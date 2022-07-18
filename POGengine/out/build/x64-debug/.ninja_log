@@ -1,14 +1,9 @@
 # ninja log v5
-25	563	6798182794101422	CMakeFiles/POGengine.dir/src/physics/private/updater.cpp.obj	2e607e1cf277c60
-20	565	6798182794111424	CMakeFiles/POGengine.dir/src/renderer/private/renderer.cpp.obj	185c94055e65fc9f
-13	567	6798182794131444	CMakeFiles/POGengine.dir/src/util/private/timer.cpp.obj	38e9a3930ce9904e
-1	1239	6798182800881586	CMakeFiles/POGengine.dir/src/main.cpp.obj	e2dcd131b0e872c7
-8	1260	6798182801081757	CMakeFiles/POGengine.dir/src/engine/private/engine.cpp.obj	b2d2f3b548bdc91a
-8	416	6798183308865416	CMakeFiles/POGengine.dir/src/util/private/timer.cpp.obj	38e9a3930ce9904e
-2	953	6798183314230316	CMakeFiles/POGengine.dir/src/main.cpp.obj	e2dcd131b0e872c7
-13	954	6798183314250328	CMakeFiles/POGengine.dir/src/engine/private/engine.cpp.obj	b2d2f3b548bdc91a
-2	385	6798183485843264	CMakeFiles/POGengine.dir/src/util/private/timer.cpp.obj	38e9a3930ce9904e
-386	793	6798183489237657	POGengine.exe	bb14d674ab724014
-2	412	6798184179082295	CMakeFiles/POGengine.dir/src/util/private/timer.cpp.obj	38e9a3930ce9904e
-8	942	6798184184380526	CMakeFiles/POGengine.dir/src/engine/private/engine.cpp.obj	b2d2f3b548bdc91a
-943	1163	6798184185691621	POGengine.exe	bb14d674ab724014
+10	377	6798491424894414	CMakeFiles/POGengine.dir/src/util/private/timer.cpp.obj	8f4ead9a9e18e0e9
+26	380	6798491424874393	CMakeFiles/POGengine.dir/src/physics/private/updater.cpp.obj	5420d5999e5e391a
+20	381	6798491424894414	CMakeFiles/POGengine.dir/src/input/private/input.cpp.obj	d728b6413b8ebfbc
+15	382	6798491424894414	CMakeFiles/POGengine.dir/src/renderer/private/renderer.cpp.obj	a44d62a895e507c
+1	864	6798491429796437	CMakeFiles/POGengine.dir/src/renderer/private/assets.cpp.obj	e48d6e68a1a39d45
+31	1087	6798491432024151	CMakeFiles/POGengine.dir/src/engine/private/engine.cpp.obj	6751bdfb732928bf
+37	1114	6798491432304510	CMakeFiles/POGengine.dir/src/main.cpp.obj	239364b826448f6
+1115	1533	6798491435798375	POGengine.exe	46f7064affb5e25c

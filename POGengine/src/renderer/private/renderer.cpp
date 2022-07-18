@@ -21,20 +21,29 @@ namespace renderer
 
 	void Renderer::Create()
 	{
-		if (!Renderer::s_instance)
+		if (!s_instance)
 		{
-			Renderer::s_instance = new Renderer();
+			s_instance = new Renderer();
 		}
 	}
 
 	Renderer* Renderer::Get()
 	{
-		return Renderer::s_instance;
+		return s_instance;
 	}
 
 	void Renderer::Destroy()
 	{
 		SAFE_DELETE(s_instance);
+	}
+
+	SDL_Texture* Renderer::LoadTexture(const char* path_to_texture)
+	{
+		SDL_Surface* temp_surface = IMG_Load(path_to_texture);
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
+		SDL_FreeSurface(temp_surface);
+
+		return texture;
 	}
 
 	bool Renderer::Start(const char* window_title, int width, int height)

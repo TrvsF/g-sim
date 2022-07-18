@@ -2,22 +2,20 @@
 
 namespace engine
 {
-    static int fps_cap_;
-    static int tick_rate_;
-    static bool is_paused_;
-    static bool shutdown_requested_;
+    static int m_fps_cap;
+    static int m_tick_rate;
+    static bool m_is_paused;
+    static bool m_shutdown_requested;
 
     bool Init()
     {
         std::cout << "initializing the game engine\n";
 
         // set default values
-        fps_cap_ = 150;
-        tick_rate_ = 20;
-        is_paused_ = false;
-        shutdown_requested_ = false;
-
-        std::cout << "starting the renderer\n";
+        m_fps_cap = 150;
+        m_tick_rate = 20;
+        m_is_paused = false;
+        m_shutdown_requested = false;
 
         // create renderer
         renderer::Renderer::Create();
@@ -25,21 +23,31 @@ namespace engine
         // create updater
         updater::Updater::Create();
 
+        // create input handler
+        input::Input::Create();
+
         return true;
     }
 
     void Run()
     {
         SDL_Event m_events;
+
+        // assign the input handler
+        static input::Input* inputs = input::Input::Get();
         
+        // assign the updater
         static updater::Updater* updater = updater::Updater::Get();
+
+        // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
         renderer->Start("POGengine", 640, 480);
 
+        // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
         timer::Timer* m_fps_timer = new timer::Timer(); 
 
-        while (!shutdown_requested_)
+        while (!m_shutdown_requested)
         {
             m_tick_timer->Update();
             m_fps_timer->Update();
@@ -50,26 +58,30 @@ namespace engine
                 switch (m_events.type)
                 {
                     case SDL_QUIT:
-                        shutdown_requested_ = true;
+                        m_shutdown_requested = true;
                         break;
                 }
             }
 
-            if (shutdown_requested_)
+            if (m_shutdown_requested)
             {
                 renderer->Clean();
                 continue;
             }
 
             // a game tick
-            if (m_tick_timer->DeltaTime() >= 1.0f / tick_rate_)
+            if (m_tick_timer->DeltaTime() >= 1.0f / m_tick_rate)
             {
                 m_tick_timer->Reset();
+                inputs->Tick();
+
                 updater->Tick();
+
+                inputs->LateTick();
             }
 
             // a render tick
-            if (m_fps_timer->DeltaTime() >= 1.0f / fps_cap_)
+            if (m_fps_timer->DeltaTime() >= 1.0f / m_fps_cap)
             {
                 m_fps_timer->Reset();
                 renderer->Render();

@@ -2,6 +2,7 @@
 #define _RENDERER_H
 
 #include <SDL.h>
+#include <SDL_image.h>
 
 #include "../src/engine/helper_macos.h"
 
@@ -29,6 +30,8 @@ namespace renderer
 		static Renderer* Get();
 		static void Destroy();
 
+		SDL_Texture* LoadTexture(const char* path_to_texture);
+
 		bool Start(const char* window_title, int width, int height);
 
 		void ClearBuffer();
@@ -37,6 +40,5 @@ namespace renderer
 
 	};
 }
-
 
 #endif

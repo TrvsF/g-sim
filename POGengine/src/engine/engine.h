@@ -6,6 +6,7 @@
 
 #include "../renderer/renderer.h"
 #include "../physics/updater.h"
+#include "../input/input.h"
 
 #include "../util/timer.h"
 

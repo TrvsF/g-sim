@@ -1,9 +1,11 @@
 #include "renderer.h"
 
+/*
 namespace renderer
 {
-	inline void Renderer::resize_window()
+	inline Renderer* Renderer::Get()
 	{
-		
+		return Renderer::s_instance;
 	}
 }
+*/
