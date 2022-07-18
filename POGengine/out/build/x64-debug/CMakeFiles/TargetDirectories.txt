@@ -1,0 +1,3 @@
+C:/Users/TravisF/Documents/.projects/POGengine/POGengine/out/build/x64-debug/CMakeFiles/POGengine.dir
+C:/Users/TravisF/Documents/.projects/POGengine/POGengine/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/Users/TravisF/Documents/.projects/POGengine/POGengine/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
