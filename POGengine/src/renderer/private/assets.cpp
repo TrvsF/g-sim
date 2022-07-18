@@ -2,8 +2,6 @@
 
 namespace renderer
 {
-	Assets* Assets::s_instance = nullptr;
-
 	Assets::Assets()
 	{
 		
@@ -21,31 +19,13 @@ namespace renderer
 		m_textures.clear();
 	}
 
-	void Assets::Create()
+	void Assets::SetTexture(const char* path_to_texture, SDL_Texture* texture)
 	{
-		if (!s_instance)
-		{
-			s_instance = new Assets();
-		}
-	}
-
-	Assets* Assets::Get()
-	{
-		return Assets::s_instance;
-	}
-
-	void Assets::Destroy()
-	{
-		SAFE_DELETE(s_instance);
+		m_textures[path_to_texture] = texture;
 	}
 
 	SDL_Texture* Assets::GetTexture(const char* path_to_texture)
 	{
-		if (m_textures[path_to_texture] == nullptr)
-		{
-			m_textures[path_to_texture] = Renderer::Get()->LoadTexture(path_to_texture);
-		}
-
 		return m_textures[path_to_texture];
 	}
 }

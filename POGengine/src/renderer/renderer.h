@@ -4,7 +4,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include <vector>
+
 #include "../src/engine/helper_macos.h"
+#include "../src/object/texture.h"
+#include "../src/renderer/assets.h"
 
 namespace renderer
 {
@@ -19,6 +23,13 @@ namespace renderer
 
 		SDL_Window* m_window;
 		SDL_Renderer* m_renderer;
+		Assets* m_assets;
+
+		size_t m_num_texture_objects;
+		std::vector<object::Texture*> m_texutre_objects;
+
+		void add_texture_object(object::Texture* texture_object);
+		void render_texture_object(object::Texture* texture_object);
 
 		inline void resize_window();
 
@@ -30,7 +41,8 @@ namespace renderer
 		static Renderer* Get();
 		static void Destroy();
 
-		SDL_Texture* LoadTexture(const char* path_to_texture);
+		bool LoadTexture(const char* path_to_texture, object::Texture* texture_object);
+		bool LoadTexture(const char* path_to_texture, object::Texture* texture_object, float x, float y, float rotation);
 
 		bool Start(const char* window_title, int width, int height);
 

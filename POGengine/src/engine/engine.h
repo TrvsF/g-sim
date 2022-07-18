@@ -10,6 +10,8 @@
 
 #include "../util/timer.h"
 
+#include "../object/texture.h"
+
 namespace engine
 {
 	bool Init();

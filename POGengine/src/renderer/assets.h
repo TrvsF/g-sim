@@ -3,28 +3,20 @@
 
 #include <SDL.h>
 
-#include <string>
 #include <map>
-
-#include "../renderer/renderer.h"
 
 namespace renderer
 {
 	class Assets
 	{
 	private:
-		static Assets* s_instance;
-
-		std::map<std::string, SDL_Texture*> m_textures;
+		std::map<const char*, SDL_Texture*> m_textures;
 		
 	public:
 		Assets();
 		virtual ~Assets();
 
-		static void Create();
-		static Assets* Get();
-		static void Destroy();
-
+		void SetTexture(const char* path_to_texture, SDL_Texture* texture);
 		SDL_Texture* GetTexture(const char* path_to_texture);
 	};
 }

@@ -47,6 +47,12 @@ namespace engine
         timer::Timer* m_tick_timer = new timer::Timer();
         timer::Timer* m_fps_timer = new timer::Timer(); 
 
+        // debug texture renderer
+        object::Texture* m_text = new object::Texture();
+        object::Texture* m_text2 = new object::Texture();
+        renderer->LoadTexture("C:/Users/TravisF/Documents/POGame/PogGame/character.png", m_text, 50, 50, 0);
+        renderer->LoadTexture("C:/Users/TravisF/Documents/POGame/PogGame/character.png", m_text2, 100, 50, 0);
+
         while (!m_shutdown_requested)
         {
             m_tick_timer->Update();

@@ -6,12 +6,15 @@ namespace renderer
 
 	Renderer::Renderer()
 	{
-		m_window = nullptr;
-		m_renderer = nullptr;
+		m_num_texture_objects = 0;
 
-		m_title = "";
-		m_width = 0;
-		m_height = 0;
+		m_window	= nullptr;
+		m_renderer	= nullptr;
+		m_assets	= nullptr;
+
+		m_title		= "";
+		m_width		= 0;
+		m_height	= 0;
 	}
 
 	Renderer::~Renderer()
@@ -37,13 +40,31 @@ namespace renderer
 		SAFE_DELETE(s_instance);
 	}
 
-	SDL_Texture* Renderer::LoadTexture(const char* path_to_texture)
+	bool Renderer::LoadTexture(const char* path_to_texture, object::Texture* texture_object)
 	{
-		SDL_Surface* temp_surface = IMG_Load(path_to_texture);
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
-		SDL_FreeSurface(temp_surface);
+		return LoadTexture(path_to_texture, texture_object, 0, 0, 0);
+	}
 
-		return texture;
+	bool Renderer::LoadTexture(const char* path_to_texture, object::Texture* texture_object, float x, float y, float rotation)
+	{
+		// check if texture image already exists in memory
+		SDL_Texture* texture = m_assets->GetTexture(path_to_texture);
+		if (!texture) 
+		{
+			// load the texture
+			SDL_Surface* temp_surface = IMG_Load(path_to_texture);
+			if (!temp_surface) { return false; }
+			texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
+			SDL_FreeSurface(temp_surface);
+
+			// add the texture to asset manager
+			m_assets->SetTexture(path_to_texture, texture);
+		}
+
+		texture_object->Set(texture, x, y, rotation);
+		add_texture_object(texture_object);
+
+		return true;
 	}
 
 	bool Renderer::Start(const char* window_title, int width, int height)
@@ -63,6 +84,9 @@ namespace renderer
 		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
 		if (!m_renderer) { return false; }
 
+		// create the asset manager object
+		m_assets = new Assets();
+
 		return true;
 
 	}
@@ -74,6 +98,12 @@ namespace renderer
 
 	void Renderer::Render()
 	{
+		for (size_t i = 0; i < m_num_texture_objects; i++)
+		{
+			render_texture_object(m_texutre_objects[i]);
+		}
+
+		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);
 	}
 
@@ -84,6 +114,27 @@ namespace renderer
 		SDL_Quit();
 	}
 
+	void Renderer::add_texture_object(object::Texture* texture_object)
+	{
+		m_texutre_objects.push_back(texture_object);
+		m_num_texture_objects++;
+	}
+
+	void Renderer::render_texture_object(object::Texture* texture_object)
+	{
+		SDL_Rect render_rect{};
+		int x			= (int)(texture_object->Pos().x);
+		int y			= (int)(texture_object->Pos().y);
+		int width		= texture_object->Width();
+		int height		= texture_object->Height();
+		float rotation  = texture_object->Rotation();
+
+		render_rect.x = x - width;
+		render_rect.y = y - height;
+		render_rect.w = width;
+		render_rect.h = height;
+
+		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+	}
+
 }
-
-
