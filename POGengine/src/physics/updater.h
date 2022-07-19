@@ -3,6 +3,8 @@
 
 #include "../engine/helper_macos.h"
 
+#include "../input/input.h"
+
 namespace updater
 {
 	class Updater

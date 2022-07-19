@@ -33,94 +33,40 @@ namespace input
 		SAFE_DELETE(s_instance);
 	}
 
-	bool Input::KeyDown(SDL_Scancode scan_code)
+	bool Input::KeyDown(const char* key)
 	{
-		return m_keyboard_states[scan_code];
+		SDL_Scancode scan_code = SDL_GetScancodeFromName(key);
+		
+		return m_keyboard_states[scan_code] && check_scancode(scan_code);
 	}
 
-	bool Input::KeyPressed(SDL_Scancode scan_code)
+	bool Input::KeyPressed(const char* key)
 	{
-		return (m_prev_keyboard_states[scan_code]) == 0 && (m_keyboard_states[scan_code] != 0);
+		SDL_Scancode scan_code = SDL_GetScancodeFromName(key);
+
+		return (m_prev_keyboard_states[scan_code]) == 0 && (m_keyboard_states[scan_code] != 0) && check_scancode(scan_code);
 	}
 
-	bool Input::KeyReleased(SDL_Scancode scan_code)
+	bool Input::KeyReleased(const char* key)
 	{
-		return (m_prev_keyboard_states[scan_code]) != 0 && (m_keyboard_states[scan_code] == 0);
+		SDL_Scancode scan_code = SDL_GetScancodeFromName(key);
+
+		return (m_prev_keyboard_states[scan_code]) != 0 && (m_keyboard_states[scan_code] == 0) && check_scancode(scan_code);
 	}
 
 	bool Input::MouseDown(MouseButton mouse_button)
 	{
-		Uint32 mask = 0;
-
-		switch (mouse_button) {
-		case MouseButton::Left:
-			mask = SDL_BUTTON_LMASK;
-			break;
-		case MouseButton::Right:
-			mask = SDL_BUTTON_RMASK;
-			break;
-		case MouseButton::Middle:
-			mask = SDL_BUTTON_MMASK;
-			break;
-		case MouseButton::Back:
-			mask = SDL_BUTTON_X1MASK;
-			break;
-		case MouseButton::Forward:
-			mask = SDL_BUTTON_X2MASK;
-			break;
-		}
-
-		return ((m_mouse_state & mask) != 0);
+		return ((m_mouse_state & mouse_button) != 0);
 	}
 
 	bool Input::MousePressed(MouseButton mouse_button)
 	{
-		Uint32 mask = 0;
-
-		switch (mouse_button) {
-		case MouseButton::Left:
-			mask = SDL_BUTTON_LMASK;
-			break;
-		case MouseButton::Right:
-			mask = SDL_BUTTON_RMASK;
-			break;
-		case MouseButton::Middle:
-			mask = SDL_BUTTON_MMASK;
-			break;
-		case MouseButton::Back:
-			mask = SDL_BUTTON_X1MASK;
-			break;
-		case MouseButton::Forward:
-			mask = SDL_BUTTON_X2MASK;
-			break;
-		}
-
-		return ((m_prev_mouse_state & mask) == 0) && ((m_mouse_state & mask) != 0);
+		return ((m_prev_mouse_state & mouse_button) == 0) && ((m_mouse_state & mouse_button) != 0);
 	}
 
 	bool Input::MouseReleased(MouseButton mouse_button)
 	{
-		Uint32 mask = 0;
-
-		switch (mouse_button) {
-		case MouseButton::Left:
-			mask = SDL_BUTTON_LMASK;
-			break;
-		case MouseButton::Right:
-			mask = SDL_BUTTON_RMASK;
-			break;
-		case MouseButton::Middle:
-			mask = SDL_BUTTON_MMASK;
-			break;
-		case MouseButton::Back:
-			mask = SDL_BUTTON_X1MASK;
-			break;
-		case MouseButton::Forward:
-			mask = SDL_BUTTON_X2MASK;
-			break;
-		}
-
-		return ((m_prev_mouse_state & mask) != 0) && ((m_mouse_state & mask) == 0);
+		return ((m_prev_mouse_state & mouse_button) != 0) && ((m_mouse_state & mouse_button) == 0);
 	}
 
 	void Input::LateTick()
@@ -133,6 +79,11 @@ namespace input
 	void Input::Tick()
 	{
 		m_mouse_state = SDL_GetMouseState(&m_mouse_x, &m_mouse_y);
+	}
+
+	bool Input::check_scancode(SDL_Scancode scan_code)
+	{
+		return !(scan_code == SDL_SCANCODE_UNKNOWN);
 	}
 
 }

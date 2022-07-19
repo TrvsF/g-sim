@@ -2,18 +2,19 @@
 #define INPUT_H_
 
 #include <SDL.h>
+#include <iostream>
 
 #include "../src/engine/helper_macos.h"
 
 namespace input
 {
-	enum class MouseButton
+	enum MouseButton
 	{
-		Left,
-		Right,
-		Middle,
-		Back,
-		Forward
+		Left = 1,
+		Right = 2,
+		Middle = 4,
+		Back = 8,
+		Forward = 16
 	};
 
 	class Input
@@ -30,7 +31,7 @@ namespace input
 		int m_mouse_x;
 		int m_mouse_y;
 
-		void CopyToPrev();
+		bool check_scancode(SDL_Scancode scan_code);
 
 	public:
 		Input();
@@ -40,9 +41,9 @@ namespace input
 		static Input* Get();
 		static void Destroy();
 
-		bool KeyDown(SDL_Scancode scan_code);
-		bool KeyPressed(SDL_Scancode scan_code);
-		bool KeyReleased(SDL_Scancode scan_code);
+		bool KeyDown(const char* key);
+		bool KeyPressed(const char* key);
+		bool KeyReleased(const char* key);
 
 		bool MouseDown(MouseButton mouse_button);
 		bool MousePressed(MouseButton mouse_button);

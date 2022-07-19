@@ -30,7 +30,7 @@ add_executable (
  
  "src/input/input.h"
  "src/input/private/input.cpp" 
- "src/object/texture.h" "src/util/vector2d.h" "src/object/private/texture.cpp")
+ "src/object/texture.h" "src/util/vector2d.h" "src/object/private/texture.cpp" "src/object/object.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

@@ -32,6 +32,7 @@ namespace updater
 
 	void Updater::Tick()
 	{
+
 	}
 
 }
