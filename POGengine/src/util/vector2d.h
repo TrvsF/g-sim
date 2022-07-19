@@ -10,7 +10,8 @@ struct Vector2D
 	float y;
 
 	Vector2D(float _x = 0, float _y = 0)
-		: x(_x), y(_y) {}
+		: x(_x), y(_y)
+	{}
 
 	float magnitudeSqr()
 	{

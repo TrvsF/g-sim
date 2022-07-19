@@ -99,7 +99,8 @@
 				15,
 				17,
 				22,
-				23
+				23,
+				26
 			]
 		}
 	],
@@ -159,7 +160,8 @@
 				15,
 				17,
 				22,
-				23
+				23,
+				26
 			]
 		},
 		{
@@ -180,7 +182,9 @@
 				18,
 				19,
 				20,
-				21
+				21,
+				24,
+				25
 			]
 		}
 	],
@@ -313,6 +317,22 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/object/private/aabb.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/object/aabb-inl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/object/transform-inl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/object/private/transform.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

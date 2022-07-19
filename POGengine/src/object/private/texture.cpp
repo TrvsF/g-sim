@@ -6,7 +6,6 @@ namespace object
 	{
 		m_width = 0;
 		m_height = 0;
-		m_rotation = 0;
 		m_pos = VEC2_ZERO;
 	}
 
@@ -20,13 +19,11 @@ namespace object
 		SDL_QueryTexture(m_texutre, NULL, NULL, &m_width, &m_height);
 	}
 
-	void Texture::Set(SDL_Texture* texture, float x, float y, float rotation)
+	void Texture::Set(SDL_Texture* texture, float x, float y)
 	{
-		m_texutre = texture;
-		SDL_QueryTexture(m_texutre, NULL, NULL, &m_width, &m_height);
+		Set(texture);
 
 		m_pos = Vector2D(x, y);
-		m_rotation = rotation;
 	}
 
 	SDL_Texture* Texture::GetTexture()
@@ -52,16 +49,6 @@ namespace object
 	int Texture::Height()
 	{
 		return m_height;
-	}
-
-	void Texture::Rotation(float rotation)
-	{
-		m_rotation = rotation;
-	}
-
-	float Texture::Rotation()
-	{
-		return m_rotation;
 	}
 
 	void Texture::Pos(Vector2D pos)

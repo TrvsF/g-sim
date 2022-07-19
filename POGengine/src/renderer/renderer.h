@@ -38,7 +38,7 @@ namespace renderer
 		virtual ~Renderer();
 
 		static void Create();
-		static Renderer* Get();
+		static inline Renderer* Get();
 		static void Destroy();
 
 		bool LoadTexture(const char* path_to_texture, object::Texture* texture_object);
@@ -52,5 +52,7 @@ namespace renderer
 
 	};
 }
+
+#include "renderer-inl.h"
 
 #endif

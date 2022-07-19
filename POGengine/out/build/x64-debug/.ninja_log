@@ -1,0 +1,12 @@
+# ninja log v5
+49	696	6799712185417330	CMakeFiles/POGengine.dir/src/object/private/aabb.cpp.obj	18dde8ccd3544645
+54	700	6799712185537437	CMakeFiles/POGengine.dir/src/object/private/transform.cpp.obj	91a0d3144de1e8da
+44	702	6799712185567474	CMakeFiles/POGengine.dir/src/object/private/texture.cpp.obj	79d44116ed1f982e
+22	704	6799712185547447	CMakeFiles/POGengine.dir/src/util/private/timer.cpp.obj	8f4ead9a9e18e0e9
+18	1095	6799712189527282	CMakeFiles/POGengine.dir/src/renderer/private/assets.cpp.obj	e48d6e68a1a39d45
+33	1528	6799712193861847	CMakeFiles/POGengine.dir/src/physics/private/updater.cpp.obj	5420d5999e5e391a
+39	1533	6799712193911609	CMakeFiles/POGengine.dir/src/input/private/input.cpp.obj	d728b6413b8ebfbc
+2	1586	6799712194432094	CMakeFiles/POGengine.dir/src/main.cpp.obj	239364b826448f6
+13	1589	6799712194462133	CMakeFiles/POGengine.dir/src/engine/private/engine.cpp.obj	6751bdfb732928bf
+3	726	6799712647516503	CMakeFiles/POGengine.dir/src/renderer/private/renderer.cpp.obj	a44d62a895e507c
+727	1162	6799712651163429	POGengine.exe	ce3bec6f8bc8171a

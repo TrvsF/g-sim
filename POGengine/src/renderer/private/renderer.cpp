@@ -30,11 +30,6 @@ namespace renderer
 		}
 	}
 
-	Renderer* Renderer::Get()
-	{
-		return s_instance;
-	}
-
 	void Renderer::Destroy()
 	{
 		SAFE_DELETE(s_instance);
@@ -61,7 +56,7 @@ namespace renderer
 			m_assets->SetTexture(path_to_texture, texture);
 		}
 
-		texture_object->Set(texture, x, y, rotation);
+		texture_object->Set(texture, x, y);
 		add_texture_object(texture_object);
 
 		return true;
@@ -127,14 +122,13 @@ namespace renderer
 		int y			= (int)(texture_object->Pos().y);
 		int width		= texture_object->Width();
 		int height		= texture_object->Height();
-		float rotation  = texture_object->Rotation();
 
 		render_rect.x = x - width;
 		render_rect.y = y - height;
 		render_rect.w = width;
 		render_rect.h = height;
 
-		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+		SDL_RenderCopy(m_renderer, texture_object->GetTexture(), NULL, &render_rect);
 	}
 
 }

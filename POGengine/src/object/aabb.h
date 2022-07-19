@@ -13,20 +13,23 @@ namespace object
 		Vector3D m_origin;
 
 	public:
-		AABB(float x = 0, float y = 0, float z = 0, float width = 0, float height = 0, float depth = 0)
-			: m_origin(x, y, z), m_size(width, height, depth) {}
+		explicit AABB(float x = 0, float y = 0, float z = 0, float width = 0, float height = 0, float depth = 0);
+		explicit AABB(const Vector3D& origin = VEC3_ZERO, const Size& size = SIZE_ZERO);
 
-		void Set2D(float x, float y, float width, float height);
+		inline void Set2D(float x, float y, float width, float height);
 
-		float GetMinX() const;
-		float GetMinY() const;
-		float GetMinZ() const;
+		inline float GetMinX() const;
+		inline float GetMinY() const;
+		inline float GetMinZ() const;
 
-		float GetMaxX() const;
-		float GetMaxY() const;
-		float GetMaxZ() const;
+		inline float GetMaxX() const;
+		inline float GetMaxY() const;
+		inline float GetMaxZ() const;
 
-		bool IntersectsRect2D(const AABB& other) const;
+		inline bool IntersectsRect2D(const AABB& other) const;
 	};
 }
+
+#include "aabb-inl.h"
+
 #endif // !AABB_H_

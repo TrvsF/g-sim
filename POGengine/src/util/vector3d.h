@@ -11,7 +11,8 @@ struct Vector3D
 	float z;
 
 	Vector3D(float _x = 0, float _y = 0, float _z = 0)
-		: x(_x), y(_y), z(_z) {}
+		: x(_x), y(_y), z(_z)
+	{}
 };
 
 const Vector3D VEC3_ZERO	= { 0, 0, 0 };

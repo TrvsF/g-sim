@@ -33,4 +33,6 @@ inline Size operator / (const Size& lhs, float factor)
 	return Size(lhs.width / factor, lhs.height / factor, lhs.depth / factor);
 }
 
+const Size SIZE_ZERO = { 0, 0, 0 };
+
 #endif // !SIZE_H_
