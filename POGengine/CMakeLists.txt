@@ -23,14 +23,24 @@ add_executable (
  "src/renderer/private/renderer.cpp"
 
  "src/util/timer.h"
+ "src/util/vector2d.h" 
+ "src/util/size.h"
+ "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
- 
+
  "src/physics/updater.h" 
  "src/physics/private/updater.cpp" 
  
  "src/input/input.h"
  "src/input/private/input.cpp" 
- "src/object/texture.h" "src/util/vector2d.h" "src/object/private/texture.cpp" "src/object/object.h")
+
+ "src/object/texture.h"
+ "src/object/object.h"
+ "src/object/transform.h"
+ "src/object/aabb.h"
+ "src/object/private/texture.cpp"
+ "src/object/private/aabb.cpp"
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

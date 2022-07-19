@@ -113,6 +113,14 @@ build CMakeFiles\POGengine.dir\src\object\private\texture.cpp.obj: CXX_COMPILER_
   TARGET_COMPILE_PDB = CMakeFiles\POGengine.dir\
   TARGET_PDB = POGengine.pdb
 
+build CMakeFiles\POGengine.dir\src\object\private\aabb.cpp.obj: CXX_COMPILER__POGengine_Debug C$:\Users\TravisF\Documents\.projects\POGengine\POGengine\src\object\private\aabb.cpp || cmake_object_order_depends_target_POGengine
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20
+  INCLUDES = -IC:\Users\TravisF\Documents\.projects\POGengine\POGengine\POGengine -I\SDL2-2.0.22-d\include -I\SDL2_image-2.6.0\include
+  OBJECT_DIR = CMakeFiles\POGengine.dir
+  OBJECT_FILE_DIR = CMakeFiles\POGengine.dir\src\object\private
+  TARGET_COMPILE_PDB = CMakeFiles\POGengine.dir\
+  TARGET_PDB = POGengine.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target POGengine
@@ -121,7 +129,7 @@ build CMakeFiles\POGengine.dir\src\object\private\texture.cpp.obj: CXX_COMPILER_
 #############################################
 # Link the executable POGengine.exe
 
-build POGengine.exe: CXX_EXECUTABLE_LINKER__POGengine_Debug CMakeFiles\POGengine.dir\src\main.cpp.obj CMakeFiles\POGengine.dir\src\engine\private\engine.cpp.obj CMakeFiles\POGengine.dir\src\renderer\private\assets.cpp.obj CMakeFiles\POGengine.dir\src\renderer\private\renderer.cpp.obj CMakeFiles\POGengine.dir\src\util\private\timer.cpp.obj CMakeFiles\POGengine.dir\src\physics\private\updater.cpp.obj CMakeFiles\POGengine.dir\src\input\private\input.cpp.obj CMakeFiles\POGengine.dir\src\object\private\texture.cpp.obj | \SDL2-2.0.22-d\lib\x64\SDL2.lib \SDL2-2.0.22-d\lib\x64\SDL2main.lib \SDL2_image-2.6.0\lib\x64\SDL2_image.lib
+build POGengine.exe: CXX_EXECUTABLE_LINKER__POGengine_Debug CMakeFiles\POGengine.dir\src\main.cpp.obj CMakeFiles\POGengine.dir\src\engine\private\engine.cpp.obj CMakeFiles\POGengine.dir\src\renderer\private\assets.cpp.obj CMakeFiles\POGengine.dir\src\renderer\private\renderer.cpp.obj CMakeFiles\POGengine.dir\src\util\private\timer.cpp.obj CMakeFiles\POGengine.dir\src\physics\private\updater.cpp.obj CMakeFiles\POGengine.dir\src\input\private\input.cpp.obj CMakeFiles\POGengine.dir\src\object\private\texture.cpp.obj CMakeFiles\POGengine.dir\src\object\private\aabb.cpp.obj | \SDL2-2.0.22-d\lib\x64\SDL2.lib \SDL2-2.0.22-d\lib\x64\SDL2main.lib \SDL2_image-2.6.0\lib\x64\SDL2_image.lib
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = \SDL2-2.0.22-d\lib\x64\SDL2.lib  \SDL2-2.0.22-d\lib\x64\SDL2main.lib  \SDL2_image-2.6.0\lib\x64\SDL2_image.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

@@ -9,7 +9,7 @@ struct Vector2D
 	float x;
 	float y;
 
-	Vector2D(float _x = 0.0f, float _y = 0.0f)
+	Vector2D(float _x = 0, float _y = 0)
 		: x(_x), y(_y) {}
 
 	float magnitudeSqr()
@@ -81,9 +81,9 @@ inline Vector2D RotateVector(Vector2D& vec, float angle)
 	return Vector2D((float)(vec.x * cos(radAngle) - vec.y * sin(radAngle)), (float)(vec.x * sin(radAngle) + vec.y * cos(radAngle)));
 }
 
-const Vector2D VEC2_ZERO = { 0.0f, 0.0f };
-const Vector2D VEC2_ONE = { 1.0f, 1.0f };
-const Vector2D VEC2_UP = { 0.0f, 1.0f };
-const Vector2D VEC2_RIGHT = { 1.0f, 0.0f };
+const Vector2D VEC2_ZERO	= { 0, 0 };
+const Vector2D VEC2_ONE		= { 1, 1 };
+const Vector2D VEC2_UP		= { 0, 1 };
+const Vector2D VEC2_RIGHT	= { 1, 0 };
 
 #endif // !VECTOR2D_H_

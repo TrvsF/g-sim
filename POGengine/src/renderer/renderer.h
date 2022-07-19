@@ -6,9 +6,9 @@
 
 #include <vector>
 
-#include "../src/engine/helper_macos.h"
-#include "../src/object/texture.h"
-#include "../src/renderer/assets.h"
+#include "../engine/helper_macos.h"
+#include "../object/texture.h"
+#include "../renderer/assets.h"
 
 namespace renderer
 {
