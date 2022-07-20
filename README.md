@@ -9,4 +9,4 @@ https://cmake.org/<br>
 commit index <br>
 [a] - append/add<br>
 [c] - clean/refactor<br>
-[f] - fixed/broke<br>
+[f] - fix/broke<br>
