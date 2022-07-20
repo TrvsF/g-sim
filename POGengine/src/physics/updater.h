@@ -1,8 +1,9 @@
 #ifndef UPDATER_H_
 #define UPDATER_H_
 
-#include "../engine/helper_macos.h"
+#include <iostream> // delete me
 
+#include "../engine/helper_macos.h"
 #include "../input/input.h"
 
 namespace physics

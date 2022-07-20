@@ -2,6 +2,11 @@
 
 namespace object
 {
+	inline AABB AABB::Create(const Vector3D origin, const Size size)
+	{
+		return AABB(origin, size);
+	}
+
 	inline float AABB::GetMaxX() const
 	{
 		return m_origin.x + m_size.width;
@@ -32,19 +37,31 @@ namespace object
 		return m_origin.z;
 	}
 
+	inline Size AABB::GetSize() const
+	{
+		return m_size;
+	}
+
+	inline void AABB::SetSize(Size size)
+	{
+		m_size = size;
+	}
+
+	inline Vector3D AABB::GetOrigin() const
+	{
+		return m_origin;
+	}
+
+	inline void AABB::SetOrigin(Vector3D origin)
+	{
+		m_origin = origin;
+	}
+
 	inline bool AABB::IntersectsRect2D(const AABB& other) const
 	{
 		return !(GetMaxX() < other.GetMinX() ||
 			other.GetMaxX() < GetMinX() ||
 			GetMaxY() < other.GetMinY() ||
 			other.GetMaxY() < GetMinY());
-	}
-
-	inline void AABB::Set2D(float x, float y, float width, float height)
-	{
-		m_origin.x = x;
-		m_origin.y = y;
-		m_size.width = width;
-		m_size.height = height;
 	}
 }

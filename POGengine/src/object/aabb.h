@@ -9,14 +9,9 @@ namespace object
 	class AABB
 	{
 	private:
-		Size m_size;
-		Vector3D m_origin;
-
+		explicit AABB(const Vector3D origin = VEC3_ZERO, const Size size = SIZE_ZERO);
 	public:
-		explicit AABB(float x = 0, float y = 0, float z = 0, float width = 0, float height = 0, float depth = 0);
-		explicit AABB(const Vector3D& origin = VEC3_ZERO, const Size& size = SIZE_ZERO);
-
-		inline void Set2D(float x, float y, float width, float height);
+		inline static AABB Create(const Vector3D origin = VEC3_ZERO, const Size size = SIZE_ZERO);
 
 		inline float GetMinX() const;
 		inline float GetMinY() const;
@@ -26,7 +21,18 @@ namespace object
 		inline float GetMaxY() const;
 		inline float GetMaxZ() const;
 
+		inline Size GetSize() const;
+		inline void SetSize(Size size);
+
+		inline Vector3D GetOrigin() const;
+		inline void SetOrigin(Vector3D origin);
+
 		inline bool IntersectsRect2D(const AABB& other) const;
+
+		static const AABB ZERO;
+	protected:
+		Size m_size;
+		Vector3D m_origin;
 	};
 }
 

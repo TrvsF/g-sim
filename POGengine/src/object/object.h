@@ -9,11 +9,30 @@ namespace object
 	class Object
 	{
 	private:
-
-
 		AABB		m_aabb;
 		Transform	m_transform;
+
+		explicit Object(const AABB& aabb = AABB::ZERO, const Transform& transform = Transform::ZERO)
+			: m_transform(transform), m_aabb(aabb)
+		{}
+	public:
+		inline static Object* Create(const AABB& aabb = AABB::ZERO, const Transform& transform = Transform::ZERO);
+
+		inline const Transform& GetTransform() const;
+		inline void SetTransform(Transform& transform);
+
+		inline const AABB& GetAABB() const;
+		inline void SetAABB(AABB& aabb);
+
+		inline const Vector3D GetPosition() const;
+		inline void SetPosition(Vector3D position);
+
+		inline const Size GetSize() const;
+		inline void SetSize(Size size);
+
 	};
 }
+
+#include "object-inl.h"
 
 #endif

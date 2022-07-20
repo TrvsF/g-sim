@@ -1,5 +1,12 @@
 #include "../updater.h"
 
+#include "../src/object/object.h"
+
+object::Object* game_obj = object::Object::Create(
+	object::AABB::Create({ 0, 50, 0 }, { 25, 25, 0 }),
+	object::Transform::Create({ 0, 50, 0 }, { 0, 0, 0 })
+);
+
 namespace physics
 {
 	Updater* Updater::s_instance = nullptr;
@@ -27,7 +34,7 @@ namespace physics
 
 	void Updater::Tick()
 	{
-		
+
 	}
 
 }

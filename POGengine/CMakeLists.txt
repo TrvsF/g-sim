@@ -40,7 +40,7 @@ add_executable (
  "src/object/aabb.h"
  "src/object/private/texture.cpp"
  "src/object/private/aabb.cpp"
- "src/object/aabb-inl.h" "src/object/transform-inl.h" "src/object/private/transform.cpp" "src/physics/updater-inl.h" "src/object/texture-inl.h")
+ "src/object/aabb-inl.h" "src/object/transform-inl.h" "src/object/private/transform.cpp" "src/physics/updater-inl.h" "src/object/texture-inl.h" "src/object/object-inl.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
