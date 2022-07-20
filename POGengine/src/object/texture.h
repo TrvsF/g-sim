@@ -10,29 +10,35 @@ namespace object
 	class Texture
 	{
 	protected:
-		SDL_Texture* m_texutre;
-
-		Vector2D m_pos;
-		int m_width;
-		int m_height;
+		SDL_Texture*	m_texutre;
+		Vector2D		m_pos;
+		float			m_rotation;
+		int				m_width;
+		int				m_height;
 
 	public:
 		Texture();
-		virtual ~Texture();
 
 		void Set(SDL_Texture* texture);
-		void Set(SDL_Texture* texture, float x, float y);
-		SDL_Texture* GetTexture();
+		void Set(SDL_Texture* texture, Vector2D pos, float rotation);
+		void Set(SDL_Texture* texture, float x, float y, float rotation);
 
-		void Width(int width);
-		int Width();
+		inline SDL_Texture* GetTexture();
 
-		void Height(int height);
-		int Height();
+		inline void Rotation(float rotation);
+		inline float Rotation() const;
 
-		void Pos(Vector2D pos);
-		Vector2D Pos();
+		inline void Width(int width);
+		inline int Width() const;
+
+		inline void Height(int height);
+		inline int Height() const;
+
+		inline void Pos(Vector2D pos);
+		inline Vector2D Pos() const;
 	};
 }
+
+#include "texture-inl.h"
 
 #endif // !TEXTURE_H_

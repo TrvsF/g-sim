@@ -21,7 +21,7 @@ namespace engine
         renderer::Renderer::Create();
 
         // create updater
-        updater::Updater::Create();
+        physics::Updater::Create();
 
         // create input handler
         input::Input::Create();
@@ -37,7 +37,7 @@ namespace engine
         static input::Input* inputs = input::Input::Get();
         
         // assign the updater
-        static updater::Updater* updater = updater::Updater::Get();
+        static physics::Updater* updater = physics::Updater::Get();
 
         // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
@@ -79,10 +79,9 @@ namespace engine
             if (m_tick_timer->DeltaTime() >= 1.0f / m_tick_rate)
             {
                 m_tick_timer->Reset();
+
                 inputs->Tick();
-
                 updater->Tick();
-
                 inputs->LateTick();
             }
 
@@ -90,6 +89,7 @@ namespace engine
             if (m_fps_timer->DeltaTime() >= 1.0f / m_fps_cap)
             {
                 m_fps_timer->Reset();
+
                 renderer->Render();
             }
 

@@ -56,8 +56,10 @@ namespace renderer
 			m_assets->SetTexture(path_to_texture, texture);
 		}
 
-		texture_object->Set(texture, x, y);
+		texture_object->Set(texture, x, y, rotation);
 		add_texture_object(texture_object);
+
+		std::cout << "loaded";
 
 		return true;
 	}
@@ -86,13 +88,10 @@ namespace renderer
 
 	}
 
-	void Renderer::ClearBuffer()
-	{
-		SDL_RenderClear(m_renderer);
-	}
-
 	void Renderer::Render()
 	{
+		clear_buffer();
+
 		for (size_t i = 0; i < m_num_texture_objects; i++)
 		{
 			render_texture_object(m_texutre_objects[i]);
@@ -109,7 +108,7 @@ namespace renderer
 		SDL_Quit();
 	}
 
-	void Renderer::add_texture_object(object::Texture* texture_object)
+	inline void Renderer::add_texture_object(object::Texture* texture_object)
 	{
 		m_texutre_objects.push_back(texture_object);
 		m_num_texture_objects++;
@@ -122,13 +121,19 @@ namespace renderer
 		int y			= (int)(texture_object->Pos().y);
 		int width		= texture_object->Width();
 		int height		= texture_object->Height();
+		float rotation  = texture_object->Rotation();
 
 		render_rect.x = x - width;
 		render_rect.y = y - height;
 		render_rect.w = width;
 		render_rect.h = height;
 
-		SDL_RenderCopy(m_renderer, texture_object->GetTexture(), NULL, &render_rect);
+		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+	}
+
+	void Renderer::clear_buffer()
+	{
+		SDL_RenderClear(m_renderer);
 	}
 
 }

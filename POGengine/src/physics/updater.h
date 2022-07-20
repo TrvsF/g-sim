@@ -5,7 +5,7 @@
 
 #include "../input/input.h"
 
-namespace updater
+namespace physics
 {
 	class Updater
 	{
@@ -17,11 +17,13 @@ namespace updater
 		virtual ~Updater();
 
 		static void Create();
-		static Updater* Get();
+		static inline Updater* Get();
 		static void Destroy();
 
 		void Tick();
 	};
 }
+
+#include "updater-inl.h"
 
 #endif

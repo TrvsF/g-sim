@@ -1,6 +1,6 @@
 #include "../updater.h"
 
-namespace updater
+namespace physics
 {
 	Updater* Updater::s_instance = nullptr;
 
@@ -18,11 +18,6 @@ namespace updater
 		{
 			Updater::s_instance = new Updater();
 		}
-	}
-
-	Updater* Updater::Get()
-	{
-		return Updater::s_instance;
 	}
 
 	void Updater::Destroy()

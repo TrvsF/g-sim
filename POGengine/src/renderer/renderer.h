@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include <iostream> // remove me
 #include <vector>
 
 #include "../engine/helper_macos.h"
@@ -31,7 +32,8 @@ namespace renderer
 		void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
 
-		inline void resize_window();
+		void clear_buffer();
+
 
 	public:
 		Renderer();
@@ -46,7 +48,6 @@ namespace renderer
 
 		bool Start(const char* window_title, int width, int height);
 
-		void ClearBuffer();
 		void Render();
 		void Clean();
 
