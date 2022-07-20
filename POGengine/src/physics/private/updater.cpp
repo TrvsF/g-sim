@@ -1,6 +1,6 @@
 #include "../updater.h"
 
-#include "../src/object/object.h"
+#include "../src/object/component/object.h"
 
 object::Object* game_obj = object::Object::Create(
 	object::AABB::Create({ 0, 50, 0 }, { 25, 25, 0 }),

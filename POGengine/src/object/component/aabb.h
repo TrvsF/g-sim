@@ -1,8 +1,8 @@
 #ifndef AABB_H_
 #define AABB_H_
 
-#include "../util/vector3d.h"
-#include "../util/size.h"
+#include "../src/util/vector3d.h"
+#include "../src/util/size.h"
 
 namespace object
 {

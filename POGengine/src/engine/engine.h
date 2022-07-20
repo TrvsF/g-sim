@@ -10,7 +10,7 @@
 
 #include "../util/timer.h"
 
-#include "../object/texture.h"
+#include "../object/component/texture.h"
 
 namespace engine
 {

@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "../engine/helper_macos.h"
-#include "../object/texture.h"
+#include "../src/object/component/texture.h"
 #include "../renderer/assets.h"
 
 namespace renderer

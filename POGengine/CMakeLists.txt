@@ -23,24 +23,32 @@ add_executable (
  "src/renderer/private/renderer.cpp"
 
  "src/util/timer.h"
- "src/util/vector2d.h" 
  "src/util/size.h"
+ "src/util/vector2d.h" 
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
 
  "src/physics/updater.h" 
+ "src/physics/updater-inl.h"
  "src/physics/private/updater.cpp" 
  
  "src/input/input.h"
  "src/input/private/input.cpp" 
 
- "src/object/texture.h"
- "src/object/object.h"
- "src/object/transform.h"
- "src/object/aabb.h"
- "src/object/private/texture.cpp"
- "src/object/private/aabb.cpp"
- "src/object/aabb-inl.h" "src/object/transform-inl.h" "src/object/private/transform.cpp" "src/physics/updater-inl.h" "src/object/texture-inl.h" "src/object/object-inl.h")
+ "src/object/component/texture.h"
+ "src/object/component/texture-inl.h"
+ "src/object/component/object.h"
+ "src/object/component/object-inl.h"
+ "src/object/component/transform.h"
+ "src/object/component/transform-inl.h"
+ "src/object/component/aabb.h"
+ "src/object/component/aabb-inl.h"
+ "src/object/component/private/texture.cpp"
+ "src/object/component/private/aabb.cpp"
+ "src/object/component/private/transform.cpp"
+
+ "src/object/game/game-object.h"
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

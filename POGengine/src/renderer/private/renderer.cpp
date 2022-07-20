@@ -59,8 +59,6 @@ namespace renderer
 		texture_object->Set(texture, x, y, rotation);
 		add_texture_object(texture_object);
 
-		std::cout << "loaded";
-
 		return true;
 	}
 
