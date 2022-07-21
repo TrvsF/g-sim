@@ -35,27 +35,32 @@ namespace renderer
 		SAFE_DELETE(s_instance);
 	}
 
-	bool Renderer::LoadTexture(const char* path_to_texture, object::Texture* texture_object)
+	bool Renderer::LoadTexture(const char* texture_path, object::Texture* texture_object)
 	{
-		return LoadTexture(path_to_texture, texture_object, 0, 0, 0);
+		return LoadTexture(texture_path, texture_object, 0, 0, 0);
 	}
 
-	bool Renderer::LoadTexture(const char* path_to_texture, object::Texture* texture_object, float x, float y, float rotation)
+	bool Renderer::LoadTexture(const char* texture_path, object::Texture* texture_object, float x, float y, float rotation)
 	{
+		// get full path of texture
+		std::string full_path = m_assets->GetFullPath(texture_path);
+
 		// check if texture image already exists in memory
-		SDL_Texture* texture = m_assets->GetTexture(path_to_texture);
+		SDL_Texture* texture = m_assets->GetTexture(full_path);
 		if (!texture) 
 		{
+			std::cout << "no\n";
 			// load the texture
-			SDL_Surface* temp_surface = IMG_Load(path_to_texture);
+			SDL_Surface* temp_surface = IMG_Load(full_path.c_str());
 			if (!temp_surface) { return false; }
 			texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
 			SDL_FreeSurface(temp_surface);
-
+			
 			// add the texture to asset manager
-			m_assets->SetTexture(path_to_texture, texture);
+			m_assets->SetTexture(full_path, texture);
 		}
 
+		// finish texture object
 		texture_object->Set(texture, x, y, rotation);
 		add_texture_object(texture_object);
 

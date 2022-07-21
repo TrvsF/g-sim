@@ -2,10 +2,10 @@
 
 namespace base
 {
-    static int m_fps_cap;
-    static int m_tick_rate;
-    static bool m_is_paused;
-    static bool m_shutdown_requested;
+    static int          m_fps_cap;
+    static int          m_tick_rate;
+    static bool         m_is_paused;
+    static bool         m_shutdown_requested;
 
     bool Init()
     {
@@ -38,7 +38,7 @@ namespace base
 
         // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
-        renderer->Start("POGengine", 640, 480);
+        if (!renderer->Start("POGengine", 640, 480)) { m_shutdown_requested = true; }  
 
         // assign the input handler
         static input::Input* inputs = input::Input::Get();
@@ -57,8 +57,8 @@ namespace base
         // debug texture renderer
         object::Texture* m_text = new object::Texture();
         object::Texture* m_text2 = new object::Texture();
-        renderer->LoadTexture("C:/Users/TravisF/Documents/POGame/PogGame/character.png", m_text, 50, 50, 0);
-        renderer->LoadTexture("C:/Users/TravisF/Documents/POGame/PogGame/character.png", m_text2, 100, 50, 0);
+        renderer->LoadTexture("player.png", m_text, 50, 50, 0);
+        renderer->LoadTexture("player.png", m_text2, 100, 50, 0);
         //
 
         while (!m_shutdown_requested)

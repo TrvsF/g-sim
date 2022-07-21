@@ -3,21 +3,25 @@
 
 #include <SDL.h>
 
+#include <iostream> // remove me
 #include <map>
+#include <string>
 
 namespace renderer
 {
 	class Assets
 	{
 	private:
-		std::map<const char*, SDL_Texture*> m_textures;
-		
+		std::string m_asset_path;
+		std::map<std::string, SDL_Texture*> m_textures;
 	public:
 		Assets();
 		virtual ~Assets();
 
-		void SetTexture(const char* path_to_texture, SDL_Texture* texture);
-		SDL_Texture* GetTexture(const char* path_to_texture);
+		void SetTexture(std::string full_path, SDL_Texture* texture);
+		SDL_Texture* GetTexture(std::string full_path);
+
+		std::string GetFullPath(const char* path_to_texture);
 	};
 }
 

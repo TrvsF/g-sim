@@ -6,6 +6,7 @@
 
 #include <iostream> // remove me
 #include <vector>
+#include <string>
 
 #include "../base/helper_macos.h"
 #include "../src/object/component/texture.h"
@@ -41,8 +42,8 @@ namespace renderer
 		static inline Renderer* Get();
 		static void Destroy();
 
-		bool LoadTexture(const char* path_to_texture, object::Texture* texture_object);
-		bool LoadTexture(const char* path_to_texture, object::Texture* texture_object, float x, float y, float rotation);
+		bool LoadTexture(const char* texture_path, object::Texture* texture_object);
+		bool LoadTexture(const char* texture_path, object::Texture* texture_object, float x, float y, float rotation);
 
 		bool Start(const char* window_title, int width, int height);
 

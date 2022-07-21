@@ -4,7 +4,7 @@ namespace renderer
 {
 	Assets::Assets()
 	{
-		
+		m_asset_path = SDL_GetBasePath() + std::string("assets/");
 	}
 
 	Assets::~Assets()
@@ -19,13 +19,20 @@ namespace renderer
 		m_textures.clear();
 	}
 
-	void Assets::SetTexture(const char* path_to_texture, SDL_Texture* texture)
+	void Assets::SetTexture(std::string full_path, SDL_Texture* texture)
 	{
-		m_textures[path_to_texture] = texture;
+		m_textures[full_path] = texture;
 	}
 
-	SDL_Texture* Assets::GetTexture(const char* path_to_texture)
+	SDL_Texture* Assets::GetTexture(std::string full_path)
 	{
-		return m_textures[path_to_texture];
+		return m_textures[full_path];
 	}
+
+	std::string Assets::GetFullPath(const char* path_to_texture)
+	{
+		std::string path = m_asset_path + std::string(path_to_texture);
+		return path;
+	}
+
 }
