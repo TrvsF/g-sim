@@ -16,22 +16,10 @@ add_executable (
  "src/base/engine.h" 
  "src/base/private/engine.cpp"
 
- "src/renderer/renderer.h"
- "src/renderer/renderer-inl.h"
- "src/renderer/assets.h" 
- "src/renderer/private/assets.cpp"
- "src/renderer/private/renderer.cpp"
+ "src/controller/controller.h"
+ "src/controller/controller-inl.h"
+ "src/controller/private/controller.cpp"
 
- "src/util/timer.h"
- "src/util/size.h"
- "src/util/vector2d.h" 
- "src/util/vector3d.h"
- "src/util/private/timer.cpp" 
-
- "src/physics/updater.h" 
- "src/physics/updater-inl.h"
- "src/physics/private/updater.cpp" 
- 
  "src/input/input.h"
  "src/input/private/input.cpp" 
 
@@ -49,8 +37,22 @@ add_executable (
 
  "src/object/game/game-object.h"
 
- "src/controller/controller.h"
- "src/controller/controller-inl.h" "src/controller/private/controller.cpp")
+ "src/physics/updater.h" 
+ "src/physics/updater-inl.h"
+ "src/physics/private/updater.cpp" 
+
+ "src/renderer/renderer.h"
+ "src/renderer/renderer-inl.h"
+ "src/renderer/assets.h" 
+ "src/renderer/private/assets.cpp"
+ "src/renderer/private/renderer.cpp"
+
+ "src/util/timer.h"
+ "src/util/size.h"
+ "src/util/vector2d.h" 
+ "src/util/vector3d.h"
+ "src/util/private/timer.cpp" 
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
