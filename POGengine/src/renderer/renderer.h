@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include <iostream> // remove me
 #include <vector>
 #include <string>
 

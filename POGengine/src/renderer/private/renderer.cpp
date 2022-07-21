@@ -49,7 +49,6 @@ namespace renderer
 		SDL_Texture* texture = m_assets->GetTexture(full_path);
 		if (!texture) 
 		{
-			std::cout << "no\n";
 			// load the texture
 			SDL_Surface* temp_surface = IMG_Load(full_path.c_str());
 			if (!temp_surface) { return false; }

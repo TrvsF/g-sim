@@ -80,3 +80,8 @@
 1136	1449	6801279937870183	POGengine.exe	2e488a3115975de
 3	1030	6801280086328278	CMakeFiles/POGengine.dir/src/renderer/private/renderer.cpp.obj	a44d62a895e507c
 1030	1274	6801280087776947	POGengine.exe	2e488a3115975de
+19	826	6801282557625863	CMakeFiles/POGengine.dir/src/renderer/private/renderer.cpp.obj	a44d62a895e507c
+24	836	6801282557728103	CMakeFiles/POGengine.dir/src/renderer/private/assets.cpp.obj	e48d6e68a1a39d45
+12	1123	6801282560582728	CMakeFiles/POGengine.dir/src/base/private/engine.cpp.obj	134fc72b54ce3ca0
+3	1172	6801282561093091	CMakeFiles/POGengine.dir/src/main.cpp.obj	239364b826448f6
+1173	1470	6801282563014495	POGengine.exe	2e488a3115975de

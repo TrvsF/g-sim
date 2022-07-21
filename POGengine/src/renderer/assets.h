@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 
-#include <iostream> // remove me
 #include <map>
 #include <string>
 
