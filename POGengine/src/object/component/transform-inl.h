@@ -1,5 +1,7 @@
 #include "transform.h"
 
+
+
 namespace object
 {
 	inline Transform Transform::Create(Vector3D position, Vector3D rotation)

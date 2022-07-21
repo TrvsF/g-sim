@@ -12,9 +12,9 @@ add_executable (
 
  "src/main.cpp"
 
- "src/engine/helper_macos.h"
- "src/engine/engine.h" 
- "src/engine/private/engine.cpp"
+ "src/base/helper_macos.h"
+ "src/base/engine.h" 
+ "src/base/private/engine.cpp"
 
  "src/renderer/renderer.h"
  "src/renderer/renderer-inl.h"
@@ -48,7 +48,9 @@ add_executable (
  "src/object/component/private/transform.cpp"
 
  "src/object/game/game-object.h"
-)
+
+ "src/controller/controller.h"
+ "src/controller/controller-inl.h" "src/controller/private/controller.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

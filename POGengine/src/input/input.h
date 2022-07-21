@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "../src/engine/helper_macos.h"
+#include "../src/base/helper_macos.h"
 
 namespace input
 {

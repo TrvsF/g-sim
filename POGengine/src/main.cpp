@@ -1,13 +1,13 @@
 ﻿#include <iostream>
-#include "engine/engine.h"
+#include "base/engine.h"
 
 #undef main
 
 int main()
 {
-    if (engine::Init())
+    if (base::Init())
     {
-        engine::Run();
+        base::Run();
     }
     std::cin.get();
     return 0;

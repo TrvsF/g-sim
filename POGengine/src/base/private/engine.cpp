@@ -1,6 +1,6 @@
 #include "../engine.h"
 
-namespace engine
+namespace base
 {
     static int m_fps_cap;
     static int m_tick_rate;
@@ -26,6 +26,9 @@ namespace engine
         // create input handler
         input::Input::Create();
 
+        // create the controller
+        controller::Controller::Create();
+
         return true;
     }
 
@@ -33,25 +36,30 @@ namespace engine
     {
         SDL_Event m_events;
 
+        // assign and start the renderer
+        static renderer::Renderer* renderer = renderer::Renderer::Get();
+        renderer->Start("POGengine", 640, 480);
+
         // assign the input handler
         static input::Input* inputs = input::Input::Get();
         
         // assign the updater
         static physics::Updater* updater = physics::Updater::Get();
 
-        // assign and start the renderer
-        static renderer::Renderer* renderer = renderer::Renderer::Get();
-        renderer->Start("POGengine", 640, 480);
+        // assign the controller
+        static controller::Controller* controller = controller::Controller::Get();
 
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
         timer::Timer* m_fps_timer = new timer::Timer(); 
 
+        //
         // debug texture renderer
         object::Texture* m_text = new object::Texture();
         object::Texture* m_text2 = new object::Texture();
         renderer->LoadTexture("C:/Users/TravisF/Documents/POGame/PogGame/character.png", m_text, 50, 50, 0);
         renderer->LoadTexture("C:/Users/TravisF/Documents/POGame/PogGame/character.png", m_text2, 100, 50, 0);
+        //
 
         while (!m_shutdown_requested)
         {
@@ -81,8 +89,10 @@ namespace engine
                 m_tick_timer->Reset();
 
                 inputs->Tick();
-                updater->Tick();
+                controller->CheckInputs();
                 inputs->LateTick();
+
+                updater->Tick();
             }
 
             // a render tick

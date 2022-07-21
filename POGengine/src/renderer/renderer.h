@@ -7,7 +7,7 @@
 #include <iostream> // remove me
 #include <vector>
 
-#include "../engine/helper_macos.h"
+#include "../base/helper_macos.h"
 #include "../src/object/component/texture.h"
 #include "../renderer/assets.h"
 
@@ -34,11 +34,9 @@ namespace renderer
 
 		void clear_buffer();
 
-
-	public:
 		Renderer();
 		virtual ~Renderer();
-
+	public:
 		static void Create();
 		static inline Renderer* Get();
 		static void Destroy();
@@ -50,7 +48,6 @@ namespace renderer
 
 		void Render();
 		void Clean();
-
 	};
 }
 

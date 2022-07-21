@@ -7,12 +7,13 @@
 #include "../renderer/renderer.h"
 #include "../physics/updater.h"
 #include "../input/input.h"
+#include "../controller/controller.h"
 
 #include "../util/timer.h"
 
 #include "../object/component/texture.h"
 
-namespace engine
+namespace base
 {
 	bool Init();
 	void Run();
