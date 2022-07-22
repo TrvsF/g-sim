@@ -8,5 +8,5 @@ https://cmake.org/<br>
 
 commit index <br>
 [a] - append/add<br>
-[c] - clean/refactor<br>
-[f] - fix/broke<br>
+[c] - clean/small change<br>
+[f] - fix/[re]factor<br>
