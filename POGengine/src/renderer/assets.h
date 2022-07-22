@@ -3,8 +3,10 @@
 
 #include <SDL.h>
 
+#include <vector>
 #include <map>
 #include <string>
+#include <sstream>
 
 namespace renderer
 {
@@ -13,6 +15,8 @@ namespace renderer
 	private:
 		std::string m_asset_path;
 		std::map<std::string, SDL_Texture*> m_textures;
+
+		std::string get_asset_path();
 	public:
 		Assets();
 		virtual ~Assets();

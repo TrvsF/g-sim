@@ -54,7 +54,7 @@ namespace renderer
 			if (!temp_surface) { return false; }
 			texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
 			SDL_FreeSurface(temp_surface);
-			
+
 			// add the texture to asset manager
 			m_assets->SetTexture(full_path, texture);
 		}

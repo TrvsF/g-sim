@@ -36,6 +36,8 @@ add_executable (
  "src/object/component/private/transform.cpp"
 
  "src/object/game/game-object.h"
+ "src/object/game/game-object-inl.h"
+ "src/object/game/private/game-object.cpp" 
 
  "src/physics/updater.h" 
  "src/physics/updater-inl.h"
@@ -44,6 +46,7 @@ add_executable (
  "src/renderer/renderer.h"
  "src/renderer/renderer-inl.h"
  "src/renderer/assets.h" 
+ "src/renderer/camera.h"
  "src/renderer/private/assets.cpp"
  "src/renderer/private/renderer.cpp"
 
@@ -52,7 +55,7 @@ add_executable (
  "src/util/vector2d.h" 
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
- "src/renderer/camera.h")
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
