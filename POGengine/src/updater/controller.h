@@ -16,15 +16,15 @@ namespace updater
 	class Controller
 	{
 	private:
-		ControllerState m_current_controller;
+		ControllerState m_controller_state;
 
-		updater::Input* m_input;
+		Input* m_input;
 
 		void check_menu_inputs();
 		void check_game_inputs();
 
 	public:
-		Controller();
+		Controller(Input* input);
 
 		inline void CheckInputs();
 	};

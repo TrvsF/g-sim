@@ -17,14 +17,18 @@ namespace updater
 	}
 	*/
 
-	Controller::Controller()
+	Controller::Controller(Input* input)
 	{
-
+		m_controller_state	= ControllerState::Game;
+		m_input				= input;
 	}
 
 	void Controller::check_game_inputs()
 	{
-
+		if (m_input->KeyDown("w"))
+		{
+			std::cout << "w";
+		}
 	}
 
 	void Controller::check_menu_inputs() {}

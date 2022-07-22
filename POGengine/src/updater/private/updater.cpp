@@ -13,8 +13,8 @@ namespace updater
 
 	Updater::Updater()
 	{
-		m_controller = new Controller();
-		m_input = new Input();
+		m_input			= new Input();
+		m_controller	= new Controller(m_input);
 	}
 
 	void Updater::Create()
@@ -32,7 +32,13 @@ namespace updater
 
 	void Updater::Tick()
 	{
+		// must be first
+		m_input->Tick();
+		m_controller->CheckInputs();
 
+		
+		// must be last
+		m_input->LateTick();
 	}
 
 }
