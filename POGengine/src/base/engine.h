@@ -5,13 +5,13 @@
 #include <SDL.h>
 
 #include "../renderer/renderer.h"
-#include "../physics/updater.h"
-#include "../input/input.h"
-#include "../controller/controller.h"
+#include "../updater/updater.h"
+#include "../updater/input.h"
+#include "../updater/controller.h"
 
 #include "../util/timer.h"
 
-#include "../object/component/texture.h"
+#include "../game/object/component/texture.h"
 
 namespace base
 {

@@ -21,13 +21,7 @@ namespace base
         renderer::Renderer::Create();
 
         // create updater
-        physics::Updater::Create();
-
-        // create input handler
-        input::Input::Create();
-
-        // create the controller
-        controller::Controller::Create();
+        updater::Updater::Create();
 
         return true;
     }
@@ -39,15 +33,9 @@ namespace base
         // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
         if (!renderer->Start("POGengine", 640, 480)) { m_shutdown_requested = true; }  
-
-        // assign the input handler
-        static input::Input* inputs = input::Input::Get();
         
         // assign the updater
-        static physics::Updater* updater = physics::Updater::Get();
-
-        // assign the controller
-        static controller::Controller* controller = controller::Controller::Get();
+        static updater::Updater* updater = updater::Updater::Get();
 
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
@@ -87,10 +75,6 @@ namespace base
             if (m_tick_timer->DeltaTime() >= 1.0f / m_tick_rate)
             {
                 m_tick_timer->Reset();
-
-                inputs->Tick();
-                controller->CheckInputs();
-                inputs->LateTick();
 
                 updater->Tick();
             }

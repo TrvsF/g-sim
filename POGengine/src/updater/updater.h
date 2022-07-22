@@ -4,19 +4,21 @@
 #include <iostream> // delete me
 
 #include "../base/helper_macos.h"
-#include "../input/input.h"
+#include "controller.h"
+#include "input.h"
 
-namespace physics
+namespace updater
 {
 	class Updater
 	{
 	private:
 		static Updater* s_instance;
 
-	public:
-		Updater();
-		virtual ~Updater();
+		Controller* m_controller;
+		Input*		m_input;
 
+		Updater();
+	public:
 		static void Create();
 		static inline Updater* Get();
 		static void Destroy();

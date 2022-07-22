@@ -9,7 +9,7 @@
 #include <string>
 
 #include "../base/helper_macos.h"
-#include "../src/object/component/texture.h"
+#include "../src/game/object/component/texture.h"
 #include "../renderer/assets.h"
 
 namespace renderer

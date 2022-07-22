@@ -36,19 +36,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 71,
+				"line" : 70,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 70,
+				"line" : 69,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 61,
+				"line" : 60,
 				"parent" : 0
 			}
 		]
@@ -93,16 +93,16 @@
 			[
 				0,
 				3,
-				6,
-				8,
-				17,
+				13,
+				14,
+				15,
 				18,
-				19,
-				22,
+				24,
 				25,
-				30,
+				26,
 				31,
-				36
+				32,
+				37
 			]
 		}
 	],
@@ -156,16 +156,16 @@
 			[
 				0,
 				3,
-				6,
-				8,
-				17,
+				13,
+				14,
+				15,
 				18,
-				19,
-				22,
+				24,
 				25,
-				30,
+				26,
 				31,
-				36
+				32,
+				37
 			]
 		},
 		{
@@ -176,27 +176,28 @@
 				2,
 				4,
 				5,
+				6,
 				7,
+				8,
 				9,
 				10,
 				11,
 				12,
-				13,
-				14,
-				15,
 				16,
+				17,
+				19,
 				20,
 				21,
+				22,
 				23,
-				24,
-				26,
 				27,
 				28,
 				29,
-				32,
+				30,
 				33,
 				34,
-				35
+				35,
+				36
 			]
 		}
 	],
@@ -226,119 +227,124 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/controller/controller.h",
+			"path" : "src/game/level/level.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/controller/controller-inl.h",
+			"path" : "src/game/object/component/texture.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/controller/private/controller.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/input/input.h",
+			"path" : "src/game/object/component/texture-inl.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/input/private/input.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/object/component/texture.h",
+			"path" : "src/game/object/component/object.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/component/texture-inl.h",
+			"path" : "src/game/object/component/object-inl.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/component/object.h",
+			"path" : "src/game/object/component/transform.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/component/object-inl.h",
+			"path" : "src/game/object/component/transform-inl.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/component/transform.h",
+			"path" : "src/game/object/component/aabb.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/component/transform-inl.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/object/component/aabb.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/object/component/aabb-inl.h",
+			"path" : "src/game/object/component/aabb-inl.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/object/component/private/texture.cpp",
+			"path" : "src/game/object/component/private/texture.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/object/component/private/aabb.cpp",
+			"path" : "src/game/object/component/private/aabb.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/object/component/private/transform.cpp",
+			"path" : "src/game/object/component/private/transform.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/game/game-object.h",
+			"path" : "src/game/object/game/game-object.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/object/game/game-object-inl.h",
+			"path" : "src/game/object/game/game-object-inl.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/object/game/private/game-object.cpp",
+			"path" : "src/game/object/game/private/game-object.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/physics/updater.h",
+			"path" : "src/updater/updater.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/physics/updater-inl.h",
+			"path" : "src/updater/updater-inl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/updater/controller.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/updater/controller-inl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/updater/input.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/physics/private/updater.cpp",
+			"path" : "src/updater/private/controller.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/updater/private/updater.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/updater/private/input.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

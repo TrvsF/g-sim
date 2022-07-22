@@ -1,6 +1,6 @@
 #include "updater.h"
 
-namespace physics
+namespace updater
 {
 	inline Updater* Updater::Get()
 	{

@@ -1,9 +1,7 @@
 #include "../input.h"
 
-namespace input
+namespace updater
 {
-	Input* Input::s_instance = nullptr;
-
 	Input::Input()
 	{
 		m_keyboard_states = SDL_GetKeyboardState(&m_key_length);
@@ -13,24 +11,6 @@ namespace input
 
 	Input::~Input()
 	{
-	}
-
-	void Input::Create()
-	{
-		if (!s_instance)
-		{
-			s_instance = new Input();
-		}
-	}
-	
-	Input* Input::Get()
-	{
-		return Input::s_instance;
-	}
-
-	void Input::Destroy()
-	{
-		SAFE_DELETE(s_instance);
 	}
 
 	bool Input::KeyDown(const char* key)

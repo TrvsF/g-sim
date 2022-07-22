@@ -6,7 +6,7 @@
 
 #include "../src/base/helper_macos.h"
 
-namespace input
+namespace updater
 {
 	enum MouseButton
 	{
@@ -20,8 +20,6 @@ namespace input
 	class Input
 	{
 	private:
-		static Input* s_instance;
-
 		const Uint8* m_keyboard_states;
 		Uint8* m_prev_keyboard_states;
 		int m_key_length;
@@ -36,10 +34,6 @@ namespace input
 	public:
 		Input();
 		virtual ~Input();
-
-		static void Create();
-		static Input* Get();
-		static void Destroy();
 
 		bool KeyDown(const char* key);
 		bool KeyPressed(const char* key);

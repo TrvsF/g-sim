@@ -1,22 +1,20 @@
 #include "../updater.h"
 
-#include "../src/object/component/object.h"
+#include "../src/game/object/component/object.h"
 
 object::Object* game_obj = object::Object::Create(
 	object::AABB::Create({ 0, 50, 0 }, { 25, 25, 0 }),
 	object::Transform::Create({ 0, 50, 0 }, { 0, 0, 0 })
 );
 
-namespace physics
+namespace updater
 {
 	Updater* Updater::s_instance = nullptr;
 
 	Updater::Updater()
 	{
-	}
-
-	Updater::~Updater()
-	{
+		m_controller = new Controller();
+		m_input = new Input();
 	}
 
 	void Updater::Create()
