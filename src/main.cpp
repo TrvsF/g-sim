@@ -1,7 +1,17 @@
-﻿#include <iostream>
-#include "base/engine.h"
+﻿#include "base/engine.h"
 
 #undef main
+
+/*--------
+ TODO:
+ [bugs]
+ -
+ [improvements]
+ - timers faster
+ - 
+ [additions]
+ -
+--------*/
 
 int main()
 {
@@ -9,6 +19,5 @@ int main()
     {
         base::Run();
     }
-    std::cin.get();
     return 0;
 }

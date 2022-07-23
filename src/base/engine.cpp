@@ -20,11 +20,11 @@ namespace base
         // create renderer
         renderer::Renderer::Create();
 
-        // create updater
-        updater::Updater::Create();
-
         // create game
         game::Game::Create();
+
+        // create updater
+        updater::Updater::Create();
 
         return true;
     }
@@ -32,9 +32,6 @@ namespace base
     void Run()
     {
         SDL_Event m_events;
-
-        // assign the updater static object
-        static updater::Updater* updater = updater::Updater::Get();
 
         // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
@@ -44,12 +41,16 @@ namespace base
         static game::Game* game = game::Game::Get();
         game->Start();
 
+        // assign the updater static object
+        static updater::Updater* updater = updater::Updater::Get();
+
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
         timer::Timer* m_fps_timer = new timer::Timer(); 
 
         while (!m_shutdown_requested)
         {
+            // tick the timers
             m_tick_timer->Update();
             m_fps_timer->Update();
 
@@ -70,21 +71,22 @@ namespace base
                 continue;
             }
 
-            // a game tick
+            // game tick
             if (m_tick_timer->DeltaTime() >= 1.0f / m_tick_rate)
             {
-                m_tick_timer->Reset();
-
+                // tick the updater [handles inputs] then the game (& its objects)
                 updater->Tick();
                 game->Tick();
+            
+                m_tick_timer->Reset();
             }
 
-            // a render tick
+            // render tick
             if (m_fps_timer->DeltaTime() >= 1.0f / m_fps_cap)
             {
-                m_fps_timer->Reset();
-
+                // render the frame
                 renderer->Render();
+                m_fps_timer->Reset();
             }
 
         }
