@@ -16,7 +16,10 @@ add_executable (
  "src/base/engine.h" 
  "src/base/engine.cpp"
 
+ "src/game/game-inl.h"
+ "src/game/game.cpp"
  "src/game/game.h"
+
  "src/game/logic/level.h"
 
  "src/game/object/component/texture.h"
@@ -55,7 +58,7 @@ add_executable (
  "src/util/vector2d.h" 
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
- "src/game/game-inl.h" "src/game/game.cpp")
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
