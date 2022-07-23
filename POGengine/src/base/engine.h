@@ -1,17 +1,15 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
 
-#include <iostream>
+#include <iostream> // delete me
 #include <SDL.h>
 
 #include "../renderer/renderer.h"
 #include "../updater/updater.h"
-#include "../updater/input.h"
-#include "../updater/controller.h"
-
+#include "../game/game.h"
 #include "../util/timer.h"
 
-#include "../game/object/component/texture.h"
+#include "../game/object/component/texture.h" // delete me
 
 namespace base
 {

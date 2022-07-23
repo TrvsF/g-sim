@@ -57,6 +57,11 @@ namespace object
 		m_origin = origin;
 	}
 
+	inline void AABB::OffsetOrigin(Vector3D offset)
+	{
+		m_origin += offset;
+	}
+
 	inline bool AABB::IntersectsRect2D(const AABB& other) const
 	{
 		return !(GetMaxX() < other.GetMinX() ||

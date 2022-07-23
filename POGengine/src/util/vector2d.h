@@ -61,6 +61,11 @@ inline Vector2D operator - (const Vector2D& lhs, const Vector2D& rhs)
 	return Vector2D(lhs.x - rhs.x, lhs.y - rhs.y);
 }
 
+inline Vector2D operator * (const Vector2D& lhs, const Vector2D& rhs)
+{
+	return Vector2D(lhs.x * rhs.x, lhs.y * rhs.y);
+}
+
 inline Vector2D operator * (const Vector2D& lhs, const float& rhs) {
 
 	return Vector2D(lhs.x * rhs, lhs.y * rhs);

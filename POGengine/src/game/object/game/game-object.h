@@ -14,13 +14,24 @@ namespace object
 
 		float m_velocity;
 
+		void handle_movement();
+		void handle_position();
+		void reset_movement_bools();
+
 	public:
 		GameObject(Object* object = nullptr, Texture* texture = nullptr);
+
+		bool Forward, Backward, Left, Right;
+
+		inline Object* GetObject();
+		inline Texture* GetTexture();
 
 		inline void MoveForwards();
 		inline void MoveBackwards();
 		inline void TurnLeft();
 		inline void TurnRight();
+
+		void Tick();
 	};
 }
 

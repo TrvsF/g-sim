@@ -25,6 +25,8 @@ namespace object
 
 		inline SDL_Texture* GetTexture();
 
+		inline bool IsInitialized();
+
 		inline void Rotation(float rotation);
 		inline float Rotation() const;
 
@@ -36,6 +38,8 @@ namespace object
 
 		inline void Pos(Vector2D pos);
 		inline Vector2D Pos() const;
+
+		inline void OffsetPos(Vector2D offset);
 	};
 }
 

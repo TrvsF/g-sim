@@ -10,10 +10,49 @@ struct Vector3D
 	float y;
 	float z;
 
+	Vector3D& operator +=(const Vector3D& rhs)
+	{
+		x += rhs.x;
+		y += rhs.y;
+		z += rhs.z;
+
+		return *this;
+	}
+
 	Vector3D(float _x = 0, float _y = 0, float _z = 0)
 		: x(_x), y(_y), z(_z)
 	{}
 };
+
+inline Vector3D operator + (const Vector3D& lhs, const Vector3D& rhs)
+{
+	return Vector3D(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+}
+
+inline Vector3D operator - (const Vector3D& lhs, const Vector3D& rhs)
+{
+	return Vector3D(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z + rhs.z);
+}
+
+inline Vector3D operator * (const Vector3D& lhs, const Vector3D& rhs)
+{
+	return Vector3D(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z);
+}
+
+inline Vector3D operator * (const Vector3D& lhs, const float& rhs) {
+
+	return Vector3D(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
+}
+
+inline Vector3D operator / (const Vector3D& lhs, const Vector3D& rhs)
+{
+	return Vector3D(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z);
+}
+
+inline Vector3D operator / (const Vector3D& lhs, const float& rhs) {
+
+	return Vector3D(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
+}
 
 const Vector3D VEC3_ZERO	= { 0, 0, 0 };
 const Vector3D VEC3_UNIT	= { 1, 1, 1 };

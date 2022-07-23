@@ -2,12 +2,12 @@
 
 namespace object
 {
-	inline Object* Object::Create(const AABB& aabb, const Transform& transform)
+	inline Object* Object::Create(Vector3D position, Vector3D rotation, Size size)
 	{
-		return new Object(aabb, transform);
+		return new Object(AABB::Create(position, size), Transform::Create(position, rotation));
 	}
 
-	inline const Transform& Object::GetTransform() const
+	inline Transform& Object::GetTransform()
 	{
 		return m_transform;
 	}
@@ -17,7 +17,7 @@ namespace object
 		m_transform = transform;
 	}
 
-	inline const AABB& Object::GetAABB() const
+	inline AABB& Object::GetAABB()
 	{
 		return m_aabb;
 	}

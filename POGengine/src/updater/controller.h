@@ -3,7 +3,8 @@
 
 #include <iostream> // remove me
 
-#include "../src/updater/input.h"
+#include "../game/game.h"
+#include "input.h"
 
 namespace updater
 {
@@ -18,13 +19,16 @@ namespace updater
 	private:
 		ControllerState m_controller_state;
 
-		Input* m_input;
+		object::GameObject* m_player;
+		Input*				m_input;
 
 		void check_menu_inputs();
 		void check_game_inputs();
 
 	public:
 		Controller(Input* input);
+
+		inline void SetPlayer(object::GameObject* player);
 
 		inline void CheckInputs();
 	};

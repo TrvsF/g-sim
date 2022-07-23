@@ -16,12 +16,12 @@ namespace object
 			: m_transform(transform), m_aabb(aabb)
 		{}
 	public:
-		inline static Object* Create(const AABB& aabb = AABB::ZERO, const Transform& transform = Transform::ZERO);
+		inline static Object* Create(Vector3D position, Vector3D rotation, Size size);
 
-		inline const Transform& GetTransform() const;
+		inline Transform& GetTransform();
 		inline void SetTransform(Transform& transform);
 
-		inline const AABB& GetAABB() const;
+		inline AABB& GetAABB();
 		inline void SetAABB(AABB& aabb);
 
 		inline const Vector3D GetPosition() const;

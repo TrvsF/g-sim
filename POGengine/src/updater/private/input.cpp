@@ -17,21 +17,21 @@ namespace updater
 	{
 		SDL_Scancode scan_code = SDL_GetScancodeFromName(key);
 		
-		return m_keyboard_states[scan_code] && check_scancode(scan_code);
+		return m_keyboard_states[scan_code] != 0 && check_scancode(scan_code);
 	}
 
 	bool Input::KeyPressed(const char* key)
 	{
 		SDL_Scancode scan_code = SDL_GetScancodeFromName(key);
 
-		return (m_prev_keyboard_states[scan_code]) == 0 && (m_keyboard_states[scan_code] != 0) && check_scancode(scan_code);
+		return m_prev_keyboard_states[scan_code] == 0 && m_keyboard_states[scan_code] != 0 && check_scancode(scan_code);
 	}
 
 	bool Input::KeyReleased(const char* key)
 	{
 		SDL_Scancode scan_code = SDL_GetScancodeFromName(key);
 
-		return (m_prev_keyboard_states[scan_code]) != 0 && (m_keyboard_states[scan_code] == 0) && check_scancode(scan_code);
+		return m_prev_keyboard_states[scan_code] != 0 && m_keyboard_states[scan_code] == 0 && check_scancode(scan_code);
 	}
 
 	bool Input::MouseDown(MouseButton mouse_button)

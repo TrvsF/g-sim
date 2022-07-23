@@ -14,9 +14,11 @@ namespace object
 
 		inline const Vector3D GetPosition() const;
 		inline void SetPosition(Vector3D position);
+		inline void OffsetPosition(Vector3D offset);
 
 		inline const Vector3D GetRotation() const;
 		inline void SetRotation(Vector3D rotation);
+		inline void OffsetRotation(Vector3D offset);
 
 		static const Transform ZERO;
 	protected:

@@ -19,6 +19,11 @@ namespace object
 		m_position = position;
 	}
 
+	inline void Transform::OffsetPosition(Vector3D offset)
+	{
+		m_position += offset;
+	}
+
 	inline const Vector3D Transform::GetRotation() const
 	{
 		return m_rotation;
@@ -27,5 +32,10 @@ namespace object
 	inline void Transform::SetRotation(Vector3D rotation)
 	{
 		m_rotation = rotation;
+	}
+
+	inline void Transform::OffsetRotation(Vector3D offset)
+	{
+		m_rotation += offset;
 	}
 }

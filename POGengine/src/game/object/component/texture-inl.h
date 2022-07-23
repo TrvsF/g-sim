@@ -2,6 +2,11 @@
 
 namespace object
 {
+	inline bool Texture::IsInitialized()
+	{
+		return !(m_texutre == nullptr);
+	}
+
 	inline SDL_Texture* Texture::GetTexture()
 	{
 		return m_texutre;
@@ -45,5 +50,10 @@ namespace object
 	inline Vector2D Texture::Pos() const
 	{
 		return m_pos;
+	}
+
+	inline void Texture::OffsetPos(Vector2D offset)
+	{
+		m_pos = m_pos + offset;
 	}
 }

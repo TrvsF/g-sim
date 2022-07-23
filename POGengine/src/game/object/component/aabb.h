@@ -26,6 +26,7 @@ namespace object
 
 		inline Vector3D GetOrigin() const;
 		inline void SetOrigin(Vector3D origin);
+		inline void OffsetOrigin(Vector3D offset);
 
 		inline bool IntersectsRect2D(const AABB& other) const;
 

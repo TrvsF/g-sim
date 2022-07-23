@@ -14,4 +14,9 @@ namespace updater
 			check_menu_inputs();
 		}
 	}
+
+	inline void Controller::SetPlayer(object::GameObject* player)
+	{
+		m_player = player;
+	}
 }

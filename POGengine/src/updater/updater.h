@@ -2,8 +2,10 @@
 #define UPDATER_H_
 
 #include <iostream> // delete me
+#include <vector>
 
 #include "../base/helper_macos.h"
+#include "../game/object/game/game-object.h"
 #include "controller.h"
 #include "input.h"
 

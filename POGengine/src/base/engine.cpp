@@ -1,4 +1,4 @@
-#include "../engine.h"
+#include "engine.h"
 
 namespace base
 {
@@ -23,6 +23,9 @@ namespace base
         // create updater
         updater::Updater::Create();
 
+        // create game
+        game::Game::Create();
+
         return true;
     }
 
@@ -30,24 +33,20 @@ namespace base
     {
         SDL_Event m_events;
 
+        // assign the updater static object
+        static updater::Updater* updater = updater::Updater::Get();
+
         // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
         if (!renderer->Start("POGengine", 640, 480)) { m_shutdown_requested = true; }  
-        
-        // assign the updater
-        static updater::Updater* updater = updater::Updater::Get();
+
+        // assign and start the game
+        static game::Game* game = game::Game::Get();
+        game->Start();
 
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
         timer::Timer* m_fps_timer = new timer::Timer(); 
-
-        //
-        // debug texture renderer
-        object::Texture* m_text = new object::Texture();
-        object::Texture* m_text2 = new object::Texture();
-        renderer->LoadTexture("player.png", m_text, 50, 50, 0);
-        renderer->LoadTexture("player.png", m_text2, 100, 50, 0);
-        //
 
         while (!m_shutdown_requested)
         {
@@ -77,6 +76,7 @@ namespace base
                 m_tick_timer->Reset();
 
                 updater->Tick();
+                game->Tick();
             }
 
             // a render tick

@@ -94,9 +94,21 @@ namespace renderer
 	{
 		clear_buffer();
 
+		/*
 		for (size_t i = 0; i < m_num_texture_objects; i++)
 		{
 			render_texture_object(m_texutre_objects[i]);
+		}
+		*/
+
+		for (object::GameObject* game_object : game::Game::Get()->GetGameObjects())
+		{
+			object::Texture* texture = game_object->GetTexture();
+			if (!texture->IsInitialized())
+			{
+				LoadTexture("player.png", texture, game_object->GetObject()->GetPosition().x, game_object->GetObject()->GetPosition().y, 0);
+			}
+			render_texture_object(game_object->GetTexture());
 		}
 
 		// !!! the last thing to be called from renderer

@@ -2,11 +2,6 @@
 
 #include "../src/game/object/component/object.h"
 
-object::Object* game_obj = object::Object::Create(
-	object::AABB::Create({ 0, 50, 0 }, { 25, 25, 0 }),
-	object::Transform::Create({ 0, 50, 0 }, { 0, 0, 0 })
-);
-
 namespace updater
 {
 	Updater* Updater::s_instance = nullptr;
@@ -36,6 +31,9 @@ namespace updater
 		m_input->Tick();
 		m_controller->CheckInputs();
 
+		/*
+			keyboard updates wont work
+		*/
 		
 		// must be last
 		m_input->LateTick();
