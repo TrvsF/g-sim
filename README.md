@@ -5,6 +5,9 @@ has 3D capeabilities, a global coordinate system, among many other changes that 
 made with SDL2 & built with cmake<br>
 https://www.libsdl.org/<br>
 https://cmake.org/<br>
+inspired by
+https://github.com/karanseq/simple-game-engine <br>
+https://github.com/Hairpull/GalagaSDL/ <br>
 
 commit index <br>
 [a] - append/add<br>
