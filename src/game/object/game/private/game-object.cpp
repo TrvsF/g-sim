@@ -1,12 +1,12 @@
 #include "../game-object.h"
-#include <iostream>
 
 namespace object
 {
-	GameObject::GameObject(Object* object, Texture* texture)
-		: m_object(object), m_texture(texture)
+	GameObject::GameObject(Object* object, const char* textureid)
 	{
-		m_velocity = 0;
+		m_object	= object;
+		m_velocity	= 0;
+		set_texture_from_id(textureid);
 		reset_movement_bools();
 	}
 
@@ -16,6 +16,17 @@ namespace object
 		handle_position();
 		// last
 		reset_movement_bools();
+	}
+	
+	void GameObject::set_texture_from_id(const char* id)
+	{
+		m_texture = new Texture();
+		SDL_Texture* t = renderer::Renderer::Get()->GetSetTextureFromId(id, m_texture);
+		m_texture->Set(t, { 
+			m_object->GetPosition().x,
+			m_object->GetPosition().y 
+			}, m_object->GetTransform().GetRotation().z
+		);
 	}
 
 	void GameObject::handle_movement()
@@ -50,5 +61,4 @@ namespace object
 		Left		= false;
 		Right		= false;
 	}
-
 }

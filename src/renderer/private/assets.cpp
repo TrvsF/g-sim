@@ -29,6 +29,11 @@ namespace renderer
 		return m_textures[full_path];
 	}
 
+	std::string Assets::GetPath()
+	{
+		return m_asset_path;
+	}
+
 	std::string Assets::GetFullPath(const char* path_to_texture)
 	{
 		std::string path = m_asset_path + std::string(path_to_texture);

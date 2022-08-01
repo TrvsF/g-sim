@@ -2,21 +2,12 @@
 
 namespace base
 {
-    static int          m_fps_cap;
-    static int          m_tick_rate;
-    static bool         m_is_paused;
-    static bool         m_shutdown_requested;
+    static const int    m_tick_rate             = 64;
+    static int          m_fps_cap               = 150;
+    static bool         m_shutdown_requested    = false;
 
     bool Init()
     {
-        std::cout << "initializing the game engine\n";
-
-        // set default values
-        m_fps_cap = 150;
-        m_tick_rate = 64;
-        m_is_paused = false;
-        m_shutdown_requested = false;
-
         // create renderer
         renderer::Renderer::Create();
 
@@ -46,7 +37,7 @@ namespace base
 
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
-        timer::Timer* m_fps_timer = new timer::Timer(); 
+        timer::Timer* m_fps_timer = new timer::Timer();
 
         while (!m_shutdown_requested)
         {
@@ -88,7 +79,6 @@ namespace base
                 renderer->Render();
                 m_fps_timer->Reset();
             }
-
         }
     }
 

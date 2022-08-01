@@ -7,9 +7,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <filesystem>
 
 #include "../base/helper_macos.h"
-#include "../game/game.h"
+#include "../game/object/component/texture.h"
 #include "../renderer/assets.h"
 
 namespace renderer
@@ -42,8 +43,8 @@ namespace renderer
 		static inline Renderer* Get();
 		static void Destroy();
 
-		bool LoadTexture(const char* texture_path, object::Texture* texture_object);
-		bool LoadTexture(const char* texture_path, object::Texture* texture_object, float x, float y, float rotation);
+		void LoadAllTextures();
+		SDL_Texture* GetSetTextureFromId(const char* id, object::Texture* texture_obj);
 
 		bool Start(const char* window_title, int width, int height);
 

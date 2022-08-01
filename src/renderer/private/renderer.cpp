@@ -35,35 +35,35 @@ namespace renderer
 		SAFE_DELETE(s_instance);
 	}
 
-	bool Renderer::LoadTexture(const char* texture_path, object::Texture* texture_object)
+	SDL_Texture* Renderer::GetSetTextureFromId(const char* id, object::Texture* texture_obj)
 	{
-		return LoadTexture(texture_path, texture_object, 0, 0, 0);
+		add_texture_object(texture_obj);
+		return m_assets->GetTexture(id);
 	}
 
-	bool Renderer::LoadTexture(const char* texture_path, object::Texture* texture_object, float x, float y, float rotation)
+	void Renderer::LoadAllTextures()
 	{
-		// get full path of texture
-		std::string full_path = m_assets->GetFullPath(texture_path);
+		std::string path = m_assets->GetPath();
 
-		// check if texture image already exists in memory
-		SDL_Texture* texture = m_assets->GetTexture(full_path);
-		if (!texture) 
+		for (const auto& entry : std::filesystem::directory_iterator(path))
 		{
-			// load the texture
-			SDL_Surface* temp_surface = IMG_Load(full_path.c_str());
-			if (!temp_surface) { return false; }
-			texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
-			SDL_FreeSurface(temp_surface);
+			std::string entry_str = entry.path().string();
+			std::string entry_stem_str = entry.path().stem().string();
 
-			// add the texture to asset manager
-			m_assets->SetTexture(full_path, texture);
+			// check if texture image already exists in memory
+			SDL_Texture* texture = m_assets->GetTexture(entry_str);
+			if (!texture)
+			{
+				// load the texture
+				SDL_Surface* temp_surface = IMG_Load(entry_str.c_str());
+				if (!temp_surface) { continue; } // TODO : ERROR
+				texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
+				SDL_FreeSurface(temp_surface);
+
+				// add the texture to asset manager
+				m_assets->SetTexture(entry_stem_str, texture);
+			}
 		}
-
-		// finish texture object
-		texture_object->Set(texture, x, y, rotation);
-		add_texture_object(texture_object);
-
-		return true;
 	}
 
 	bool Renderer::Start(const char* window_title, int width, int height)
@@ -86,30 +86,19 @@ namespace renderer
 		// create the asset manager object
 		m_assets = new Assets();
 
-		return true;
+		LoadAllTextures();
 
+		return true;
 	}
 
 	void Renderer::Render()
 	{
 		clear_buffer();
 
-		/*
 		for (size_t i = 0; i < m_num_texture_objects; i++)
 		{
 			render_texture_object(m_texutre_objects[i]);
-		}
-		*/
-
-		for (object::GameObject* game_object : game::Game::Get()->GetGameObjects())
-		{
-			object::Texture* texture = game_object->GetTexture();
-			if (!texture->IsInitialized())
-			{
-				LoadTexture("player.png", texture, game_object->GetObject()->GetPosition().x, game_object->GetObject()->GetPosition().y, 0);
-			}
-			render_texture_object(game_object->GetTexture());
-		}
+		}		
 
 		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);

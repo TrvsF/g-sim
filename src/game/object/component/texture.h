@@ -18,6 +18,7 @@ namespace object
 
 	public:
 		Texture();
+		Texture(SDL_Texture* texture);
 
 		void Set(SDL_Texture* texture);
 		void Set(SDL_Texture* texture, Vector2D pos, float rotation);

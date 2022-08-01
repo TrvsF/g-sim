@@ -1,6 +1,7 @@
 #ifndef GAMEOBJECT_H_
 #define GAMEOBJECT_H_
 
+#include "../src/renderer/renderer.h"
 #include "../component/object.h"
 #include "../component/texture.h"
 
@@ -14,12 +15,14 @@ namespace object
 
 		float m_velocity;
 
+		void set_texture_from_id(const char* id);
 		void handle_movement();
 		void handle_position();
 		void reset_movement_bools();
 
 	public:
-		GameObject(Object* object = nullptr, Texture* texture = nullptr);
+		// GameObject(Object* object = nullptr, Texture* texture = nullptr);
+		GameObject(Object* object, const char* textureid);
 
 		bool Forward, Backward, Left, Right;
 

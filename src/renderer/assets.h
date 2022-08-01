@@ -24,6 +24,7 @@ namespace renderer
 		void SetTexture(std::string full_path, SDL_Texture* texture);
 		SDL_Texture* GetTexture(std::string full_path);
 
+		std::string GetPath();
 		std::string GetFullPath(const char* path_to_texture);
 	};
 }

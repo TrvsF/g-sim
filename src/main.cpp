@@ -19,5 +19,6 @@ int main()
     {
         base::Run();
     }
+    std::cin.get();
     return 0;
 }
