@@ -33,9 +33,15 @@ add_executable (
  "src/game/object/component/private/texture.cpp"
  "src/game/object/component/private/aabb.cpp"
  "src/game/object/component/private/transform.cpp"
+
  "src/game/object/objects/game-object.h"
  "src/game/object/objects/game-object-inl.h"
  "src/game/object/objects/private/game-object.cpp" 
+ "src/game/object/objects/texture-object.h"
+ "src/game/object/objects/texture-object-inl.h"
+ "src/game/object/objects/private/texture-object.cpp"
+ "src/game/object/objects/geometry-object.h"
+ "src/game/object/objects/private/geometry-object.cpp"
 
  "src/updater/updater.h" 
  "src/updater/updater-inl.h"
@@ -58,7 +64,7 @@ add_executable (
  "src/util/vector2d.h" 
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
- "src/game/object/objects/texture-object.h" "src/game/object/objects/texture-object-inl.h" "src/game/object/objects/private/texture-object.cpp")
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

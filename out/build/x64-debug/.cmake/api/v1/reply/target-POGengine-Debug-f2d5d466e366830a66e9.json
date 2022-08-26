@@ -36,19 +36,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 74,
+				"line" : 80,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 73,
+				"line" : 79,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 64,
+				"line" : 70,
 				"parent" : 0
 			}
 		]
@@ -98,13 +98,14 @@
 				17,
 				18,
 				21,
-				27,
-				28,
-				29,
+				24,
+				26,
+				32,
+				33,
 				34,
-				35,
+				39,
 				40,
-				43
+				45
 			]
 		}
 	],
@@ -163,13 +164,14 @@
 				17,
 				18,
 				21,
-				27,
-				28,
-				29,
+				24,
+				26,
+				32,
+				33,
 				34,
-				35,
+				39,
 				40,
-				43
+				45
 			]
 		},
 		{
@@ -193,19 +195,20 @@
 				20,
 				22,
 				23,
-				24,
 				25,
-				26,
+				27,
+				28,
+				29,
 				30,
 				31,
-				32,
-				33,
+				35,
 				36,
 				37,
 				38,
-				39,
 				41,
-				42
+				42,
+				43,
+				44
 			]
 		}
 	],
@@ -330,6 +333,33 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "src/game/object/objects/texture-object.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/game/object/objects/texture-object-inl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/game/object/objects/private/texture-object.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/game/object/objects/geometry-object.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/game/object/objects/private/geometry-object.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
 			"path" : "src/updater/updater.h",
 			"sourceGroupIndex" : 1
 		},
@@ -427,22 +457,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/util/private/timer.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/game/object/objects/texture-object.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/game/object/objects/texture-object-inl.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/game/object/objects/private/texture-object.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
