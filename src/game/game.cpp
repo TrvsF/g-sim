@@ -30,7 +30,7 @@ namespace game
 			{ 25, 25, 25}
 		);
 
-		m_player = new object::GameObject(obj, "player");
+		m_player = new object::TextureObject(obj, "player");
 		m_game_objects.push_back(m_player);
 	}
 

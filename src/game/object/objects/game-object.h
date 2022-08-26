@@ -9,25 +9,23 @@ namespace object
 {
 	class GameObject
 	{
-	private:
-		Object*		m_object;
-		Texture*	m_texture;
+	protected:
+		Object* m_object;
 
+	private:
 		float m_velocity;
 
-		void set_texture_from_id(const char* id);
 		void handle_movement();
 		void handle_position();
 		void reset_movement_bools();
 
 	public:
 		// GameObject(Object* object = nullptr, Texture* texture = nullptr);
-		GameObject(Object* object, const char* textureid);
+		GameObject(Object* object);
 
 		bool Forward, Backward, Left, Right;
 
 		inline Object* GetObject();
-		inline Texture* GetTexture();
 
 		inline void MoveForwards();
 		inline void MoveBackwards();
