@@ -22,8 +22,8 @@ add_executable (
 
  "src/game/logic/level.h"
 
- "src/game/object/object.h"
- "src/game/object/object-inl.h"
+ "src/game/object/game-object.h"
+ "src/game/object/game-object-inl.h"
 
  "src/game/object/component/texture.h"
  "src/game/object/component/texture-inl.h"
@@ -35,12 +35,11 @@ add_executable (
  "src/game/object/component/private/aabb.cpp"
  "src/game/object/component/private/transform.cpp"
 
- "src/game/object/objects/game-object.h"
- "src/game/object/objects/game-object-inl.h"
- "src/game/object/objects/private/game-object.cpp" 
+ 
  "src/game/object/objects/texture-object.h"
  "src/game/object/objects/texture-object-inl.h"
  "src/game/object/objects/private/texture-object.cpp"
+
  "src/game/object/objects/geometry-object.h"
  "src/game/object/objects/private/geometry-object.cpp"
 

@@ -1,0 +1,54 @@
+#include "game-object.h"
+
+namespace object
+{
+	inline GameObject* GameObject::Create(Vector3D position, Vector3D rotation, Size size)
+	{
+		return new GameObject(AABB::Create(position, size), Transform::Create(position, rotation));
+	}
+
+	inline Transform& GameObject::GetTransform()
+	{
+		return m_transform;
+	}
+
+	inline void GameObject::SetTransform(Transform& transform)
+	{
+		m_transform = transform;
+	}
+
+	inline AABB& GameObject::GetAABB()
+	{
+		return m_aabb;
+	}
+
+	inline void GameObject::SetAABB(AABB& aabb)
+	{
+		m_aabb = aabb;
+	}
+
+	inline const Vector3D GameObject::GetPosition() const
+	{
+		return m_transform.GetPosition();
+	}
+
+	inline void GameObject::SetPosition(Vector3D position)
+	{
+		m_transform.SetPosition(position);
+	}
+
+	inline const Size GameObject::GetSize() const
+	{
+		return m_aabb.GetSize();
+	}
+
+	inline void GameObject::SetSize(Size size)
+	{
+		m_aabb.SetSize(size);
+	}
+
+	inline void Tick()
+	{
+
+	}
+}

@@ -1,7 +1,9 @@
 #ifndef TEXTUREOBJECT_H_
 #define TEXTUREOBJECT_H_ 
 
-#include "game-object.h"
+#include "../game-object.h"
+#include "../component/texture.h"
+#include "../src/renderer/renderer.h"
 
 namespace object
 {
@@ -12,7 +14,7 @@ namespace object
 
 		void set_texture_from_id(const char* id);
 	public:
-		TextureObject(Object* object, const char* textureid);
+		TextureObject(GameObject* object, const char* textureid);
 
 		inline Texture* GetTexture();
 	};

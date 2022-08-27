@@ -2,7 +2,7 @@
 
 namespace object
 {
-	TextureObject::TextureObject(Object* object, const char* textureid)
+	TextureObject::TextureObject(GameObject* object, const char* textureid)
 		: GameObject(object)
 	{
 		set_texture_from_id(textureid);
@@ -13,9 +13,9 @@ namespace object
 		m_texture = new Texture();
 		SDL_Texture* t = renderer::Renderer::Get()->GetSetTextureFromId(id, m_texture);
 		m_texture->Set(t, {
-			m_object->GetPosition().x,
-			m_object->GetPosition().y
-			}, m_object->GetTransform().GetRotation().z
+			GetPosition().x,
+			GetPosition().y
+			}, GetTransform().GetRotation().z
 		);
 	}
 	

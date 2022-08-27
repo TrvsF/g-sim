@@ -2,7 +2,7 @@
 #define GAME_H_
 
 #include "../base/helper_macos.h"
-#include "object/objects/game-object.h"
+#include "object/game-object.h"
 #include "object/objects/texture-object.h"
 
 #include <vector>

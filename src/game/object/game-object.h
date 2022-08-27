@@ -6,17 +6,21 @@
 
 namespace object
 {
-	class Object
+	class GameObject
 	{
 	private:
 		AABB		m_aabb;
 		Transform	m_transform;
 
-		explicit Object(const AABB& aabb = AABB::ZERO, const Transform& transform = Transform::ZERO)
-			: m_transform(transform), m_aabb(aabb)
-		{}
 	public:
-		inline static Object* Create(Vector3D position, Vector3D rotation, Size size);
+		GameObject(AABB aabb, Transform transform)
+			: m_aabb(aabb), m_transform(transform)
+		{}
+		GameObject(GameObject* gameobject)
+			: m_aabb(gameobject->GetAABB()), m_transform(gameobject->GetTransform())
+		{}
+
+		inline static GameObject* Create(Vector3D position, Vector3D rotation, Size size);
 
 		inline Transform& GetTransform();
 		inline void SetTransform(Transform& transform);
@@ -30,9 +34,11 @@ namespace object
 		inline const Size GetSize() const;
 		inline void SetSize(Size size);
 
+		inline void Tick();
+		inline GameObject* GetObject();
 	};
 }
 
-#include "object-inl.h"
+#include "game-object-inl.h"
 
 #endif

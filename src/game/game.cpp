@@ -24,7 +24,7 @@ namespace game
 
 	void Game::Start()
 	{
-		object::Object* obj = object::Object::Create(
+		object::GameObject* obj = object::GameObject::Create(
 			{100, 50,  0},
 			{  0,  0,  0}, 
 			{ 25, 25, 25}
@@ -36,6 +36,6 @@ namespace game
 
 	void Game::Tick()
 	{
-		m_player->Tick();
+		// m_player->Tick();
 	}
 }
