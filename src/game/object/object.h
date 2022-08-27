@@ -1,8 +1,8 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
-#include "aabb.h"
-#include "transform.h"
+#include "component/aabb.h"
+#include "component/transform.h"
 
 namespace object
 {

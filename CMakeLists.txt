@@ -22,10 +22,11 @@ add_executable (
 
  "src/game/logic/level.h"
 
+ "src/game/object/object.h"
+ "src/game/object/object-inl.h"
+
  "src/game/object/component/texture.h"
  "src/game/object/component/texture-inl.h"
- "src/game/object/component/object.h"
- "src/game/object/component/object-inl.h"
  "src/game/object/component/transform.h"
  "src/game/object/component/transform-inl.h"
  "src/game/object/component/aabb.h"

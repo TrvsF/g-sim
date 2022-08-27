@@ -1,6 +1,6 @@
 #include "../updater.h"
 
-#include "../src/game/object/component/object.h"
+#include "../src/game/object/object.h"
 
 namespace updater
 {

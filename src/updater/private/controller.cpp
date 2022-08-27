@@ -15,8 +15,6 @@ namespace updater
 		{ 
 			m_player = game::Game::Get()->GetPlayer();
 		}
-		m_player->Forward = m_input->KeyDown("w");
-		m_player->Backward = m_input->KeyDown("s");
 	}
 
 	void Controller::check_menu_inputs() {}
