@@ -59,7 +59,7 @@ namespace object
 			m_offset_rotation = VEC3_ZERO;
 			Update();
 
-			m_aabb.OffsetOrigin(m_offset_pos);
+			m_aabb.OffsetPos(m_offset_pos);
 
 			m_transform.OffsetRotation(m_offset_rotation);
 			m_transform.OffsetPosition(m_offset_pos);

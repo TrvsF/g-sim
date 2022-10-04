@@ -4,7 +4,7 @@ namespace object
 {
 	const AABB AABB::ZERO;
 
-	AABB::AABB(const Vector3D origin, const Size size)
-		: m_origin(origin), m_size(size)
+	AABB::AABB(const Vector3D pos, const Size size)
+		: m_pos(pos), m_size(size)
 	{}
 }

@@ -8,10 +8,11 @@ namespace object
 	class Camera : public GameObject
 	{
 	private:
-
+		GameObject* m_subject;
 	public:
 		Camera(GameObject* gameobject);
 
+		void SetSubject(GameObject* gameobject);
 		void InterpTexture(GameObject* gameobject);
 
 		void Update();

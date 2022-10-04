@@ -43,14 +43,14 @@ namespace game
 		m_camera = new object::Camera(obj2);
 		m_game_objects.push_back(m_camera);
 
-		// TODO : FIGURE OUT HOW THE BB IS SETUP/RENDERING <<< ITS RENDERING BOTTOM RIGHT??!?!??
+		// set subject as player 
+		object::Camera* camera = (object::Camera*) m_camera;
+		camera->SetSubject(m_player);
 	}
 
 	void Game::Tick()
 	{
 		m_player->Tick();
 		m_camera->Tick();
-
-		printf("IS INTER : %d\n", m_camera->GetAABB().IntersectsRect2D(m_player->GetAABB()));
 	}
 }
