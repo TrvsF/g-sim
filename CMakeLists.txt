@@ -25,6 +25,7 @@ add_executable (
  "src/game/object/game-object.h"
  "src/game/object/game-object-inl.h"
 
+ "src/game/object/component/shape.h"
  "src/game/object/component/texture.h"
  "src/game/object/component/texture-inl.h"
  "src/game/object/component/transform.h"
@@ -35,13 +36,15 @@ add_executable (
  "src/game/object/component/private/aabb.cpp"
  "src/game/object/component/private/transform.cpp"
 
+  "src/game/object/objects/private/camera.cpp"
+  "src/game/object/objects/camera.h"
  
- "src/game/object/objects/texture-object.h"
- "src/game/object/objects/texture-object-inl.h"
- "src/game/object/objects/private/texture-object.cpp"
+ "src/game/object/objects/abs/texture-object.h"
+ "src/game/object/objects/abs/texture-object-inl.h"
+ "src/game/object/objects/abs/private/texture-object.cpp"
 
- "src/game/object/objects/geometry-object.h"
- "src/game/object/objects/private/geometry-object.cpp"
+ "src/game/object/objects/abs/geometry-object.h"
+ "src/game/object/objects/abs/private/geometry-object.cpp"
 
  "src/updater/updater.h" 
  "src/updater/updater-inl.h"
@@ -55,7 +58,7 @@ add_executable (
  "src/renderer/renderer.h"
  "src/renderer/renderer-inl.h"
  "src/renderer/assets.h" 
- "src/renderer/camera.h"
+ 
  "src/renderer/private/assets.cpp"
  "src/renderer/private/renderer.cpp"
 

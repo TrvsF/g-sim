@@ -28,6 +28,12 @@ namespace renderer
 		SDL_Renderer* m_renderer;
 		Assets* m_assets;
 
+		size_t m_num_shape_objects;
+		std::vector<SDL_Rect> m_shape_objects;
+
+		void render_shape_object(SDL_Rect shape);
+		void reset_shape_objects();
+
 		size_t m_num_texture_objects;
 		std::vector<object::Texture*> m_texutre_objects;
 
@@ -44,7 +50,11 @@ namespace renderer
 		static void Destroy();
 
 		void LoadAllTextures();
-		SDL_Texture* GetSetTextureFromId(const char* id, object::Texture* texture_obj);
+		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
+
+		void AddTempShape(SDL_Rect shape);
+
+		inline SDL_Renderer* GetRendererObj();
 
 		bool Start(const char* window_title, int width, int height);
 

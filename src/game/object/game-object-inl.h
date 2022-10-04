@@ -47,8 +47,19 @@ namespace object
 		m_aabb.SetSize(size);
 	}
 
-	inline void Tick()
+	inline void GameObject::DrawBB()
 	{
+		SDL_Rect rect;
+		rect.w = (int)m_aabb.GetMaxX() - (int)m_aabb.GetMinX();
+		rect.h = (int)m_aabb.GetMaxY() - (int)m_aabb.GetMinY();
+		rect.x = (int)m_aabb.GetMinX();
+		rect.y = (int)m_aabb.GetMinY();
 
+		Vector3D pos = m_transform.GetPosition();
+
+		printf("w %d h %d x %d y %d\n", rect.w, rect.h, rect.x, rect.y);
+		// printf("x %.2f y %.2f z %.2f\n", pos.x, pos.y, pos.z);
+
+		renderer::Renderer::Get()->AddTempShape(rect);
 	}
 }

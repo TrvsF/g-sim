@@ -6,7 +6,8 @@ namespace renderer
 
 	Renderer::Renderer()
 	{
-		m_num_texture_objects = 0;
+		m_num_texture_objects	= 0;
+		m_num_shape_objects		= 0;
 
 		m_window	= nullptr;
 		m_renderer	= nullptr;
@@ -35,7 +36,7 @@ namespace renderer
 		SAFE_DELETE(s_instance);
 	}
 
-	SDL_Texture* Renderer::GetSetTextureFromId(const char* id, object::Texture* texture_obj)
+	SDL_Texture* Renderer::GetSetTextureObjFromId(const char* id, object::Texture* texture_obj)
 	{
 		add_texture_object(texture_obj);
 		return m_assets->GetTexture(id);
@@ -100,6 +101,11 @@ namespace renderer
 			render_texture_object(m_texutre_objects[i]);
 		}		
 
+		for (size_t i = 0; i < m_num_shape_objects; i++)
+		{
+			render_shape_object(m_shape_objects[i]);
+		} reset_shape_objects();
+
 		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);
 	}
@@ -109,6 +115,12 @@ namespace renderer
 		SDL_DestroyWindow(m_window);
 		SDL_DestroyRenderer(m_renderer);
 		SDL_Quit();
+	}
+
+	void Renderer::AddTempShape(SDL_Rect shape)
+	{
+		m_shape_objects.push_back(shape);
+		m_num_shape_objects++;
 	}
 
 	inline void Renderer::add_texture_object(object::Texture* texture_object)
@@ -126,12 +138,25 @@ namespace renderer
 		int height		= texture_object->Height();
 		float rotation  = texture_object->Rotation();
 
-		render_rect.x = x - width;
-		render_rect.y = y - height;
+		render_rect.x = x;
+		render_rect.y = y;
 		render_rect.w = width;
 		render_rect.h = height;
 
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+	}
+
+	void Renderer::render_shape_object(SDL_Rect shape)
+	{
+		SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+		SDL_RenderDrawRect(m_renderer, &shape);
+		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+	}
+
+	void Renderer::reset_shape_objects()
+	{
+		m_shape_objects.clear();
+		m_num_shape_objects = 0;
 	}
 
 	void Renderer::clear_buffer()

@@ -3,7 +3,8 @@
 
 #include "../base/helper_macos.h"
 #include "object/game-object.h"
-#include "object/objects/texture-object.h"
+#include "object/objects/camera.h"
+#include "object/objects/abs/texture-object.h"
 
 #include <vector>
 
@@ -16,6 +17,7 @@ namespace game
 
 		std::vector<object::GameObject*> m_game_objects;
 		object::GameObject* m_player;
+		object::GameObject* m_camera;
 	public:
 		Game();
 

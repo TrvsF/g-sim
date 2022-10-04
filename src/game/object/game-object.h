@@ -4,10 +4,19 @@
 #include "component/aabb.h"
 #include "component/transform.h"
 
+// debug includes
+#include <iostream>
+#include "../src/renderer/renderer.h"
+#include "SDL.h"
+
 namespace object
 {
 	class GameObject
 	{
+	protected:
+		bool		m_debug;
+		Vector3D	m_offset_pos;
+		Vector3D	m_offset_rotation;
 	private:
 		AABB		m_aabb;
 		Transform	m_transform;
@@ -34,8 +43,32 @@ namespace object
 		inline const Size GetSize() const;
 		inline void SetSize(Size size);
 
-		inline void Tick();
 		inline GameObject* GetObject();
+
+		virtual void Update()
+		{}
+
+		// debug
+		inline void DrawBB();
+
+		// Tick
+
+		void Tick()
+		{
+			m_offset_pos = VEC3_ZERO;
+			m_offset_rotation = VEC3_ZERO;
+			Update();
+
+			m_aabb.OffsetOrigin(m_offset_pos);
+
+			m_transform.OffsetRotation(m_offset_rotation);
+			m_transform.OffsetPosition(m_offset_pos);
+
+			if (m_debug)
+			{
+				DrawBB();
+			}
+		}
 	};
 }
 

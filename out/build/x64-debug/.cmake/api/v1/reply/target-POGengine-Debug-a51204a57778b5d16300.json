@@ -36,19 +36,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 80,
+				"line" : 83,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 79,
+				"line" : 82,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 70,
+				"line" : 73,
 				"parent" : 0
 			}
 		]
@@ -94,17 +94,18 @@
 				0,
 				3,
 				5,
-				16,
 				17,
 				18,
-				21,
-				23,
-				29,
-				30,
-				31,
-				36,
-				37,
-				42
+				19,
+				20,
+				24,
+				26,
+				32,
+				33,
+				34,
+				38,
+				39,
+				44
 			]
 		}
 	],
@@ -159,17 +160,18 @@
 				0,
 				3,
 				5,
-				16,
 				17,
 				18,
-				21,
-				23,
-				29,
-				30,
-				31,
-				36,
-				37,
-				42
+				19,
+				20,
+				24,
+				26,
+				32,
+				33,
+				34,
+				38,
+				39,
+				44
 			]
 		},
 		{
@@ -189,22 +191,23 @@
 				13,
 				14,
 				15,
-				19,
-				20,
+				16,
+				21,
 				22,
-				24,
+				23,
 				25,
-				26,
 				27,
 				28,
-				32,
-				33,
-				34,
+				29,
+				30,
+				31,
 				35,
-				38,
-				39,
+				36,
+				37,
 				40,
-				41
+				41,
+				42,
+				43
 			]
 		}
 	],
@@ -265,6 +268,11 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "src/game/object/component/shape.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
 			"path" : "src/game/object/component/texture.h",
 			"sourceGroupIndex" : 1
 		},
@@ -313,29 +321,40 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/game/object/objects/texture-object.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/game/object/objects/texture-object-inl.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/game/object/objects/private/texture-object.cpp",
+			"path" : "src/game/object/objects/private/camera.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/game/object/objects/geometry-object.h",
+			"path" : "src/game/object/objects/camera.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/game/object/objects/abs/texture-object.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/game/object/objects/abs/texture-object-inl.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/game/object/objects/private/geometry-object.cpp",
+			"path" : "src/game/object/objects/abs/private/texture-object.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/game/object/objects/abs/geometry-object.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/game/object/objects/abs/private/geometry-object.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -394,11 +413,6 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/renderer/assets.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/renderer/camera.h",
 			"sourceGroupIndex" : 1
 		},
 		{
