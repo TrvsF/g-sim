@@ -12,7 +12,7 @@ namespace game
 		m_game_objects.push_back(game_object);
 	}
 
-	inline void Game::SetPlayer(object::GameObject* player)
+	inline void Game::SetPlayer(object::Player* player)
 	{
 		m_player = player;
 	}
@@ -22,7 +22,7 @@ namespace game
 		return m_game_objects;
 	}
 
-	inline object::GameObject* Game::GetPlayer()
+	inline object::Player* Game::GetPlayer()
 	{
 		return m_player;
 	}

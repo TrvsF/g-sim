@@ -15,6 +15,15 @@ namespace updater
 		{ 
 			m_player = game::Game::Get()->GetPlayer();
 		}
+
+		if (m_input->KeyDown("w"))
+		{ m_player->MoveUp(); }
+		if (m_input->KeyDown("s"))
+		{ m_player->MoveDown(); }
+		if (m_input->KeyDown("a"))
+		{ m_player->MoveLeft(); }
+		if (m_input->KeyDown("d"))
+		{ m_player->MoveRight(); }
 	}
 
 	void Controller::check_menu_inputs() {}

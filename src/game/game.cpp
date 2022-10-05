@@ -25,33 +25,43 @@ namespace game
 
 	void Game::Start()
 	{
-		object::GameObject* obj = object::GameObject::Create(
-			{  0.0f,  0.0f,  0.0f  },
-			{  0.0f,  0.0f,  0.0f  }, 
-			{ 32.0f, 32.0f,  32.0f }
+		// SETUP CAMERA AND PLAYER OBJECTS
+		object::GameObject* playerobj = object::GameObject::Create(
+			{  200.0f,  200.0f,  0.0f  },
+			{  0.0f,    0.0f,    0.0f  }, 
+			{  32.0f,   32.0f,   32.0f }
 		);
 
-		m_player = new object::TextureObject(obj, "player");
-		m_game_objects.push_back(m_player);
+		m_player = new object::Player(playerobj, "player");
 
-		object::GameObject* obj2 = object::GameObject::Create(
+		object::GameObject* cameraobj = object::GameObject::Create(
 			{ 300.0f, 20.0f,  0.0f },
 			{ 0.0f,   0.0f,   0.0f },
 			{ 300.0f, 300.0f, 300.0f }
 		);
 
-		m_camera = new object::Camera(obj2);
-		m_game_objects.push_back(m_camera);
+		m_camera = new object::Camera(cameraobj);
 
-		// set subject as player 
-		object::Camera* camera = (object::Camera*) m_camera;
-		camera->SetSubject(m_player);
+		m_camera->AddTextureobj(m_player->GetTexture());
+		m_camera->SetSubject(m_player);
+
+		// debug
+		object::GameObject* miscagent = object::GameObject::Create(
+			{ 100.0f,  400.0f,  0.0f },
+			{ 0.0f,    0.0f,    0.0f },
+			{ 32.0f,   32.0f,   32.0f }
+		);
+		m_game_objects.push_back(new object::Agent(miscagent, "player"));
 	}
 
 	void Game::Tick()
 	{
 		// player > world > camera
 		m_player->Tick();
+		for (object::GameObject* gameobject : m_game_objects)
+		{
+			gameobject->Tick();
+		}
 		m_camera->Tick();
 	}
 }

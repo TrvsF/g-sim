@@ -15,6 +15,11 @@ namespace object
 		m_subject = gameobject;
 	}
 
+	void Camera::AddTextureobj(Texture* textureobject)
+	{
+		m_textureobjs.push_back(textureobject);
+	}
+
 	// TODO : 
 	// TAKE PLAYER INPUT TO CONTROL CAMERA
 	// INTERP TEXTURES OF ALL OTHER GAME OBJECTS IN MEMORY
@@ -30,6 +35,9 @@ namespace object
 			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
 		};
 
+		// check if offset pos
+
+	
 		
 	}
 }

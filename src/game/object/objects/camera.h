@@ -18,8 +18,6 @@ namespace object
 		void AddTextureobj(Texture* textureobject);
 
 		void Update();
-
-		void Tick();
 	};
 }
 

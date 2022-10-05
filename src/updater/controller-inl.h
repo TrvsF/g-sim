@@ -15,7 +15,7 @@ namespace updater
 		}
 	}
 
-	inline void Controller::SetPlayer(object::GameObject* player)
+	inline void Controller::SetPlayer(object::Player* player)
 	{
 		m_player = player;
 	}

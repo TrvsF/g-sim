@@ -19,7 +19,7 @@ namespace updater
 	private:
 		ControllerState m_controller_state;
 
-		object::GameObject* m_player;
+		object::Player*		m_player;
 		Input*				m_input;
 
 		void check_menu_inputs();
@@ -28,7 +28,7 @@ namespace updater
 	public:
 		Controller(Input* input);
 
-		inline void SetPlayer(object::GameObject* player);
+		inline void SetPlayer(object::Player* player);
 
 		inline void CheckInputs();
 	};

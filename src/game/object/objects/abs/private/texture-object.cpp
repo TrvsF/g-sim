@@ -22,16 +22,5 @@ namespace object
 			GetTransform().GetRotation().z
 		);
 	}
-
-	void TextureObject::Update()
-	{
-		float yaw = GetTransform().GetRotation().z;
-		Vector2D direction_vec2d = { (float)cosf(yaw), (float)sin(yaw) };
-		Vector2D pos_change_vec2d = direction_vec2d * 2;
-
-		m_offset_pos = { pos_change_vec2d.x, pos_change_vec2d.y, 0.0f };
-
-		m_texture->OffsetPos(pos_change_vec2d);
-	}
 	
 }

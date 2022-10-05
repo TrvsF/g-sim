@@ -30,10 +30,6 @@ namespace updater
 		// must be first
 		m_input->Tick();
 		m_controller->CheckInputs();
-
-		/*
-			keyboard updates wont work
-		*/
 		
 		// must be last
 		m_input->LateTick();

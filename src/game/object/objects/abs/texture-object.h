@@ -16,8 +16,6 @@ namespace object
 	public:
 		TextureObject(GameObject* object, const char* textureid);
 
-		void Update();
-
 		inline Texture* GetTexture();
 	};
 }

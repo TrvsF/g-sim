@@ -4,6 +4,8 @@
 #include "../base/helper_macos.h"
 #include "object/game-object.h"
 #include "object/objects/camera.h"
+#include "object/objects/player.h"
+#include "object/objects/agent.h"
 #include "object/objects/abs/texture-object.h"
 
 #include <vector>
@@ -16,8 +18,9 @@ namespace game
 		static Game* s_instance;
 
 		std::vector<object::GameObject*> m_game_objects;
-		object::GameObject* m_player;
-		object::GameObject* m_camera;
+
+		object::Player* m_player;
+		object::Camera* m_camera;
 	public:
 		Game();
 
@@ -27,8 +30,9 @@ namespace game
 
 		inline void AddGameObject(object::GameObject* game_object);
 		inline const std::vector<object::GameObject*> GetGameObjects() const;
-		inline void SetPlayer(object::GameObject* player);
-		inline object::GameObject* GetPlayer();
+
+		inline void SetPlayer(object::Player* player);
+		inline object::Player* GetPlayer();
 
 		void Start();
 		void Tick();
