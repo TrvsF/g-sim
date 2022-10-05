@@ -15,12 +15,9 @@ namespace object
 		m_subject = gameobject;
 	}
 
-
-	void Camera::InterpTexture(GameObject* gameobject)
-	{
-		
-	}
-
+	// TODO : 
+	// TAKE PLAYER INPUT TO CONTROL CAMERA
+	// INTERP TEXTURES OF ALL OTHER GAME OBJECTS IN MEMORY
 	void Camera::Update()
 	{
 		if (!m_subject) { return; }
@@ -33,5 +30,6 @@ namespace object
 			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
 		};
 
+		
 	}
 }

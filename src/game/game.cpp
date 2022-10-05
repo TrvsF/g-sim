@@ -35,7 +35,7 @@ namespace game
 		m_game_objects.push_back(m_player);
 
 		object::GameObject* obj2 = object::GameObject::Create(
-			{ 300.0f, 20.0f, 0.0f },
+			{ 300.0f, 20.0f,  0.0f },
 			{ 0.0f,   0.0f,   0.0f },
 			{ 300.0f, 300.0f, 300.0f }
 		);
@@ -50,6 +50,7 @@ namespace game
 
 	void Game::Tick()
 	{
+		// player > world > camera
 		m_player->Tick();
 		m_camera->Tick();
 	}

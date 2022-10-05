@@ -6,9 +6,6 @@ namespace renderer
 
 	Renderer::Renderer()
 	{
-		m_num_texture_objects	= 0;
-		m_num_shape_objects		= 0;
-
 		m_window	= nullptr;
 		m_renderer	= nullptr;
 		m_assets	= nullptr;
@@ -96,14 +93,14 @@ namespace renderer
 	{
 		clear_buffer();
 
-		for (size_t i = 0; i < m_num_texture_objects; i++)
+		for (object::Texture* textureobj : m_texutre_objects)
 		{
-			render_texture_object(m_texutre_objects[i]);
+			render_texture_object(textureobj);
 		}		
 
-		for (size_t i = 0; i < m_num_shape_objects; i++)
+		for (SDL_Rect shapeobj : m_shape_objects)
 		{
-			render_shape_object(m_shape_objects[i]);
+			render_shape_object(shapeobj);
 		} reset_shape_objects();
 
 		// !!! the last thing to be called from renderer
@@ -120,13 +117,11 @@ namespace renderer
 	void Renderer::AddTempShape(SDL_Rect shape)
 	{
 		m_shape_objects.push_back(shape);
-		m_num_shape_objects++;
 	}
 
 	inline void Renderer::add_texture_object(object::Texture* texture_object)
 	{
 		m_texutre_objects.push_back(texture_object);
-		m_num_texture_objects++;
 	}
 
 	void Renderer::render_texture_object(object::Texture* texture_object)
@@ -156,7 +151,6 @@ namespace renderer
 	void Renderer::reset_shape_objects()
 	{
 		m_shape_objects.clear();
-		m_num_shape_objects = 0;
 	}
 
 	void Renderer::clear_buffer()

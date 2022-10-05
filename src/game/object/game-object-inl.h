@@ -57,7 +57,7 @@ namespace object
 
 		Vector3D pos = m_transform.GetPosition();
 
-		printf("w %d h %d x %d y %d\n", rect.w, rect.h, rect.x, rect.y);
+		// printf("w %d h %d x %d y %d\n", rect.w, rect.h, rect.x, rect.y);
 		// printf("x %.2f y %.2f z %.2f\n", pos.x, pos.y, pos.z);
 
 		renderer::Renderer::Get()->AddTempShape(rect);

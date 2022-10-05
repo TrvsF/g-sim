@@ -28,14 +28,11 @@ namespace renderer
 		SDL_Renderer* m_renderer;
 		Assets* m_assets;
 
-		size_t m_num_shape_objects;
 		std::vector<SDL_Rect> m_shape_objects;
+		std::vector<object::Texture*> m_texutre_objects;
 
 		void render_shape_object(SDL_Rect shape);
 		void reset_shape_objects();
-
-		size_t m_num_texture_objects;
-		std::vector<object::Texture*> m_texutre_objects;
 
 		void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
