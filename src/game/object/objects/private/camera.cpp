@@ -24,6 +24,15 @@ namespace object
 			object->GetTransform().GetPosition().x - m_offset_pos.x,
 			object->GetTransform().GetPosition().y - m_offset_pos.y 
 		};
+
+		// if offscreen dont render
+		if (pos.x + textureobj->Width() < 0 || pos.x > m_screensize.x || pos.y + textureobj->Height() < 0 || pos.y > m_screensize.y)
+		{
+			textureobj->Active(false);
+			return;
+		}
+
+		textureobj->Active(true);
 		textureobj->Pos(pos);
 	}
 
@@ -40,15 +49,15 @@ namespace object
 			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
 		};
 
-		Vector2D screensize = renderer::Renderer::Get()->GetScreensize();
+		m_screensize = renderer::Renderer::Get()->GetScreensize();
 
 		// where the camera will endup
 		AABB newaabb = GetAABB();
 		newaabb.OffsetPos(offsetpos);
 
 		// if the in the next frame the camera will be offscreen
-		if (   newaabb.GetMinX() < 0 || newaabb.GetMaxX() > screensize.x
-			|| newaabb.GetMinY() < 0 || newaabb.GetMaxY() > screensize.y)
+		if (   newaabb.GetMinX() < 0 || newaabb.GetMaxX() > m_screensize.x
+			|| newaabb.GetMinY() < 0 || newaabb.GetMaxY() > m_screensize.y)
 		{
 			m_offset_pos += offsetpos;
 		}

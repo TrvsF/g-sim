@@ -15,6 +15,7 @@ namespace object
 	void Texture::Set(SDL_Texture* texture)
 	{
 		m_texutre = texture;
+		m_active = true;
 		SDL_QueryTexture(m_texutre, NULL, NULL, &m_width, &m_height);
 	}
 

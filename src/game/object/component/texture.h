@@ -15,6 +15,7 @@ namespace object
 		float			m_rotation;
 		int				m_width;
 		int				m_height;
+		bool			m_active;
 
 	public:
 		Texture();
@@ -39,6 +40,9 @@ namespace object
 
 		inline void Pos(Vector2D pos);
 		inline Vector2D Pos() const;
+
+		inline void Active(bool active);
+		inline bool Active();
 
 		inline void OffsetPos(Vector2D offset);
 	};

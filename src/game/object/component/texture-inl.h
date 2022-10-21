@@ -56,4 +56,14 @@ namespace object
 	{
 		m_pos = m_pos + offset;
 	}
+
+	inline void Texture::Active(bool active)
+	{
+		m_active = active;
+	}
+
+	inline bool Texture::Active()
+	{
+		return m_active;
+	}
 }

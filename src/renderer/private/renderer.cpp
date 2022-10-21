@@ -95,6 +95,8 @@ namespace renderer
 
 		for (object::Texture* textureobj : m_texutre_objects)
 		{
+			if (!textureobj->Active()) { continue; }
+
 			render_texture_object(textureobj);
 		}		
 

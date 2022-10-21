@@ -13,6 +13,7 @@ namespace object
 		GameObject*				m_subject;
 		std::vector<Texture*>	m_textureobjs;
 		Vector2D				m_interp_pos;
+		Vector2D				m_screensize;
 	public:
 		Camera(GameObject* gameobject);
 
