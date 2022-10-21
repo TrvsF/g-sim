@@ -17,9 +17,6 @@ namespace object
 		*/
 
 		m_offset_pos = { m_inputvector.x, m_inputvector.y, 0.0f };
-		
-		GetTexture()->OffsetPos(m_inputvector);
-
 		m_inputvector = VEC2_ZERO;
 	}
 }

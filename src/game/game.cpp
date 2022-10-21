@@ -33,6 +33,7 @@ namespace game
 		);
 
 		m_player = new object::Player(playerobj, "player");
+		m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT
 
 		object::GameObject* cameraobj = object::GameObject::Create(
 			{ 300.0f, 20.0f,  0.0f },
@@ -41,8 +42,6 @@ namespace game
 		);
 
 		m_camera = new object::Camera(cameraobj);
-
-		m_camera->AddTextureobj(m_player->GetTexture());
 		m_camera->SetSubject(m_player);
 
 		// debug
@@ -51,17 +50,20 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 32.0f,   32.0f,   32.0f }
 		);
-		m_game_objects.push_back(new object::Agent(miscagent, "player"));
+		m_gameworld_objects.push_back(new object::Agent(miscagent, "player"));
 	}
 
+	// player -> world -> camera
 	void Game::Tick()
 	{
-		// player > world > camera
-		m_player->Tick();
-		for (object::GameObject* gameobject : m_game_objects)
+		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
-			gameobject->Tick();
+			gameworldobject->Tick();
 		}
 		m_camera->Tick();
+		for (object::GameObject* gameworldobject : m_gameworld_objects)
+		{
+			m_camera->SetTexturePos(gameworldobject);
+		}
 	}
 }

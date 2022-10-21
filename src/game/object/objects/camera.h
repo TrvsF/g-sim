@@ -2,6 +2,7 @@
 #define CAMERA_H_
 
 #include "../game-object.h"
+#include "abs/texture-object.h"
 #include "../component/texture.h"
 
 namespace object
@@ -9,15 +10,16 @@ namespace object
 	class Camera : public GameObject
 	{
 	private:
-		GameObject* m_subject;
-		std::vector<Texture*> m_textureobjs;
+		GameObject*				m_subject;
+		std::vector<Texture*>	m_textureobjs;
+		Vector2D				m_interp_pos;
 	public:
 		Camera(GameObject* gameobject);
 
 		void SetSubject(GameObject* gameobject);
-		void AddTextureobj(Texture* textureobject);
+		void SetTexturePos(GameObject* gameobject);
 
-		void Update();
+		void Tick();
 	};
 }
 

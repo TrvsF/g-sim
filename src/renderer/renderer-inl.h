@@ -11,4 +11,9 @@ namespace renderer
 	{
 		return Renderer::m_renderer;
 	}
+
+	inline Vector2D Renderer::GetScreensize()
+	{
+		return { (float)m_width, (float)m_height };
+	}
 }

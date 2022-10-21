@@ -7,6 +7,7 @@ namespace object
 	{
 		m_subject = nullptr;
 		m_debug = true;
+		m_interp_pos = VEC2_ZERO;
 	}
 
 	void Camera::SetSubject(GameObject* gameobject)
@@ -15,29 +16,53 @@ namespace object
 		m_subject = gameobject;
 	}
 
-	void Camera::AddTextureobj(Texture* textureobject)
+	void Camera::SetTexturePos(GameObject* gameobject)
 	{
-		m_textureobjs.push_back(textureobject);
+		object::TextureObject* object = static_cast<object::TextureObject*> (gameobject);
+		object::Texture* textureobj = object->GetTexture();
+		Vector2D pos = { 
+			object->GetTransform().GetPosition().x - m_offset_pos.x,
+			object->GetTransform().GetPosition().y - m_offset_pos.y 
+		};
+		textureobj->Pos(pos);
 	}
 
-	// TODO : 
-	// TAKE PLAYER INPUT TO CONTROL CAMERA
-	// INTERP TEXTURES OF ALL OTHER GAME OBJECTS IN MEMORY
-	void Camera::Update()
+	void Camera::Tick()
 	{
 		if (!m_subject) { return; }
 
 		// follow the player
 		Vector3D subject_midpoint = m_subject->GetAABB().GetMidpoint();
-		m_offset_pos = { 
-			(subject_midpoint.x - GetPosition().x) - (GetSize().width / 2),
-			(subject_midpoint.y - GetPosition().y) - (GetSize().height / 2),
+		// how much we need to move to follow the player
+		Vector3D offsetpos = { 
+			(subject_midpoint.x - (GetPosition().x + m_offset_pos.x)) - (GetSize().width / 2),
+			(subject_midpoint.y - (GetPosition().y + m_offset_pos.y)) - (GetSize().height / 2),
 			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
 		};
 
-		// check if offset pos
+		Vector2D screensize = renderer::Renderer::Get()->GetScreensize();
 
-	
-		
+		// where the camera will endup
+		AABB newaabb = GetAABB();
+		newaabb.OffsetPos(offsetpos);
+
+		// if the in the next frame the camera will be offscreen
+		if (   newaabb.GetMinX() < 0 || newaabb.GetMaxX() > screensize.x
+			|| newaabb.GetMinY() < 0 || newaabb.GetMaxY() > screensize.y)
+		{
+			m_offset_pos += offsetpos;
+		}
+		else
+		{
+			GetAABB().OffsetPos(offsetpos);
+			GetTransform().OffsetPosition(offsetpos);
+		}
+
+		if (m_debug)
+		{
+			DrawBB();
+			printf("%.2f, %.2f\n", m_offset_pos.x, m_offset_pos.y);
+		}
+
 	}
 }

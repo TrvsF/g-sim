@@ -17,7 +17,7 @@ namespace game
 	private:
 		static Game* s_instance;
 
-		std::vector<object::GameObject*> m_game_objects;
+		std::vector<object::GameObject*> m_gameworld_objects;
 
 		object::Player* m_player;
 		object::Camera* m_camera;

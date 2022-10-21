@@ -23,7 +23,7 @@ namespace object
 
 	public:
 		GameObject(AABB aabb, Transform transform)
-			: m_aabb(aabb), m_transform(transform)
+			: m_aabb(aabb), m_transform(transform), m_debug(false)
 		{}
 		GameObject(GameObject* gameobject)
 			: m_aabb(gameobject->GetAABB()), m_transform(gameobject->GetTransform())
@@ -63,6 +63,9 @@ namespace object
 			m_aabb.OffsetPos(m_offset_pos);
 			m_transform.OffsetRotation(m_offset_rotation);
 			m_transform.OffsetPosition(m_offset_pos);
+
+			// remove me
+			// TextureUpdate();
 
 			if (m_debug)
 			{

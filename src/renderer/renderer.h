@@ -53,8 +53,9 @@ namespace renderer
 
 		inline SDL_Renderer* GetRendererObj();
 
-		bool Start(const char* window_title, int width, int height);
+		inline Vector2D GetScreensize();
 
+		bool Start(const char* window_title, int width, int height);
 		void Render();
 		void Clean();
 	};

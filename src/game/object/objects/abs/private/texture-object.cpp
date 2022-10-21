@@ -22,5 +22,4 @@ namespace object
 			GetTransform().GetRotation().z
 		);
 	}
-	
 }
