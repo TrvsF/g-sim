@@ -36,19 +36,19 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 87,
+				"line" : 89,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 86,
+				"line" : 88,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 77,
+				"line" : 79,
 				"parent" : 0
 			}
 		]
@@ -94,20 +94,20 @@
 				0,
 				3,
 				5,
+				16,
 				17,
 				18,
-				19,
-				21,
-				23,
-				25,
-				28,
-				30,
-				36,
-				37,
+				22,
+				24,
+				26,
+				31,
+				32,
 				38,
-				42,
-				43,
-				48
+				39,
+				40,
+				44,
+				45,
+				50
 			]
 		}
 	],
@@ -162,20 +162,20 @@
 				0,
 				3,
 				5,
+				16,
 				17,
 				18,
-				19,
-				21,
-				23,
-				25,
-				28,
-				30,
-				36,
-				37,
+				22,
+				24,
+				26,
+				31,
+				32,
 				38,
-				42,
-				43,
-				48
+				39,
+				40,
+				44,
+				45,
+				50
 			]
 		},
 		{
@@ -195,25 +195,27 @@
 				13,
 				14,
 				15,
-				16,
+				19,
 				20,
-				22,
-				24,
-				26,
+				21,
+				23,
+				25,
 				27,
+				28,
 				29,
-				31,
-				32,
+				30,
 				33,
 				34,
 				35,
-				39,
-				40,
+				36,
+				37,
 				41,
-				44,
-				45,
+				42,
+				43,
 				46,
-				47
+				47,
+				48,
+				49
 			]
 		}
 	],
@@ -274,11 +276,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/game/object/component/shape.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"path" : "src/game/object/component/texture.h",
 			"sourceGroupIndex" : 1
 		},
@@ -327,6 +324,16 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "src/game/object/component/triangle.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/game/object/component/triangle-inl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
 			"path" : "src/game/object/objects/player.h",
 			"sourceGroupIndex" : 1
 		},
@@ -370,14 +377,19 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/game/object/objects/abs/private/texture-object.cpp",
-			"sourceGroupIndex" : 0
+			"path" : "src/game/object/objects/abs/geometry-object.h",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/game/object/objects/abs/geometry-object.h",
+			"path" : "src/game/object/objects/abs/geometry-object-inl.h",
 			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/game/object/objects/abs/private/texture-object.cpp",
+			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,

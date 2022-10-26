@@ -8,6 +8,9 @@ namespace object
 	class Transform
 	{
 	private:
+		Vector3D m_position;
+		Vector3D m_rotation;
+			
 		explicit Transform(Vector3D position = VEC3_ZERO, Vector3D rotation = VEC3_ZERO);
 	public:
 		inline static Transform Create(Vector3D position = VEC3_ZERO, Vector3D rotation = VEC3_ZERO);
@@ -21,9 +24,6 @@ namespace object
 		inline void OffsetRotation(Vector3D offset);
 
 		static const Transform ZERO;
-	protected:
-		Vector3D m_position;
-		Vector3D m_rotation;
 	};
 }
 

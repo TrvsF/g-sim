@@ -31,7 +31,6 @@ namespace object
 			textureobj->Active(false);
 			return;
 		}
-
 		textureobj->Active(true);
 		textureobj->Pos(pos);
 	}
@@ -72,6 +71,5 @@ namespace object
 			DrawBB();
 			printf("%.2f, %.2f\n", m_offset_pos.x, m_offset_pos.y);
 		}
-
 	}
 }
