@@ -16,8 +16,6 @@ namespace object
 		explicit Triangle(Vector2D v1 = VEC2_ZERO, Vector2D v2 = VEC2_ZERO, Vector2D v3 = VEC2_ZERO);
 	public:
 		inline static Triangle Create(Vector2D v1 = VEC2_ZERO, Vector2D v2 = VEC2_ZERO, Vector2D v3 = VEC2_ZERO);
-
-		inline 
 	};
 }
 

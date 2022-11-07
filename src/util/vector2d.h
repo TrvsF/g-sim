@@ -4,6 +4,8 @@
 #define PI 3.14159265f
 #define DEG_TO_RAD PI / 180.0f
 
+#include <math.h>
+
 struct Vector2D
 {
 	float x;
