@@ -26,7 +26,7 @@ namespace base
 
         // assign and start the renderer
         static renderer::Renderer* renderer = renderer::Renderer::Get();
-        if (!renderer->Start("POGengine", 640, 480)) { m_shutdown_requested = true; }  
+        if (!renderer->Start("tri-engine", 640, 480)) { m_shutdown_requested = true; }  
 
         // assign and start the game
         static game::Game* game = game::Game::Get();

@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "POGengine::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-POGengine-Debug-82291ac9373825a4b3ff.json",
+					"jsonFile" : "target-POGengine-Debug-ad26987f71d502a4c514.json",
 					"name" : "POGengine",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/travis/Documents/.projects/POGengine/out/build/x64-debug",
-		"source" : "C:/Users/travis/Documents/.projects/POGengine"
+		"build" : "C:/Users/TravisF/Documents/.projects/tri-engine/out/build/x64-debug",
+		"source" : "C:/Users/TravisF/Documents/.projects/tri-engine"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 3
 	}
 }
