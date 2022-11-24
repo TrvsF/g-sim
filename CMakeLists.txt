@@ -25,7 +25,6 @@ add_executable (
  "src/game/object/game-object.h"
  "src/game/object/game-object-inl.h"
 
- 
  "src/game/object/component/texture.h"
  "src/game/object/component/texture-inl.h"
  "src/game/object/component/transform.h"
@@ -37,6 +36,7 @@ add_executable (
  "src/game/object/component/private/transform.cpp"
  "src/game/object/component/triangle.h"
  "src/game/object/component/triangle-inl.h"
+ "src/game/object/component/private/triangle.cpp"
 
  "src/game/object/objects/player.h"
  "src/game/object/objects/private/player.cpp"
@@ -73,7 +73,7 @@ add_executable (
  "src/util/vector2d.h" 
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
-  "src/game/object/component/private/triangle.cpp")
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

@@ -36,7 +36,7 @@ namespace game
 		m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT
 
 		object::GameObject* cameraobj = object::GameObject::Create(
-			{ 300.0f, 20.0f,  0.0f },
+			{ 0.0f,   0.0f,   0.0f },
 			{ 0.0f,   0.0f,   0.0f },
 			{ 300.0f, 300.0f, 300.0f }
 		);
@@ -53,7 +53,7 @@ namespace game
 		m_gameworld_objects.push_back(new object::Agent(miscagent, "player"));
 	}
 
-	// player -> world -> camera
+	// entities -> camera
 	void Game::Tick()
 	{
 		for (object::GameObject* gameworldobject : m_gameworld_objects)

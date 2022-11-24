@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "POGengine::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-POGengine-Debug-ad26987f71d502a4c514.json",
+					"jsonFile" : "target-POGengine-Debug-0779d472b4e17d2cd85a.json",
 					"name" : "POGengine",
 					"projectIndex" : 0
 				}
@@ -55,6 +55,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 3
+		"minor" : 4
 	}
 }

@@ -12,7 +12,7 @@ namespace object
 
 	void Camera::SetSubject(GameObject* gameobject)
 	{
-		// run some checks?
+		// todo run some checks?
 		m_subject = gameobject;
 	}
 
@@ -69,7 +69,7 @@ namespace object
 		if (m_debug)
 		{
 			DrawBB();
-			printf("%.2f, %.2f\n", m_offset_pos.x, m_offset_pos.y);
+			// printf("%.2f, %.2f\n", m_offset_pos.x, m_offset_pos.y);
 		}
 	}
 }

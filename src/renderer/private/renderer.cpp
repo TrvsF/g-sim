@@ -41,6 +41,7 @@ namespace renderer
 
 	void Renderer::LoadAllTextures()
 	{
+		// get local path
 		std::string path = m_assets->GetPath();
 
 		for (const auto& entry : std::filesystem::directory_iterator(path))
@@ -85,6 +86,7 @@ namespace renderer
 		m_assets = new Assets();
 
 		LoadAllTextures();
+		set_window_icon();
 
 		return true;
 	}
@@ -121,9 +123,10 @@ namespace renderer
 		m_shape_objects.push_back(shape);
 	}
 
-	inline void Renderer::add_texture_object(object::Texture* texture_object)
+	void Renderer::set_window_icon()
 	{
-		m_texutre_objects.push_back(texture_object);
+		SDL_Surface* icon_surface = IMG_Load(m_assets->GetFullPath("icon.png").c_str());
+		SDL_SetWindowIcon(m_window, icon_surface);
 	}
 
 	void Renderer::render_texture_object(object::Texture* texture_object)

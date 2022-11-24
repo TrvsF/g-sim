@@ -37,6 +37,8 @@ namespace renderer
 		void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
 
+		void set_window_icon();
+
 		void clear_buffer();
 
 		Renderer();
