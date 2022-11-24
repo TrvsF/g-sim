@@ -1,4 +1,4 @@
-POGengine<br>
+tri-engine<br>
 
 an attempt to learn from & better POGame https://github.com/TrvsF/POGame<br>
 
