@@ -1,6 +1,7 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
+#include <SDL.h>
 #include "../src/util/vector2d.h"
 #include <vector>
 
@@ -16,7 +17,11 @@ namespace object
 		explicit Triangle(Vector2D v1 = VEC2_ZERO, Vector2D v2 = VEC2_ZERO, Vector2D v3 = VEC2_ZERO);
 	public:
 		inline static Triangle Create(Vector2D v1 = VEC2_ZERO, Vector2D v2 = VEC2_ZERO, Vector2D v3 = VEC2_ZERO);
+
+		inline std::vector<SDL_Vertex> GetVerts();
 	};
 }
+
+#include "triangle-inl.h"
 
 #endif // !TRIANGLE_H_

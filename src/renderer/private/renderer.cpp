@@ -85,6 +85,8 @@ namespace renderer
 		// create the asset manager object
 		m_assets = new Assets();
 
+		SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+
 		LoadAllTextures();
 		set_window_icon();
 
@@ -107,6 +109,8 @@ namespace renderer
 			render_shape_object(shapeobj);
 		} reset_shape_objects();
 
+		render_verts(m_verts);
+
 		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);
 	}
@@ -116,6 +120,11 @@ namespace renderer
 		SDL_DestroyWindow(m_window);
 		SDL_DestroyRenderer(m_renderer);
 		SDL_Quit();
+	}
+
+	void Renderer::AddVerts(std::vector<SDL_Vertex> verts)
+	{
+		m_verts = verts;
 	}
 
 	void Renderer::AddTempShape(SDL_Rect shape)
@@ -144,6 +153,16 @@ namespace renderer
 		render_rect.h = height;
 
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+	}
+	
+	void Renderer::render_verts(std::vector<SDL_Vertex> verts)
+	{
+		std::vector< SDL_Vertex > v = {
+			{ SDL_FPoint{ 400, 150 }, SDL_Color{ 255, 0, 0, 255 } },
+			{ SDL_FPoint{ 200, 450 }, SDL_Color{ 0, 0, 255, 255 } },
+			{ SDL_FPoint{ 600, 450 }, SDL_Color{ 0, 255, 0, 255 } }
+		};
+		SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
 	}
 
 	void Renderer::render_shape_object(SDL_Rect shape)

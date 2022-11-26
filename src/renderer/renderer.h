@@ -29,7 +29,10 @@ namespace renderer
 		Assets* m_assets;
 
 		std::vector<SDL_Rect> m_shape_objects;
+		std::vector<SDL_Vertex> m_verts;
 		std::vector<object::Texture*> m_texutre_objects;
+
+		void render_verts(std::vector<SDL_Vertex> verts);
 
 		void render_shape_object(SDL_Rect shape);
 		void reset_shape_objects();
@@ -52,6 +55,7 @@ namespace renderer
 		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
 
 		void AddTempShape(SDL_Rect shape);
+		void AddVerts(std::vector<SDL_Vertex> verts);
 
 		inline SDL_Renderer* GetRendererObj();
 
