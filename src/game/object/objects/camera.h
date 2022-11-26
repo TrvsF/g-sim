@@ -12,15 +12,15 @@ namespace object
 	private:
 		GameObject*				m_subject;
 		std::vector<Texture*>	m_textureobjs;
-		Vector2D				m_interp_pos;
 		Vector2D				m_screensize;
+		Vector3D				m_local_offset_pos;
 	public:
 		Camera(GameObject* gameobject);
 
 		void SetSubject(GameObject* gameobject);
 		void SetTexturePos(GameObject* gameobject);
 
-		void Tick();
+		void Update();
 	};
 }
 

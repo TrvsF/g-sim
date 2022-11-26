@@ -104,12 +104,15 @@ namespace renderer
 			render_texture_object(textureobj);
 		}		
 
-		for (SDL_Rect shapeobj : m_shape_objects)
+		for (object::AABB* aabb : m_aabbs)
 		{
-			render_shape_object(shapeobj);
-		} reset_shape_objects();
+			render_aabb(aabb);
+		} 
 
-		render_verts(m_verts);
+		for (object::Triangle* tri : m_tris)
+		{
+			render_verts(tri->GetVerts());
+		}
 
 		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);
@@ -122,14 +125,14 @@ namespace renderer
 		SDL_Quit();
 	}
 
-	void Renderer::AddVerts(std::vector<SDL_Vertex> verts)
+	void Renderer::LoadTri(object::Triangle* tri)
 	{
-		m_verts = verts;
+		m_tris.push_back(tri);
 	}
 
-	void Renderer::AddTempShape(SDL_Rect shape)
+	void Renderer::LoadAABB(object::AABB* aabb)
 	{
-		m_shape_objects.push_back(shape);
+		m_aabbs.push_back(aabb);
 	}
 
 	void Renderer::set_window_icon()
@@ -165,16 +168,17 @@ namespace renderer
 		SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
 	}
 
-	void Renderer::render_shape_object(SDL_Rect shape)
+	void Renderer::render_aabb(object::AABB* aabb)
 	{
-		SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-		SDL_RenderDrawRect(m_renderer, &shape);
-		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-	}
+		SDL_Rect rect;
+		rect.w = (int)aabb->GetMaxX() - (int)aabb->GetMinX();
+		rect.h = (int)aabb->GetMaxY() - (int)aabb->GetMinY();
+		rect.x = (int)aabb->GetMinX();
+		rect.y = (int)aabb->GetMinY();
 
-	void Renderer::reset_shape_objects()
-	{
-		m_shape_objects.clear();
+		SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
+		SDL_RenderDrawRect(m_renderer, &rect);
+		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 	}
 
 	void Renderer::clear_buffer()

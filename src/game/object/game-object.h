@@ -45,14 +45,10 @@ namespace object
 
 		inline GameObject* GetObject();
 
+		// tick runs for every game object, update is used for children to be overwritten
 		virtual void Update()
 		{}
-
-		// debug
-		inline void DrawBB();
-
-		// Tick
-
+		
 		void Tick()
 		{
 			m_offset_pos = VEC3_ZERO;
@@ -64,12 +60,9 @@ namespace object
 			m_transform.OffsetRotation(m_offset_rotation);
 			m_transform.OffsetPosition(m_offset_pos);
 
-			// remove me
-			// TextureUpdate();
-
 			if (m_debug)
 			{
-				DrawBB();
+				renderer::Renderer::Get()->LoadAABB(&m_aabb);
 			}
 		}
 	};

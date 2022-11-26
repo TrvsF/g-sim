@@ -7,7 +7,7 @@ namespace object
 	{
 		m_subject = nullptr;
 		m_debug = true;
-		m_interp_pos = VEC2_ZERO;
+		m_local_offset_pos = VEC3_ZERO;
 	}
 
 	void Camera::SetSubject(GameObject* gameobject)
@@ -21,8 +21,8 @@ namespace object
 		object::TextureObject* object = static_cast<object::TextureObject*> (gameobject);
 		object::Texture* textureobj = object->GetTexture();
 		Vector2D pos = { 
-			object->GetTransform().GetPosition().x - m_offset_pos.x,
-			object->GetTransform().GetPosition().y - m_offset_pos.y 
+			object->GetTransform().GetPosition().x - m_local_offset_pos.x,
+			object->GetTransform().GetPosition().y - m_local_offset_pos.y
 		};
 
 		// if offscreen dont render
@@ -35,7 +35,7 @@ namespace object
 		textureobj->Pos(pos);
 	}
 
-	void Camera::Tick()
+	void Camera::Update()
 	{
 		if (!m_subject) { return; }
 
@@ -43,8 +43,8 @@ namespace object
 		Vector3D subject_midpoint = m_subject->GetAABB().GetMidpoint();
 		// how much we need to move to follow the player
 		Vector3D offsetpos = { 
-			(subject_midpoint.x - (GetPosition().x + m_offset_pos.x)) - (GetSize().width / 2),
-			(subject_midpoint.y - (GetPosition().y + m_offset_pos.y)) - (GetSize().height / 2),
+			(subject_midpoint.x - (GetPosition().x + m_local_offset_pos.x)) - (GetSize().width / 2),
+			(subject_midpoint.y - (GetPosition().y + m_local_offset_pos.y)) - (GetSize().height / 2),
 			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
 		};
 
@@ -58,18 +58,12 @@ namespace object
 		if (   newaabb.GetMinX() < 0 || newaabb.GetMaxX() > m_screensize.x
 			|| newaabb.GetMinY() < 0 || newaabb.GetMaxY() > m_screensize.y)
 		{
-			m_offset_pos += offsetpos;
+			m_local_offset_pos += offsetpos;
 		}
 		else
 		{
 			GetAABB().OffsetPos(offsetpos);
 			GetTransform().OffsetPosition(offsetpos);
-		}
-
-		if (m_debug)
-		{
-			DrawBB();
-			// printf("%.2f, %.2f\n", m_offset_pos.x, m_offset_pos.y);
 		}
 	}
 }

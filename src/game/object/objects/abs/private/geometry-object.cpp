@@ -10,7 +10,7 @@ namespace object
 		m_rotate = 0;
 		m_debug = true;
 
-		renderer::Renderer::Get()->AddVerts(GetVert());
+		// renderer::Renderer::Get()->AddVerts(GetVert());
 	}
 
 	std::vector<SDL_Vertex> GeometryObject::GetVert()
