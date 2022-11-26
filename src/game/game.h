@@ -7,6 +7,7 @@
 #include "object/objects/player.h"
 #include "object/objects/agent.h"
 #include "object/objects/abs/texture-object.h"
+#include "object/objects/abs/geometry-object.h"
 
 #include <vector>
 

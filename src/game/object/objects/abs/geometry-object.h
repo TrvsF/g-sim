@@ -10,14 +10,10 @@ namespace object
 	class GeometryObject : public GameObject
 	{
 	private:
-		std::vector<Triangle> m_tris;
-
-		float m_rotate;
+		std::vector<Triangle>	m_tris;
+		float					m_rotate;
 	public:
 		GeometryObject(GameObject* object);
-
-		// debug
-		std::vector<SDL_Vertex> GetVert();
 
 		inline float Rotate();
 		inline void Rotate(float rotate);

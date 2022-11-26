@@ -51,6 +51,13 @@ namespace game
 			{ 32.0f,   32.0f,   32.0f }
 		);
 		m_gameworld_objects.push_back(new object::Agent(miscagent, "player"));
+
+		object::GameObject* triman = object::GameObject::Create(
+			{ 50.0f,   50.0f,   0.0f },
+			{ 0.0f,    0.0f,    0.0f },
+			{ 32.0f,   32.0f,   32.0f }
+		);
+		m_gameworld_objects.push_back(new object::GeometryObject(triman));
 	}
 
 	// entities -> camera
