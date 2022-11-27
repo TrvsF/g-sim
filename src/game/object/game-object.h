@@ -63,6 +63,7 @@ namespace object
 			if (m_debug)
 			{
 				renderer::Renderer::Get()->LoadAABB(&m_aabb);
+				m_debug = false;
 			}
 		}
 	};

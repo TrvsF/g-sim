@@ -16,9 +16,14 @@ namespace object
 
 		explicit Triangle(Vector2D v1 = VEC2_ZERO, Vector2D v2 = VEC2_ZERO, Vector2D v3 = VEC2_ZERO);
 	public:
+		Triangle(Triangle const& origin)
+			: m_v1(origin.m_v1), m_v2(origin.m_v2), m_v3(origin.m_v3)
+		{}
 		inline static Triangle Create(Vector2D v1 = VEC2_ZERO, Vector2D v2 = VEC2_ZERO, Vector2D v3 = VEC2_ZERO);
 
-		inline std::vector<SDL_Vertex> GetVerts();
+		inline Vector2D GetPoint1();
+		inline Vector2D GetPoint2();
+		inline Vector2D GetPoint3();
 	};
 }
 

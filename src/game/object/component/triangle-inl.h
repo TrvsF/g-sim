@@ -7,13 +7,18 @@ namespace object
 		return Triangle(v1, v2, v3);
 	}
 
-	inline std::vector<SDL_Vertex> Triangle::GetVerts()
+	inline Vector2D Triangle::GetPoint1()
 	{
-		return
-		{
-			{ SDL_FPoint{ m_v1.x, m_v1.y }, SDL_Color{ 255, 0, 0, 255 } },
-			{ SDL_FPoint{ m_v2.x, m_v2.y }, SDL_Color{ 0, 0, 255, 255 } },
-			{ SDL_FPoint{ m_v3.x, m_v3.y }, SDL_Color{ 0, 255, 0, 255 } }
-		};
+		return m_v1;
+	}
+
+	inline Vector2D Triangle::GetPoint2()
+	{
+		return m_v2;
+	}
+
+	inline Vector2D Triangle::GetPoint3()
+	{
+		return m_v3;
 	}
 }

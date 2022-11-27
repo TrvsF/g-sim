@@ -111,7 +111,7 @@ namespace renderer
 
 		for (object::Triangle* tri : m_tris)
 		{
-			render_verts(tri->GetVerts());
+			render_tri(tri);
 		}
 
 		// !!! the last thing to be called from renderer
@@ -123,6 +123,14 @@ namespace renderer
 		SDL_DestroyWindow(m_window);
 		SDL_DestroyRenderer(m_renderer);
 		SDL_Quit();
+	}
+
+	void Renderer::LoadTris(std::vector<object::Triangle*> tris)
+	{
+		for (object::Triangle* tri : tris)
+		{
+			m_tris.push_back(tri);
+		}
 	}
 
 	void Renderer::LoadTri(object::Triangle* tri)
@@ -158,12 +166,12 @@ namespace renderer
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}
 	
-	void Renderer::render_verts(std::vector<SDL_Vertex> verts)
+	void Renderer::render_tri(object::Triangle* tri)
 	{
 		std::vector< SDL_Vertex > v = {
-			{ SDL_FPoint{ 400, 150 }, SDL_Color{ 255, 0, 0, 255 } },
-			{ SDL_FPoint{ 200, 450 }, SDL_Color{ 0, 0, 255, 255 } },
-			{ SDL_FPoint{ 600, 450 }, SDL_Color{ 0, 255, 0, 255 } }
+			{ SDL_FPoint{ tri->GetPoint1().x, tri->GetPoint1().y }, SDL_Color{255, 0, 0, 255}},
+			{ SDL_FPoint{ tri->GetPoint2().x, tri->GetPoint2().y }, SDL_Color{ 0, 0, 255, 255 } },
+			{ SDL_FPoint{ tri->GetPoint3().x, tri->GetPoint3().y }, SDL_Color{ 0, 255, 0, 255 } }
 		};
 		SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
 	}

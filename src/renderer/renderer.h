@@ -34,11 +34,11 @@ namespace renderer
 		std::vector<object::Triangle*> m_tris;
 		std::vector<object::Texture*> m_texutre_objects;
 
-		void render_verts(std::vector<SDL_Vertex> verts);
+		void render_tri(object::Triangle* tri);
 
 		void render_aabb(object::AABB* rect);
 
-		void add_texture_object(object::Texture* texture_object);
+		inline void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
 
 		void set_window_icon();
@@ -55,6 +55,7 @@ namespace renderer
 		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
 		void LoadAllTextures();
 		void LoadAABB(object::AABB* aabb);
+		void LoadTris(std::vector<object::Triangle*> tris);
 		void LoadTri(object::Triangle* tri); // TODO : system to unload these object
 
 		inline SDL_Renderer* GetRendererObj();

@@ -15,6 +15,10 @@ struct Vector2D
 		: x(_x), y(_y)
 	{}
 
+	Vector2D(Vector2D const &v)
+		: x(v.x), y(v.y)
+	{}
+
 	float magnitudeSqr()
 	{
 		return x * x + y * y;

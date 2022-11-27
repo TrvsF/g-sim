@@ -2,13 +2,8 @@
 
 namespace object
 {
-	inline float GeometryObject::Rotate()
+	inline std::vector<Triangle*> GeometryObject::GetTris()
 	{
-		return m_rotate;
-	}
-	
-	inline void GeometryObject::Rotate(float rotate)
-	{
-		m_rotate = rotate;
+		return m_tris;
 	}
 }

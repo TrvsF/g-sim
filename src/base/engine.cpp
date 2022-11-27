@@ -10,7 +10,7 @@ namespace base
     {
         // create renderer
         renderer::Renderer::Create();
-
+        
         // create game
         game::Game::Create();
 
