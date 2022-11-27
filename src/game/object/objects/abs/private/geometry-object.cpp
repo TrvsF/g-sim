@@ -28,10 +28,6 @@ namespace object
 		create_tris(points);
 	}
 
-	// TODO
-	// https://stackoverflow.com/questions/6715172/c-vector-memory-corruption-when-modifiying-an-object-member-from-outside-the
-	// DO CONSTRUCTORS
-
 	void GeometryObject::create_tris(std::vector<Vector2D> points)
 	{
 		float xtot = 0;
@@ -54,6 +50,7 @@ namespace object
 			last = point;
 		}
 		
+		// TODO : offset based on pos (maybe pass verts?)
 		renderer::Renderer::Get()->LoadTris(tris);
 	}
 }
