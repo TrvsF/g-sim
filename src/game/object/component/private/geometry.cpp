@@ -20,7 +20,7 @@ namespace object
 		Vector2D last = points.back();
 		for (Vector2D point : points)
 		{
-			Triangle tri = Triangle::Create(point, last, midpoint);
+			Triangle tri = Triangle(point, last, midpoint);
 			m_tris.push_back(tri);
 			last = point;
 		}

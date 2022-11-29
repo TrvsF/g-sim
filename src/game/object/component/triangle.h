@@ -10,9 +10,8 @@ namespace object
 	{
 	private:
 		// somethings gone REALLY wrong here, probably need to rewrite the class
-		explicit Triangle(const Vector2D v1 = VEC2_ZERO, const Vector2D v2 = VEC2_ZERO, const Vector2D v3 = VEC2_ZERO);
 	public:
-		inline static Triangle Create(const Vector2D v1 = VEC2_ZERO, const Vector2D v2 = VEC2_ZERO, const Vector2D v3 = VEC2_ZERO);
+		Triangle(const Vector2D v1 = VEC2_ZERO, const Vector2D v2 = VEC2_ZERO, const Vector2D v3 = VEC2_ZERO);
 
 		inline Vector2D GetPoint1() const;
 		inline Vector2D GetPoint2() const;
