@@ -1,7 +1,7 @@
 #ifndef TEXTURE_H_
 #define TEXTURE_H_
 
-#include <SDL.h>
+#include <SDL.h> // TODO: only texture
 
 #include "../src/util/vector2d.h"
 

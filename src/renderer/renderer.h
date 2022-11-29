@@ -12,7 +12,7 @@
 #include "../base/helper_macos.h"
 #include "../game/object/component/aabb.h"
 #include "../game/object/component/texture.h"
-#include "../game/object/component/triangle.h"
+#include "../game/object/component/geometry.h"
 #include "../renderer/assets.h"
 
 namespace renderer
@@ -31,12 +31,13 @@ namespace renderer
 		Assets* m_assets;
 
 		std::vector<object::AABB*> m_aabbs;
-		std::vector<object::Triangle*> m_tris;
+		std::vector<object::Geometry*> m_geometry_objects;
 		std::vector<object::Texture*> m_texutre_objects;
 
+		void render_geometry_object(object::Geometry* geometry_object);
 		void render_tri(object::Triangle* tri);
 
-		void render_aabb(object::AABB* rect);
+		void render_aabb(object::AABB* aabb);
 
 		inline void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
@@ -55,8 +56,9 @@ namespace renderer
 		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
 		void LoadAllTextures();
 		void LoadAABB(object::AABB* aabb);
-		void LoadTris(std::vector<object::Triangle*> tris);
-		void LoadTri(object::Triangle* tri); // TODO : system to unload these object
+		void LoadGeometry(object::Geometry* geometry_object); // TODO : system to unload these object
+
+		void RenderRect(SDL_Rect* rect);
 
 		inline SDL_Renderer* GetRendererObj();
 

@@ -2,8 +2,8 @@
 
 namespace object
 {
-	inline std::vector<Triangle*> GeometryObject::GetTris()
+	inline Geometry* GeometryObject::GetGeometry()
 	{
-		return m_tris;
+		return m_geometry;
 	}
 }

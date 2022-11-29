@@ -109,9 +109,9 @@ namespace renderer
 			render_aabb(aabb);
 		} 
 
-		for (object::Triangle* tri : m_tris)
+		for (object::Geometry* geometryobj : m_geometry_objects)
 		{
-			render_tri(tri);
+			render_geometry_object(geometryobj);
 		}
 
 		// !!! the last thing to be called from renderer
@@ -125,17 +125,9 @@ namespace renderer
 		SDL_Quit();
 	}
 
-	void Renderer::LoadTris(std::vector<object::Triangle*> tris)
+	void Renderer::LoadGeometry(object::Geometry* geometry_object)
 	{
-		for (object::Triangle* tri : tris)
-		{
-			m_tris.push_back(tri);
-		}
-	}
-
-	void Renderer::LoadTri(object::Triangle* tri)
-	{
-		m_tris.push_back(tri);
+		m_geometry_objects.push_back(geometry_object);
 	}
 
 	void Renderer::LoadAABB(object::AABB* aabb)
@@ -166,12 +158,25 @@ namespace renderer
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}
 	
+	void Renderer::render_geometry_object(object::Geometry* geometry_object)
+	{
+		for (object::Triangle tri : geometry_object->Tris())
+		{
+			std::vector< SDL_Vertex > v = {
+				{ SDL_FPoint{ tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y }, SDL_Color{255, 0, 0, 255}},
+				{ SDL_FPoint{ tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y }, SDL_Color{ 0, 0, 255, 255 } },
+				{ SDL_FPoint{ tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y }, SDL_Color{ 0, 255, 0, 255 } }
+			};
+			SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
+		}
+	}
+
 	void Renderer::render_tri(object::Triangle* tri)
 	{
 		std::vector< SDL_Vertex > v = {
-			{ SDL_FPoint{ tri->GetPoint1().x, tri->GetPoint1().y }, SDL_Color{255, 0, 0, 255}},
-			{ SDL_FPoint{ tri->GetPoint2().x, tri->GetPoint2().y }, SDL_Color{ 0, 0, 255, 255 } },
-			{ SDL_FPoint{ tri->GetPoint3().x, tri->GetPoint3().y }, SDL_Color{ 0, 255, 0, 255 } }
+				{ SDL_FPoint{ tri->GetPoint1() }, SDL_Color{255, 0, 0, 255}},
+				{ SDL_FPoint{ tri->GetPoint2() }, SDL_Color{ 0, 0, 255, 255 } },
+				{ SDL_FPoint{ tri->GetPoint3() }, SDL_Color{ 0, 255, 0, 255 } }
 		};
 		SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
 	}
@@ -184,8 +189,13 @@ namespace renderer
 		rect.x = (int)aabb->GetMinX();
 		rect.y = (int)aabb->GetMinY();
 
+		RenderRect(&rect);
+	}
+
+	void Renderer::RenderRect(SDL_Rect* rect)
+	{
 		SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-		SDL_RenderDrawRect(m_renderer, &rect);
+		SDL_RenderDrawRect(m_renderer, rect);
 		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 	}
 

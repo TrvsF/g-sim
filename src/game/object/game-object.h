@@ -49,6 +49,7 @@ namespace object
 		virtual void Update()
 		{}
 		
+		// update pos of object
 		void Tick()
 		{
 			m_offset_pos = VEC3_ZERO;
@@ -60,6 +61,7 @@ namespace object
 			m_transform.OffsetRotation(m_offset_rotation);
 			m_transform.OffsetPosition(m_offset_pos);
 
+			// rebug render where game object is
 			if (m_debug)
 			{
 				renderer::Renderer::Get()->LoadAABB(&m_aabb);
