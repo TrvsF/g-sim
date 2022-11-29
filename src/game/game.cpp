@@ -55,14 +55,10 @@ namespace game
 		object::GameObject* triman = object::GameObject::Create(
 			{ 50.0f,   50.0f,   0.0f },
 			{ 0.0f,    0.0f,    0.0f },
-			{ 32.0f,   32.0f,   32.0f }
+			{ 232.0f,   232.0f,   232.0f }
 		);
-		// generate random points
-		std::vector<Vector2D> points =
-		{
-			{0, 20}, {10, 30}, {30, 0}
-		};
-		m_gameworld_objects.push_back(new object::GeometryObject(triman, 6));
+		srand(time(NULL));
+		m_gameworld_objects.push_back(new object::GeometryObject(triman, 11));
 	}
 
 	// entities -> camera

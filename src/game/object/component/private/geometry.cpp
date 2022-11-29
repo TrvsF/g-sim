@@ -17,15 +17,13 @@ namespace object
 		Vector2D midpoint = { xtot / size, ytot / size };
 
 		// create triangles from points
-		std::vector<Triangle> tris;
 		Vector2D last = points.back();
 		for (Vector2D point : points)
 		{
-			tris.push_back(Triangle::Create(point, last, midpoint));
+			Triangle tri = Triangle::Create(point, last, midpoint);
+			m_tris.push_back(tri);
 			last = point;
 		}
-
-		m_tris = tris;
 	}
 
 	Geometry::Geometry()
@@ -39,10 +37,7 @@ namespace object
 	void Geometry::Set(Vector2D pos, int sides, float width, float height)
 	{
 		// dont be silly
-		if (sides < 3)
-		{
-			sides = 3;
-		}
+		if (sides < 3) { sides = 3; }
 		// generate random points
 		std::vector<Vector2D> points;
 		for (int i = 0; i < sides; i++)

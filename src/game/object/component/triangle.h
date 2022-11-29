@@ -1,7 +1,6 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-#include <SDL_rect.h>
 #include "../src/util/vector2d.h"
 #include <vector>
 
@@ -10,23 +9,20 @@ namespace object
 	class Triangle
 	{
 	private:
-		SDL_FPoint m_v1;
-		SDL_FPoint m_v2;
-		SDL_FPoint m_v3;
-
-		
+		// somethings gone REALLY wrong here, probably need to rewrite the class
+		explicit Triangle(const Vector2D v1 = VEC2_ZERO, const Vector2D v2 = VEC2_ZERO, const Vector2D v3 = VEC2_ZERO);
 	public:
-		explicit Triangle(SDL_FPoint v1 = { 0, 0 }, SDL_FPoint v2 = { 0, 0 }, SDL_FPoint v3 = { 0, 0 });
-		Triangle(Triangle const& origin)
-			: m_v1(origin.m_v1), m_v2(origin.m_v2), m_v3(origin.m_v3)
-		{}
-		inline static Triangle Create(Vector2D v1 = { 0, 0 }, Vector2D v2 = { 0, 0 }, Vector2D v3 = { 0, 0 });
+		inline static Triangle Create(const Vector2D v1 = VEC2_ZERO, const Vector2D v2 = VEC2_ZERO, const Vector2D v3 = VEC2_ZERO);
 
-		inline SDL_FPoint GetPoint1();
-		inline SDL_FPoint GetPoint2();
-		inline SDL_FPoint GetPoint3();
+		inline Vector2D GetPoint1() const;
+		inline Vector2D GetPoint2() const;
+		inline Vector2D GetPoint3() const;
 
 		static const Triangle ZERO;
+	protected:
+		Vector2D m_v1;
+		Vector2D m_v2;
+		Vector2D m_v3;
 	};
 }
 

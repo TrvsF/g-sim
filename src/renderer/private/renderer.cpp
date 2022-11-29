@@ -160,7 +160,7 @@ namespace renderer
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry_object)
 	{
-		for (object::Triangle tri : geometry_object->Tris())
+		for (const auto& tri : geometry_object->Tris())
 		{
 			std::vector< SDL_Vertex > v = {
 				{ SDL_FPoint{ tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y }, SDL_Color{255, 0, 0, 255}},
@@ -173,12 +173,14 @@ namespace renderer
 
 	void Renderer::render_tri(object::Triangle* tri)
 	{
+		/*
 		std::vector< SDL_Vertex > v = {
 				{ SDL_FPoint{ tri->GetPoint1() }, SDL_Color{255, 0, 0, 255}},
 				{ SDL_FPoint{ tri->GetPoint2() }, SDL_Color{ 0, 0, 255, 255 } },
 				{ SDL_FPoint{ tri->GetPoint3() }, SDL_Color{ 0, 255, 0, 255 } }
 		};
 		SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
+		*/
 	}
 
 	void Renderer::render_aabb(object::AABB* aabb)

@@ -2,16 +2,6 @@
 
 namespace object
 {
-	inline void Geometry::Tris(std::vector<Triangle> tris)
-	{
-		m_tris = tris;
-	}
-
-	inline std::vector<Triangle> Geometry::Tris()
-	{
-		return m_tris;
-	}
-
 	inline void Geometry::Rotation(float rotation)
 	{
 		m_rotation = rotation;

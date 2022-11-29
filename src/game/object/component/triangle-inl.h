@@ -2,22 +2,22 @@
 
 namespace object
 {
-	inline Triangle Triangle::Create(Vector2D v1, Vector2D v2, Vector2D v3)
+	inline Triangle Triangle::Create(const Vector2D v1, const Vector2D v2, const  Vector2D v3)
 	{
-		return Triangle({v1.x, v1.y}, {v2.x, v2.y}, { v3.x, v3.y });
+		return Triangle(v1, v2, v3);
 	}
 
-	inline SDL_FPoint Triangle::GetPoint1()
+	inline Vector2D Triangle::GetPoint1() const
 	{
 		return m_v1;
 	}
 
-	inline SDL_FPoint Triangle::GetPoint2()
+	inline Vector2D Triangle::GetPoint2() const
 	{
 		return m_v2;
 	}
 
-	inline SDL_FPoint Triangle::GetPoint3()
+	inline Vector2D Triangle::GetPoint3() const
 	{
 		return m_v3;
 	}

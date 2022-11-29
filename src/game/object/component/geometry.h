@@ -27,8 +27,7 @@ namespace object
 		void Set(Vector2D pos, int sides, float width, float height);
 		void Set(Vector2D pos, std::vector<Vector2D> points);
 
-		inline void Tris(std::vector<Triangle> tris);
-		inline std::vector<Triangle> Tris();
+		inline const std::vector<Triangle>& Tris() const { return m_tris; }
 
 		inline void Rotation(float rotation);
 		inline float Rotation() const;
