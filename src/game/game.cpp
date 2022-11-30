@@ -59,6 +59,7 @@ namespace game
 		);
 		srand(time(NULL));
 		m_gameworld_objects.push_back(new object::GeometryObject(triman, 11));
+		m_gameworld_objects.push_back(new object::GeometryObject(triman, 11));
 	}
 
 	// entities -> camera

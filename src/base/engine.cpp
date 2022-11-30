@@ -68,7 +68,6 @@ namespace base
                 // tick the updater [handles inputs] then the game (& its objects)
                 updater->Tick();
                 game->Tick();
-            
                 m_tick_timer->Reset();
             }
 
