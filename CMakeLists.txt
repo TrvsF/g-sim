@@ -36,7 +36,7 @@ add_executable (
  "src/game/object/component/private/transform.cpp"
  "src/game/object/component/triangle.h"
  "src/game/object/component/triangle-inl.h"
- "src/game/object/component/private/triangle.cpp"
+ 
 
  "src/game/object/objects/player.h"
  "src/game/object/objects/private/player.cpp"
