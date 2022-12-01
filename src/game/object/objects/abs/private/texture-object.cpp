@@ -5,6 +5,7 @@ namespace object
 	TextureObject::TextureObject(GameObject* object, const char* textureid)
 		: GameObject(object)
 	{
+		SetType(GameObjectType::Texture);
 		set_texture_from_id(textureid);
 		m_debug = true;
 	}

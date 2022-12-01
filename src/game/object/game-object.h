@@ -11,6 +11,12 @@
 
 namespace object
 {
+	enum class GameObjectType
+	{
+		Texture,
+		Geometry
+	};
+
 	class GameObject
 	{
 	protected:
@@ -18,8 +24,9 @@ namespace object
 		Vector3D	m_offset_pos;
 		Vector3D	m_offset_rotation;
 	private:
-		AABB		m_aabb;
-		Transform	m_transform;
+		GameObjectType	m_object_type;
+		AABB			m_aabb; 
+		Transform		m_transform;
 
 	public:
 		GameObject(AABB aabb, Transform transform)
@@ -42,6 +49,9 @@ namespace object
 
 		inline const Size GetSize() const;
 		inline void SetSize(Size size);
+
+		inline const GameObjectType GetType() const;
+		inline void SetType(GameObjectType type);
 
 		inline GameObject* GetObject();
 

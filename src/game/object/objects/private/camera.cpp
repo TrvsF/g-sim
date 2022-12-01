@@ -18,23 +18,46 @@ namespace object
 
 	void Camera::SetTexturePos(GameObject* gameobject)
 	{
-		// if is a texture game object get its texture companant
-		object::TextureObject* object = static_cast<object::TextureObject*> (gameobject);
-		object::Texture* textureobj = object->GetTexture();
-		// get new pos relative to camera object
-		Vector2D pos = { 
-			object->GetTransform().GetPosition().x - m_local_offset_pos.x,
-			object->GetTransform().GetPosition().y - m_local_offset_pos.y
-		};
-		// if offscreen dont render
-		if (pos.x + textureobj->Width() < 0 || pos.x > m_screensize.x || pos.y + textureobj->Height() < 0 || pos.y > m_screensize.y)
+		if (gameobject->GetType() == GameObjectType::Texture)
 		{
-			textureobj->Active(false);
-			return;
+			// if is a texture game object get its texture companant
+			object::TextureObject* object = static_cast<object::TextureObject*> (gameobject);
+			object::Texture* textureobj = object->GetTexture();
+			// get new pos relative to camera object
+			Vector2D pos = {
+				object->GetTransform().GetPosition().x - m_local_offset_pos.x,
+				object->GetTransform().GetPosition().y - m_local_offset_pos.y
+			};
+			// if offscreen dont render
+			if (pos.x + textureobj->Width() < 0 || pos.x > m_screensize.x || pos.y + textureobj->Height() < 0 || pos.y > m_screensize.y)
+			{
+				textureobj->Active(false);
+				return;
+			}
+			// if onscreen set some values
+			textureobj->Active(true);
+			textureobj->Pos(pos);
 		}
-		// if onscreen set some values
-		textureobj->Active(true);
-		textureobj->Pos(pos);
+		if (gameobject->GetType() == GameObjectType::Geometry)
+		{
+			// if is a texture game object get its texture companant
+			object::GeometryObject* object = static_cast<object::GeometryObject*> (gameobject);
+			object::Geometry* geometry = object->GetGeometry();
+			// get new pos relative to camera object
+			Vector2D pos = {
+				object->GetTransform().GetPosition().x - m_local_offset_pos.x,
+				object->GetTransform().GetPosition().y - m_local_offset_pos.y
+			};
+			// if offscreen dont render
+			if (pos.x + object->GetSize().width < 0 || pos.x > m_screensize.x || pos.y + object->GetSize().height < 0 || pos.y > m_screensize.y)
+			{
+				geometry->Active(false);
+				return;
+			}
+			// if onscreen set some values
+			geometry->Active(true);
+			geometry->Pos(pos);
+		}
 	}
 
 	void Camera::Update()

@@ -46,4 +46,14 @@ namespace object
 	{
 		m_aabb.SetSize(size);
 	}
+
+	inline const GameObjectType GameObject::GetType() const
+	{
+		return m_object_type;
+	}
+
+	inline void GameObject::SetType(GameObjectType type)
+	{
+		m_object_type = type;
+	}
 }

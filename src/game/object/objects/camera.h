@@ -3,6 +3,8 @@
 
 #include "../game-object.h"
 #include "abs/texture-object.h"
+#include "abs/geometry-object.h"
+#include "../component/geometry.h"
 #include "../component/texture.h"
 
 namespace object

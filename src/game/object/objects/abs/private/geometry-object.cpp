@@ -2,7 +2,7 @@
 
 namespace object
 {
-	void GeometryObject::set_geometry()
+	void GeometryObject::load_geometry()
 	{
 		renderer::Renderer::Get()->LoadGeometry(m_geometry);
 	}
@@ -10,24 +10,26 @@ namespace object
 	GeometryObject::GeometryObject(GameObject* object, int sides)
 		: GameObject(object)
 	{
+		SetType(GameObjectType::Geometry);
 		m_geometry = new Geometry();
-		set_geometry(); // sometimes causes a crash??!?!???
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y},
 			sides,
 			GetAABB().GetMaxX() - GetAABB().GetMinX(),
 			GetAABB().GetMaxY() - GetAABB().GetMinY()
 		);
+		load_geometry();
 	}
 
 	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points)
 		: GameObject(object)
 	{
+		SetType(GameObjectType::Geometry);
 		m_geometry = new Geometry();
-		set_geometry();
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y },
 			points
 		);
+		load_geometry();
 	}
 }
