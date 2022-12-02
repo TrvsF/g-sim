@@ -35,6 +35,7 @@ namespace game
 		// if there is no selected object see if we can find one
 		if (m_selected_obj == nullptr)
 		{
+			bool found = false;
 			for (object::GameObject* object : m_gameworld_objects)
 			{
 				// TODO : Change to texture
@@ -42,10 +43,13 @@ namespace game
 				{
 					m_selected_obj = object;
 					m_selected_obj_offset = { x - object->GetPosition().x, y - object->GetPosition().y };
+					found = true;
 					break;
 				}
 			}
+			if (!found) { return; }
 		}
+		// move the about around :D
 		Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
 		m_selected_obj->SetPosition(pos);
 	}
