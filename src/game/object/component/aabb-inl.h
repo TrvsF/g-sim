@@ -74,4 +74,14 @@ namespace object
 			GetMaxY() < other.GetMinY() ||
 			other.GetMaxY() < GetMinY());
 	}
+
+	inline bool AABB::IntersectsPoint(Vector2D point) const
+	{
+		return point.x > GetMinX() && point.x < GetMaxX() && point.y > GetMinY() && point.y < GetMinY();
+	}
+
+	inline bool AABB::IntersectsPoint(int x, int y) const
+	{
+		return x > GetMinX() && x < GetMaxX() && y > GetMinY() && y < GetMaxY();
+	}
 }

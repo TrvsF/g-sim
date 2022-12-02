@@ -32,4 +32,9 @@ namespace object
 		);
 		load_geometry();
 	}
+
+	void GeometryObject::Update()
+	{
+		m_geometry->Pos({ GetPosition().x, GetPosition().y });
+	}
 }

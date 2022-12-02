@@ -24,6 +24,18 @@ namespace updater
 		{ m_player->MoveLeft(); }
 		if (m_input->KeyDown("d"))
 		{ m_player->MoveRight(); }
+
+		if (m_input->MouseDown(Left))
+		{
+			int x, y;
+			SDL_GetMouseState(&x, &y);
+			game::Game::Get()->OnMouseClick(x, y);
+		}
+
+		if (m_input->MouseReleased(Left))
+		{
+			game::Game::Get()->OnMouseRelease();
+		}
 	}
 
 	void Controller::check_menu_inputs() {}

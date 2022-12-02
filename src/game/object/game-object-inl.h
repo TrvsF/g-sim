@@ -35,6 +35,7 @@ namespace object
 	inline void GameObject::SetPosition(Vector3D position)
 	{
 		m_transform.SetPosition(position);
+		m_aabb.SetPos(position);
 	}
 
 	inline const Size GameObject::GetSize() const

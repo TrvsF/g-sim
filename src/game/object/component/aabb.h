@@ -1,6 +1,7 @@
 #ifndef AABB_H_
 #define AABB_H_
 
+#include "../src/util/vector2d.h"
 #include "../src/util/vector3d.h"
 #include "../src/util/size.h"
 
@@ -30,6 +31,8 @@ namespace object
 		inline void OffsetPos(Vector3D offset);
 		
 		inline bool IntersectsRect2D(const AABB& other) const;
+		inline bool IntersectsPoint(Vector2D point) const;
+		inline bool IntersectsPoint(int x, int y) const;
 
 		static const AABB ZERO;
 	protected:

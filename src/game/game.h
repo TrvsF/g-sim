@@ -22,12 +22,18 @@ namespace game
 
 		object::Player* m_player;
 		object::Camera* m_camera;
+
+		object::GameObject* m_selected_obj;
+		Vector2D			m_selected_obj_offset;
 	public:
 		Game();
 
 		static void Create();
 		static inline Game* Get();
 		static void Destroy();
+
+		void OnMouseRelease();
+		void OnMouseClick(int x, int y);
 
 		inline void AddGameObject(object::GameObject* game_object);
 		inline const std::vector<object::GameObject*> GetGameObjects() const;

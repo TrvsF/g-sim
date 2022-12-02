@@ -85,7 +85,7 @@ namespace renderer
 		// create the asset manager object
 		m_assets = new Assets();
 
-		SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
 		LoadAllTextures();
 		set_window_icon();
@@ -163,9 +163,9 @@ namespace renderer
 		for (const auto& tri : geometry_object->Tris())
 		{
 			std::vector< SDL_Vertex > v = {
-				{ SDL_FPoint{ tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y }, SDL_Color{255, 0, 0, 255}},
-				{ SDL_FPoint{ tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y }, SDL_Color{ 0, 0, 255, 255 } },
-				{ SDL_FPoint{ tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y }, SDL_Color{ 0, 255, 0, 255 } }
+				{ SDL_FPoint{ tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y }, SDL_Color{ 50, 130, 0, 255}},
+				{ SDL_FPoint{ tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y }, SDL_Color{ 50, 130, 0, 255 } },
+				{ SDL_FPoint{ tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y }, SDL_Color{ 0, 0, 0, 255 } }
 			};
 			SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
 		}
