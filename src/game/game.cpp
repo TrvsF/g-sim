@@ -64,7 +64,7 @@ namespace game
 		);
 
 		m_player = new object::Player(playerobj, "player");
-		m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT
+		m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT (z indexing?)
 
 		object::GameObject* cameraobj = object::GameObject::Create(
 			{ 0.0f,   0.0f,   0.0f },
@@ -103,7 +103,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 232.0f,   232.0f,   232.0f }
 		);
-		srand(time(NULL));
+		srand(time(NULL)); // move me
 		m_gameworld_objects.push_back(new object::GeometryObject(triman, 4));
 		m_gameworld_objects.push_back(new object::GeometryObject(triman2, 5));
 		m_gameworld_objects.push_back(new object::GeometryObject(triman3, 4));

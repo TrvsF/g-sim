@@ -35,6 +35,5 @@ namespace object
 
 	void GeometryObject::Update()
 	{
-		m_geometry->Pos({ GetPosition().x, GetPosition().y });
 	}
 }

@@ -14,7 +14,8 @@ namespace object
 	enum class GameObjectType
 	{
 		Texture,
-		Geometry
+		Geometry,
+		None
 	};
 
 	class GameObject
@@ -30,7 +31,7 @@ namespace object
 
 	public:
 		GameObject(AABB aabb, Transform transform)
-			: m_aabb(aabb), m_transform(transform), m_debug(false)
+			: m_aabb(aabb), m_transform(transform), m_debug(false), m_object_type(GameObjectType::None)
 		{}
 		GameObject(GameObject* gameobject)
 			: m_aabb(gameobject->GetAABB()), m_transform(gameobject->GetTransform())
