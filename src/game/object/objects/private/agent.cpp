@@ -2,8 +2,8 @@
 
 namespace object
 {
-	Agent::Agent(GameObject* gameobject, const char* textureid)
-		: TextureObject(gameobject, textureid)
+	Agent::Agent(GameObject* gameobject, int sides)
+		: GeometryObject(gameobject, sides)
 	{
 		
 	}

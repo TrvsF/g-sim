@@ -6,6 +6,7 @@
 #include "object/objects/camera.h"
 #include "object/objects/player.h"
 #include "object/objects/agent.h"
+#include "object/objects/food.h"
 #include "object/objects/abs/texture-object.h"
 #include "object/objects/abs/geometry-object.h"
 

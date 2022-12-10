@@ -81,7 +81,14 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 32.0f,   32.0f,   32.0f }
 		);
-		m_gameworld_objects.push_back(new object::Agent(miscagent, "player"));
+		m_gameworld_objects.push_back(new object::Agent(miscagent, 4)); // TODO : Scale BB with tri size
+
+		object::GameObject* food = object::GameObject::Create(
+			{ 100.0f,  400.0f,  0.0f },
+			{ 0.0f,    0.0f,    0.0f },
+			{ 64.0f,   64.0f,   64.0f }
+		);
+		m_gameworld_objects.push_back(new object::Food(food, "food"));
 
 		object::GameObject* triman = object::GameObject::Create(
 			{ 150.0f,   0.0f,   0.0f },
