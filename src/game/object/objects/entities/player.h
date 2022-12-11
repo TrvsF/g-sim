@@ -1,7 +1,7 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "abs/texture-object.h"
+#include "../src/game/object/objects/abstract/texture-object.h"
 
 namespace object
 {

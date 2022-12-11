@@ -3,12 +3,12 @@
 
 #include "../base/helper_macos.h"
 #include "object/game-object.h"
-#include "object/objects/camera.h"
-#include "object/objects/player.h"
-#include "object/objects/agent.h"
-#include "object/objects/food.h"
-#include "object/objects/abs/texture-object.h"
-#include "object/objects/abs/geometry-object.h"
+#include "object/objects/entities/camera.h"
+#include "object/objects/entities/player.h"
+#include "object/objects/entities/agent.h"
+#include "object/objects/entities/food.h"
+#include "object/objects/abstract/texture-object.h"
+#include "object/objects/abstract/geometry-object.h"
 
 #include <vector>
 

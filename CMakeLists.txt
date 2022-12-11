@@ -40,19 +40,21 @@ add_executable (
  "src/game/object/component/private/transform.cpp"
  "src/game/object/component/private/geometry.cpp"
  
- "src/game/object/objects/player.h"
- "src/game/object/objects/private/player.cpp"
- "src/game/object/objects/agent.h"
- "src/game/object/objects/private/agent.cpp"
- "src/game/object/objects/camera.h"
- "src/game/object/objects/private/camera.cpp"
+ "src/game/object/objects/entities/player.h"
+ "src/game/object/objects/entities/private/player.cpp"
+ "src/game/object/objects/entities/agent.h"
+ "src/game/object/objects/entities/private/agent.cpp"
+ "src/game/object/objects/entities/camera.h"
+ "src/game/object/objects/entities/private/camera.cpp"
+ "src/game/object/objects/entities/food.h"
+ "src/game/object/objects/entities/private/food.cpp"
   
- "src/game/object/objects/abs/texture-object.h"
- "src/game/object/objects/abs/texture-object-inl.h"
- "src/game/object/objects/abs/geometry-object.h"
- "src/game/object/objects/abs/geometry-object-inl.h"
- "src/game/object/objects/abs/private/texture-object.cpp"
- "src/game/object/objects/abs/private/geometry-object.cpp"
+ "src/game/object/objects/abstract/texture-object.h"
+ "src/game/object/objects/abstract/texture-object-inl.h"
+ "src/game/object/objects/abstract/geometry-object.h"
+ "src/game/object/objects/abstract/geometry-object-inl.h"
+ "src/game/object/objects/abstract/private/texture-object.cpp"
+ "src/game/object/objects/abstract/private/geometry-object.cpp"
 
  "src/updater/updater.h" 
  "src/updater/updater-inl.h"
@@ -76,7 +78,7 @@ add_executable (
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
- "src/game/object/objects/food.h" "src/game/object/objects/private/food.cpp")
+ "src/game/object/objects/components/eye.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

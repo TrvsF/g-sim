@@ -1,7 +1,7 @@
 #ifndef AGENT_H_
 #define AGENT_H_
 
-#include "abs/geometry-object.h"
+#include "../src/game/object/objects/abstract/geometry-object.h"
 
 /*
 	TODO :
