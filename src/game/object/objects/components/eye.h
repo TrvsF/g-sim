@@ -7,7 +7,10 @@ namespace object
 {
 	class Eye : public Geometry
 	{
-
+	private:
+		int m_maxdistance;
+		int m_fov;
+	public:
 	};
 }
 

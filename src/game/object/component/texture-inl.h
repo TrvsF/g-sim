@@ -66,4 +66,14 @@ namespace object
 	{
 		return m_active;
 	}
+
+	inline void Texture::Scale(float scale)
+	{
+		m_scale = scale;
+	}
+
+	inline float Texture::Scale()
+	{
+		return m_scale;
+	}
 }

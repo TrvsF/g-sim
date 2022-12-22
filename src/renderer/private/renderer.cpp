@@ -143,17 +143,20 @@ namespace renderer
 
 	void Renderer::render_texture_object(object::Texture* texture_object)
 	{
-		SDL_Rect render_rect{};
-		int x			= (int)(texture_object->Pos().x);
-		int y			= (int)(texture_object->Pos().y);
+		float scale		= texture_object->Scale();
 		int width		= texture_object->Width();
 		int height		= texture_object->Height();
+		int x			= texture_object->Pos().x - (((width * scale) - width) / 2);
+		int y			= texture_object->Pos().y - (((height * scale) - height) / 2);
 		float rotation  = texture_object->Rotation();
 
-		render_rect.x = x;
-		render_rect.y = y;
-		render_rect.w = width;
-		render_rect.h = height;
+		SDL_Rect render_rect {
+			x, y, (int)roundf(width * scale), (int)roundf(height * scale)
+		};
+
+		SDL_Rect src_rect {
+			0, 0, (int)roundf(width * scale), (int)roundf(height * scale)
+		};
 
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}

@@ -48,6 +48,7 @@ add_executable (
  "src/game/object/objects/entities/private/camera.cpp"
  "src/game/object/objects/entities/food.h"
  "src/game/object/objects/entities/private/food.cpp"
+ "src/game/object/objects/components/eye.h"
   
  "src/game/object/objects/abstract/texture-object.h"
  "src/game/object/objects/abstract/texture-object-inl.h"
@@ -78,7 +79,7 @@ add_executable (
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
- "src/game/object/objects/components/eye.h")
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

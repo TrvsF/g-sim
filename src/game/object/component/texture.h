@@ -13,6 +13,7 @@ namespace object
 		SDL_Texture*	m_texutre;
 		Vector2D		m_pos;
 		float			m_rotation;
+		float			m_scale;
 		int				m_width;
 		int				m_height;
 		bool			m_active;
@@ -43,6 +44,9 @@ namespace object
 
 		inline void Active(bool active);
 		inline bool Active();
+
+		inline void Scale(float scale);
+		inline float Scale();
 
 		inline void OffsetPos(Vector2D offset);
 	};
