@@ -6,6 +6,8 @@ namespace game
 
 	Game::Game()
 	{
+		m_collision = new Collision(128);
+
 		m_player = nullptr;
 		m_camera = nullptr;
 
@@ -52,90 +54,6 @@ namespace game
 		// move the about around :D
 		Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
 		m_selected_obj->SetPosition(pos);
-	}
-
-	void Game::DoCollision()
-	{
-		// TODO : make this not look shit
-		for (auto& it : m_mapped_objects) 
-		{
-			int x = it.first.first;
-			int y = it.first.second;
-			auto& const currentgridobjs = it.second;
-			for (int i = -1; i <= 1; i++)
-			{
-				for (int j = -1; j <= 1; j++)
-				{
-					std::pair<int, int> newpair(x + i, y + j);
-					if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
-					// if does then remove from old grid
-					auto& const newlist = m_mapped_objects[newpair];
-					for (auto& const oldobj : currentgridobjs)
-					{
-						for (auto& const newobj : newlist)
-						{
-							if (newobj == oldobj) { continue; }
-							if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))
-							{
-								std::cout << "c";
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	void Game::check_collision_element(object::GameObject* game_object)
-	{
-		int gridscale = 128;
-		int x = (int)roundf(game_object->GetPosition().x / gridscale);
-		int y = (int)roundf(game_object->GetPosition().y / gridscale);
-
-		std::pair<int, int> pair(x, y);
-		auto& const objectlist = m_mapped_objects[pair];
-
-		// if object is not in the grid
-		if (std::find(objectlist.begin(), objectlist.end(), game_object) == objectlist.end())
-		{
-			for (int i = -1; i <= 1; i++)
-			{
-				for (int j = -1; j <= 1; j++)
-				{
-					// if doesnt exist there continue
-					if (i == 0 && j == 0) { continue; }
-					std::pair<int, int> newpair(x + i, y + j);
-					if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
-					// if does then remove from old grid
-					auto& const newlist = m_mapped_objects[newpair];
-					newlist.erase(std::remove(newlist.begin(), newlist.end(), game_object), newlist.end());
-					if (newlist.empty())
-					{
-						m_mapped_objects.erase(newpair);
-					}
-				}
-			}
-			m_mapped_objects[pair].push_back(game_object);
-		}
-	}
-
-	void Game::add_collision_element(object::GameObject* game_object)
-	{
-		int gridscale = 128;
-		int x = (int)roundf(game_object->GetPosition().x / gridscale);
-		int y = (int)roundf(game_object->GetPosition().y / gridscale);
-
-		std::pair<int, int> pair(x, y);
-
-		// if does not exist
-		if (m_mapped_objects.find(pair) == m_mapped_objects.end())
-		{
-			m_mapped_objects.insert({ pair, { game_object } });
-		}
-		else
-		{
-			m_mapped_objects[pair].push_back(game_object);
-		}
 	}
 
 	void Game::Start()
@@ -207,9 +125,9 @@ namespace game
 	{
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
-			check_collision_element(gameworldobject);
+			m_collision->CheckCollisionObj(gameworldobject);
+			m_collision->DoCollision();
 			gameworldobject->Tick();
-			DoCollision();
 		}
 		m_camera->Tick();
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
