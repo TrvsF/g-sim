@@ -56,15 +56,31 @@ namespace game
 
 	void Game::DoCollision()
 	{
-		for (auto& it : m_mapped_objects) {
+		// TODO : make this not look shit
+		for (auto& it : m_mapped_objects) 
+		{
+			int x = it.first.first;
+			int y = it.first.second;
 			auto& const currentgridobjs = it.second;
-
 			for (int i = -1; i <= 1; i++)
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					if (i == 0 && j == 0) { continue; }
-					// do checks
+					std::pair<int, int> newpair(x + i, y + j);
+					if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
+					// if does then remove from old grid
+					auto& const newlist = m_mapped_objects[newpair];
+					for (auto& const oldobj : currentgridobjs)
+					{
+						for (auto& const newobj : newlist)
+						{
+							if (newobj == oldobj) { continue; }
+							if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))
+							{
+								std::cout << "c";
+							}
+						}
+					}
 				}
 			}
 		}
@@ -93,12 +109,14 @@ namespace game
 					// if does then remove from old grid
 					auto& const newlist = m_mapped_objects[newpair];
 					newlist.erase(std::remove(newlist.begin(), newlist.end(), game_object), newlist.end());
-					std::cout << "FOUND";
+					if (newlist.empty())
+					{
+						m_mapped_objects.erase(newpair);
+					}
 				}
 			}
 			m_mapped_objects[pair].push_back(game_object);
 		}
-		m_mapped_objects;
 	}
 
 	void Game::add_obj_to_cmap(object::GameObject* game_object)
@@ -109,8 +127,6 @@ namespace game
 
 		std::pair<int, int> pair(x, y);
 
-		printf("%d, %d\n", x, y);
-
 		// if does not exist
 		if (m_mapped_objects.find(pair) == m_mapped_objects.end())
 		{
@@ -119,11 +135,6 @@ namespace game
 		else
 		{
 			m_mapped_objects[pair].push_back(game_object);
-		}
-
-		for (auto& it : m_mapped_objects) {
-			// Do stuff
-			std::cout << it.first.first << it.first.second << "\n";
 		}
 	}
 
@@ -158,7 +169,7 @@ namespace game
 		AddGameObject(new object::Agent(miscagent, 4)); // TODO : Scale BB with tri size
 
 		object::GameObject* food = object::GameObject::Create(
-			{ 100.0f,  400.0f,  0.0f },
+			{ 1000.0f,  400.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
@@ -198,6 +209,7 @@ namespace game
 		{
 			check_collision_element(gameworldobject);
 			gameworldobject->Tick();
+			DoCollision();
 		}
 		m_camera->Tick();
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
