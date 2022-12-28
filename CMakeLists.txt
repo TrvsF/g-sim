@@ -48,7 +48,6 @@ add_executable (
  "src/game/object/objects/entities/private/camera.cpp"
  "src/game/object/objects/entities/food.h"
  "src/game/object/objects/entities/private/food.cpp"
- "src/game/object/objects/components/eye.h"
   
  "src/game/object/objects/abstract/texture-object.h"
  "src/game/object/objects/abstract/texture-object-inl.h"

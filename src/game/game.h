@@ -38,7 +38,7 @@ namespace game
 		// collision stuff (todo: move)
 		std::unordered_map<std::pair<int, int>, std::vector<object::GameObject*>, pairhash> m_mapped_objects;
 		void check_collision_element(object::GameObject* game_object);
-		void add_obj_to_cmap(object::GameObject* game_object);
+		void add_collision_element(object::GameObject* game_object);
 
 		// input stuff (todo: move?)
 		object::GameObject* m_selected_obj;

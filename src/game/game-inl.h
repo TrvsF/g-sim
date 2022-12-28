@@ -9,7 +9,7 @@ namespace game
 
 	inline void Game::AddGameObject(object::GameObject* game_object)
 	{
-		add_obj_to_cmap(game_object);
+		add_collision_element(game_object);
 		m_gameworld_objects.push_back(game_object);
 	}
 

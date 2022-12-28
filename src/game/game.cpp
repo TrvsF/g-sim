@@ -119,7 +119,7 @@ namespace game
 		}
 	}
 
-	void Game::add_obj_to_cmap(object::GameObject* game_object)
+	void Game::add_collision_element(object::GameObject* game_object)
 	{
 		int gridscale = 128;
 		int x = (int)roundf(game_object->GetPosition().x / gridscale);
