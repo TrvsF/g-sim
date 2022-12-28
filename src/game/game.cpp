@@ -54,6 +54,79 @@ namespace game
 		m_selected_obj->SetPosition(pos);
 	}
 
+	void Game::DoCollision()
+	{
+		for (auto& it : m_mapped_objects) {
+			auto& const currentgridobjs = it.second;
+
+			for (int i = -1; i <= 1; i++)
+			{
+				for (int j = -1; j <= 1; j++)
+				{
+					if (i == 0 && j == 0) { continue; }
+					// do checks
+				}
+			}
+		}
+	}
+
+	void Game::check_collision_element(object::GameObject* game_object)
+	{
+		int gridscale = 128;
+		int x = (int)roundf(game_object->GetPosition().x / gridscale);
+		int y = (int)roundf(game_object->GetPosition().y / gridscale);
+
+		std::pair<int, int> pair(x, y);
+		auto& const objectlist = m_mapped_objects[pair];
+
+		// if object is not in the grid
+		if (std::find(objectlist.begin(), objectlist.end(), game_object) == objectlist.end())
+		{
+			for (int i = -1; i <= 1; i++)
+			{
+				for (int j = -1; j <= 1; j++)
+				{
+					// if doesnt exist there continue
+					if (i == 0 && j == 0) { continue; }
+					std::pair<int, int> newpair(x + i, y + j);
+					if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
+					// if does then remove from old grid
+					auto& const newlist = m_mapped_objects[newpair];
+					newlist.erase(std::remove(newlist.begin(), newlist.end(), game_object), newlist.end());
+					std::cout << "FOUND";
+				}
+			}
+			m_mapped_objects[pair].push_back(game_object);
+		}
+		m_mapped_objects;
+	}
+
+	void Game::add_obj_to_cmap(object::GameObject* game_object)
+	{
+		int gridscale = 128;
+		int x = (int)roundf(game_object->GetPosition().x / gridscale);
+		int y = (int)roundf(game_object->GetPosition().y / gridscale);
+
+		std::pair<int, int> pair(x, y);
+
+		printf("%d, %d\n", x, y);
+
+		// if does not exist
+		if (m_mapped_objects.find(pair) == m_mapped_objects.end())
+		{
+			m_mapped_objects.insert({ pair, { game_object } });
+		}
+		else
+		{
+			m_mapped_objects[pair].push_back(game_object);
+		}
+
+		for (auto& it : m_mapped_objects) {
+			// Do stuff
+			std::cout << it.first.first << it.first.second << "\n";
+		}
+	}
+
 	void Game::Start()
 	{
 		// SETUP CAMERA AND PLAYER OBJECTS
@@ -64,7 +137,8 @@ namespace game
 		);
 
 		m_player = new object::Player(playerobj, "player");
-		m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT (z indexing?)
+		AddGameObject(m_player);
+		// m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT (z indexing?)
 
 		object::GameObject* cameraobj = object::GameObject::Create(
 			{ 0.0f,   0.0f,   0.0f },
@@ -81,40 +155,40 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 32.0f,   32.0f,   32.0f }
 		);
-		m_gameworld_objects.push_back(new object::Agent(miscagent, 4)); // TODO : Scale BB with tri size
+		AddGameObject(new object::Agent(miscagent, 4)); // TODO : Scale BB with tri size
 
 		object::GameObject* food = object::GameObject::Create(
 			{ 100.0f,  400.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		m_gameworld_objects.push_back(new object::Food(food, "food"));
+		AddGameObject(new object::Food(food, "food"));
 
 		object::GameObject* triman = object::GameObject::Create(
-			{ 150.0f,   0.0f,   0.0f },
+			{ 150.0f,   0.0f,    0.0f },
 			{ 0.0f,     0.0f,    0.0f },
-			{ 232.0f,   232.0f,   232.0f }
+			{ 64.0f,    64.0f,   64.0f }
 		);
 		object::GameObject* triman2 = object::GameObject::Create(
-			{ -50.0f,   -50.0f,   0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 232.0f,   232.0f,   232.0f }
+			{ 400.0f,   400.0f,  0.0f },
+			{ 0.0f,     0.0f,    0.0f },
+			{ 64.0f,    64.0f,   64.0f }
 		);
 		object::GameObject* triman3 = object::GameObject::Create(
-			{ 250.0f,   250.0f,   0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 232.0f,   232.0f,   232.0f }
+			{ 250.0f,   250.0f,  0.0f },
+			{ 0.0f,     0.0f,    0.0f },
+			{ 64.0f,    64.0f,   64.0f }
 		);
 		object::GameObject* triman4 = object::GameObject::Create(
 			{ 50.0f,   50.0f,   0.0f },
 			{ 0.0f,    0.0f,    0.0f },
-			{ 232.0f,   232.0f,   232.0f }
+			{ 64.0f,   64.0f,   64.0f }
 		);
 		srand(time(NULL)); // move me
-		m_gameworld_objects.push_back(new object::GeometryObject(triman, 4));
-		m_gameworld_objects.push_back(new object::GeometryObject(triman2, 5));
-		m_gameworld_objects.push_back(new object::GeometryObject(triman3, 4));
-		m_gameworld_objects.push_back(new object::GeometryObject(triman4, 5));
+		AddGameObject(new object::GeometryObject(triman,  4));
+		AddGameObject(new object::GeometryObject(triman2, 5));
+		AddGameObject(new object::GeometryObject(triman3, 4));
+		AddGameObject(new object::GeometryObject(triman4, 5));
 	}
 
 	// entities -> camera
@@ -122,6 +196,7 @@ namespace game
 	{
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
+			check_collision_element(gameworldobject);
 			gameworldobject->Tick();
 		}
 		m_camera->Tick();
