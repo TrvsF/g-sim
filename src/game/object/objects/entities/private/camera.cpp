@@ -5,6 +5,7 @@ namespace object
 	Camera::Camera(GameObject* gameobject)
 		: GameObject(gameobject)
 	{
+		SetEntityType(GameEntityType::None);
 		m_subject = nullptr;
 		m_debug = true;
 		m_local_offset_pos = VEC3_ZERO;
@@ -18,7 +19,7 @@ namespace object
 
 	void Camera::SetTexturePos(GameObject* gameobject)
 	{
-		if (gameobject->GetType() == GameObjectType::Texture)
+		if (gameobject->GetObjType() == GameObjectType::Texture)
 		{
 			// if is a texture game object get its texture companant
 			object::TextureObject* object = static_cast<object::TextureObject*> (gameobject);
@@ -38,7 +39,7 @@ namespace object
 			textureobj->Active(true);
 			textureobj->Pos(pos);
 		}
-		if (gameobject->GetType() == GameObjectType::Geometry)
+		if (gameobject->GetObjType() == GameObjectType::Geometry)
 		{
 			// if is a texture game object get its texture companant
 			object::GeometryObject* object = static_cast<object::GeometryObject*> (gameobject);

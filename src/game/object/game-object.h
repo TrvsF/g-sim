@@ -18,6 +18,14 @@ namespace object
 		None
 	};
 
+	enum class GameEntityType
+	{
+		Player,
+		Food,
+		Agent,
+		None
+	};
+
 	class GameObject
 	{
 	protected:
@@ -26,12 +34,13 @@ namespace object
 		Vector3D	m_offset_rotation;
 	private:
 		GameObjectType	m_object_type;
+		GameEntityType  m_entity_type;
 		AABB			m_aabb; 
 		Transform		m_transform;
 
 	public:
 		GameObject(AABB aabb, Transform transform)
-			: m_aabb(aabb), m_transform(transform), m_debug(false), m_object_type(GameObjectType::None)
+			: m_aabb(aabb), m_transform(transform), m_debug(false), m_object_type(GameObjectType::None), m_entity_type(GameEntityType::None)
 		{}
 		GameObject(GameObject* gameobject)
 			: m_aabb(gameobject->GetAABB()), m_transform(gameobject->GetTransform())
@@ -51,8 +60,11 @@ namespace object
 		inline const Size GetSize() const;
 		inline void SetSize(Size size);
 
-		inline const GameObjectType GetType() const;
-		inline void SetType(GameObjectType type);
+		inline const GameObjectType GetObjType() const;
+		inline void SetObjType(GameObjectType type);
+
+		inline const GameEntityType GetEntityType() const;
+		inline void SetEntityType(GameEntityType type);
 
 		inline GameObject* GetObject();
 

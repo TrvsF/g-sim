@@ -87,7 +87,7 @@ namespace game
 		AddGameObject(new object::Agent(miscagent, 4)); // TODO : Scale BB with tri size
 
 		object::GameObject* food = object::GameObject::Create(
-			{ 1000.0f,  400.0f,  0.0f },
+			{ 600.0f,  400.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);

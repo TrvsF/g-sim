@@ -8,10 +8,13 @@ namespace object
 	class Food : public TextureObject
 	{
 	private:
-		
+		// TODO : move to setup
+		int		m_hp = 25000;
+		bool	m_is_being_eaten = false;
 	public:
 		Food(GameObject* gameobject, const char* textureid);
 
+		void SetCollision(GameEntityType type);
 		void Update();
 	};
 }

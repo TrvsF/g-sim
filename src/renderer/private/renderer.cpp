@@ -170,7 +170,7 @@ namespace renderer
 				{ SDL_FPoint{ tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y }, SDL_Color{ 50, 130, 0, 255 } },
 				{ SDL_FPoint{ tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y }, SDL_Color{ 0, 0, 0, 255 } }
 			};
-			SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
+			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);
 		}
 	}
 

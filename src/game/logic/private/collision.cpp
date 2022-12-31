@@ -20,6 +20,7 @@ namespace game
 				if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
 				// if there are items in grid
 				auto& newlist = m_mapped_objects[newpair];
+				// TODO : store pairs to cut time in 1/2 & run alg on both instead
 				for (auto& oldobj : currentgridobjs)
 				{
 					for (auto& newobj : newlist)
@@ -27,7 +28,11 @@ namespace game
 						if (newobj == oldobj) { continue; }
 						if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))
 						{
-							std::cout << "c";
+							if (oldobj->GetEntityType() == object::GameEntityType::Food)
+							{
+								object::Food* object = static_cast<object::Food*> (oldobj);
+								object->SetCollision(newobj->GetEntityType());
+							}
 						}
 					}
 				}

@@ -5,6 +5,7 @@ namespace object
 	Player::Player(GameObject* gameobject, const char* textureid)
 		: TextureObject(gameobject, textureid)
 	{
+		SetEntityType(GameEntityType::Player);
 		m_inputvector = VEC2_ZERO;
 	}
 
