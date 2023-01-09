@@ -4,12 +4,12 @@
 #include "../base/helper_macos.h"
 
 #include "object/game-object.h"
-#include "object/objects/entities/camera.h"
-#include "object/objects/entities/player.h"
-#include "object/objects/entities/agent.h"
-#include "object/objects/entities/food.h"
-#include "object/objects/abstract/texture-object.h"
-#include "object/objects/abstract/geometry-object.h"
+#include "entities/camera.h"
+#include "entities/player.h"
+#include "entities/agent.h"
+#include "entities/food.h"
+#include "object/objects/texture-object.h"
+#include "object/objects/geometry-object.h"
 
 #include "logic/level.h"
 #include "logic/collision.h"

@@ -1,7 +1,7 @@
 #ifndef FOOD_H_
 #define FOOD_H_
 
-#include "../abstract/texture-object.h"
+#include "../object/objects/texture-object.h"
 
 namespace object
 {
