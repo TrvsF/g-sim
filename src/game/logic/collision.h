@@ -2,7 +2,7 @@
 #define COLLISION_H_
 
 #include "../object/game-object.h"
-#include "../object/objects/entities/food.h"
+#include "../entities/food.h"
 
 #include <unordered_map>
 #include <algorithm>
