@@ -8,16 +8,23 @@ namespace object
 	class Player : public TextureObject
 	{
 	private:
-		Vector2D m_inputvector;
+		int m_velocity;
+		int m_rotation;
+
+		void reset_tickvars()
+		{
+			m_velocity = 0;
+			m_rotation = 0;
+		}
 	public:
 		Player(GameObject* gameobject, const char* textureid);
 
 		void Update();
 
-		void MoveUp()		{ m_inputvector += { 0, -1 }; }
-		void MoveDown()		{ m_inputvector += { 0,  1 }; }
-		void MoveLeft()		{ m_inputvector += { -1, 0 }; }
-		void MoveRight()	{ m_inputvector += {  1, 0 }; }
+		void MoveUp()		{ m_velocity -= 1; }
+		void MoveDown()		{ m_velocity += 1; }
+		void MoveLeft()		{ m_rotation -= 1; }
+		void MoveRight()	{ m_rotation += 1; }
 	};
 }
 

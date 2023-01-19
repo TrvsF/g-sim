@@ -6,21 +6,19 @@ namespace object
 		: TextureObject(gameobject, textureid)
 	{
 		SetEntityType(GameEntityType::Player);
-		m_inputvector = VEC2_ZERO;
+		reset_tickvars();
 	}
 
 	void Player::Update()
 	{
-		/*
-		float yaw = GetTransform().GetRotation().z;
+		m_offset_rotation.z = m_rotation;
+		float yaw = (GetTransform().GetRotation().z + m_rotation) * DEG_TO_RAD;
+
 		Vector2D direction_vec2d = { (float)cosf(yaw), (float)sin(yaw) };
-		Vector2D pos_change_vec2d = direction_vec2d * m_inputvector;
-		*/
+		Vector2D pos_change_vec2d = direction_vec2d * m_velocity;
 
-		maths::GetAngleBetweenPoints({ GetTransform().GetPosition().x, GetTransform().GetPosition().y },
-			{ GetTransform().GetPosition().x + 100, GetTransform().GetPosition().y -50 });
-
-		m_offset_pos = { m_inputvector.x, m_inputvector.y, 0.0f };
-		m_inputvector = VEC2_ZERO;
+		m_offset_pos = { pos_change_vec2d.x, pos_change_vec2d.y };
+		
+		reset_tickvars();
 	}
 }

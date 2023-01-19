@@ -28,19 +28,19 @@ namespace maths
 
     static int GetAngleBetweenPoints(Vector2D point1, Vector2D point2)
     {
-        float top = (point1.x * point2.x) + (point1.y * point2.y);
-        float bottom = point1.magnitude() * point2.magnitude();
-        float diff = top / bottom;
-
-        int angle = (int)roundf(acosf(diff) * RAD_TO_DEG);
+        int angle = (int)roundf(atan2f(point2.y - point1.y, point2.x - point1.x) * RAD_TO_DEG);
         GetBoundedAngleDeg(angle);
 
         return angle;
     }
 
-    static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov)
+    static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov, int rotation)
     {
-        return GetAngleBetweenPoints(origin, point) <= fov / 2;
+        float ang = GetAngleBetweenPoints(origin, point);
+        GetBoundedAngleDeg(rotation);
+        printf("angle = %.2f, rotation = %d\n", ang, rotation);
+
+        return rotation - (fov / 2.0f) >= ang && rotation + (fov / 2.0f) <= ang;
     }
 
     static bool IsInRange(Vector2D origin, Vector2D point, int distance)
