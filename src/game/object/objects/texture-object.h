@@ -16,6 +16,9 @@ namespace object
 	public:
 		TextureObject(GameObject* object, const char* textureid);
 
+		void HandleOffsets();
+		void Update();
+
 		inline Texture* GetTexture();
 	};
 }

@@ -18,6 +18,7 @@ namespace object
 		GeometryObject(GameObject* object, int sides);
 		GeometryObject(GameObject* object, std::vector<Vector2D> points);
 
+		void HandleOffsets();
 		void Update();
 
 		inline Geometry* GetGeometry();

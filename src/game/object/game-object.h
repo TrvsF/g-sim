@@ -70,6 +70,9 @@ namespace object
 
 		inline GameObject* GetObject();
 
+		virtual void HandleOffsets()
+		{}
+
 		// tick runs for every game object, update is used for children to be overwritten
 		virtual void Update()
 		{}
@@ -81,10 +84,7 @@ namespace object
 			m_offset_rotation = VEC3_ZERO;
 
 			Update();
-
-			m_aabb.OffsetPos(m_offset_pos);
-			m_transform.OffsetRotation(m_offset_rotation);
-			m_transform.OffsetPosition(m_offset_pos);
+			HandleOffsets();
 
 			// rebug render where game object is
 			if (m_debug)
@@ -94,12 +94,14 @@ namespace object
 					renderer::Renderer::Get()->LoadAABB(&m_aabb);
 					m_setup = true;
 				}
+				/*
 				float r = GetTransform().GetRotation().z;
 				int x = GetPosition().x;
 				int y = GetPosition().y;
 				int x2 = x + (cosf(r) * 20);
 				int y2 = y + (sinf(r) * 20);
 				SDL_RenderDrawLine(renderer::Renderer::Get()->GetRendererObj(), x, y, x2, y2);
+				*/
 			}
 		}
 	};

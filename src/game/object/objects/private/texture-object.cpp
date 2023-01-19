@@ -23,4 +23,18 @@ namespace object
 			GetTransform().GetRotation().z
 		);
 	}
+
+	void TextureObject::HandleOffsets()
+	{
+		GetTransform().OffsetPosition(m_offset_pos);
+		GetAABB().OffsetPos(m_offset_pos);
+
+		GetTransform().OffsetRotation(m_offset_rotation);
+		m_texture->OffsetRotation(m_offset_rotation.z);
+	}
+
+	void TextureObject::Update()
+	{
+
+	}
 }

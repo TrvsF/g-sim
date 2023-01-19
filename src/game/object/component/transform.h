@@ -2,6 +2,7 @@
 #define TRANSFORM_H_
 
 #include "../src/util/vector3d.h"
+#include "../src/util/vector2d.h"
 
 namespace object
 {
@@ -16,6 +17,7 @@ namespace object
 		inline static Transform Create(Vector3D position = VEC3_ZERO, Vector3D rotation = VEC3_ZERO);
 
 		inline const Vector3D GetPosition() const;
+		inline const Vector2D Get2DPosition() const;
 		inline void SetPosition(Vector3D position);
 		inline void OffsetPosition(Vector3D offset);
 
