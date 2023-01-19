@@ -54,7 +54,12 @@ namespace object
 
 	inline void Texture::OffsetPos(Vector2D offset)
 	{
-		m_pos = m_pos + offset;
+		m_pos += offset;
+	}
+
+	inline void Texture::OffsetRotation(float rotation)
+	{
+		m_rotation += rotation;
 	}
 
 	inline void Texture::Active(bool active)

@@ -24,7 +24,12 @@ namespace object
 
 	inline void Geometry::OffsetPos(Vector2D offset)
 	{
-		m_pos = m_pos + offset;
+		m_pos += offset;
+	}
+
+	inline void Geometry::OffsetRotation(float rotation)
+	{
+		m_rotation += rotation;
 	}
 
 	inline void Geometry::Active(bool active)

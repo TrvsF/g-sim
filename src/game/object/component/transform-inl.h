@@ -12,6 +12,11 @@ namespace object
 		return m_position;
 	}
 
+	inline const Vector2D Transform::Get2DPosition() const
+	{
+		return { m_position.x, m_position.y };
+	}
+
 	inline void Transform::SetPosition(Vector3D position)
 	{
 		m_position = position;

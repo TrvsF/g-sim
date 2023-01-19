@@ -33,6 +33,15 @@ namespace object
 		load_geometry();
 	}
 
+	void GeometryObject::HandleOffsets()
+	{
+		GetTransform().OffsetPosition(m_offset_pos);
+		GetAABB().OffsetPos(m_offset_pos);
+
+		GetTransform().OffsetRotation(m_offset_rotation);
+		m_geometry->OffsetRotation(m_offset_rotation.z);
+	}
+
 	void GeometryObject::Update()
 	{
 	}

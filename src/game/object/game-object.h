@@ -3,7 +3,7 @@
 
 #include "component/aabb.h"
 #include "component/transform.h"
-
+#include "../src/util/vector2d.h"
 // debug includes
 #include <iostream>
 #include "../src/renderer/renderer.h"
@@ -37,6 +37,8 @@ namespace object
 		GameEntityType  m_entity_type;
 		AABB			m_aabb; 
 		Transform		m_transform;
+		// todo this is bad
+		bool m_setup = false;
 
 	public:
 		GameObject(AABB aabb, Transform transform)
@@ -68,6 +70,9 @@ namespace object
 
 		inline GameObject* GetObject();
 
+		virtual void HandleOffsets()
+		{}
+
 		// tick runs for every game object, update is used for children to be overwritten
 		virtual void Update()
 		{}
@@ -79,16 +84,24 @@ namespace object
 			m_offset_rotation = VEC3_ZERO;
 
 			Update();
-
-			m_aabb.OffsetPos(m_offset_pos);
-			m_transform.OffsetRotation(m_offset_rotation);
-			m_transform.OffsetPosition(m_offset_pos);
+			HandleOffsets();
 
 			// rebug render where game object is
 			if (m_debug)
 			{
-				renderer::Renderer::Get()->LoadAABB(&m_aabb);
-				m_debug = false;
+				if (!m_setup)
+				{
+					renderer::Renderer::Get()->LoadAABB(&m_aabb);
+					m_setup = true;
+				}
+				/*
+				float r = GetTransform().GetRotation().z;
+				int x = GetPosition().x;
+				int y = GetPosition().y;
+				int x2 = x + (cosf(r) * 20);
+				int y2 = y + (sinf(r) * 20);
+				SDL_RenderDrawLine(renderer::Renderer::Get()->GetRendererObj(), x, y, x2, y2);
+				*/
 			}
 		}
 	};

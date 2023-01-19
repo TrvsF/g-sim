@@ -20,12 +20,25 @@ namespace game
 				if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
 				// if there are items in grid
 				auto& newlist = m_mapped_objects[newpair];
-				// TODO : store pairs to cut time in 1/2 & run alg on both instead
+				// TODO : store pairs to cut time (in this loop) in 1/2 & run alg on both instead
 				for (auto& oldobj : currentgridobjs)
 				{
 					for (auto& newobj : newlist)
 					{
+						// if looping over self
 						if (newobj == oldobj) { continue; }
+						// debug
+						if (newobj->GetEntityType() == object::GameEntityType::Player)
+						{ 
+							/*
+							printf("%d", maths::IsInRange(
+								newobj->GetTransform().Get2DPosition(),
+								oldobj->GetTransform().Get2DPosition(),
+								125
+							));
+							*/
+						}
+						// if they intersect
 						if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))
 						{
 							if (oldobj->GetEntityType() == object::GameEntityType::Food)

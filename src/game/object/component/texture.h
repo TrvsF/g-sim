@@ -49,6 +49,7 @@ namespace object
 		inline float Scale();
 
 		inline void OffsetPos(Vector2D offset);
+		inline void OffsetRotation(float rotation);
 	};
 }
 
