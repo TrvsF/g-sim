@@ -34,13 +34,14 @@ namespace maths
         return angle;
     }
 
-    static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov, int rotation)
+    static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov, float rotation)
     {
         float ang = GetAngleBetweenPoints(origin, point);
-        GetBoundedAngleDeg(rotation);
-        printf("angle = %.2f, rotation = %d\n", ang, rotation);
+        int pang = roundf(rotation - 180);
+        GetBoundedAngleDeg(pang);
+        printf("angle = %.2f, rotation = %d\n", ang, pang);
 
-        return rotation - (fov / 2.0f) >= ang && rotation + (fov / 2.0f) <= ang;
+        return !(pang - (fov / 2.0f) >= ang || pang + (fov / 2.0f) <= ang);
     }
 
     static bool IsInRange(Vector2D origin, Vector2D point, int distance)
