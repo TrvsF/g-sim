@@ -36,10 +36,9 @@ namespace maths
 
     static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov, float rotation)
     {
-        float ang = GetAngleBetweenPoints(origin, point);
-        int pang = roundf(rotation - 180);
+        int ang = GetAngleBetweenPoints(origin, point);
+        int pang = (int)roundf(rotation - 180);
         GetBoundedAngleDeg(pang);
-        printf("angle = %.2f, rotation = %d\n", ang, pang);
 
         return !(pang - (fov / 2.0f) >= ang || pang + (fov / 2.0f) <= ang);
     }
@@ -53,5 +52,4 @@ namespace maths
         return calcdistance <= distance;
     }
 }
-
 #endif

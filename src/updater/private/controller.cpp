@@ -39,4 +39,12 @@ namespace updater
 	}
 
 	void Controller::check_menu_inputs() {}
+
+	void Controller::global_checks()
+	{
+		if (m_input->KeyPressed("`"))
+		{
+			console::ACTIVE = !console::ACTIVE;
+		}
+	}
 }

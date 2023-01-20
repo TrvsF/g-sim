@@ -4,6 +4,8 @@ namespace updater
 {
 	inline void Controller::CheckInputs()
 	{
+		global_checks();
+
 		if (m_controller_state == ControllerState::Game)
 		{
 			check_game_inputs();

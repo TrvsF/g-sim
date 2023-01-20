@@ -13,6 +13,7 @@
 #include "../game/object/component/aabb.h"
 #include "../game/object/component/texture.h"
 #include "../game/object/component/geometry.h"
+#include "../game/console.h"
 #include "../renderer/assets.h"
 
 namespace renderer
@@ -42,6 +43,12 @@ namespace renderer
 		inline void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
 
+		// console
+		void render_console();
+
+		void render_rect(SDL_Rect rect, SDL_Color colour);
+		void render_fillrect(SDL_Rect rect, SDL_Color outline, SDL_Color fill);
+
 		void set_window_icon();
 
 		void clear_buffer();
@@ -57,8 +64,6 @@ namespace renderer
 		void LoadAllTextures();
 		void LoadAABB(object::AABB* aabb);
 		void LoadGeometry(object::Geometry* geometry_object); // TODO : system to unload these object
-
-		void RenderRect(SDL_Rect* rect);
 
 		inline SDL_Renderer* GetRendererObj();
 

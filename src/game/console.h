@@ -3,19 +3,19 @@
 
 #include <string>
 
-namespace game
+namespace console
 {
 	// private var (promise)
-	std::string m_inputstr;
+	inline std::string m_inputstr = "";
 
-	bool ACTIVE;
+	inline bool ACTIVE = false;
 
-	void InputChar(const char* c)
+	inline void InputChar(const char* c)
 	{
 		m_inputstr.append(c);
 	}
 
-	void InputBackspace()
+	inline void InputBackspace()
 	{
 		if (m_inputstr.length() > 0)
 		{
@@ -23,7 +23,7 @@ namespace game
 		}
 	}
 
-	void InputEnter();
+	inline void InputEnter();
 }
 
 #endif // !CONSOLE_H_

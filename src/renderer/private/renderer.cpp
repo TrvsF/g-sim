@@ -114,6 +114,11 @@ namespace renderer
 			render_geometry_object(geometryobj);
 		}
 
+		if (console::ACTIVE)
+		{
+			render_console();
+		}
+
 		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);
 	}
@@ -194,13 +199,36 @@ namespace renderer
 		rect.x = (int)aabb->GetMinX();
 		rect.y = (int)aabb->GetMinY();
 
-		RenderRect(&rect);
+		render_rect(rect, { 255, 30, 30, 255 });
 	}
 
-	void Renderer::RenderRect(SDL_Rect* rect)
+	void Renderer::render_console()
 	{
-		SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-		SDL_RenderDrawRect(m_renderer, rect);
+		SDL_Rect rect;
+		rect.w = m_width / 2.5f;
+		rect.h = m_height / 4.0f;
+		rect.x = 3;
+		rect.y = 3;
+
+		render_fillrect(rect, { 255, 30, 30, 150 }, { 150, 150, 150, 255 });
+	}
+
+	void Renderer::render_rect(SDL_Rect rect, SDL_Color colour)
+	{
+		SDL_SetRenderDrawColor(m_renderer, colour.r, colour.g, colour.b, colour.a);
+		SDL_RenderDrawRect(m_renderer, &rect);
+
+		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+	}
+
+	void Renderer::render_fillrect(SDL_Rect rect, SDL_Color outline, SDL_Color fill)
+	{
+		SDL_SetRenderDrawColor(m_renderer, fill.r, fill.g, fill.b, fill.a);
+		SDL_RenderFillRect(m_renderer, &rect);
+
+		SDL_SetRenderDrawColor(m_renderer, outline.r, outline.g, outline.b, outline.a);
+		SDL_RenderDrawRect(m_renderer, &rect);
+
 		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 	}
 

@@ -24,6 +24,7 @@ namespace updater
 
 		void check_menu_inputs();
 		void check_game_inputs();
+		void global_checks();
 
 	public:
 		Controller(Input* input);
