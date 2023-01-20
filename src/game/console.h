@@ -23,7 +23,11 @@ namespace console
 		}
 	}
 
-	inline void InputEnter();
+	inline void InputEnter()
+	{
+		printf("enter");
+		printf(m_inputstr.c_str());
+	}
 }
 
 #endif // !CONSOLE_H_

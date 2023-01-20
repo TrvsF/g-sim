@@ -46,5 +46,22 @@ namespace updater
 		{
 			console::ACTIVE = !console::ACTIVE;
 		}
+
+		if (console::ACTIVE)
+		{
+			// todo : find a better soulution
+			for (const char &c : m_alphabet)
+			{
+				if (m_input->KeyDown(&c))
+				{
+					printf("yay");
+					console::InputChar(&c);
+				}
+			}
+			if (m_input->KeyPressed("Keypad Enter"))
+			{
+				console::InputEnter();
+			}
+		}
 	}
 }
