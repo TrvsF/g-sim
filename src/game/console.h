@@ -1,12 +1,9 @@
 #ifndef CONSOLE_H_
 #define CONSOLE_H_
 
-#include <string>
-
 namespace console
 {
-	// private var (promise)
-	inline char m_inputstr[32] = "";
+	inline char m_inputstr[64] = "";
 
 	inline bool ACTIVE = false;
 
@@ -29,9 +26,8 @@ namespace console
 
 	inline void InputEnter()
 	{
-		printf(m_inputstr);
+		std::cout << "console : " << m_inputstr << "\n";
 		m_inputstr[0] = '\0';
 	}
 }
-
 #endif // !CONSOLE_H_
