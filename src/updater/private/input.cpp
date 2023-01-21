@@ -34,6 +34,32 @@ namespace updater
 		return m_prev_keyboard_states[scan_code] != 0 && m_keyboard_states[scan_code] == 0 && check_scancode(scan_code);
 	}
 
+	bool Input::KeyDown(int scancode)
+	{
+		if (scancode < 4 || scancode > 44) { return false; }
+
+		return m_keyboard_states[scancode] != 0;
+	}
+
+	bool Input::KeyPressed(int scancode)
+	{
+		if (scancode < 4 || scancode > 44) { return false; }
+
+		return m_prev_keyboard_states[scancode] == 0 && m_keyboard_states[scancode] != 0;
+	}
+
+	bool Input::KeyReleased(int scancode)
+	{
+		if (scancode < 4 || scancode > 44) { return false; }
+
+		return m_prev_keyboard_states[scancode] != 0 && m_keyboard_states[scancode] == 0;
+	}
+
+	const char* Input::CharFromScancode(int scancode)
+	{
+		return &m_sdlmap[scancode];
+	}
+
 	bool Input::MouseDown(MouseButton mouse_button)
 	{
 		return ((m_mouse_state & mouse_button) != 0);

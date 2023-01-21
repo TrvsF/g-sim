@@ -49,18 +49,28 @@ namespace updater
 
 		if (console::ACTIVE)
 		{
-			// todo : find a better soulution
-			for (const char &c : m_alphabet)
+			for (int i = 4; i < 40; i++)
 			{
-				if (m_input->KeyDown(&c))
+				if (m_input->KeyPressed(i))
 				{
-					printf("yay");
-					console::InputChar(&c);
+					const char* c = m_input->CharFromScancode(i);
+					console::InputChar(c);
 				}
 			}
-			if (m_input->KeyPressed("Keypad Enter"))
+			if (m_input->KeyPressed(44))
+			{
+				console::InputChar(" ");
+			}
+
+			// enter
+			if (m_input->KeyPressed(40))
 			{
 				console::InputEnter();
+			}
+			// backspace
+			if (m_input->KeyReleased(42))
+			{
+				console::InputBackspace();
 			}
 		}
 	}

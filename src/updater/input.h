@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <iostream>
+#include <unordered_map>
 
 #include "../src/base/helper_macos.h"
 
@@ -29,6 +30,47 @@ namespace updater
 		int m_mouse_x;
 		int m_mouse_y;
 
+		std::unordered_map<int, const char> m_sdlmap =
+		{
+			{4, 'a'},
+			{5, 'b'},
+			{6, 'c'},
+			{7, 'd'},
+			{8, 'e'},
+			{9, 'f'},
+			{10, 'g'},
+			{11, 'h'},
+			{12, 'i'},
+			{13, 'j'},
+			{14, 'k'},
+			{15, 'l'},
+			{16, 'm'},
+			{17, 'n'},
+			{18, 'o'},
+			{19, 'p'},
+			{20, 'q'},
+			{21, 'r'},
+			{22, 's'},
+			{23, 't'},
+			{24, 'u'},
+			{25, 'v'},
+			{26, 'w'},
+			{27, 'x'},
+			{28, 'y'},
+			{29, 'z'},
+			{30, '1'},
+			{31, '2'},
+			{32, '3'},
+			{33, '4'},
+			{34, '5'},
+			{35, '6'},
+			{36, '7'},
+			{37, '8'},
+			{38, '9'},
+			{39, '0'},
+			{44, ' '}
+		};
+
 		bool check_scancode(SDL_Scancode scan_code);
 
 	public:
@@ -38,6 +80,12 @@ namespace updater
 		bool KeyDown(const char* key);
 		bool KeyPressed(const char* key);
 		bool KeyReleased(const char* key);
+
+		bool KeyDown(int scancode);
+		bool KeyPressed(int scancode);
+		bool KeyReleased(int scancode);
+
+		const char* CharFromScancode(int scancode);
 
 		bool MouseDown(MouseButton mouse_button);
 		bool MousePressed(MouseButton mouse_button);

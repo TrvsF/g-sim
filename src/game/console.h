@@ -6,27 +6,31 @@
 namespace console
 {
 	// private var (promise)
-	inline std::string m_inputstr = "";
+	inline char m_inputstr[32] = "";
 
 	inline bool ACTIVE = false;
 
 	inline void InputChar(const char* c)
 	{
-		m_inputstr.append(c);
+		if (strlen(m_inputstr) < 30)
+		{ 
+			strncat(m_inputstr, c, 1);
+		}
 	}
 
 	inline void InputBackspace()
 	{
-		if (m_inputstr.length() > 0)
+		int last = strlen(m_inputstr);
+		if (last > 0)
 		{
-			m_inputstr.pop_back();
+			m_inputstr[last - 1] = '\0';
 		}
 	}
 
 	inline void InputEnter()
 	{
-		printf("enter");
-		printf(m_inputstr.c_str());
+		printf(m_inputstr);
+		m_inputstr[0] = '\0';
 	}
 }
 
