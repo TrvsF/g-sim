@@ -9,15 +9,15 @@ namespace console
 
 	inline void InputChar(const char* c)
 	{
-		if (strlen(m_inputstr) < 30)
-		{ 
-			strncat(m_inputstr, c, 1);
+		if (strlen(m_inputstr) < 63)
+		{
+			strncat_s(m_inputstr, c, 1);
 		}
 	}
 
 	inline void InputBackspace()
 	{
-		int last = strlen(m_inputstr);
+		size_t last = strlen(m_inputstr);
 		if (last > 0)
 		{
 			m_inputstr[last - 1] = '\0';
@@ -26,6 +26,7 @@ namespace console
 
 	inline void InputEnter()
 	{
+		// TODO : event system here for commands?
 		std::cout << "console : " << m_inputstr << "\n";
 		m_inputstr[0] = '\0';
 	}
