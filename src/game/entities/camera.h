@@ -19,6 +19,10 @@ namespace object
 	public:
 		Camera(GameObject* gameobject);
 
+		inline GameObject* GetSubject()
+		{
+			return m_subject;
+		}
 		void SetSubject(GameObject* gameobject);
 		void SetTexturePos(GameObject* gameobject);
 

@@ -29,12 +29,18 @@ namespace updater
 		{
 			int x, y;
 			SDL_GetMouseState(&x, &y);
-			game::Game::Get()->OnMouseClick(x, y);
+			game::Game::Get()->OnMouseClick(x, y, Left);
+		}
+		if (m_input->MousePressed(Right))
+		{
+			int x, y;
+			SDL_GetMouseState(&x, &y);
+			game::Game::Get()->OnMouseClick(x, y, Right);
 		}
 
 		if (m_input->MouseReleased(Left))
 		{
-			game::Game::Get()->OnMouseRelease();
+			game::Game::Get()->OnMouseRelease(Left);
 		}
 	}
 

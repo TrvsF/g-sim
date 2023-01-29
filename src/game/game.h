@@ -14,6 +14,8 @@
 #include "logic/level.h"
 #include "logic/collision.h"
 
+#include "../src/updater/controller.h"
+
 #include <unordered_map>
 #include <algorithm>
 #include <vector>
@@ -44,8 +46,9 @@ namespace game
 		static inline Game* Get();
 		static void Destroy();
 
-		void OnMouseRelease();
-		void OnMouseClick(int x, int y);
+		void OnMouseRelease(int mousebutton);
+		void OnMouseClick(int x, int y, int mousebutton);
+		object::GameObject* GetClickedObj(int x, int y);
 
 		inline void AddGameObject(object::GameObject* game_object);
 		inline const std::vector<object::GameObject*> GetGameObjects() const;

@@ -27,33 +27,71 @@ namespace game
 		SAFE_DELETE(s_instance);
 	}
 
-	void Game::OnMouseRelease()
+	void Game::OnMouseRelease(int mousebutton)
 	{
-		m_selected_obj = nullptr;
+		switch (mousebutton)
+		{
+		case 1:
+			m_selected_obj = nullptr;
+		}
 	}
 
-	void Game::OnMouseClick(int x, int y)
+	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
+	void Game::OnMouseClick(int x, int y, int mousebutton)
 	{
-		// if there is no selected object see if we can find one
-		if (m_selected_obj == nullptr)
+		printf("%d", mousebutton);
+		switch (mousebutton)
 		{
-			bool found = false;
-			for (object::GameObject* object : m_gameworld_objects)
-			{
-				// TODO : Change to texture
-				if (object->GetAABB().IntersectsPoint(x, y))
-				{
-					m_selected_obj = object;
-					m_selected_obj_offset = { x - object->GetPosition().x, y - object->GetPosition().y };
-					found = true;
-					break;
-				}
-			}
-			if (!found) { return; }
+		case 1:
+		{
+			// if there is no selected object see if we can find one
+			m_selected_obj = GetClickedObj(x, y);
+			if (m_selected_obj == nullptr) { return; }
+			// move the about around :D
+			Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
+			m_selected_obj->SetPosition(pos);
 		}
-		// move the about around :D
-		Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
-		m_selected_obj->SetPosition(pos);
+
+		case 2:
+		{
+			if (m_camera->GetSubject() != m_player)
+			{
+				m_camera->SetSubject(m_player);
+				return;
+			}
+			object::GameObject* obj = GetClickedObj(x, y);
+			if (obj == nullptr) { return; }
+			m_camera->SetSubject(obj);
+		}
+		}
+	}
+
+	object::GameObject* Game::GetClickedObj(int x, int y)
+	{
+		for (object::GameObject* object : m_gameworld_objects)
+		{
+			// TODO : make this faster/not care about objects not on screen
+			Vector2D screenpos;
+			if (object->GetObjType() == object::GameObjectType::Texture)
+			{
+				object::TextureObject* screenobj = static_cast<object::TextureObject*> (object);
+				screenpos = screenobj->GetTexture()->Pos();
+			}
+			if (object->GetObjType() == object::GameObjectType::Geometry)
+			{
+				object::GeometryObject* screenobj = static_cast<object::GeometryObject*> (object);
+				screenpos = screenobj->GetGeometry()->Pos();
+			}
+			object::AABB aabb = object::AABB::Create({ screenpos.x, screenpos.y, 0 }, object->GetSize());
+
+			if (aabb.IntersectsPoint(x, y))
+			{
+				m_selected_obj = object;
+				m_selected_obj_offset = { x - object->GetPosition().x, y - object->GetPosition().y };
+				return object;
+			}
+		}
+		return nullptr;
 	}
 
 	void Game::Start()
