@@ -12,8 +12,8 @@ namespace updater
 	enum MouseButton
 	{
 		Left = 1,
-		Right = 2,
-		Middle = 4,
+		Middle = 2,
+		Right = 4,
 		Back = 8,
 		Forward = 16
 	};
@@ -27,8 +27,8 @@ namespace updater
 
 		Uint32 m_mouse_state;
 		Uint32 m_prev_mouse_state;
-		int m_mouse_x;
-		int m_mouse_y;
+		int m_mouse_x = 0;
+		int m_mouse_y = 0;
 
 		std::unordered_map<int, const char> m_sdlmap =
 		{
@@ -81,15 +81,16 @@ namespace updater
 		bool KeyPressed(const char* key);
 		bool KeyReleased(const char* key);
 
+		// this is stupid!
 		bool KeyDown(int scancode);
 		bool KeyPressed(int scancode);
 		bool KeyReleased(int scancode);
 
 		const char* CharFromScancode(int scancode);
 
-		bool MouseDown(MouseButton mouse_button);
-		bool MousePressed(MouseButton mouse_button);
-		bool MouseReleased(MouseButton mouse_button);
+		bool MouseDown(MouseButton mouse_button, int& x, int& y);
+		bool MousePressed(MouseButton mouse_button, int& x, int& y);
+		bool MouseReleased(MouseButton mouse_button, int& x, int& y);
 
 		void Tick();
 		void LateTick();

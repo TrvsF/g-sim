@@ -104,15 +104,17 @@ namespace renderer
 			render_texture_object(textureobj);
 		}		
 
+		for (object::Geometry* geometryobj : m_geometry_objects)
+		{
+			if (!geometryobj->Active()) { continue; }
+
+			render_geometry_object(geometryobj);
+		}
+
 		for (object::AABB* aabb : m_aabbs)
 		{
 			render_aabb(aabb);
 		} 
-
-		for (object::Geometry* geometryobj : m_geometry_objects)
-		{
-			render_geometry_object(geometryobj);
-		}
 
 		if (console::ACTIVE)
 		{

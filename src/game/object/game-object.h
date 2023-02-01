@@ -95,6 +95,7 @@ namespace object
 					m_setup = true;
 				}
 				/*
+				// show rotation
 				float r = GetTransform().GetRotation().z;
 				int x = GetPosition().x;
 				int y = GetPosition().y;

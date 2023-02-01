@@ -39,7 +39,7 @@ namespace game
 	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
 	void Game::OnMouseClick(int x, int y, int mousebutton)
 	{
-		printf("%d", mousebutton);
+		printf("%d, %d\n", x, y);
 		switch (mousebutton)
 		{
 		case 1:
@@ -51,18 +51,18 @@ namespace game
 			Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
 			m_selected_obj->SetPosition(pos);
 		}
-
-		case 2:
+		break;
+		case 4:
 		{
-			if (m_camera->GetSubject() != m_player)
+			object::GameObject* obj = GetClickedObj(x, y);
+			if (obj == nullptr && m_camera->GetSubject() != m_player)
 			{
 				m_camera->SetSubject(m_player);
 				return;
 			}
-			object::GameObject* obj = GetClickedObj(x, y);
-			if (obj == nullptr) { return; }
 			m_camera->SetSubject(obj);
 		}
+		break;
 		}
 	}
 

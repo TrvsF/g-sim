@@ -60,19 +60,25 @@ namespace updater
 		return &m_sdlmap[scancode];
 	}
 
-	bool Input::MouseDown(MouseButton mouse_button)
+	bool Input::MouseDown(MouseButton mouse_button, int& x, int& y)
 	{
-		return ((m_mouse_state & mouse_button) != 0);
+		x = m_mouse_x;
+		y = m_mouse_y;
+		return (((int)m_mouse_state & mouse_button) != 0);
 	}
 
-	bool Input::MousePressed(MouseButton mouse_button)
+	bool Input::MousePressed(MouseButton mouse_button, int& x, int& y)
 	{
-		return ((m_prev_mouse_state & mouse_button) == 0) && ((m_mouse_state & mouse_button) != 0);
+		x = m_mouse_x;
+		y = m_mouse_y;
+		return (((int)m_prev_mouse_state & mouse_button) == 0) && (((int)m_mouse_state & mouse_button) != 0);
 	}
 
-	bool Input::MouseReleased(MouseButton mouse_button)
+	bool Input::MouseReleased(MouseButton mouse_button, int& x, int& y)
 	{
-		return ((m_prev_mouse_state & mouse_button) != 0) && ((m_mouse_state & mouse_button) == 0);
+		x = m_mouse_x;
+		y = m_mouse_y;
+		return (((int)m_prev_mouse_state & mouse_button) != 0) && (((int)m_mouse_state & mouse_button) == 0);
 	}
 
 	void Input::LateTick()

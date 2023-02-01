@@ -25,20 +25,18 @@ namespace updater
 		if (m_input->KeyDown("d"))
 		{ m_player->MoveRight(); }
 
-		if (m_input->MouseDown(Left))
+		int x, y;
+		if (m_input->MousePressed(Right, x, y))
 		{
-			int x, y;
-			SDL_GetMouseState(&x, &y);
-			game::Game::Get()->OnMouseClick(x, y, Left);
-		}
-		if (m_input->MousePressed(Right))
-		{
-			int x, y;
-			SDL_GetMouseState(&x, &y);
 			game::Game::Get()->OnMouseClick(x, y, Right);
 		}
-
-		if (m_input->MouseReleased(Left))
+		// click & drag
+		if (m_input->MouseDown(Left, x, y))
+		{
+			
+			game::Game::Get()->OnMouseClick(x, y, Left);
+		}
+		if (m_input->MouseReleased(Left, x, y))
 		{
 			game::Game::Get()->OnMouseRelease(Left);
 		}
