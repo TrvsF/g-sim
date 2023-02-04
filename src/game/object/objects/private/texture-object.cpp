@@ -13,7 +13,7 @@ namespace object
 	void TextureObject::set_texture_from_id(const char* id)
 	{
 		m_texture = new Texture();
-		SDL_Texture* texture = renderer::Renderer::Get()->GetSetTextureObjFromId(id, m_texture);
+		SDL_Texture* texture = renderer::Renderer::SharedInstace().GetSetTextureObjFromId(id, m_texture);
 		m_texture->Set(
 			texture,
 			{

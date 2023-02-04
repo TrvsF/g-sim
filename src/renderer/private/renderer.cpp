@@ -2,8 +2,6 @@
 
 namespace renderer
 {
-	Renderer* Renderer::s_instance = nullptr;
-
 	Renderer::Renderer()
 	{
 		m_window	= nullptr;
@@ -17,20 +15,6 @@ namespace renderer
 
 	Renderer::~Renderer()
 	{
-		Destroy();
-	}
-
-	void Renderer::Create()
-	{
-		if (!s_instance)
-		{
-			s_instance = new Renderer();
-		}
-	}
-
-	void Renderer::Destroy()
-	{
-		SAFE_DELETE(s_instance);
 	}
 
 	SDL_Texture* Renderer::GetSetTextureObjFromId(const char* id, object::Texture* texture_obj)

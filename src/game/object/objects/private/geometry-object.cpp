@@ -4,7 +4,7 @@ namespace object
 {
 	void GeometryObject::load_geometry()
 	{
-		renderer::Renderer::Get()->LoadGeometry(m_geometry);
+		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
 	}
 
 	GeometryObject::GeometryObject(GameObject* object, int sides)

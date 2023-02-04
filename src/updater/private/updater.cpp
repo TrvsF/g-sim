@@ -12,19 +12,6 @@ namespace updater
 		m_controller	= new Controller(m_input);
 	}
 
-	void Updater::Create()
-	{
-		if (!Updater::s_instance)
-		{
-			Updater::s_instance = new Updater();
-		}
-	}
-
-	void Updater::Destroy()
-	{
-		SAFE_DELETE(s_instance);
-	}
-
 	void Updater::Tick()
 	{
 		// must be first

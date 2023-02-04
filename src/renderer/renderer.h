@@ -21,8 +21,6 @@ namespace renderer
 	class Renderer
 	{
 	private:
-		static Renderer* s_instance;
-
 		int m_width;
 		int m_height;
 		const char* m_title;
@@ -56,9 +54,7 @@ namespace renderer
 		Renderer();
 		virtual ~Renderer();
 	public:
-		static void Create();
-		static inline Renderer* Get();
-		static void Destroy();
+		static Renderer& SharedInstace() { static Renderer renderer; return renderer; }
 		
 		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
 		void LoadAllTextures();

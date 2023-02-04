@@ -2,8 +2,6 @@
 
 namespace game
 {
-	Game* Game::s_instance = nullptr;
-
 	Game::Game()
 	{
 		m_collision = new Collision(128);
@@ -12,19 +10,6 @@ namespace game
 		m_camera = nullptr;
 
 		m_selected_obj = nullptr;
-	}
-
-	void Game::Create()
-	{
-		if (!Game::s_instance)
-		{
-			Game::s_instance = new Game();
-		}
-	}
-
-	void Game::Destroy()
-	{
-		SAFE_DELETE(s_instance);
 	}
 
 	void Game::OnMouseRelease(int mousebutton)

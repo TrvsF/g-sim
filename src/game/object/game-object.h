@@ -91,7 +91,7 @@ namespace object
 			{
 				if (!m_setup)
 				{
-					renderer::Renderer::Get()->LoadAABB(&m_aabb);
+					renderer::Renderer::SharedInstace().LoadAABB(&m_aabb);
 					m_setup = true;
 				}
 				/*

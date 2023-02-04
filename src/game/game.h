@@ -25,7 +25,7 @@ namespace game
 	class Game
 	{
 	private:
-		static Game* s_instance;
+		Game();
 
 		// logic objects
 		Collision*	m_collision;
@@ -40,11 +40,7 @@ namespace game
 		object::GameObject* m_selected_obj;
 		Vector2D			m_selected_obj_offset;
 	public:
-		Game();
-
-		static void Create();
-		static inline Game* Get();
-		static void Destroy();
+		static Game& SharedInstace() { static Game game; return game; }
 
 		void OnMouseRelease(int mousebutton);
 		void OnMouseClick(int x, int y, int mousebutton);

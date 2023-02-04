@@ -2,11 +2,6 @@
 
 namespace game
 {
-	inline Game* Game::Get()
-	{
-		return Game::s_instance;
-	}
-
 	inline void Game::AddGameObject(object::GameObject* game_object)
 	{
 		m_collision->AddCollisionObj(game_object);
