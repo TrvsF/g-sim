@@ -39,11 +39,11 @@ namespace game
 	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
 	void Game::OnMouseClick(int x, int y, int mousebutton)
 	{
-		printf("%d, %d\n", x, y);
 		switch (mousebutton)
 		{
 		case 1:
 		{
+			// TODO : FIX (SHOULD BE MOUSE DOWN NOT CLICK)
 			// if there is no selected object see if we can find one
 			m_selected_obj = GetClickedObj(x, y);
 			if (m_selected_obj == nullptr) { return; }
