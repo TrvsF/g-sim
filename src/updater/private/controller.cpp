@@ -33,7 +33,6 @@ namespace updater
 		// click & drag
 		if (m_input->MouseDown(Left, x, y))
 		{
-			
 			game::Game::Get()->OnMouseClick(x, y, Left);
 		}
 		if (m_input->MouseReleased(Left, x, y))

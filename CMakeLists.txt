@@ -90,5 +90,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND}
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/eventbus/lib")
+
 include_directories(${PROJECT_NAME} ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} Dexode::EventBus)
