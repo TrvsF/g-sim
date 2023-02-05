@@ -1,11 +1,16 @@
 #ifndef CONSOLE_H_
 #define CONSOLE_H_
 
+#include "../event/event.h"
+#include <memory>
+
 namespace console
 {
 	inline char m_inputstr[64] = "";
 
 	inline bool ACTIVE = false;
+
+	inline std::shared_ptr<_EventBus> bus = event::Event::SharedInstace().EventBus;
 
 	inline void InputChar(const char* c)
 	{
@@ -29,6 +34,8 @@ namespace console
 		// TODO : event system here for commands?
 		std::cout << "console : " << m_inputstr << "\n";
 		m_inputstr[0] = '\0';
+		bus->postpone(event::ePosChange{ {-500, -500} });
+		bus->process();
 	}
 }
 #endif // !CONSOLE_H_

@@ -15,6 +15,10 @@
 #include "logic/collision.h"
 
 #include "../src/updater/controller.h"
+#include "../event/event.h"
+
+#include <dexode/EventBus.hpp>
+using Listener = dexode::EventBus::Listener;
 
 #include <unordered_map>
 #include <algorithm>
@@ -26,6 +30,10 @@ namespace game
 	{
 	private:
 		Game();
+
+		// event objects & methods
+		Listener m_listener { event::Event::SharedInstace().EventBus };
+		void e_poschange(const event::ePosChange& event);
 
 		// logic objects
 		Collision*	m_collision;

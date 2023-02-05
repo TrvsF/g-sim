@@ -13,7 +13,7 @@
 #include "../game/object/component/aabb.h"
 #include "../game/object/component/texture.h"
 #include "../game/object/component/geometry.h"
-#include "../game/console.h"
+#include "../base/console.h"
 #include "../renderer/assets.h"
 
 namespace renderer

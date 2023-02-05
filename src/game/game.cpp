@@ -10,6 +10,14 @@ namespace game
 		m_camera = nullptr;
 
 		m_selected_obj = nullptr;
+		m_level = nullptr;
+
+		m_listener.listen<event::ePosChange>(std::bind(&Game::e_poschange, this, std::placeholders::_1));
+	}
+
+	void Game::e_poschange(const event::ePosChange& event)
+	{
+		m_player->SetPosition({event.pos.x, event.pos.y, 0});
 	}
 
 	void Game::OnMouseRelease(int mousebutton)
