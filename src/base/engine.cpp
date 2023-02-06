@@ -7,16 +7,8 @@ namespace base
     static bool         m_shutdown_requested    = false;
 
     bool Init()
-    {
-        // create renderer
-        renderer::Renderer::Create();
-        
-        // create game
-        game::Game::Create();
-
-        // create updater
-        updater::Updater::Create();
-
+    {       
+        // TODO : run startup checks ^^(maybe with the vars above)^^
         return true;
     }
 
@@ -24,20 +16,16 @@ namespace base
     {
         SDL_Event m_events;
 
-        // assign and start the renderer
-        static renderer::Renderer* renderer = renderer::Renderer::Get();
-        if (!renderer->Start("tri-engine", 640, 480)) { m_shutdown_requested = true; }  
+        // start the renderer
+        if (!renderer::Renderer::SharedInstace().Start("tri-engine", 640, 480)) 
+        { m_shutdown_requested = true; }
 
-        // assign and start the game
-        static game::Game* game = game::Game::Get();
-        game->Start();
-
-        // assign the updater static object
-        static updater::Updater* updater = updater::Updater::Get();
+        // start the game
+        game::Game::SharedInstace().Start();
 
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
-        timer::Timer* m_fps_timer = new timer::Timer();
+        timer::Timer* m_fps_timer  = new timer::Timer();
 
         while (!m_shutdown_requested)
         {
@@ -58,7 +46,7 @@ namespace base
 
             if (m_shutdown_requested)
             {
-                renderer->Clean();
+                renderer::Renderer::SharedInstace().Clean();
                 continue;
             }
 
@@ -66,8 +54,8 @@ namespace base
             if (m_tick_timer->DeltaTime() >= 1.0f / m_tick_rate)
             {
                 // tick the updater [handles inputs] then the game (& its objects)
-                updater->Tick();
-                game->Tick();
+                updater::Updater::SharedInstance().Tick();
+                game::Game::SharedInstace().Tick();
                 m_tick_timer->Reset();
             }
 
@@ -75,7 +63,7 @@ namespace base
             if (m_fps_timer->DeltaTime() >= 1.0f / m_fps_cap)
             {
                 // render the frame
-                renderer->Render();
+                renderer::Renderer::SharedInstace().Render();
                 m_fps_timer->Reset();
             }
         }
@@ -83,6 +71,6 @@ namespace base
 
     void Stop()
     {
-        renderer::Renderer::Destroy();
+        // TODO : clean objects
     }
 }

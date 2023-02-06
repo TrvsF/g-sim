@@ -13,7 +13,7 @@ namespace updater
 	{
 		if (m_player == nullptr) 
 		{ 
-			m_player = game::Game::Get()->GetPlayer();
+			m_player = game::Game::SharedInstace().GetPlayer();
 		}
 
 		if (m_input->KeyDown("w"))
@@ -28,17 +28,16 @@ namespace updater
 		int x, y;
 		if (m_input->MousePressed(Right, x, y))
 		{
-			game::Game::Get()->OnMouseClick(x, y, Right);
+			game::Game::SharedInstace().OnMouseClick(Right, x, y);
 		}
 		// click & drag
 		if (m_input->MouseDown(Left, x, y))
 		{
-			
-			game::Game::Get()->OnMouseClick(x, y, Left);
+			game::Game::SharedInstace().OnMouseDown(Left, x, y);
 		}
 		if (m_input->MouseReleased(Left, x, y))
 		{
-			game::Game::Get()->OnMouseRelease(Left);
+			game::Game::SharedInstace().OnMouseRelease(Left);
 		}
 	}
 

@@ -15,6 +15,10 @@
 #include "logic/collision.h"
 
 #include "../src/updater/controller.h"
+#include "../event/event.h"
+
+#include <dexode/EventBus.hpp>
+using Listener = dexode::EventBus::Listener;
 
 #include <unordered_map>
 #include <algorithm>
@@ -25,7 +29,11 @@ namespace game
 	class Game
 	{
 	private:
-		static Game* s_instance;
+		Game();
+
+		// event objects & methods
+		Listener m_listener { event::Event::SharedInstace().EventBus };
+		void e_poschange(const event::ePosChange& event);
 
 		// logic objects
 		Collision*	m_collision;
@@ -40,14 +48,11 @@ namespace game
 		object::GameObject* m_selected_obj;
 		Vector2D			m_selected_obj_offset;
 	public:
-		Game();
-
-		static void Create();
-		static inline Game* Get();
-		static void Destroy();
+		static Game& SharedInstace() { static Game game; return game; }
 
 		void OnMouseRelease(int mousebutton);
-		void OnMouseClick(int x, int y, int mousebutton);
+		void OnMouseDown(int mousebutton, int x, int y);
+		void OnMouseClick(int mousebutton,int x, int y);
 		object::GameObject* GetClickedObj(int x, int y);
 
 		inline void AddGameObject(object::GameObject* game_object);

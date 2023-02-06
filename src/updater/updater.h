@@ -21,9 +21,7 @@ namespace updater
 
 		Updater();
 	public:
-		static void Create();
-		static inline Updater* Get();
-		static void Destroy();
+		static Updater& SharedInstance() { static Updater updater; return updater; }
 
 		void Tick();
 	};

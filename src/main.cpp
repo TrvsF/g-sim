@@ -9,10 +9,6 @@
  [improvements]
  - 
  [additions]
- - chromosome (large collection of genomes) --hasmany-> 
-   genome (collection of genes) --hasmany-> 
-   gene (a specific atrabute of the agent [sight, hunger, speed]) --hasmany->
-   dna (bit)
  -
 --------*/
 

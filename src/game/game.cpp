@@ -2,8 +2,6 @@
 
 namespace game
 {
-	Game* Game::s_instance = nullptr;
-
 	Game::Game()
 	{
 		m_collision = new Collision(128);
@@ -12,19 +10,14 @@ namespace game
 		m_camera = nullptr;
 
 		m_selected_obj = nullptr;
+		m_level = nullptr;
+
+		m_listener.listen<event::ePosChange>(std::bind(&Game::e_poschange, this, std::placeholders::_1));
 	}
 
-	void Game::Create()
+	void Game::e_poschange(const event::ePosChange& event)
 	{
-		if (!Game::s_instance)
-		{
-			Game::s_instance = new Game();
-		}
-	}
-
-	void Game::Destroy()
-	{
-		SAFE_DELETE(s_instance);
+		m_player->SetPosition({event.pos.x, event.pos.y, 0});
 	}
 
 	void Game::OnMouseRelease(int mousebutton)
@@ -33,17 +26,16 @@ namespace game
 		{
 		case 1:
 			m_selected_obj = nullptr;
+			break;
 		}
 	}
 
-	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
-	void Game::OnMouseClick(int x, int y, int mousebutton)
+	void Game::OnMouseDown(int mousebutton, int x, int y)
 	{
+		// TODO : fix
 		switch (mousebutton)
 		{
 		case 1:
-		{
-			// TODO : FIX (SHOULD BE MOUSE DOWN NOT CLICK)
 			// if there is no selected object see if we can find one
 			m_selected_obj = GetClickedObj(x, y);
 			if (m_selected_obj == nullptr) { return; }
@@ -51,8 +43,22 @@ namespace game
 			Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
 			m_selected_obj->SetPosition(pos);
 		}
+	}
+
+	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
+	void Game::OnMouseClick(int mousebutton, int x, int y)
+	{
+		switch (mousebutton)
+		{
+		case 1: // m1
+		{
+		}
 		break;
-		case 4:
+		case 2: // mm
+		{
+		}
+		break;
+		case 4: // m2
 		{
 			object::GameObject* obj = GetClickedObj(x, y);
 			if (obj == nullptr && m_camera->GetSubject() != m_player)
@@ -156,6 +162,14 @@ namespace game
 		AddGameObject(new object::GeometryObject(triman2, 5));
 		AddGameObject(new object::GeometryObject(triman3, 4));
 		AddGameObject(new object::GeometryObject(triman4, 5));
+
+		object::GameObject* textobj = object::GameObject::Create(
+			{ 50.0f,   400.0f,  0.0f },
+			{ 0.0f,    0.0f,    0.0f },
+			{ 64.0f,   64.0f,   64.0f }
+		);
+		// TODO : check for is text obj to change text etc
+		AddGameObject(new object::TextureObject(textobj, "HenryBlue-Regular", "hello georgia!", { 0, 255, 0 }));
 	}
 
 	// entities -> camera

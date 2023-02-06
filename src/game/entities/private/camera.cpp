@@ -74,7 +74,7 @@ namespace object
 			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
 		};
 
-		m_screensize = renderer::Renderer::Get()->GetScreensize();
+		m_screensize = renderer::Renderer::SharedInstace().GetScreensize();
 
 		// where the camera will endup
 		AABB newaabb = GetAABB();
