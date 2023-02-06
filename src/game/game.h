@@ -51,7 +51,8 @@ namespace game
 		static Game& SharedInstace() { static Game game; return game; }
 
 		void OnMouseRelease(int mousebutton);
-		void OnMouseClick(int x, int y, int mousebutton);
+		void OnMouseDown(int mousebutton, int x, int y);
+		void OnMouseClick(int mousebutton,int x, int y);
 		object::GameObject* GetClickedObj(int x, int y);
 
 		inline void AddGameObject(object::GameObject* game_object);

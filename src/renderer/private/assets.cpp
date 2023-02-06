@@ -29,15 +29,31 @@ namespace renderer
 		return m_textures[full_path];
 	}
 
-	std::string Assets::GetPath()
+	void Assets::SetFont(std::string full_path, TTF_Font* font)
 	{
-		return m_asset_path;
+		m_fonts[full_path] = font;
 	}
 
-	std::string Assets::GetFullPath(const char* path_to_texture)
+	TTF_Font* Assets::GetFont(std::string full_path)
 	{
-		std::string path = m_asset_path + std::string(path_to_texture);
+		return m_fonts[full_path];
+	}
+
+	std::string Assets::GetPathToTexture(const char* path_to_texture)
+	{
+		std::string path = m_asset_path + "textures/" + std::string(path_to_texture);
 		return path;
+	}
+
+	std::string Assets::GetFullTexturePath()
+	{
+		return m_asset_path + "textures/";
+		
+	}
+
+	std::string Assets::GetFullFontPath()
+	{
+		return m_asset_path + "fonts/";
 	}
 
 	std::string Assets::get_asset_path()

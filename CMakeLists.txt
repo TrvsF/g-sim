@@ -2,10 +2,13 @@
 # project specific logic here.
 cmake_minimum_required (VERSION 3.8)
 
+# project name
 project ("POGengine")
 
-set(SDL2_DIR "/SDL2-2.0.22-d") # CHANGE THIS TO WHERE YOUR SDL IS
-set(SDL2_image_DIR "/SDL2_image-2.6.0")
+# dirs of where sdl is on my machine
+set(SDL2_DIR		"/SDL2-2.0.22-d")
+set(SDL2_image_DIR	"/SDL2_image-2.6.0")
+set(SDL2_ttf_DIR	"/SDL2_ttf-2.20.1")
 
 add_executable (	
  POGengine
@@ -78,19 +81,21 @@ add_executable (
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
- "src/game/logic/collision.h" "src/game/logic/private/collision.cpp" "src/base/console.h" "src/event/event.h" "src/event/private/event.cpp")
+ "src/game/logic/collision.h" "src/game/logic/private/collision.cpp" "src/base/console.h" "src/event/event.h" "src/event/private/event.cpp"  )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 endif()
 
+# makes debugging ez
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND}
- -E copy_directory "${PROJECT_SOURCE_DIR}/libs" $<TARGET_FILE_DIR:POGengine>) # makes debugging ez
+ -E copy_directory "${PROJECT_SOURCE_DIR}/libs" $<TARGET_FILE_DIR:POGengine>) 
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/eventbus/lib")
 
-include_directories(${PROJECT_NAME} ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} Dexode::EventBus)
+include_directories(${PROJECT_NAME} ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} Dexode::EventBus)

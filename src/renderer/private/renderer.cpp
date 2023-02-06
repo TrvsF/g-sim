@@ -23,10 +23,28 @@ namespace renderer
 		return m_assets->GetTexture(id);
 	}
 
+	SDL_Texture* Renderer::GetSetTextureObjFromText(const char* font, std::string text, SDL_Color colour, object::Texture* texture_obj)
+	{
+		add_texture_object(texture_obj);
+		return create_texture_from_text(font, text, colour);
+	}
+
+	SDL_Texture* Renderer::create_texture_from_text(const char* font, std::string text, SDL_Color colour)
+	{
+		TTF_Font* fontobj = m_assets->GetFont(font);
+		SDL_Surface* tempsurface = TTF_RenderText_Solid(fontobj, text.c_str(), colour);
+		if (!tempsurface) { return nullptr; } // TODO : ERROR
+
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, tempsurface);
+		SDL_FreeSurface(tempsurface);
+
+		return texture;
+	}
+
 	void Renderer::LoadAllTextures()
 	{
 		// get local path
-		std::string path = m_assets->GetPath();
+		std::string path = m_assets->GetFullTexturePath();
 
 		for (const auto& entry : std::filesystem::directory_iterator(path))
 		{
@@ -38,13 +56,34 @@ namespace renderer
 			if (!texture)
 			{
 				// load the texture
-				SDL_Surface* temp_surface = IMG_Load(entry_str.c_str());
-				if (!temp_surface) { continue; } // TODO : ERROR
-				texture = SDL_CreateTextureFromSurface(m_renderer, temp_surface);
-				SDL_FreeSurface(temp_surface);
+				SDL_Surface* tempsurface = IMG_Load(entry_str.c_str());
+				if (!tempsurface) { continue; } // TODO : ERROR
+				texture = SDL_CreateTextureFromSurface(m_renderer, tempsurface);
+				SDL_FreeSurface(tempsurface);
 
 				// add the texture to asset manager
 				m_assets->SetTexture(entry_stem_str, texture);
+			}
+		}
+	}
+
+	void Renderer::LoadAllFonts()
+	{
+		// get local path
+		std::string path = m_assets->GetFullFontPath();
+
+		for (const auto& entry : std::filesystem::directory_iterator(path))
+		{
+			std::string entry_str = entry.path().string();
+			std::string entry_stem_str = entry.path().stem().string();
+
+			// check if font already exists in memory
+			TTF_Font* font = m_assets->GetFont(entry_stem_str);
+			if (!font)
+			{
+				// load the texture
+				font = TTF_OpenFont(entry_str.c_str(), 18);
+				m_assets->SetFont(entry_stem_str, font);
 			}
 		}
 	}
@@ -66,11 +105,19 @@ namespace renderer
 		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
 		if (!m_renderer) { return false; }
 
+		// init images
+		int flags = IMG_INIT_PNG;
+		if (!(IMG_Init(flags) & flags)) { return false; }
+
+		// init fonts
+		if (TTF_Init() == -1) { return false; }
+
 		// create the asset manager object
 		m_assets = new Assets();
 
 		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
+		LoadAllFonts();
 		LoadAllTextures();
 		set_window_icon();
 
@@ -128,7 +175,7 @@ namespace renderer
 
 	void Renderer::set_window_icon()
 	{
-		SDL_Surface* icon_surface = IMG_Load(m_assets->GetFullPath("icon.png").c_str());
+		SDL_Surface* icon_surface = IMG_Load(m_assets->GetPathToTexture("icon.png").c_str());
 		SDL_SetWindowIcon(m_window, icon_surface);
 	}
 

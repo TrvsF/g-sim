@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
 #include <vector>
@@ -41,6 +42,8 @@ namespace renderer
 		inline void add_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
 
+		SDL_Texture* create_texture_from_text(const char* font, std::string text, SDL_Color colour);
+
 		// console
 		void render_console();
 
@@ -56,8 +59,12 @@ namespace renderer
 	public:
 		static Renderer& SharedInstace() { static Renderer renderer; return renderer; }
 		
+		SDL_Texture* GetSetTextureObjFromText(const char* font, std::string text, SDL_Color colour, object::Texture* texture_obj);
 		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
 		void LoadAllTextures();
+
+		void LoadAllFonts();
+
 		void LoadAABB(object::AABB* aabb);
 		void LoadGeometry(object::Geometry* geometry_object); // TODO : system to unload these object
 

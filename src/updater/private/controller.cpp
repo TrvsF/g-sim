@@ -28,12 +28,12 @@ namespace updater
 		int x, y;
 		if (m_input->MousePressed(Right, x, y))
 		{
-			game::Game::SharedInstace().OnMouseClick(x, y, Right);
+			game::Game::SharedInstace().OnMouseClick(Right, x, y);
 		}
 		// click & drag
 		if (m_input->MouseDown(Left, x, y))
 		{
-			game::Game::SharedInstace().OnMouseClick(x, y, Left);
+			game::Game::SharedInstace().OnMouseDown(Left, x, y);
 		}
 		if (m_input->MouseReleased(Left, x, y))
 		{

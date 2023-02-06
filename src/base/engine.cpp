@@ -17,14 +17,15 @@ namespace base
         SDL_Event m_events;
 
         // start the renderer
-        if (!renderer::Renderer::SharedInstace().Start("tri-engine", 640, 480)) { m_shutdown_requested = true; }
+        if (!renderer::Renderer::SharedInstace().Start("tri-engine", 640, 480)) 
+        { m_shutdown_requested = true; }
 
         // start the game
         game::Game::SharedInstace().Start();
 
         // start the timers
         timer::Timer* m_tick_timer = new timer::Timer();
-        timer::Timer* m_fps_timer = new timer::Timer();
+        timer::Timer* m_fps_timer  = new timer::Timer();
 
         while (!m_shutdown_requested)
         {
