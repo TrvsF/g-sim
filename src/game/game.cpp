@@ -8,6 +8,7 @@ namespace game
 
 		m_player = nullptr;
 		m_camera = nullptr;
+		m_consoletxt = nullptr;
 
 		m_selected_obj = nullptr;
 		m_level = nullptr;
@@ -164,26 +165,35 @@ namespace game
 		AddGameObject(new object::GeometryObject(triman4, 5));
 
 		object::GameObject* textobj = object::GameObject::Create(
-			{ 50.0f,   400.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
-			{ 64.0f,   64.0f,   64.0f }
+			{ 0.0f,    0.0f,    0.0f },
+			{ 0.0f,    0.0f,    0.0f }
 		);
 		// TODO : check for is text obj to change text etc
-		AddGameObject(new object::TextureObject(textobj, "HenryBlue-Regular", "hello georgia!", { 0, 255, 0 }));
+		m_consoletxt = new object::TextObject(textobj, "HenryBlue-Regular", "hello georgia!", { 0, 255, 0 });
+		m_consoletxt->GetTexture()->Active(false);
+		AddGameObject(m_consoletxt);
 	}
 
 	// entities -> camera
 	void Game::Tick()
 	{
+		// tick/collision objects
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
 			m_collision->CheckCollisionObj(gameworldobject);
 			m_collision->DoCollision();
 			gameworldobject->Tick();
 		}
+		// camera
 		m_camera->Tick();
+		// console
+		m_consoletxt->GetTexture()->Active(console::ACTIVE);
+		m_consoletxt->SetText(console::m_inputstr);
+		// update what camera sees
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
+			if (gameworldobject == m_consoletxt) { continue; } // hack for console text
 			m_camera->SetTexturePos(gameworldobject);
 		}
 	}

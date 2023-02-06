@@ -25,7 +25,7 @@ namespace renderer
 
 	SDL_Texture* Renderer::GetSetTextureObjFromText(const char* font, std::string text, SDL_Color colour, object::Texture* texture_obj)
 	{
-		add_texture_object(texture_obj);
+		if (texture_obj != nullptr) { add_texture_object(texture_obj); }
 		return create_texture_from_text(font, text, colour);
 	}
 
@@ -145,11 +145,11 @@ namespace renderer
 		for (object::AABB* aabb : m_aabbs)
 		{
 			render_aabb(aabb);
-		} 
+		}
 
 		if (console::ACTIVE)
 		{
-			render_console();
+			// render_console();
 		}
 
 		// !!! the last thing to be called from renderer

@@ -13,10 +13,8 @@ namespace object
 		Texture*	m_texture;
 
 		void set_texture_from_id(const char* id);
-		void set_text(const char* font, std::string text, SDL_Color colour);
 	public:
 		TextureObject(GameObject* object, const char* textureid);
-		TextureObject(GameObject* object, const char* font, std::string text, SDL_Color colour);
 
 		void HandleOffsets();
 		void Update();

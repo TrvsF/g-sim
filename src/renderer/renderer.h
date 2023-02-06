@@ -22,17 +22,17 @@ namespace renderer
 	class Renderer
 	{
 	private:
-		int m_width;
-		int m_height;
-		const char* m_title;
+		int				m_width;
+		int				m_height;
+		const char*		m_title;
 
-		SDL_Window* m_window;
-		SDL_Renderer* m_renderer;
-		Assets* m_assets;
+		SDL_Window*		m_window;
+		SDL_Renderer*	m_renderer;
+		Assets*			m_assets;
 
-		std::vector<object::AABB*> m_aabbs;
-		std::vector<object::Geometry*> m_geometry_objects;
-		std::vector<object::Texture*> m_texutre_objects;
+		std::vector<object::AABB*>		m_aabbs;
+		std::vector<object::Geometry*>	m_geometry_objects;
+		std::vector<object::Texture*>	m_texutre_objects;
 
 		void render_geometry_object(object::Geometry* geometry_object);
 		void render_tri(object::Triangle* tri);
@@ -40,6 +40,7 @@ namespace renderer
 		void render_aabb(object::AABB* aabb);
 
 		inline void add_texture_object(object::Texture* texture_object);
+		inline void remove_texture_object(object::Texture* texture_object);
 		void render_texture_object(object::Texture* texture_object);
 
 		SDL_Texture* create_texture_from_text(const char* font, std::string text, SDL_Color colour);
@@ -59,6 +60,7 @@ namespace renderer
 	public:
 		static Renderer& SharedInstace() { static Renderer renderer; return renderer; }
 		
+		SDL_Texture* ReplaceText(const char* font, std::string text, SDL_Color colour, object::Texture* texture_obj);
 		SDL_Texture* GetSetTextureObjFromText(const char* font, std::string text, SDL_Color colour, object::Texture* texture_obj);
 		SDL_Texture* GetSetTextureObjFromId(const char* id, object::Texture* texture_obj);
 		void LoadAllTextures();

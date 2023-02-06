@@ -3,11 +3,15 @@
 
 #include "../base/helper_macos.h"
 
+#include "../base/console.h"
+
 #include "object/game-object.h"
 #include "entities/camera.h"
 #include "entities/player.h"
 #include "entities/agent.h"
 #include "entities/food.h"
+
+#include "object/objects/text-object.h"
 #include "object/objects/texture-object.h"
 #include "object/objects/geometry-object.h"
 
@@ -43,6 +47,9 @@ namespace game
 		std::vector<object::GameObject*> m_gameworld_objects;
 		object::Player* m_player;
 		object::Camera* m_camera;
+
+		// console text TODO : this another way maybe?
+		object::TextObject* m_consoletxt;
 
 		// input stuff (todo: move?)
 		object::GameObject* m_selected_obj;
