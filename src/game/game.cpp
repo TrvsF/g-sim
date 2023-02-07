@@ -188,8 +188,14 @@ namespace game
 		// camera
 		m_camera->Tick();
 		// console
-		m_consoletxt->GetTexture()->Active(console::ACTIVE);
-		m_consoletxt->SetText(console::m_inputstr);
+		bool active = console::ACTIVE;
+		m_consoletxt->GetTexture()->Active(active);
+		if (active)
+		{
+			if (console::SPECIAL) { m_consoletxt->SetText("done!"); }
+			else { m_consoletxt->SetText(console::m_inputstr); }
+		}
+		else { m_consoletxt->SetText("."); }
 		// update what camera sees
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
