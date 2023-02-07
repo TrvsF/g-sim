@@ -15,8 +15,9 @@
 #include "object/objects/texture-object.h"
 #include "object/objects/geometry-object.h"
 
-#include "logic/level.h"
 #include "logic/collision.h"
+
+#include "ai/ai.h"
 
 #include "../src/updater/controller.h"
 #include "../event/event.h"
@@ -41,7 +42,6 @@ namespace game
 
 		// logic objects
 		Collision*	m_collision;
-		Level*		m_level;
 
 		// world object stuff
 		std::vector<object::GameObject*> m_gameworld_objects;

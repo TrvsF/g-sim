@@ -23,7 +23,7 @@ add_executable (
  "src/game/game.cpp"
  "src/game/game.h"
 
- "src/game/logic/level.h"
+ 
 
  "src/game/object/game-object.h"
  "src/game/object/game-object-inl.h"
@@ -81,7 +81,7 @@ add_executable (
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
- "src/game/logic/collision.h" "src/game/logic/private/collision.cpp" "src/base/console.h" "src/event/event.h" "src/event/private/event.cpp"   "src/game/object/objects/text-object.h" "src/game/object/objects/private/text-object.cpp")
+ "src/game/logic/collision.h" "src/game/logic/private/collision.cpp" "src/base/console.h" "src/event/event.h" "src/event/private/event.cpp"   "src/game/object/objects/text-object.h" "src/game/object/objects/private/text-object.cpp" "src/game/ai/ai.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

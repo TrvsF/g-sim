@@ -11,7 +11,6 @@ namespace game
 		m_consoletxt = nullptr;
 
 		m_selected_obj = nullptr;
-		m_level = nullptr;
 
 		m_listener.listen<event::ePosChange>(std::bind(&Game::e_poschange, this, std::placeholders::_1));
 	}
