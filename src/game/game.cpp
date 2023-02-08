@@ -102,6 +102,8 @@ namespace game
 
 	void Game::Start()
 	{
+		srand(time(NULL)); // move me
+
 		// SETUP CAMERA AND PLAYER OBJECTS
 		object::GameObject* playerobj = object::GameObject::Create(
 			{  200.0f,  200.0f,  0.0f  },
@@ -128,7 +130,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 32.0f,   32.0f,   32.0f }
 		);
-		AddGameObject(new object::Agent(miscagent, 4)); // TODO : Scale BB with tri size
+		AddGameObject(new object::Agent(miscagent, 8)); // TODO : Scale BB with tri size
 
 		object::GameObject* food = object::GameObject::Create(
 			{ 600.0f,  400.0f,  0.0f },
@@ -137,6 +139,7 @@ namespace game
 		);
 		AddGameObject(new object::Food(food, "food"));
 
+		/*
 		object::GameObject* triman = object::GameObject::Create(
 			{ 150.0f,   0.0f,    0.0f },
 			{ 0.0f,     0.0f,    0.0f },
@@ -157,19 +160,19 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		srand(time(NULL)); // move me
 		AddGameObject(new object::GeometryObject(triman,  4));
 		AddGameObject(new object::GeometryObject(triman2, 5));
 		AddGameObject(new object::GeometryObject(triman3, 4));
 		AddGameObject(new object::GeometryObject(triman4, 5));
+		*/
 
 		object::GameObject* textobj = object::GameObject::Create(
-			{ 0.0f,    0.0f,    0.0f },
+			{ 4.0f,    4.0f,    0.0f },
 			{ 0.0f,    0.0f,    0.0f },
 			{ 0.0f,    0.0f,    0.0f }
 		);
-		// TODO : check for is text obj to change text etc
-		m_consoletxt = new object::TextObject(textobj, "HenryBlue-Regular", "hello georgia!", { 0, 255, 0 });
+		// TODO : move me?
+		m_consoletxt = new object::TextObject(textobj, "HenryBlue-Regular", "", { 0, 255, 0 });
 		m_consoletxt->GetTexture()->Active(false);
 		AddGameObject(m_consoletxt);
 	}
@@ -184,9 +187,11 @@ namespace game
 			m_collision->DoCollision();
 			gameworldobject->Tick();
 		}
+
 		// camera
 		m_camera->Tick();
-		// console
+
+		// console TODO : move me?
 		bool active = console::ACTIVE;
 		m_consoletxt->GetTexture()->Active(active);
 		if (active)
@@ -194,7 +199,8 @@ namespace game
 			if (console::SPECIAL) { m_consoletxt->SetText("done!"); }
 			else { m_consoletxt->SetText(console::m_inputstr); }
 		}
-		else { m_consoletxt->SetText("."); }
+		else { m_consoletxt->SetText(""); }
+
 		// update what camera sees
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{

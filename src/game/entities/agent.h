@@ -3,31 +3,25 @@
 
 #include "../object/objects/geometry-object.h"
 
-/*
-	TODO :
-	chromosome/genome/sex
-	- (see notes)
-	eyes
-	- have centeral eye point & cast a cone x deg either side of that
-	- max range, cone size, placement
-	brain
-	- have random set of bits that controls how moves/interacts
-	- maybe save last x bits for memeory?
-	- cross-reference some(or all) to genome 
-	- eg how fast, what to do when @ food, if violent etc
-	limbs (maybe)
-	- things that can be controlled to interact with world?
-	- would also require brain to evolve to control? unless hard-coded:/
-*/
-
 namespace object
 {
 	class Agent : public GeometryObject
 	{
 	private:
-		
+		// movement
+		const float MAX_VELOCITY  = 5.0f;
+		const float MAX_TURNSPEED = 4.0f;
+		float m_velocity;
+		bool  m_ismoving;
+
+		void do_friction();
+		void calc_offsetrotation();
+		void calc_offsetpos();
 	public:
 		Agent(GameObject* gameobject, int sides);
+
+		void MoveForward();
+		void MoveBackward();
 
 		void Update();
 	};

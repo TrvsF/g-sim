@@ -53,7 +53,7 @@ namespace console
 
 	inline void InputEnter()
 	{
-		// debug
+		// console & refresh
 		printf("\033[2J");
 		printf("\033[%d;%dH", 0, 0);
 		std::cout << ">/ " << m_inputstr << "\n";
@@ -62,7 +62,7 @@ namespace console
 		std::string command = input.substr(0, input.find(" "));
 
 		// - tp
-		if (command == "tp")
+		if (command == "tp" || command == "pos")
 		{
 			int newpos[2];
 			int size = sizeof(newpos) / sizeof(newpos[0]);
@@ -73,6 +73,8 @@ namespace console
 
 			bus->postpone(event::ePosChange { Vector2D{x, y} });
 			bus->process();
+
+			SPECIAL = true;
 		}
 
 		// - scale
@@ -83,9 +85,10 @@ namespace console
 			GetSubcommands(input, newscale, size);
 
 			// TODO : set render scale to newscale[0]
+
+			SPECIAL = true;
 		}
 
-		SPECIAL = true;
 		m_inputstr[0] = '\0';
 	}
 }

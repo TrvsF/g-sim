@@ -126,14 +126,7 @@ namespace renderer
 
 	void Renderer::Render()
 	{
-		clear_buffer();
-
-		for (object::Texture* textureobj : m_texutre_objects)
-		{
-			if (!textureobj->Active()) { continue; }
-
-			render_texture_object(textureobj);
-		}		
+		clear_buffer();	
 
 		for (object::Geometry* geometryobj : m_geometry_objects)
 		{
@@ -149,7 +142,14 @@ namespace renderer
 
 		if (console::ACTIVE)
 		{
-			// render_console();
+			render_console();
+		}
+
+		for (object::Texture* textureobj : m_texutre_objects)
+		{
+			if (!textureobj->Active()) { continue; }
+
+			render_texture_object(textureobj);
 		}
 
 		// !!! the last thing to be called from renderer
@@ -239,11 +239,11 @@ namespace renderer
 	{
 		SDL_Rect rect;
 		rect.w = m_width / 2.5f;
-		rect.h = m_height / 4.0f;
+		rect.h = 20.0f;
 		rect.x = 3;
 		rect.y = 3;
 
-		render_fillrect(rect, { 255, 30, 30, 150 }, { 150, 150, 150, 255 });
+		render_fillrect(rect, { 255, 30, 30, 150 }, { 0, 0, 0, 255 });
 	}
 
 	void Renderer::render_rect(SDL_Rect rect, SDL_Color colour)
