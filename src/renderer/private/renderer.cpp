@@ -135,11 +135,6 @@ namespace renderer
 			render_geometry_object(geometryobj);
 		}
 
-		for (object::AABB* aabb : m_aabbs)
-		{
-			render_aabb(aabb);
-		}
-
 		if (console::ACTIVE)
 		{
 			render_console();
@@ -150,6 +145,11 @@ namespace renderer
 			if (!textureobj->Active()) { continue; }
 
 			render_texture_object(textureobj);
+		}
+
+		for (object::AABB* aabb : m_aabbs)
+		{
+			render_aabb(aabb);
 		}
 
 		// !!! the last thing to be called from renderer

@@ -42,6 +42,18 @@ namespace object
 		m_geometry->OffsetRotation(m_offset_rotation.z);
 	}
 
+	void GeometryObject::SetPosition(Vector2D pos)
+	{
+		GetTransform().SetPosition({ pos.x, pos.y, 0 });
+		GetAABB().SetPos({ pos.x, pos.y, 0 });
+	}
+
+	void GeometryObject::SetRotation(float rotation)
+	{
+		GetTransform().SetRotation({ 0, 0, rotation });
+		m_geometry->Rotation(rotation);
+	}
+
 	void GeometryObject::Update()
 	{
 	}

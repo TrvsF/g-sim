@@ -19,6 +19,8 @@ namespace object
 
 		m_offset_pos = { pos_change_vec2d.x, pos_change_vec2d.y };
 		
+		printf("%d\n", 5);
+
 		reset_tickvars();
 	}
 }

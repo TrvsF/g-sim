@@ -57,6 +57,7 @@ namespace console
 		printf("\033[2J");
 		printf("\033[%d;%dH", 0, 0);
 		std::cout << ">/ " << m_inputstr << "\n";
+
 		// coammnds
 		std::string input   = std::string(m_inputstr);
 		std::string command = input.substr(0, input.find(" "));
