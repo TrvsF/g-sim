@@ -52,19 +52,17 @@ namespace updater
 
 		if (console::ACTIVE)
 		{
-			for (int i = 4; i < 40; i++)
+			// TODO : find a better way to get what keyboard keys are down (input.h)
+			// alphabet
+			for (int i = 4; i < 45; i++)
 			{
 				if (m_input->KeyPressed(i))
 				{
+					if (i >= 40 && i < 44) { continue; }
 					const char* c = m_input->CharFromScancode(i);
 					console::InputChar(c);
 				}
 			}
-			if (m_input->KeyPressed(44))
-			{
-				console::InputChar(" ");
-			}
-
 			// enter
 			if (m_input->KeyPressed(40))
 			{

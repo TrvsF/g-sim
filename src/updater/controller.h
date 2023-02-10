@@ -17,7 +17,6 @@ namespace updater
 	class Controller
 	{
 	private:
-		std::string m_alphabet = "abcdefghijklmnopqrstuvyxwz";
 		ControllerState m_controller_state;
 
 		object::Player*		m_player;

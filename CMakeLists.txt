@@ -18,12 +18,19 @@ add_executable (
  "src/base/helper_macos.h"
  "src/base/engine.h" 
  "src/base/engine.cpp"
+ "src/base/console.h"
+
+ "src/event/event.h"
+ "src/event/private/event.cpp"
 
  "src/game/game-inl.h"
  "src/game/game.cpp"
  "src/game/game.h"
 
- 
+ "src/game/ai/ai.h"
+
+ "src/game/logic/collision.h"
+ "src/game/logic/private/collision.cpp"
 
  "src/game/object/game-object.h"
  "src/game/object/game-object-inl.h"
@@ -51,11 +58,13 @@ add_executable (
  "src/game/entities/private/camera.cpp"
  "src/game/entities/food.h"
  "src/game/entities/private/food.cpp"
-  
+
+ "src/game/object/objects/text-object.h"
  "src/game/object/objects/texture-object.h"
  "src/game/object/objects/texture-object-inl.h"
  "src/game/object/objects/geometry-object.h"
  "src/game/object/objects/geometry-object-inl.h"
+ "src/game/object/objects/private/text-object.cpp"
  "src/game/object/objects/private/texture-object.cpp"
  "src/game/object/objects/private/geometry-object.cpp"
 
@@ -81,7 +90,7 @@ add_executable (
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
- "src/game/logic/collision.h" "src/game/logic/private/collision.cpp" "src/base/console.h" "src/event/event.h" "src/event/private/event.cpp"   "src/game/object/objects/text-object.h" "src/game/object/objects/private/text-object.cpp" "src/game/ai/ai.h")
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
