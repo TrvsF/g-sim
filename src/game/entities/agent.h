@@ -5,14 +5,30 @@
 
 namespace object
 {
+	struct Turnobj {
+		int   steps;
+		bool  left;
+	};
+
+	enum class AgentState
+	{
+		Wandering,
+		Attacking
+	};
+
 	class Agent : public GeometryObject
 	{
 	private:
+		// brain
+		Turnobj	   m_turnobj;
+		AgentState m_aistate;
+		int		 m_agression;
+
 		// navigation
 		Vector2D m_targetpos;
 
 		// movement
-		const float MAX_VELOCITY  = 5.0f;
+		const float MAX_VELOCITY  = 3.0f;
 		const float MAX_TURNSPEED = 4.0f;
 		float m_velocity;
 		float m_turnspeed;
@@ -24,9 +40,11 @@ namespace object
 	public:
 		Agent(GameObject* gameobject, int sides);
 
-		// nivigation
-		void SetTargetpos(Vector2D pos);
-		void MoveToTargetPos();
+		// navigation
+		void  SetTargetpos(Vector2D pos);
+		void  rotate_to_targetpos();
+		float get_deg_to_targetpos();
+		void  Wander();
 
 		// movement
 		void TurnLeft();

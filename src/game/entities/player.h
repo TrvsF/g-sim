@@ -21,8 +21,8 @@ namespace object
 
 		void Update();
 
-		void MoveUp()		{ m_velocity -= 1; }
-		void MoveDown()		{ m_velocity += 1; }
+		void MoveUp()		{ m_velocity += 1; }
+		void MoveDown()		{ m_velocity -= 1; }
 		void MoveLeft()		{ m_rotation -= 1; }
 		void MoveRight()	{ m_rotation += 1; }
 	};

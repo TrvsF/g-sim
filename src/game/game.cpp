@@ -9,6 +9,7 @@ namespace game
 		m_player = nullptr;
 		m_camera = nullptr;
 		m_consoletxt = nullptr;
+		m_coords     = nullptr;
 
 		m_selected_obj = nullptr;
 
@@ -166,15 +167,25 @@ namespace game
 		AddGameObject(new object::GeometryObject(triman4, 5));
 		*/
 
-		object::GameObject* textobj = object::GameObject::Create(
+		object::GameObject* consoletxtobj = object::GameObject::Create(
 			{ 4.0f,    4.0f,    0.0f },
 			{ 0.0f,    0.0f,    0.0f },
 			{ 0.0f,    0.0f,    0.0f }
 		);
 		// TODO : move me?
-		m_consoletxt = new object::TextObject(textobj, "HenryBlue-Regular", "", { 0, 255, 0 });
+		m_consoletxt = new object::TextObject(consoletxtobj, "HenryBlue-Regular", "", { 0, 255, 0 });
 		m_consoletxt->GetTexture()->Active(false);
 		AddGameObject(m_consoletxt);
+
+		object::GameObject* coordtextobj = object::GameObject::Create(
+			{ 4.0f,    380.0f,    0.0f },
+			{ 0.0f,    0.0f,    0.0f },
+			{ 0.0f,    0.0f,    0.0f }
+		);
+		// TODO : move me?
+		m_coords = new object::TextObject(coordtextobj, "HenryBlue-Regular", "", { 0, 0, 0 });
+		m_coords->GetTexture()->Active(false);
+		AddGameObject(m_coords);
 	}
 
 	// entities -> camera
@@ -201,10 +212,13 @@ namespace game
 		}
 		else { m_consoletxt->SetText(""); }
 
+		std::string coords = std::string(std::to_string(m_camera->GetSubject()->GetTransform().Get2DPosition().x) + " " + std::to_string(m_camera->GetSubject()->GetTransform().Get2DPosition().y));
+		m_coords->SetText(coords);
+
 		// update what camera sees
 		for (object::GameObject* gameworldobject : m_gameworld_objects)
 		{
-			if (gameworldobject == m_consoletxt) { continue; } // hack for console text
+			if (gameworldobject == m_consoletxt || gameworldobject == m_coords) { continue; } // hack for console & coord text
 			m_camera->SetTexturePos(gameworldobject);
 		}
 	}

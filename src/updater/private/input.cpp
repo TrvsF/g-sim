@@ -97,5 +97,4 @@ namespace updater
 	{
 		return !(scan_code == SDL_SCANCODE_UNKNOWN);
 	}
-
 }

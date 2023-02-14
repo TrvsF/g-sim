@@ -30,14 +30,11 @@ namespace game
 						// debug
 						if (newobj->GetEntityType() == object::GameEntityType::Player)
 						{ 
-							/*
-							maths::IsInConeOfVision(
+							std::cout << 
+							maths::GetAngleBetweenPoints(
 								newobj->GetTransform().Get2DPosition(),
-								oldobj->GetTransform().Get2DPosition(),
-								30,
-								newobj->GetTransform().GetRotation().z
-							)
-							*/
+								oldobj->GetTransform().Get2DPosition()
+							) << "\n";
 						}
 						// if they intersect
 						if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))

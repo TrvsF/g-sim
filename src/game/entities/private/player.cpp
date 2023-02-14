@@ -17,9 +17,7 @@ namespace object
 		Vector2D direction_vec2d = { (float)cosf(yaw), (float)sin(yaw) };
 		Vector2D pos_change_vec2d = direction_vec2d * m_velocity;
 
-		m_offset_pos = { pos_change_vec2d.x, pos_change_vec2d.y };
-		
-		printf("%d\n", 5);
+		m_offset_pos = { pos_change_vec2d.x, pos_change_vec2d.y, 0 };
 
 		reset_tickvars();
 	}

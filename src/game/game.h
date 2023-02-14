@@ -48,8 +48,9 @@ namespace game
 		object::Player* m_player;
 		object::Camera* m_camera;
 
-		// console text TODO : this another way maybe?
+		// TODO : this another way maybe?
 		object::TextObject* m_consoletxt;
+		object::TextObject* m_coords;
 
 		// input stuff (todo: move?)
 		object::GameObject* m_selected_obj;
