@@ -172,7 +172,10 @@ namespace game
 			{ 0.0f,     0.0f,    0.0f },
 			{ 64.0f,    64.0f,   64.0f }
 		);
-		AddGameObject(new object::GeometryObject(triman, 4));
+		object::Agent* triagent = new object::Agent(triman, 4);
+		AddGameObject(triagent);
+		triagent->SetTargetpos({ 500, 500 });
+		
 
 		object::GameObject* consoletxtobj = object::GameObject::Create(
 			{ 4.0f,    4.0f,    0.0f },
