@@ -37,7 +37,7 @@ namespace maths
     static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov, float rotation)
     {
         int ang = GetAngleBetweenPoints(origin, point);
-        int pang = (int)roundf(rotation - 180);
+        int pang = (int)roundf(rotation);
         GetBoundedAngleDeg(pang);
 
         return !(pang - (fov / 2.0f) >= ang || pang + (fov / 2.0f) <= ang);

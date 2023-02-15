@@ -8,7 +8,7 @@ namespace object
 		SetEntityType(GameEntityType::Agent);
 
 		m_aistate   = AgentState::Wandering;
-		m_agression = 0;
+		m_mood		= VEC2_ZERO;
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
 
@@ -45,29 +45,29 @@ namespace object
 		Vector2D direction_vec2d  = { cosf(yaw), sinf(yaw) };
 		Vector2D pos_change_vec2d = direction_vec2d * m_velocity;
 
-		m_offset_pos	  = { pos_change_vec2d.x, -pos_change_vec2d.y, 0 }; // TODO : this isnt good
+		m_offset_pos	  = { pos_change_vec2d.x, pos_change_vec2d.y, 0 }; // TODO : this isnt good
 		m_offset_rotation = { 0, 0, m_turnspeed };
 	}
 
-	void Agent::TurnRight()
+	void Agent::turnright()
 	{
 		m_turnspeed = fminf(MAX_TURNSPEED, m_turnspeed + 0.5f);
 		m_isturning = true;
 	}
 
-	void Agent::TurnLeft()
+	void Agent::turnleft()
 	{
 		m_turnspeed = fmaxf(-MAX_TURNSPEED, m_turnspeed - 0.5f);
 		m_isturning = true;
 	}
 
-	void Agent::MoveForward()
+	void Agent::moveforward()
 	{
 		m_velocity = fminf(MAX_VELOCITY, m_velocity + 0.5f);
 		m_ismoving = true;
 	}
 
-	void Agent::MoveBackward()
+	void Agent::movebackward()
 	{
 		m_velocity = fmaxf(-MAX_VELOCITY, m_velocity - 0.5f);
 		m_ismoving = true;
@@ -78,49 +78,85 @@ namespace object
 		m_targetpos = pos;
 	}
 
-	void Agent::rotate_to_targetpos()
+	void Agent::SetTargetent(GeometryObject* ent)
 	{
-		float rotation = get_deg_to_targetpos();
+		m_targetentity = ent;
+	}
+
+	void Agent::rotate_to_pos(Vector2D pos)
+	{
+		float rotation = get_deg_to_pos(pos);
 		SetRotation(rotation);
 	}
 
-	float Agent::get_deg_to_targetpos()
+	float Agent::get_deg_to_pos(Vector2D pos)
 	{
-		int ang = maths::GetAngleBetweenPoints({ GetPosition().x, GetPosition().y }, { m_targetpos });
+		int ang = maths::GetAngleBetweenPoints({ GetPosition().x, GetPosition().y }, { pos });
 		maths::GetBoundedAngleDeg(ang);
 		return ang;
 	}
 
+	void Agent::SeenEnt(GeometryObject* ent)
+	{
+		m_mood.y++;
+		if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
+		{
+			m_aistate	   = AgentState::Attacking;
+			m_targetentity = ent;
+		}
+	}
+
 	void Agent::Wander()
 	{
-		MoveForward();
-		// 1/100 chance to create new turnobj
-		if (maths::GetRandomInt(0, 149) == 0)
+		moveforward();
+
+		// 1/250 chance to create new turnobj
+		if (maths::GetRandomInt(0, 249) == 0)
 		{
-			std::cout << "yeah";
 			m_turnobj.left  = maths::GetRandomInt(0, 1);
-			m_turnobj.steps = maths::GetRandomInt(0, 15);
+			m_turnobj.steps = maths::GetRandomInt(0, 50);
 		}
 
 		// is object has steps then turn in that dir, if not turn toward the goal
 		if (m_turnobj.steps != 0)
 		{
-			m_turnobj.left ? TurnLeft() : TurnRight();
+			m_turnobj.left ? turnleft() : turnright();
 			m_turnobj.steps--;
 		}
 		else 
 		{
-			int r = (int) roundf(GetTransform().GetRotation().z) + get_deg_to_targetpos();
-			maths::GetBoundedAngleDeg(r);
-			r < 180 ? TurnLeft() : TurnRight();
+			float r = GetTransform().GetRotation().z - get_deg_to_pos(m_targetpos);
+			r > 0 ? turnleft() : turnright();
+		}
+	}
 
-			// std::cout << r << " " << (r < 180) << "\n";
+	void Agent::Attack()
+	{
+		if (m_targetentity == nullptr) { return; } // TODO : not good
+
+		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
+		moveforward();
+		// TODO : attack!
+	}
+
+	void Agent::do_brain()
+	{
+		switch (m_aistate)
+		{
+		case object::AgentState::Wandering:
+			Wander();
+			break;
+		case object::AgentState::Attacking:
+			Attack();
+			break;
+		default:
+			break;
 		}
 	}
 
 	void Agent::Update()
 	{
-		Wander();
+		do_brain();
 		do_friction();
 		calc_offsetpos();
 	}

@@ -68,8 +68,6 @@ namespace object
 		inline const GameEntityType GetEntityType() const;
 		inline void SetEntityType(GameEntityType type);
 
-		inline GameObject* GetObject();
-
 		virtual void HandleOffsets()
 		{}
 

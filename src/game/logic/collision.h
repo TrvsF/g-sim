@@ -3,6 +3,7 @@
 
 #include "../object/game-object.h"
 #include "../entities/food.h"
+#include "../entities/agent.h"
 #include "../src/util/maths.h"
 
 #include <unordered_map>

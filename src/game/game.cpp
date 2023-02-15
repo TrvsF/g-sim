@@ -167,6 +167,13 @@ namespace game
 		AddGameObject(new object::GeometryObject(triman4, 5));
 		*/
 
+		object::GameObject* triman = object::GameObject::Create(
+			{ 0.0f,     0.0f,    0.0f },
+			{ 0.0f,     0.0f,    0.0f },
+			{ 64.0f,    64.0f,   64.0f }
+		);
+		AddGameObject(new object::GeometryObject(triman, 4));
+
 		object::GameObject* consoletxtobj = object::GameObject::Create(
 			{ 4.0f,    4.0f,    0.0f },
 			{ 0.0f,    0.0f,    0.0f },
@@ -212,7 +219,12 @@ namespace game
 		}
 		else { m_consoletxt->SetText(""); }
 
-		std::string coords = std::string(std::to_string(m_camera->GetSubject()->GetTransform().Get2DPosition().x) + " " + std::to_string(m_camera->GetSubject()->GetTransform().Get2DPosition().y));
+		std::string coords = std::string( // yuk!
+			std::to_string((int)roundf(m_camera->GetSubject()->GetTransform().Get2DPosition().x))
+			+ " " + 
+			std::to_string((int)roundf(m_camera->GetSubject()->GetTransform().Get2DPosition().y))
+		);
+		m_coords->GetTexture()->Pos({ m_camera->GetAABB().GetMinX(), m_camera->GetAABB().GetMaxY() });
 		m_coords->SetText(coords);
 
 		// update what camera sees

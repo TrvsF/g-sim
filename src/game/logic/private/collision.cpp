@@ -28,13 +28,29 @@ namespace game
 						// if looping over self
 						if (newobj == oldobj) { continue; }
 						// debug
-						if (newobj->GetEntityType() == object::GameEntityType::Player)
+						if (newobj->GetEntityType() == object::GameEntityType::Agent && oldobj->GetObjType() == object::GameObjectType::Geometry)
 						{ 
+							bool isobjseen = maths::IsInConeOfVision
+							(
+								newobj->GetTransform().Get2DPosition(),
+								oldobj->GetTransform().Get2DPosition(),
+								90,
+								newobj->GetTransform().GetRotation().z
+							);
+
+							if (isobjseen)
+							{
+								object::Agent* agent = static_cast<object::Agent*> (newobj);
+								agent->SeenEnt(static_cast<object::GeometryObject*> (oldobj));
+							}
+								
+							/*
 							std::cout << 
 							maths::GetAngleBetweenPoints(
 								newobj->GetTransform().Get2DPosition(),
 								oldobj->GetTransform().Get2DPosition()
 							) << "\n";
+							*/
 						}
 						// if they intersect
 						if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))

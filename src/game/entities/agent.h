@@ -22,10 +22,11 @@ namespace object
 		// brain
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
-		int		 m_agression;
+		Vector2D   m_mood; // happy/sad & fear/confidence
 
-		// navigation
-		Vector2D m_targetpos;
+		// targets
+		Vector2D		m_targetpos;
+		GeometryObject*	m_targetentity;
 
 		// movement
 		const float MAX_VELOCITY  = 3.0f;
@@ -34,23 +35,29 @@ namespace object
 		float m_turnspeed;
 		bool  m_isturning;
 		bool  m_ismoving;
+
+		void do_brain();
 		void do_friction();
 		void calc_offsetrotation();
 		void calc_offsetpos();
+
+		void  rotate_to_pos(Vector2D pos);
+		float get_deg_to_pos(Vector2D pos);
+
+		// movement
+		void turnleft();
+		void turnright();
+		void moveforward();
+		void movebackward();
 	public:
 		Agent(GameObject* gameobject, int sides);
 
 		// navigation
-		void  SetTargetpos(Vector2D pos);
-		void  rotate_to_targetpos();
-		float get_deg_to_targetpos();
-		void  Wander();
-
-		// movement
-		void TurnLeft();
-		void TurnRight();
-		void MoveForward();
-		void MoveBackward();
+		void SetTargetpos(Vector2D pos);
+		void SetTargetent(GeometryObject* ent);
+		void Attack();
+		void Wander();
+		void SeenEnt(GeometryObject* ent);
 
 		void Update();
 	};
