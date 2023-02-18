@@ -8,7 +8,7 @@ namespace object
 		SetEntityType(GameEntityType::None);
 		m_subject = nullptr;
 		m_debug = true;
-		m_local_offset_pos = VEC3_ZERO;
+		m_local_offset_pos = VEC2_ZERO;
 	}
 
 	void Camera::SetSubject(GameObject* gameobject)
@@ -84,7 +84,7 @@ namespace object
 		if (   newaabb.GetMinX() < 0 || newaabb.GetMaxX() > m_screensize.x
 			|| newaabb.GetMinY() < 0 || newaabb.GetMaxY() > m_screensize.y)
 		{
-			m_local_offset_pos += offsetpos;
+			m_local_offset_pos += { offsetpos.x, offsetpos.y };
 		}
 		else
 		{

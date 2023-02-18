@@ -3,11 +3,14 @@
 
 #include "../src/game/object/component/geometry.h"
 #include "../src/game/object/game-object.h"
+#include "../src/renderer/renderer.h"
+#include "../src/event/event.h"
 
 #include <vector>
 
 namespace object
 {
+	inline std::shared_ptr<_EventBus> bus = event::Event::SharedInstace().EventBus;
 	class GeometryObject : public GameObject
 	{
 	private:

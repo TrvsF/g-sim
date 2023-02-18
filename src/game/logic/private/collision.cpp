@@ -27,7 +27,8 @@ namespace game
 					{
 						// if looping over self
 						if (newobj == oldobj) { continue; }
-						// debug
+
+						// if agent can see another
 						if (newobj->GetEntityType() == object::GameEntityType::Agent && oldobj->GetObjType() == object::GameObjectType::Geometry)
 						{ 
 							bool isobjseen = maths::IsInConeOfVision
@@ -40,18 +41,11 @@ namespace game
 
 							if (isobjseen)
 							{
-								object::Agent* agent = static_cast<object::Agent*> (newobj);
-								agent->SeenEnt(static_cast<object::GeometryObject*> (oldobj));
+								object::Agent* agent = static_cast<object::Agent*>  (newobj);
+								agent->SeenEnt(static_cast<object::Agent*>			(oldobj));
 							}
-								
-							/*
-							std::cout << 
-							maths::GetAngleBetweenPoints(
-								newobj->GetTransform().Get2DPosition(),
-								oldobj->GetTransform().Get2DPosition()
-							) << "\n";
-							*/
 						}
+
 						// if they intersect
 						if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))
 						{

@@ -28,6 +28,7 @@ add_executable (
  "src/game/game.h"
 
  "src/game/ai/ai.h"
+ "src/game/ai/private/ai.cpp"
 
  "src/game/logic/collision.h"
  "src/game/logic/private/collision.cpp"

@@ -3,6 +3,7 @@
 
 #include <dexode/EventBus.hpp>
 
+#include "../game/object/game-object.h"
 #include "../util/vector2d.h"
 
 #include <iostream>
@@ -12,10 +13,17 @@ using _Listener = dexode::EventBus::Listener;
 
 namespace event
 {
-	// events
+	// EVENTS
+	// commands
 	struct ePosChange
 	{
 		Vector2D pos;
+	};
+	// agents
+	struct eAgentDeath
+	{
+		object::GameObject* victim;
+		// object::GameObject* killer;
 	};
 
 	class Event

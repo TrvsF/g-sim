@@ -15,7 +15,7 @@ namespace object
 		GameObject*				m_subject;
 		std::vector<Texture*>	m_textureobjs;
 		Vector2D				m_screensize;
-		Vector3D				m_local_offset_pos;
+		Vector2D				m_local_offset_pos;
 	public:
 		Camera(GameObject* gameobject);
 
@@ -25,6 +25,11 @@ namespace object
 		}
 		void SetSubject(GameObject* gameobject);
 		void SetTexturePos(GameObject* gameobject);
+
+		inline const Vector2D GetOffsetpos()
+		{
+			return m_local_offset_pos;
+		}
 
 		void Update();
 	};

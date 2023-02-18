@@ -9,10 +9,14 @@ namespace object
 
 		m_aistate   = AgentState::Wandering;
 		m_mood		= VEC2_ZERO;
+
+		m_health = 100;
+
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
 
-		m_targetpos = VEC2_ZERO;
+		m_targetentity = nullptr;
+		m_targetpos	   = VEC2_ZERO;
 
 		m_velocity  = 0;
 		m_turnspeed = 0;
@@ -78,7 +82,7 @@ namespace object
 		m_targetpos = pos;
 	}
 
-	void Agent::SetTargetent(GeometryObject* ent)
+	void Agent::SetTargetent(Agent* ent)
 	{
 		m_targetentity = ent;
 	}
@@ -93,10 +97,23 @@ namespace object
 	{
 		int ang = maths::GetAngleBetweenPoints({ GetPosition().x, GetPosition().y }, { pos });
 		maths::GetBoundedAngleDeg(ang);
-		return ang;
+		return (float)ang;
 	}
 
-	void Agent::SeenEnt(GeometryObject* ent)
+	void Agent::DoDamage(int damage)
+	{
+		m_health = std::max(m_health - damage, 0);
+		if (m_health <= 0) { Kill(); }
+	}
+
+	void Agent::Kill()
+	{
+		GetGeometry()->Active(false);
+		bus->postpone(event::eAgentDeath { this });
+		bus->process();
+	}
+
+	void Agent::SeenEnt(Agent* ent)
 	{
 		m_mood.y++;
 		if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
@@ -132,11 +149,12 @@ namespace object
 
 	void Agent::Attack()
 	{
-		if (m_targetentity == nullptr) { return; } // TODO : not good
+		if (m_targetentity == nullptr) { return; } // TODO : throw error
 
 		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
 		moveforward();
-		// TODO : attack!
+		
+		m_targetentity->DoDamage(10);
 	}
 
 	void Agent::Flee()

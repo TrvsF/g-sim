@@ -13,12 +13,45 @@ namespace game
 
 		m_selected_obj = nullptr;
 
-		m_listener.listen<event::ePosChange>(std::bind(&Game::e_poschange, this, std::placeholders::_1));
+		m_listener.listen<event::ePosChange> (std::bind(&Game::e_poschange,  this, std::placeholders::_1));
+		m_listener.listen<event::eAgentDeath>(std::bind(&Game::e_agentdeath, this, std::placeholders::_1));
 	}
 
 	void Game::e_poschange(const event::ePosChange& event)
 	{
 		m_player->SetPosition({event.pos.x, event.pos.y, 0});
+	}
+
+	void Game::e_agentdeath(const event::eAgentDeath& event)
+	{
+		object::GameObject* gameobject = event.victim;
+		m_gameworld_objects.erase(std::remove(m_gameworld_objects.begin(), m_gameworld_objects.end(), gameobject), m_gameworld_objects.end());
+	}
+
+	// console TODO : move me?
+	void Game::doconsole()
+	{
+		// console
+		bool active = console::ACTIVE;
+		m_consoletxt->GetTexture()->Active(active);
+		if (active)
+		{
+			if (console::SPECIAL) { m_consoletxt->SetText("done!"); }
+			else { m_consoletxt->SetText(console::m_inputstr); }
+		}
+		else { m_consoletxt->SetText(""); }
+
+		// debug coords
+		if (m_camera->GetSubject() != nullptr)
+		{
+			object::Transform* subject_transform = &m_camera->GetSubject()->GetTransform();
+			Vector2D pos = subject_transform->Get2DPosition();
+			std::string coords = std::string(std::to_string((int)roundf(pos.x)) + " " + std::to_string((int)roundf(pos.y)));
+
+			Vector2D offsetpos = pos - m_camera->GetOffsetpos();
+			m_coords->GetTexture()->Pos(offsetpos + Vector2D{0, -20});
+			m_coords->SetText(coords);
+		}
 	}
 
 	void Game::OnMouseRelease(int mousebutton)
@@ -49,10 +82,17 @@ namespace game
 	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
 	void Game::OnMouseClick(int mousebutton, int x, int y)
 	{
-		switch (mousebutton)
+		switch (mousebutton)	
 		{
 		case 1: // m1
 		{
+			object::GameObject* miscagent = object::GameObject::Create(
+				{ (float)x,(float)y, 0.0f },
+				{ 0.0f,    0.0f,     0.0f },
+				{ 32.0f,   32.0f,   32.0f }
+			);
+			int sides = maths::GetRandomInt(2, 6);
+			AddGameObject(new object::Agent(miscagent, sides));
 		}
 		break;
 		case 2: // mm
@@ -103,7 +143,7 @@ namespace game
 
 	void Game::Start()
 	{
-		srand(time(NULL)); // move me
+		srand((int)time(NULL)); // move me
 
 		// SETUP CAMERA AND PLAYER OBJECTS
 		object::GameObject* playerobj = object::GameObject::Create(
@@ -212,23 +252,8 @@ namespace game
 		// camera
 		m_camera->Tick();
 
-		// console TODO : move me?
-		bool active = console::ACTIVE;
-		m_consoletxt->GetTexture()->Active(active);
-		if (active)
-		{
-			if (console::SPECIAL) { m_consoletxt->SetText("done!"); }
-			else { m_consoletxt->SetText(console::m_inputstr); }
-		}
-		else { m_consoletxt->SetText(""); }
-
-		std::string coords = std::string( // yuk!
-			std::to_string((int)roundf(m_camera->GetSubject()->GetTransform().Get2DPosition().x))
-			+ " " + 
-			std::to_string((int)roundf(m_camera->GetSubject()->GetTransform().Get2DPosition().y))
-		);
-		m_coords->GetTexture()->Pos({ m_camera->GetAABB().GetMinX(), m_camera->GetAABB().GetMaxY() });
-		m_coords->SetText(coords);
+		// console
+		doconsole();
 
 		// update what camera sees
 		for (object::GameObject* gameworldobject : m_gameworld_objects)

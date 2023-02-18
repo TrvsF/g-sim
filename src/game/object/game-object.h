@@ -6,7 +6,6 @@
 #include "../src/util/vector2d.h"
 // debug includes
 #include <iostream>
-#include "../src/renderer/renderer.h"
 #include "SDL.h"
 
 namespace object
@@ -89,7 +88,7 @@ namespace object
 			{
 				if (!m_setup)
 				{
-					renderer::Renderer::SharedInstace().LoadAABB(&m_aabb);
+					// renderer::Renderer::SharedInstace().LoadAABB(&m_aabb);
 					m_setup = true;
 				}
 				/*

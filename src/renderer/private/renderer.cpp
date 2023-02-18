@@ -184,8 +184,8 @@ namespace renderer
 		float scale		= texture_object->Scale();
 		int width		= texture_object->Width();
 		int height		= texture_object->Height();
-		int x			= texture_object->Pos().x - (((width * scale) - width) / 2);
-		int y			= texture_object->Pos().y - (((height * scale) - height) / 2);
+		int x			= (int)roundf(texture_object->Pos().x - (((width * scale) - width) / 2));
+		int y			= (int)roundf(texture_object->Pos().y - (((height * scale) - height) / 2));
 		float rotation  = texture_object->Rotation();
 
 		SDL_Rect render_rect {
@@ -238,8 +238,8 @@ namespace renderer
 	void Renderer::render_console()
 	{
 		SDL_Rect rect;
-		rect.w = m_width / 2.5f;
-		rect.h = 20.0f;
+		rect.w = (int)roundf(m_width / 2.5f);
+		rect.h = 20;
 		rect.x = 3;
 		rect.y = 3;
 
