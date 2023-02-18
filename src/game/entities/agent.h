@@ -61,15 +61,12 @@ namespace object
 		void SetTargetent(Agent*   ent);
 		void Attack();
 		void Wander();
-<<<<<<< HEAD
 		void   Flee();
 		void SeenEnt(GeometryObject* ent);
-=======
 		void SeenEnt(Agent* ent);
 
 		void Kill();
 		void DoDamage(int damage);
->>>>>>> ee62648fce5472967929c719fec527d9434659c1
 
 		void Update();
 	};
