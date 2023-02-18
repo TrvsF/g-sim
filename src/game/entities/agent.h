@@ -24,9 +24,12 @@ namespace object
 		AgentState m_aistate;
 		Vector2D   m_mood; // happy/sad & fear/confidence
 
+		// body
+		int m_health;
+
 		// targets
-		Vector2D		m_targetpos;
-		GeometryObject*	m_targetentity;
+		Vector2D m_targetpos;
+		Agent*	 m_targetentity;
 
 		// movement
 		const float MAX_VELOCITY  = 3.0f;
@@ -54,10 +57,13 @@ namespace object
 
 		// navigation
 		void SetTargetpos(Vector2D pos);
-		void SetTargetent(GeometryObject* ent);
+		void SetTargetent(Agent*   ent);
 		void Attack();
 		void Wander();
-		void SeenEnt(GeometryObject* ent);
+		void SeenEnt(Agent* ent);
+
+		void Kill();
+		void DoDamage(int damage);
 
 		void Update();
 	};

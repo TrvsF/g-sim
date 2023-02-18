@@ -6,6 +6,7 @@
 #include "../renderer/renderer.h"
 #include "../updater/updater.h"
 #include "../game/game.h"
+#include "../game/ai/ai.h"
 #include "../util/timer.h"
 
 namespace base

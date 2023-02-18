@@ -30,6 +30,10 @@ namespace updater
 		{
 			game::Game::SharedInstace().OnMouseClick(Right, x, y);
 		}
+		if (m_input->MousePressed(Left, x, y))
+		{
+			game::Game::SharedInstace().OnMouseClick(Left, x, y);
+		}
 		// click & drag
 		if (m_input->MouseDown(Left, x, y))
 		{
@@ -54,7 +58,7 @@ namespace updater
 		{
 			// TODO : find a better way to get what keyboard keys are down (input.h)
 			// alphabet
-			for (int i = 4; i < 45; i++)
+			for (int i = 4; i < 46; i++)
 			{
 				if (m_input->KeyPressed(i))
 				{

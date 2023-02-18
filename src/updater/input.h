@@ -68,7 +68,8 @@ namespace updater
 			{37, '8'},
 			{38, '9'},
 			{39, '0'},
-			{44, ' '}
+			{44, ' '},
+			{45, '-'}
 		};
 
 		bool check_scancode(SDL_Scancode scan_code);

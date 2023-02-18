@@ -17,7 +17,7 @@ namespace base
         SDL_Event m_events;
 
         // start the renderer
-        if (!renderer::Renderer::SharedInstace().Start("tri-engine", 640, 480)) 
+        if (!renderer::Renderer::SharedInstace().Start("tri-engine", 1280, 960)) 
         { m_shutdown_requested = true; }
 
         // start the game
@@ -56,6 +56,7 @@ namespace base
                 // tick the updater [handles inputs] then the game (& its objects)
                 updater::Updater::SharedInstance().Tick();
                 game::Game::SharedInstace().Tick();
+                ai::AI::SharedInstace().Tick();
                 m_tick_timer->Reset();
             }
 

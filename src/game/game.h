@@ -17,8 +17,6 @@
 
 #include "logic/collision.h"
 
-#include "ai/ai.h"
-
 #include "../src/updater/controller.h"
 #include "../event/event.h"
 
@@ -39,6 +37,7 @@ namespace game
 		// event objects & methods
 		Listener m_listener { event::Event::SharedInstace().EventBus };
 		void e_poschange(const event::ePosChange& event);
+		void e_agentdeath(const event::eAgentDeath& event);
 
 		// logic objects
 		Collision*	m_collision;
@@ -51,6 +50,7 @@ namespace game
 		// TODO : this another way maybe?
 		object::TextObject* m_consoletxt;
 		object::TextObject* m_coords;
+		void doconsole();
 
 		// input stuff (todo: move?)
 		object::GameObject* m_selected_obj;

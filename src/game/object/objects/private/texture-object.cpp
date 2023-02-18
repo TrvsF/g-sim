@@ -22,6 +22,8 @@ namespace object
 			}, 
 			GetTransform().GetRotation().z
 		);
+		
+		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
 	}
 
 	void TextureObject::HandleOffsets()

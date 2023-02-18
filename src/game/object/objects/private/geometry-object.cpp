@@ -5,6 +5,7 @@ namespace object
 	void GeometryObject::load_geometry()
 	{
 		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
+		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
 	}
 
 	GeometryObject::GeometryObject(GameObject* object, int sides)
