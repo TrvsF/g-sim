@@ -53,6 +53,8 @@ namespace object
 		void turnright();
 		void moveforward();
 		void movebackward();
+
+		~Agent();
 	public:
 		Agent(GameObject* gameobject, int sides);
 

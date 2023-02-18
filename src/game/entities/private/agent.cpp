@@ -24,6 +24,11 @@ namespace object
 		m_ismoving  = false;
 	}
 
+	Agent::~Agent()
+	{
+		std::cout << "gone";
+	}
+
 	void Agent::do_friction()
 	{
 		if (!m_ismoving)

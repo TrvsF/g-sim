@@ -25,7 +25,9 @@ namespace game
 	void Game::e_agentdeath(const event::eAgentDeath& event)
 	{
 		object::GameObject* gameobject = event.victim;
-		m_gameworld_objects.erase(std::remove(m_gameworld_objects.begin(), m_gameworld_objects.end(), gameobject), m_gameworld_objects.end());
+		auto it = std::find(m_gameworld_objects.begin(), m_gameworld_objects.end(), gameobject);
+		if (it != m_gameworld_objects.end()) { m_gameworld_objects.erase(it); }
+		// delete gameobject;
 	}
 
 	// console TODO : move me?
