@@ -139,15 +139,26 @@ namespace object
 		// TODO : attack!
 	}
 
+	void Agent::Flee()
+	{
+		if (m_targetentity == nullptr) { return; } // TODO : not good
+
+		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
+		movebackward();
+	}
+
 	void Agent::do_brain()
 	{
 		switch (m_aistate)
 		{
-		case object::AgentState::Wandering:
+		case AgentState::Wandering:
 			Wander();
 			break;
-		case object::AgentState::Attacking:
+		case AgentState::Attacking:
 			Attack();
+			break;
+		case AgentState::Fleeing:
+			Flee();
 			break;
 		default:
 			break;

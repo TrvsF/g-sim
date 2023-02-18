@@ -13,7 +13,8 @@ namespace object
 	enum class AgentState
 	{
 		Wandering,
-		Attacking
+		Attacking,
+		Fleeing
 	};
 
 	class Agent : public GeometryObject
@@ -57,6 +58,7 @@ namespace object
 		void SetTargetent(GeometryObject* ent);
 		void Attack();
 		void Wander();
+		void   Flee();
 		void SeenEnt(GeometryObject* ent);
 
 		void Update();
