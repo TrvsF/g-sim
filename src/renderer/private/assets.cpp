@@ -4,7 +4,7 @@ namespace renderer
 {
 	Assets::Assets()
 	{
-		m_asset_path = get_asset_path();
+		m_assetpath = file::GetBasePath() + "assets/";
 	}
 
 	Assets::~Assets()
@@ -41,56 +41,18 @@ namespace renderer
 
 	std::string Assets::GetPathToTexture(const char* path_to_texture)
 	{
-		std::string path = m_asset_path + "textures/" + std::string(path_to_texture);
+		std::string path = m_assetpath + "textures/" + std::string(path_to_texture);
 		return path;
 	}
 
 	std::string Assets::GetFullTexturePath()
 	{
-		return m_asset_path + "textures/";
+		return m_assetpath + "textures/";
 		
 	}
 
 	std::string Assets::GetFullFontPath()
 	{
-		return m_asset_path + "fonts/";
+		return m_assetpath + "fonts/";
 	}
-
-	std::string Assets::get_asset_path()
-	{
-		// get full path
-		std::string full_path = SDL_GetBasePath();
-		std::stringstream full_path_ss(full_path);
-		
-		// split into segments (we're looking for "/out")s
-		std::vector<std::string> path_list;
-		std::string segment;
-		while(std::getline(full_path_ss, segment, '\\'))
-		{
-			path_list.push_back(segment);
-		}
-
-		// make new vector string:))) and then add everything before the out dir [THANKS SDL]
-		std::vector<std::string> real_path_list;
-		for (std::string path : path_list)
-		{
-			if (path == "out")
-				break;
-
-			real_path_list.push_back(path);
-		}
-
-		// set the asset path with "/"s
-		std::string asset_path;
-		for (std::string path : real_path_list)
-		{
-			asset_path.append(path);
-			asset_path.append("/");
-		}
-
-		asset_path.append("assets/");
-
-		return asset_path;
-	}
-
 }

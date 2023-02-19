@@ -28,8 +28,8 @@ namespace game
 
 		std::unordered_map<std::pair<int, int>, std::vector<object::GameObject*>, pairhash> m_mapped_objects;
 
-		std::vector<std::pair<int, int>> get_surrounding_grid_pairs(std::pair<int, int> currentgrid, bool includeown);
-		std::pair<int, int> get_grid_from_coords(float x, float y);
+		std::vector<std::pair<int, int>> get_surroundinggridpairs(std::pair<int, int> currentgrid, bool includeown);
+		std::pair<int, int> get_gridfromcoords(float x, float y);
 	public:
 		Collision(int scale);
 

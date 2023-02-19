@@ -7,18 +7,18 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <sstream>
+
+#include "../util/file.h"
 
 namespace renderer
 {
 	class Assets
 	{
 	private:
-		std::string m_asset_path;
+		std::string m_basepath;
+		std::string m_assetpath;
 		std::map<std::string, SDL_Texture*> m_textures;
 		std::map<std::string, TTF_Font*>	m_fonts;
-
-		std::string get_asset_path();
 	public:
 		Assets();
 		virtual ~Assets();

@@ -91,6 +91,7 @@ add_executable (
  "src/util/vector3d.h"
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
+ "src/util/file.h"
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

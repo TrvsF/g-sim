@@ -14,6 +14,7 @@ namespace ai
 		virtual ~AI() = default;
 
 		std::vector<object::Agent*> getagents();
+		void do_debugconsole();
 	public:
 		static AI& SharedInstace() { static AI ai; return ai; }
 

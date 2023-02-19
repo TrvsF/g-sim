@@ -28,8 +28,39 @@ namespace game
 		RemoveGameObject(gameobject);
 	}
 
-	// console TODO : move me?
-	void Game::doconsole()
+	void Game::init_entities()
+	{
+		// player
+		object::GameObject* playerobj = object::GameObject::Create(
+			{ 200.0f,  200.0f,  0.0f },
+			{ 0.0f,    0.0f,    0.0f },
+			{ 32.0f,   32.0f,   32.0f }
+		);
+		m_player = new object::Player(playerobj, "player");
+		AddGameObject(m_player);
+
+		// camera
+		object::GameObject* cameraobj = object::GameObject::Create(
+			{ 0.0f,   0.0f,   0.0f },
+			{ 0.0f,   0.0f,   0.0f },
+			{ 300.0f, 300.0f, 300.0f }
+		);
+		m_camera = new object::Camera(cameraobj);
+		m_camera->SetSubject(m_player);
+	}
+
+	void Game::init_textelements()
+	{
+		object::GameObject* consoletxtobj = object::GameObject::Create({ 4.0f,    4.0f,    0.0f }, 0, 0);
+		m_consoletxt = new object::TextObject(consoletxtobj, "HenryBlue-Regular", "", { 0, 255, 0 });
+		AddGameObject(m_consoletxt);
+
+		object::GameObject* coordtextobj = object::GameObject::Create(0, 0, 0);
+		m_coords = new object::TextObject(coordtextobj, "HenryBlue-Regular", "", { 0, 0, 0 });
+		AddGameObject(m_coords);
+	}
+
+	void Game::do_textelements()
 	{
 		// console
 		bool active = console::ACTIVE;
@@ -41,13 +72,15 @@ namespace game
 		}
 		else { m_consoletxt->SetText(""); }
 
-		// debug coords
+		// coords
 		if (m_camera->GetSubject() != nullptr)
 		{
+			// get current subject coords
 			object::Transform* subject_transform = &m_camera->GetSubject()->GetTransform();
 			Vector2D pos = subject_transform->Get2DPosition();
 			std::string coords = std::string(std::to_string((int)roundf(pos.x)) + " " + std::to_string((int)roundf(pos.y)));
 
+			// offset pos & draw coords
 			Vector2D offsetpos = pos - m_camera->GetOffsetpos();
 			m_coords->GetTexture()->Pos(offsetpos + Vector2D{0, -20});
 			m_coords->SetText(coords);
@@ -71,7 +104,7 @@ namespace game
 		{
 		case 1:
 			// if there is no selected object see if we can find one
-			m_selected_obj = GetClickedObj(x, y);
+			m_selected_obj = get_clickedobject(x, y);
 			if (m_selected_obj == nullptr) { return; }
 			// move the about around :D
 			Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
@@ -91,7 +124,7 @@ namespace game
 			object::GameObject* miscagent = object::GameObject::Create(
 				{ _x,	   _y,      0.0f },
 				{ 0.0f,    0.0f,    0.0f },
-				{ 32.0f,   32.0f,   32.0f }
+				{ 64.0f,   64.0f,   64.0f }
 			);
 			int sides = maths::GetRandomInt(2, 6);
 			AddGameObject(new object::Agent(miscagent, sides));
@@ -103,7 +136,7 @@ namespace game
 		break;
 		case 4: // m2
 		{
-			object::GameObject* obj = GetClickedObj(x, y);
+			object::GameObject* obj = get_clickedobject(x, y);
 			if (obj == nullptr && m_camera->GetSubject() != m_player)
 			{
 				m_camera->SetSubject(m_player);
@@ -115,7 +148,7 @@ namespace game
 		}
 	}
 
-	object::GameObject* Game::GetClickedObj(int x, int y)
+	object::GameObject* Game::get_clickedobject(int x, int y)
 	{
 		for (object::GameObject* object : m_gameobjects)
 		{
@@ -147,25 +180,7 @@ namespace game
 	{
 		srand((int)time(NULL)); // move me
 
-		// SETUP CAMERA AND PLAYER OBJECTS
-		object::GameObject* playerobj = object::GameObject::Create(
-			{  200.0f,  200.0f,  0.0f  },
-			{  0.0f,    0.0f,    0.0f  }, 
-			{  32.0f,   32.0f,   32.0f }
-		);
-
-		m_player = new object::Player(playerobj, "player");
-		AddGameObject(m_player);
-		// m_gameworld_objects.push_back(m_player); // TODO : MAKE SURE THIS IS ALWAYS AT THE FRONT (z indexing?)
-
-		object::GameObject* cameraobj = object::GameObject::Create(
-			{ 0.0f,   0.0f,   0.0f },
-			{ 0.0f,   0.0f,   0.0f },
-			{ 300.0f, 300.0f, 300.0f }
-		);
-
-		m_camera = new object::Camera(cameraobj);
-		m_camera->SetSubject(m_player);
+		init_entities();
 
 		// debug
 		object::GameObject* miscagent = object::GameObject::Create(
@@ -173,7 +188,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 32.0f,   32.0f,   32.0f }
 		);
-		AddGameObject(new object::Agent(miscagent, 8)); // TODO : Scale BB with tri size
+		AddGameObject(new object::Agent(miscagent, 8));
 
 		object::GameObject* food = object::GameObject::Create(
 			{ 600.0f,  400.0f,  0.0f },
@@ -181,33 +196,6 @@ namespace game
 			{ 64.0f,   64.0f,   64.0f }
 		);
 		AddGameObject(new object::Food(food, "food"));
-
-		/*
-		object::GameObject* triman = object::GameObject::Create(
-			{ 150.0f,   0.0f,    0.0f },
-			{ 0.0f,     0.0f,    0.0f },
-			{ 64.0f,    64.0f,   64.0f }
-		);
-		object::GameObject* triman2 = object::GameObject::Create(
-			{ 400.0f,   400.0f,  0.0f },
-			{ 0.0f,     0.0f,    0.0f },
-			{ 64.0f,    64.0f,   64.0f }
-		);
-		object::GameObject* triman3 = object::GameObject::Create(
-			{ 250.0f,   250.0f,  0.0f },
-			{ 0.0f,     0.0f,    0.0f },
-			{ 64.0f,    64.0f,   64.0f }
-		);
-		object::GameObject* triman4 = object::GameObject::Create(
-			{ 50.0f,   50.0f,   0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 64.0f,   64.0f,   64.0f }
-		);
-		AddGameObject(new object::GeometryObject(triman,  4));
-		AddGameObject(new object::GeometryObject(triman2, 5));
-		AddGameObject(new object::GeometryObject(triman3, 4));
-		AddGameObject(new object::GeometryObject(triman4, 5));
-		*/
 
 		object::GameObject* triman = object::GameObject::Create(
 			{ 0.0f,     0.0f,    0.0f },
@@ -217,27 +205,8 @@ namespace game
 		object::Agent* triagent = new object::Agent(triman, 4);
 		AddGameObject(triagent);
 		triagent->SetTargetpos({ 500, 500 });
-		
 
-		object::GameObject* consoletxtobj = object::GameObject::Create(
-			{ 4.0f,    4.0f,    0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 0.0f,    0.0f,    0.0f }
-		);
-		// TODO : move me?
-		m_consoletxt = new object::TextObject(consoletxtobj, "HenryBlue-Regular", "", { 0, 255, 0 });
-		m_consoletxt->GetTexture()->Active(false);
-		AddGameObject(m_consoletxt);
-
-		object::GameObject* coordtextobj = object::GameObject::Create(
-			{ 4.0f,    380.0f,    0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 0.0f,    0.0f,    0.0f }
-		);
-		// TODO : move me?
-		m_coords = new object::TextObject(coordtextobj, "HenryBlue-Regular", "", { 0, 0, 0 });
-		m_coords->GetTexture()->Active(false);
-		AddGameObject(m_coords);
+		init_textelements();
 	}
 
 	// entities -> camera
@@ -255,7 +224,7 @@ namespace game
 		m_camera->Tick();
 
 		// console
-		doconsole();
+		do_textelements();
 
 		// update what camera sees
 		for (object::GameObject* gameobject : m_gameobjects)

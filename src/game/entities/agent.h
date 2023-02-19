@@ -2,6 +2,7 @@
 #define AGENT_H_
 
 #include "../object/objects/geometry-object.h"
+#include "../src/util/file.h"
 
 namespace object
 {
@@ -26,8 +27,10 @@ namespace object
 		Vector2D   m_mood; // happy/sad & fear/confidence
 
 		// body
+		std::string m_name;
 		bool m_dead;
 		int  m_health;
+		void set_name();
 
 		// targets
 		Vector2D m_targetpos;
@@ -58,6 +61,11 @@ namespace object
 		~Agent();
 	public:
 		Agent(GameObject* gameobject, int sides);
+
+		inline std::string GetName()
+		{
+			return m_name;
+		}
 
 		// navigation
 		void SetTargetpos(Vector2D pos);

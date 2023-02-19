@@ -10,6 +10,7 @@ namespace object
 		m_aistate   = AgentState::Wandering;
 		m_mood		= VEC2_ZERO;
 
+		set_name();
 		m_dead   = false;
 		m_health = 100;
 
@@ -26,8 +27,12 @@ namespace object
 	}
 
 	Agent::~Agent()
+	{}
+
+	void Agent::set_name()
 	{
-		std::cout << "gone";
+		std::vector<std::string> names = file::GetLinesFromFile("names.txt");
+		m_name = *maths::select_randomly(names.begin(), names.end());
 	}
 
 	void Agent::do_friction()

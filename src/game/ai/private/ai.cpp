@@ -15,8 +15,18 @@ namespace ai
 		return agents;
 	}
 
+	void AI::do_debugconsole()
+	{
+		printf("\033[2J");
+		printf("\033[%d;%dH", 0, 0);
+		for (const auto& agent : getagents())
+		{
+			std::cout << agent->GetName() << "\n";
+		}
+	}
+
 	void AI::Tick()
 	{
-		
+		do_debugconsole();
 	}
 }

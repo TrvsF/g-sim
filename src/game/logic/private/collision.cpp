@@ -15,7 +15,7 @@ namespace game
 			int x = it.first.first;
 			int y = it.first.second;
 			auto& currentgridobjs = it.second;
-			for (auto& newpair : get_surrounding_grid_pairs(std::pair<int, int>(x, y), true))
+			for (auto& newpair : get_surroundinggridpairs(std::pair<int, int>(x, y), true))
 			{
 				if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
 				// if there are items in grid
@@ -64,12 +64,12 @@ namespace game
 
 	void Collision::CheckCollisionObj(object::GameObject* game_object)
 	{
-		std::pair<int, int> gridpair = get_grid_from_coords(game_object->GetPosition().x, game_object->GetPosition().y);
+		std::pair<int, int> gridpair = get_gridfromcoords(game_object->GetPosition().x, game_object->GetPosition().y);
 		auto& objectlist = m_mapped_objects[gridpair];
 		// if object is not in the grid
 		if (std::find(objectlist.begin(), objectlist.end(), game_object) == objectlist.end())
 		{
-			for (auto& newpair : get_surrounding_grid_pairs(gridpair, false))
+			for (auto& newpair : get_surroundinggridpairs(gridpair, false))
 			{
 				if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
 				// if does then remove from old grid
@@ -86,7 +86,7 @@ namespace game
 
 	void Collision::AddCollisionObj(object::GameObject* game_object)
 	{
-		std::pair<int, int> gridpair = get_grid_from_coords(game_object->GetPosition().x, game_object->GetPosition().y);
+		std::pair<int, int> gridpair = get_gridfromcoords(game_object->GetPosition().x, game_object->GetPosition().y);
 		// if does not exist
 		if (m_mapped_objects.find(gridpair) == m_mapped_objects.end())
 		{
@@ -98,7 +98,7 @@ namespace game
 		}
 	}
 
-	std::vector<std::pair<int, int>> Collision::get_surrounding_grid_pairs(std::pair<int, int> currentgrid, bool includeown)
+	std::vector<std::pair<int, int>> Collision::get_surroundinggridpairs(std::pair<int, int> currentgrid, bool includeown)
 	{
 		std::vector<std::pair<int, int>> gridpairs;
 		for (int i = -1; i <= 1; i++)
@@ -112,7 +112,7 @@ namespace game
 		return gridpairs;
 	}
 
-	std::pair<int, int> Collision::get_grid_from_coords(float x, float y)
+	std::pair<int, int> Collision::get_gridfromcoords(float x, float y)
 	{
 		int _x = (int)roundf(x / m_gridscale);
 		int _y = (int)roundf(y / m_gridscale);
