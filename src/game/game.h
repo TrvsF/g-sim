@@ -39,11 +39,13 @@ namespace game
 		void e_poschange(const event::ePosChange& event);
 		void e_agentdeath(const event::eAgentDeath& event);
 
+		std::vector<object::GameObject*> m_toremove;
+
 		// logic objects
 		Collision*	m_collision;
 
 		// world object stuff
-		std::vector<object::GameObject*> m_gameworld_objects;
+		std::vector<object::GameObject*> m_gameobjects;
 		object::Player* m_player;
 		object::Camera* m_camera;
 
@@ -63,7 +65,8 @@ namespace game
 		void OnMouseClick(int mousebutton,int x, int y);
 		object::GameObject* GetClickedObj(int x, int y);
 
-		inline void AddGameObject(object::GameObject* game_object);
+		inline void AddGameObject(object::GameObject* gameobject);
+		inline void RemoveGameObject(object::GameObject* gameobject);
 		inline const std::vector<object::GameObject*> GetGameObjects() const;
 
 		inline void SetPlayer(object::Player* player);

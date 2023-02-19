@@ -10,6 +10,7 @@ namespace object
 		m_aistate   = AgentState::Wandering;
 		m_mood		= VEC2_ZERO;
 
+		m_dead   = false;
 		m_health = 100;
 
 		m_turnobj.steps = 0;
@@ -108,14 +109,15 @@ namespace object
 	void Agent::DoDamage(int damage)
 	{
 		m_health = std::max(m_health - damage, 0);
-		if (m_health <= 0) { Kill(); }
+		if (m_health <= 0 && !m_dead) { Kill(); }
 	}
 
 	void Agent::Kill()
 	{
-		GetGeometry()->Active(false);
+		// GetGeometry()->Active(false);
 		bus->postpone(event::eAgentDeath { this });
 		bus->process();
+		m_dead = true;
 	}
 
 	void Agent::SeenEnt(Agent* ent)
@@ -160,6 +162,7 @@ namespace object
 		moveforward();
 		
 		m_targetentity->DoDamage(10);
+		if (m_targetentity->IsDead()) { m_aistate = AgentState::Wandering; }
 	}
 
 	void Agent::Flee()

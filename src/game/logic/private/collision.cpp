@@ -25,8 +25,8 @@ namespace game
 				{
 					for (auto& newobj : newlist)
 					{
-						// if looping over self
-						if (newobj == oldobj) { continue; }
+						// if looping over self/null
+						if (newobj == oldobj || newobj == nullptr || oldobj == nullptr) { continue; }
 
 						// if agent can see another
 						if (newobj->GetEntityType() == object::GameEntityType::Agent && oldobj->GetObjType() == object::GameObjectType::Geometry)
@@ -56,6 +56,7 @@ namespace game
 							}
 						}
 					}
+					// maths::pop_front(newlist);
 				}
 			}
 		}

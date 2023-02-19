@@ -25,9 +25,7 @@ namespace game
 	void Game::e_agentdeath(const event::eAgentDeath& event)
 	{
 		object::GameObject* gameobject = event.victim;
-		auto it = std::find(m_gameworld_objects.begin(), m_gameworld_objects.end(), gameobject);
-		if (it != m_gameworld_objects.end()) { m_gameworld_objects.erase(it); }
-		// delete gameobject;
+		RemoveGameObject(gameobject);
 	}
 
 	// console TODO : move me?
@@ -88,9 +86,11 @@ namespace game
 		{
 		case 1: // m1
 		{
+			float _x = x + m_camera->GetOffsetpos().x;
+			float _y = y + m_camera->GetOffsetpos().y;
 			object::GameObject* miscagent = object::GameObject::Create(
-				{ (float)x,(float)y, 0.0f },
-				{ 0.0f,    0.0f,     0.0f },
+				{ _x,	   _y,      0.0f },
+				{ 0.0f,    0.0f,    0.0f },
 				{ 32.0f,   32.0f,   32.0f }
 			);
 			int sides = maths::GetRandomInt(2, 6);
@@ -117,7 +117,7 @@ namespace game
 
 	object::GameObject* Game::GetClickedObj(int x, int y)
 	{
-		for (object::GameObject* object : m_gameworld_objects)
+		for (object::GameObject* object : m_gameobjects)
 		{
 			// TODO : make this faster/not care about objects not on screen
 			Vector2D screenpos;
@@ -244,11 +244,11 @@ namespace game
 	void Game::Tick()
 	{
 		// tick/collision objects
-		for (object::GameObject* gameworldobject : m_gameworld_objects)
+		for (object::GameObject* gameobject : m_gameobjects)
 		{
-			m_collision->CheckCollisionObj(gameworldobject);
+			gameobject->Tick();
+			m_collision->CheckCollisionObj(gameobject);
 			m_collision->DoCollision();
-			gameworldobject->Tick();
 		}
 
 		// camera
@@ -258,10 +258,13 @@ namespace game
 		doconsole();
 
 		// update what camera sees
-		for (object::GameObject* gameworldobject : m_gameworld_objects)
+		for (object::GameObject* gameobject : m_gameobjects)
 		{
-			if (gameworldobject == m_consoletxt || gameworldobject == m_coords) { continue; } // hack for console & coord text
-			m_camera->SetTexturePos(gameworldobject);
+			if (gameobject == m_consoletxt || gameobject == m_coords) { continue; } // hack for console & coord text
+			m_camera->SetTexturePos(gameobject);
 		}
+
+		for (object::GameObject* gameobject : m_toremove) { delete gameobject; }
+		m_toremove.clear();
 	}
 }

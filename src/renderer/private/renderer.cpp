@@ -128,7 +128,7 @@ namespace renderer
 	{
 		clear_buffer();	
 
-		for (object::Geometry* geometryobj : m_geometry_objects)
+		for (object::Geometry* geometryobj : m_geometryobjects)
 		{
 			if (!geometryobj->Active()) { continue; }
 
@@ -140,7 +140,7 @@ namespace renderer
 			render_console();
 		}
 
-		for (object::Texture* textureobj : m_texutre_objects)
+		for (object::Texture* textureobj : m_texutreobjects)
 		{
 			if (!textureobj->Active()) { continue; }
 
@@ -165,12 +165,24 @@ namespace renderer
 
 	void Renderer::LoadGeometry(object::Geometry* geometry_object)
 	{
-		m_geometry_objects.push_back(geometry_object);
+		m_geometryobjects.push_back(geometry_object);
+	}
+
+	void Renderer::UnloadGeometry(object::Geometry* geometry_object)
+	{
+		auto it = std::find(m_geometryobjects.begin(), m_geometryobjects.end(), geometry_object);
+		if (it != m_geometryobjects.end()) { m_geometryobjects.erase(it); }
 	}
 
 	void Renderer::LoadAABB(object::AABB* aabb)
 	{
 		m_aabbs.push_back(aabb);
+	}
+
+	void Renderer::UnloadAABB(object::AABB* aabb)
+	{
+		auto it = std::find(m_aabbs.begin(), m_aabbs.end(), aabb);
+		if (it != m_aabbs.end()) { m_aabbs.erase(it); }
 	}
 
 	void Renderer::set_window_icon()

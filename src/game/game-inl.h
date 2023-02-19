@@ -2,10 +2,19 @@
 
 namespace game
 {
-	inline void Game::AddGameObject(object::GameObject* game_object)
+	inline void Game::AddGameObject(object::GameObject* gameobject)
 	{
-		m_collision->AddCollisionObj(game_object);
-		m_gameworld_objects.push_back(game_object);
+		m_collision->AddCollisionObj(gameobject);
+		m_gameobjects.push_back(gameobject);
+	}
+
+	inline void Game::RemoveGameObject(object::GameObject* gameobject)
+	{
+		// remove from gameworldobjects
+		auto it = std::find(m_gameobjects.begin(), m_gameobjects.end(), gameobject);
+		if (it != m_gameobjects.end()) { m_gameobjects.erase(it); }
+		// delete gameobject;
+		m_toremove.push_back(gameobject);
 	}
 
 	inline void Game::SetPlayer(object::Player* player)
@@ -15,7 +24,7 @@ namespace game
 
 	inline const std::vector<object::GameObject*> Game::GetGameObjects() const
 	{
-		return m_gameworld_objects;
+		return m_gameobjects;
 	}
 
 	inline object::Player* Game::GetPlayer()

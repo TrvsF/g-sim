@@ -3,6 +3,7 @@
 
 #include <random>
 #include <time.h>
+#include <assert.h>
 
 namespace maths
 {
@@ -50,6 +51,13 @@ namespace maths
         int calcdistance = (int)roundf(sqrtf(x + y));
 
         return calcdistance <= distance;
+    }
+
+    template<typename T>
+    void pop_front(std::vector<T>& vec)
+    {
+        assert(!vec.empty());
+        vec.erase(vec.begin());
     }
 }
 #endif

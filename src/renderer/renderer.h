@@ -31,8 +31,8 @@ namespace renderer
 		Assets*			m_assets;
 
 		std::vector<object::AABB*>		m_aabbs;
-		std::vector<object::Geometry*>	m_geometry_objects;
-		std::vector<object::Texture*>	m_texutre_objects;
+		std::vector<object::Geometry*>	m_geometryobjects;
+		std::vector<object::Texture*>	m_texutreobjects;
 
 		void render_geometry_object(object::Geometry* geometry_object);
 		void render_tri(object::Triangle* tri);
@@ -67,8 +67,10 @@ namespace renderer
 
 		void LoadAllFonts();
 
-		void LoadAABB(object::AABB* aabb);
-		void LoadGeometry(object::Geometry* geometry_object); // TODO : system to unload these object
+		void UnloadAABB(object::AABB* aabb);
+		void LoadAABB  (object::AABB* aabb);
+		void UnloadGeometry(object::Geometry* geometry_object);
+		void LoadGeometry  (object::Geometry* geometry_object);
 
 		inline SDL_Renderer* GetRendererObj();
 

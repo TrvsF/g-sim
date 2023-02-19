@@ -2,7 +2,7 @@
 
 namespace object
 {
-	void GeometryObject::load_geometry()
+	void GeometryObject::loadgeometry()
 	{
 		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
 		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
@@ -19,7 +19,7 @@ namespace object
 			GetAABB().GetMaxX() - GetAABB().GetMinX(),
 			GetAABB().GetMaxY() - GetAABB().GetMinY()
 		);
-		load_geometry();
+		loadgeometry();
 	}
 
 	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points)
@@ -31,7 +31,13 @@ namespace object
 			{ GetPosition().x, GetPosition().y },
 			points
 		);
-		load_geometry();
+		loadgeometry();
+	}
+
+	GeometryObject::~GeometryObject()
+	{
+		if (m_debug) { renderer::Renderer::SharedInstace().UnloadAABB(&GetAABB()); }
+		if (m_debug) { renderer::Renderer::SharedInstace().UnloadGeometry(GetGeometry()); }
 	}
 
 	void GeometryObject::HandleOffsets()

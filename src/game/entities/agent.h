@@ -26,7 +26,8 @@ namespace object
 		Vector2D   m_mood; // happy/sad & fear/confidence
 
 		// body
-		int m_health;
+		bool m_dead;
+		int  m_health;
 
 		// targets
 		Vector2D m_targetpos;
@@ -67,6 +68,7 @@ namespace object
 		void SeenEnt(GeometryObject* ent);
 		void SeenEnt(Agent* ent);
 
+		inline bool IsDead() { return m_dead; }
 		void Kill();
 		void DoDamage(int damage);
 
