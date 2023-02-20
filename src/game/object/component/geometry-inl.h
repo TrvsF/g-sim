@@ -22,6 +22,11 @@ namespace object
 		return m_pos;
 	}
 
+	inline Vector2D Geometry::CenterPos() const
+	{
+		return { m_pos.x + (m_width / 2), m_pos.y + (m_height / 2) };
+	}
+
 	inline void Geometry::OffsetPos(Vector2D offset)
 	{
 		m_pos += offset;

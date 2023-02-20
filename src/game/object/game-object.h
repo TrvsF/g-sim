@@ -56,6 +56,7 @@ namespace object
 		inline AABB& GetAABB();
 		inline void SetAABB(AABB& aabb);
 
+		inline const Vector2D Get2DPosition() const;
 		inline const Vector3D GetPosition() const;
 		inline void SetPosition(Vector3D position);
 

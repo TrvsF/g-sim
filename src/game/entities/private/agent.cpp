@@ -9,10 +9,15 @@ namespace object
 
 		m_aistate   = AgentState::Wandering;
 		m_mood		= VEC2_ZERO;
+		m_dead		= false;
 
+		// TODO : set by genome
 		set_name();
-		m_dead   = false;
-		m_health = 100;
+		m_maxvel  = maths::GetRandomFloat(1.0f, 3.0f);
+		m_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
+		m_health  = maths::GetRandomInt(70, 250);
+		m_maincolour = {}; // TODO : sync to geometry
+		m_secondarycolour = {};
 
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
@@ -31,7 +36,7 @@ namespace object
 
 	void Agent::set_name()
 	{
-		std::vector<std::string> names = file::GetLinesFromFile("names.txt");
+		std::vector<std::string> names = file::GetLinesFromFile("firstnames.txt");
 		m_name = *maths::select_randomly(names.begin(), names.end());
 	}
 
@@ -66,25 +71,25 @@ namespace object
 
 	void Agent::turnright()
 	{
-		m_turnspeed = fminf(MAX_TURNSPEED, m_turnspeed + 0.5f);
+		m_turnspeed = fminf(m_maxturn, m_turnspeed + 0.5f);
 		m_isturning = true;
 	}
 
 	void Agent::turnleft()
 	{
-		m_turnspeed = fmaxf(-MAX_TURNSPEED, m_turnspeed - 0.5f);
+		m_turnspeed = fmaxf(-m_maxturn, m_turnspeed - 0.5f);
 		m_isturning = true;
 	}
 
 	void Agent::moveforward()
 	{
-		m_velocity = fminf(MAX_VELOCITY, m_velocity + 0.5f);
+		m_velocity = fminf(m_maxvel, m_velocity + 0.5f);
 		m_ismoving = true;
 	}
 
 	void Agent::movebackward()
 	{
-		m_velocity = fmaxf(-MAX_VELOCITY, m_velocity - 0.5f);
+		m_velocity = fmaxf(-m_maxvel, m_velocity - 0.5f);
 		m_ismoving = true;
 	}
 
@@ -161,18 +166,35 @@ namespace object
 
 	void Agent::Attack()
 	{
-		if (m_targetentity == nullptr) { return; } // TODO : throw error
+		// TODO : fix bad pointer
+		if (m_targetentity == NULL)
+		{ m_aistate = AgentState::Wandering; return; }
 
 		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
 		moveforward();
 		
-		m_targetentity->DoDamage(10);
-		if (m_targetentity->IsDead()) { m_aistate = AgentState::Wandering; }
+		// if is inside target
+		bool iscollided = false;
+		for (const auto& object : m_collidedobjs)
+		{
+			if (object->GetEntityType() == GameEntityType::Agent)
+			{
+				Agent* entity = dynamic_cast<Agent*>(object);
+				if (entity == m_targetentity) { iscollided = true; break; }
+			}
+		}
+
+		if (iscollided)
+		{
+			m_targetentity->DoDamage(10);
+			if (m_targetentity->IsDead()) { m_targetentity = NULL; m_aistate = AgentState::Wandering; }
+		}
 	}
 
 	void Agent::Flee()
 	{
-		if (m_targetentity == nullptr) { return; } // TODO : not good
+		if (m_targetentity == NULL)
+		{ m_aistate = AgentState::Wandering; return; }
 
 		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
 		movebackward();
@@ -194,6 +216,7 @@ namespace object
 		default:
 			break;
 		}
+		m_collidedobjs.clear();
 	}
 
 	void Agent::Update()

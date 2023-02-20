@@ -27,6 +27,11 @@ namespace object
 		m_aabb = aabb;
 	}
 
+	inline const Vector2D GameObject::Get2DPosition() const
+	{
+		return { m_transform.GetPosition().x, m_transform.GetPosition().y };
+	}
+
 	inline const Vector3D GameObject::GetPosition() const
 	{
 		return m_transform.GetPosition();

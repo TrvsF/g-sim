@@ -213,12 +213,25 @@ namespace renderer
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry_object)
 	{
+		float poop = geometry_object->Rotation();
 		for (const auto& tri : geometry_object->Tris())
 		{
+			Vector2D v1 = { tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y };
+			Vector2D v2 = { tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y };
+			Vector2D v3 = { tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y };
+
+			v1 = maths::GetRotatedPoint(v1, geometry_object->CenterPos(), poop);
+			v2 = maths::GetRotatedPoint(v2, geometry_object->CenterPos(), poop);
+			v3 = maths::GetRotatedPoint(v3, geometry_object->CenterPos(), poop);
+
+			SDL_FPoint p1 = { v1.x, v1.y };
+			SDL_FPoint p2 = { v2.x, v2.y };
+			SDL_FPoint p3 = { v3.x, v3.y };
+
 			std::vector< SDL_Vertex > v = {
-				{ SDL_FPoint{ tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y }, SDL_Color{ 50, 130, 0, 255}},
-				{ SDL_FPoint{ tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y }, SDL_Color{ 50, 130, 0, 255 } },
-				{ SDL_FPoint{ tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y }, SDL_Color{ 0, 0, 0, 255 } }
+				{ p1, SDL_Color{ 50, 130, 0, 255}},
+				{ p2, SDL_Color{ 50, 130, 0, 255 } },
+				{ p3, SDL_Color{ 0, 0, 0, 255 } }
 			};
 			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);
 		}

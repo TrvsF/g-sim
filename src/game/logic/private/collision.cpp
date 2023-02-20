@@ -7,56 +7,68 @@ namespace game
 		m_gridscale = scale;
 	}
 
+	bool Collision::is_colliding(object::GameObject* obj1, object::GameObject* obj2)
+	{
+		return obj1->GetAABB().IntersectsRect2D(obj2->GetAABB());
+	}
+
+	// -1 for infinite range
+	bool Collision::is_looking(object::GameObject* searcher, object::GameObject* gameobject, int fov, int range)
+	{
+		bool inrange = range == -1 ? true : maths::GetDistanceBetweenPoints_sq(searcher->Get2DPosition(), gameobject->Get2DPosition()) < range * range;
+		return maths::IsInConeOfVision
+		(
+			searcher->GetTransform().Get2DPosition(),
+			gameobject->GetTransform().Get2DPosition(),
+			fov,
+			searcher->GetTransform().GetRotation().z
+		) && inrange;
+	}
+
+	// TODO : (((somehow))) cut down on the nested fors
 	void Collision::DoCollision()
 	{
-		// TODO : make this not look shit
-		for (auto& it : m_mapped_objects)
+		// first  = grid pos pair
+		// second = list of objs in grid
+		for (auto& mapobj : m_mapped_objects)
 		{
-			int x = it.first.first;
-			int y = it.first.second;
-			auto& currentgridobjs = it.second;
-			for (auto& newpair : get_surroundinggridpairs(std::pair<int, int>(x, y), true))
+			int x = mapobj.first.first;
+			int y = mapobj.first.second;
+			auto& currentgridobjs = mapobj.second;
+			// check each surrounding grid tile
+			for (auto& gridpair : get_surroundinggridpairs(std::pair<int, int>(x, y), true))
 			{
-				if (m_mapped_objects.find(newpair) == m_mapped_objects.end()) { continue; }
-				// if there are items in grid
-				auto& newlist = m_mapped_objects[newpair];
-				// TODO : store pairs to cut time (in this loop) in 1/2 & run alg on both instead
-				for (auto& oldobj : currentgridobjs)
+				// if grid does not exist in map
+				if (m_mapped_objects.find(gridpair) == m_mapped_objects.end()) { continue; }
+				// store searched grid objects
+				auto& searchedobjs = m_mapped_objects[gridpair];
+				for (auto& gridobj : currentgridobjs)
 				{
-					for (auto& newobj : newlist)
+					for (auto& searchedobj : searchedobjs)
 					{
 						// if looping over self/null
-						if (newobj == oldobj || newobj == nullptr || oldobj == nullptr) { continue; }
+						if (searchedobj == gridobj || searchedobj == nullptr || gridobj == nullptr) { continue; }
 
-						// if agent can see another
-						if (newobj->GetEntityType() == object::GameEntityType::Agent && oldobj->GetObjType() == object::GameObjectType::Geometry)
-						{ 
-							bool isobjseen = maths::IsInConeOfVision
-							(
-								newobj->GetTransform().Get2DPosition(),
-								oldobj->GetTransform().Get2DPosition(),
-								90,
-								newobj->GetTransform().GetRotation().z
-							);
-
-							if (isobjseen)
-							{
-								object::Agent* agent = static_cast<object::Agent*>  (newobj);
-								agent->SeenEnt(static_cast<object::Agent*>			(oldobj));
-							}
-						}
-
-						// if they intersect
-						if (oldobj->GetAABB().IntersectsRect2D(newobj->GetAABB()))
+						// TODO : move this block
+						// if obj is an agent
+						if (gridobj->GetEntityType() == object::GameEntityType::Agent)
 						{
-							if (oldobj->GetEntityType() == object::GameEntityType::Food)
+							// if is looking
+							if (searchedobj->GetEntityType() == object::GameEntityType::Agent && is_looking(gridobj, searchedobj, 120, -1))
 							{
-								object::Food* object = static_cast<object::Food*> (oldobj);
-								object->SetCollision(newobj->GetEntityType());
+								object::Agent* agent = static_cast<object::Agent*>  (gridobj);
+								agent->SeenEnt(static_cast<object::Agent*>			(searchedobj));
+							}
+
+							if (is_colliding(gridobj, searchedobj))
+							{
+								object::Agent* agent = static_cast<object::Agent*> (gridobj);
+								agent->AddCollidedObj(searchedobj);
 							}
 						}
+
+						
 					}
-					// maths::pop_front(newlist);
 				}
 			}
 		}

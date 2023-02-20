@@ -30,6 +30,9 @@ namespace game
 
 		std::vector<std::pair<int, int>> get_surroundinggridpairs(std::pair<int, int> currentgrid, bool includeown);
 		std::pair<int, int> get_gridfromcoords(float x, float y);
+
+		bool is_colliding(object::GameObject* obj1, object::GameObject* obj2);
+		bool is_looking(object::GameObject* searcher, object::GameObject* gameobject, int fov, int range);
 	public:
 		Collision(int scale);
 

@@ -215,9 +215,9 @@ namespace game
 		// tick/collision objects
 		for (object::GameObject* gameobject : m_gameobjects)
 		{
-			gameobject->Tick();
 			m_collision->CheckCollisionObj(gameobject);
 			m_collision->DoCollision();
+			gameobject->Tick();
 		}
 
 		// camera
@@ -233,7 +233,10 @@ namespace game
 			m_camera->SetTexturePos(gameobject);
 		}
 
-		for (object::GameObject* gameobject : m_toremove) { delete gameobject; }
+		for (int i = 0; i < m_toremove.size(); i++)
+		{
+			delete m_toremove[i];
+		}
 		m_toremove.clear();
 	}
 }

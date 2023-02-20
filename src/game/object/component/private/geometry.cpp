@@ -27,11 +27,11 @@ namespace object
 	}
 
 	Geometry::Geometry()
-		: m_tris(NULL), m_pos(VEC2_ZERO), m_rotation(0), m_active(false)
+		: m_tris(NULL), m_pos(VEC2_ZERO), m_rotation(0), m_active(false), m_width(0), m_height(0)
 	{}
 
 	Geometry::Geometry(std::vector<Triangle> tris, Vector2D pos)
-		: m_tris(tris), m_pos(pos), m_rotation(0), m_active(false)
+		: m_tris(tris), m_pos(pos), m_rotation(0), m_active(false), m_width(0), m_height(0)
 	{}
 
 	void Geometry::Set(Vector2D pos, int sides, float width, float height)
@@ -46,8 +46,10 @@ namespace object
 		}
 
 		set_tris(points);
-		m_pos		= pos;
-		m_active	= true;
+		m_pos	 = pos;
+		m_active = true;
+		m_height = height;
+		m_width  = width;
 	}
 
 	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points)
@@ -55,5 +57,6 @@ namespace object
 		set_tris(points);
 		m_active	= true;
 		m_pos		= pos;
+		// TODO : no width or height
 	}
 }

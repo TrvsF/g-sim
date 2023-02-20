@@ -16,7 +16,10 @@ namespace object
 		std::vector<Triangle>	m_tris;
 		Vector2D				m_pos;
 		float					m_rotation;
+		float					m_width;
+		float					m_height;
 		bool					m_active;
+		// TODO : width & height
 
 		void set_tris(std::vector<Vector2D> points);
 
@@ -34,6 +37,7 @@ namespace object
 
 		inline void Pos(Vector2D pos);
 		inline Vector2D Pos() const;
+		inline Vector2D CenterPos() const;
 
 		inline void Active(bool active);
 		inline bool Active();

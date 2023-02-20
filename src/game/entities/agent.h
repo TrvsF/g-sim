@@ -21,24 +21,27 @@ namespace object
 	class Agent : public GeometryObject
 	{
 	private:
-		// brain
+		// brain/stats
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
 		Vector2D   m_mood; // happy/sad & fear/confidence
+		bool		m_dead;
 
-		// body
+		// traits
 		std::string m_name;
-		bool m_dead;
-		int  m_health;
+		int   m_health;
+		float m_maxvel;
+		float m_maxturn;
+		SDL_Color m_maincolour;
+		SDL_Color m_secondarycolour;
 		void set_name();
 
 		// targets
 		Vector2D m_targetpos;
 		Agent*	 m_targetentity;
+		std::vector<GameObject*> m_collidedobjs;
 
 		// movement
-		const float MAX_VELOCITY  = 3.0f;
-		const float MAX_TURNSPEED = 4.0f;
 		float m_velocity;
 		float m_turnspeed;
 		bool  m_isturning;
@@ -65,6 +68,11 @@ namespace object
 		inline std::string GetName()
 		{
 			return m_name;
+		}
+
+		inline void AddCollidedObj(object::GameObject* obj)
+		{
+			m_collidedobjs.push_back(obj);
 		}
 
 		// navigation

@@ -28,6 +28,25 @@ namespace maths
         if (angle < 0) { angle += 360; }
     }
 
+    static Vector2D GetRotatedPoint(Vector2D point, Vector2D rotator, float angle)
+    {
+        float rang = angle * DEG_TO_RAD;
+        float rsin = sinf(rang);
+        float rcos = cosf(rang);
+
+        float _x = rcos * (point.x - rotator.x) - rsin * (point.y - rotator.y) + point.x;
+        float _y = rsin * (point.x - rotator.x) - rcos * (point.y - rotator.y) + point.y;
+        return { _x, _y };
+    }
+
+    static float GetDistanceBetweenPoints_sq(Vector2D point1, Vector2D point2)
+    {
+        float _x = point1.x * point2.x;
+        float _y = point1.y * point2.y;
+
+        return (_x * _x) + (_y * _y);
+    }
+
     static int GetAngleBetweenPoints(Vector2D point1, Vector2D point2)
     {
         int angle = (int)roundf(atan2f(point2.y - point1.y, point2.x - point1.x) * RAD_TO_DEG);
