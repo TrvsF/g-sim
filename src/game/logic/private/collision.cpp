@@ -53,15 +53,17 @@ namespace game
 						// if obj is an agent
 						if (gridobj->GetEntityType() == object::GameEntityType::Agent)
 						{
-							// if is looking
+							// if gridobject is looking @ searchedobject
 							if (searchedobj->GetEntityType() == object::GameEntityType::Agent && is_looking(gridobj, searchedobj, 120, -1))
 							{
-								object::Agent* agent = static_cast<object::Agent*>  (gridobj);
-								agent->SeenEnt(static_cast<object::Agent*>			(searchedobj));
+								object::Agent* agent  = static_cast<object::Agent*> (gridobj);
+								object::Agent* victim = static_cast<object::Agent*> (searchedobj);
+								if (!victim->IsDead()) { agent->SeenEnt(victim); }
 							}
-
+							// if gridobject is colliding with searchedobject
 							if (is_colliding(gridobj, searchedobj))
 							{
+								// TODO : this can push a garbage pointer (for 1 tick)
 								object::Agent* agent = static_cast<object::Agent*> (gridobj);
 								agent->AddCollidedObj(searchedobj);
 							}

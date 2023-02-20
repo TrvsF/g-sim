@@ -22,8 +22,8 @@ namespace object
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
 
-		m_targetentity = nullptr;
-		m_targetpos	   = VEC2_ZERO;
+		m_targetentity = NULL;
+		m_targetpos	   = {500, 500};
 
 		m_velocity  = 0;
 		m_turnspeed = 0;
@@ -187,7 +187,11 @@ namespace object
 		if (iscollided)
 		{
 			m_targetentity->DoDamage(10);
-			if (m_targetentity->IsDead()) { m_targetentity = NULL; m_aistate = AgentState::Wandering; }
+			if (m_targetentity->IsDead()) 
+			{
+				m_targetentity = NULL;
+				m_aistate = AgentState::Wandering;
+			}
 		}
 	}
 
