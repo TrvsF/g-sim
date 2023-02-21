@@ -42,8 +42,10 @@ namespace object
 
 	void Agent::set_name()
 	{
-		std::vector<std::string> names = file::GetLinesFromFile("firstnames.txt");
-		m_name = *maths::select_randomly(names.begin(), names.end());
+		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
+		std::vector<std::string> lastnames  = file::GetLinesFromFile("lastnames.txt");
+		m_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
+			+ " " + *maths::select_randomly(lastnames.begin(), lastnames.end());
 	}
 
 	void Agent::do_friction()
@@ -150,7 +152,7 @@ namespace object
 	{
 		moveforward();
 
-		// 1/250 chance to create new turnobj
+		// 1/250 chance to create new turnobj (sim random wondering)
 		if (maths::GetRandomInt(0, 249) == 0)
 		{
 			m_turnobj.left  = maths::GetRandomInt(0, 1);
@@ -172,7 +174,6 @@ namespace object
 
 	void Agent::Attack()
 	{
-		// TODO : fix bad pointer
 		if (m_targetentity == NULL)
 		{ m_aistate = AgentState::Wandering; return; }
 
