@@ -16,7 +16,7 @@ namespace object
 	private:
 		Geometry* m_geometry;
 
-		void loadgeometry();
+		void load_geometry();
 	public:
 		GeometryObject(GameObject* object, int sides);
 		GeometryObject(GameObject* object, std::vector<Vector2D> points);

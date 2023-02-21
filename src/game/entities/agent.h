@@ -25,11 +25,13 @@ namespace object
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
 		Vector2D   m_mood; // happy/sad & fear/confidence
-		bool		m_dead;
+		bool       m_dead;
 
 		// traits
 		std::string m_name;
-		int   m_health;
+		int m_food;
+		int m_health;
+		int m_damage;
 		float m_maxvel;
 		float m_maxturn;
 		SDL_Color m_maincolour;

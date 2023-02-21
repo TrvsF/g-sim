@@ -27,7 +27,7 @@ namespace object
 		Geometry();
 		Geometry(std::vector<Triangle> tris, Vector2D pos);
 
-		void Set(Vector2D pos, int sides, float width, float height);
+		void Set(Vector2D pos, int sides, float& width, float& height, Vector2D& mins, Vector2D& maxes);
 		void Set(Vector2D pos, std::vector<Vector2D> points);
 
 		inline const std::vector<Triangle>& Tris() const { return m_tris; }
