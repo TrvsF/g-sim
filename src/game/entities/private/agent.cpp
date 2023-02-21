@@ -22,7 +22,7 @@ namespace object
 		m_health = maths::GetRandomInt(70, 250);
 		m_food   = maths::GetRandomInt(-10, 10) + m_health;
 		m_damage = maths::GetRandomInt(5, 15);
-		m_maincolour = {}; // TODO : sync to geometry
+		m_maincolour	  = {}; // TODO : sync to geometry
 		m_secondarycolour = {};
 
 		m_turnobj.steps = 0;
