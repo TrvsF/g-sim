@@ -25,6 +25,10 @@ namespace game
 		) && inrange;
 	}
 
+	void Collision::check_agent(object::Agent* agent)
+	{
+	}
+
 	// TODO : (((somehow))) cut down on the nested fors
 	void Collision::DoCollision()
 	{
