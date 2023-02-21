@@ -12,10 +12,16 @@ namespace object
 		m_dead		= false;
 
 		// TODO : set by genome
+		// - gneome will have 2 chromosomes
+		// - A dicates solely the geometry object
+		// - B will determine personality triats (agression, etc)
+		// - below vars are made up of either B or B/A(mix)
 		set_name();
 		m_maxvel  = maths::GetRandomFloat(1.0f, 3.0f);
 		m_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
-		m_health  = maths::GetRandomInt(70, 250);
+		m_health = maths::GetRandomInt(70, 250);
+		m_food   = maths::GetRandomInt(-10, 10) + m_health;
+		m_damage = maths::GetRandomInt(5, 15);
 		m_maincolour = {}; // TODO : sync to geometry
 		m_secondarycolour = {};
 
@@ -220,6 +226,7 @@ namespace object
 		default:
 			break;
 		}
+		m_targetentity = NULL;
 		m_collidedobjs.clear();
 	}
 

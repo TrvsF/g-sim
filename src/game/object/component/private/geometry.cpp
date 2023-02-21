@@ -34,22 +34,33 @@ namespace object
 		: m_tris(tris), m_pos(pos), m_rotation(0), m_active(false), m_width(0), m_height(0)
 	{}
 
-	void Geometry::Set(Vector2D pos, int sides, float width, float height)
+	void Geometry::Set(Vector2D pos, int sides, float& width, float& height, Vector2D& mins, Vector2D& maxes)
 	{
 		// dont be silly
 		if (sides < 3) { sides = 3; }
+		// set width & height properly
+		maxes = VEC2_ZERO;
+		mins  = { 50000.0f, 50000.0f };
 		// generate random points
 		std::vector<Vector2D> points;
 		for (int i = 0; i < sides; i++)
 		{
-			points.push_back({ maths::GetRandomFloat(0, width), maths::GetRandomFloat(0, height) });
+			float x = maths::GetRandomFloat(0, width);
+			float y = maths::GetRandomFloat(0, height);
+			// width & height thing
+			if (maxes.x < x) { maxes.x = x; }
+			if (mins.x > x) { mins.x = x; }
+			if (maxes.y < y) { maxes.y = y; }
+			if (mins.y > y) { mins.y = y; }
+
+			points.push_back({ x, y });
 		}
 
 		set_tris(points);
 		m_pos	 = pos;
 		m_active = true;
-		m_height = height;
-		m_width  = width;
+		m_height = height = maxes.y - mins.y;
+		m_width  = width  = maxes.x - mins.x;
 	}
 
 	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points)

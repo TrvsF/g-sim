@@ -220,9 +220,19 @@ namespace renderer
 			Vector2D v2 = { tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y };
 			Vector2D v3 = { tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y };
 
+			// cool rotation
+			/*
 			v1 = maths::GetRotatedPoint(v1, geometry_object->CenterPos(), poop);
 			v2 = maths::GetRotatedPoint(v2, geometry_object->CenterPos(), poop);
 			v3 = maths::GetRotatedPoint(v3, geometry_object->CenterPos(), poop);
+			*/
+
+			// circle rotation
+			/*
+			v1 = maths::GetRotatedPointRoundCircle(v1, geometry_object->CenterPos(), poop);
+			v2 = maths::GetRotatedPointRoundCircle(v2, geometry_object->CenterPos(), poop);
+			v3 = maths::GetRotatedPointRoundCircle(v3, geometry_object->CenterPos(), poop);
+			*/
 
 			SDL_FPoint p1 = { v1.x, v1.y };
 			SDL_FPoint p2 = { v2.x, v2.y };
