@@ -85,23 +85,9 @@ namespace object
 			Update();
 			HandleOffsets();
 
-			// rebug render where game object is
 			if (m_debug)
 			{
-				if (!m_setup)
-				{
-					// renderer::Renderer::SharedInstace().LoadAABB(&m_aabb);
-					m_setup = true;
-				}
-				/*
-				// show rotation
-				float r = GetTransform().GetRotation().z;
-				int x = GetPosition().x;
-				int y = GetPosition().y;
-				int x2 = x + (cosf(r) * 20);
-				int y2 = y + (sinf(r) * 20);
-				SDL_RenderDrawLine(renderer::Renderer::Get()->GetRendererObj(), x, y, x2, y2);
-				*/
+			
 			}
 		}
 	};

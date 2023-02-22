@@ -20,6 +20,7 @@ namespace ai
 
 		Listener m_listener{ event::Event::SharedInstace().EventBus };
 		void e_agentdeath(const event::eAgentDeath& event);
+		void e_agentborn(const event::eAgentBorn& event);
 
 		std::vector<object::Agent*> getagents();
 		void do_debugconsole();

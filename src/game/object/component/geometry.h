@@ -19,7 +19,8 @@ namespace object
 		float					m_width;
 		float					m_height;
 		bool					m_active;
-		// TODO : width & height
+		SDL_Color				m_maincolour;
+		SDL_Color				m_secondarycolour;
 
 		void set_tris(std::vector<Vector2D> points);
 
@@ -41,6 +42,9 @@ namespace object
 
 		inline void Active(bool active);
 		inline bool Active();
+
+		inline void		 Colour(SDL_Color colour) { m_maincolour = colour; }
+		inline SDL_Color Colour() { return m_maincolour; }
 
 		inline void OffsetPos(Vector2D offset);
 		inline void OffsetRotation(float rotation);

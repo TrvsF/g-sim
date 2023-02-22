@@ -22,8 +22,9 @@ namespace object
 		m_health = maths::GetRandomInt(70, 250);
 		m_food   = maths::GetRandomInt(-10, 10) + m_health;
 		m_damage = maths::GetRandomInt(5, 15);
-		m_maincolour	  = {}; // TODO : sync to geometry
-		m_secondarycolour = {};
+		m_maincolour	  = get_randomcolour(); // TODO : sync to geometry
+		m_secondarycolour = get_randomcolour();
+		GetGeometry()->Colour(m_maincolour);
 
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
@@ -35,6 +36,9 @@ namespace object
 		m_turnspeed = 0;
 		m_isturning = false;
 		m_ismoving  = false;
+
+		bus->postpone(event::eAgentBorn { this });
+		bus->process();
 	}
 
 	Agent::~Agent()
@@ -46,6 +50,14 @@ namespace object
 		std::vector<std::string> lastnames  = file::GetLinesFromFile("lastnames.txt");
 		m_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
 			+ " " + *maths::select_randomly(lastnames.begin(), lastnames.end());
+	}
+
+	SDL_Color Agent::get_randomcolour()
+	{
+		unsigned char r = maths::GetRandomInt(0, 255);
+		unsigned char g = maths::GetRandomInt(0, 255);
+		unsigned char b = maths::GetRandomInt(0, 255);
+		return { r, g, b };
 	}
 
 	void Agent::do_friction()
@@ -132,9 +144,9 @@ namespace object
 
 	void Agent::Kill()
 	{
-		// GetGeometry()->Active(false);
 		bus->postpone(event::eAgentDeath { this });
 		bus->process();
+		GetGeometry()->Active(false);
 		m_dead = true;
 	}
 

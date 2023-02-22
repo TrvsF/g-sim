@@ -5,9 +5,15 @@ namespace ai
 	AI::AI()
 	{
 		m_listener.listen<event::eAgentDeath>(std::bind(&AI::e_agentdeath, this, std::placeholders::_1));
+		m_listener.listen<event::eAgentBorn> (std::bind(&AI::e_agentborn,  this, std::placeholders::_1));
 	}
 
 	void AI::e_agentdeath(const event::eAgentDeath& event)
+	{
+		do_debugconsole();
+	}
+
+	void AI::e_agentborn(const event::eAgentBorn& event)
 	{
 		do_debugconsole();
 	}

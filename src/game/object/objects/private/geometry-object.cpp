@@ -11,12 +11,13 @@ namespace object
 	GeometryObject::GeometryObject(GameObject* object, int sides)
 		: GameObject(object)
 	{
-		m_debug = true;
 		SetObjType(GameObjectType::Geometry);
 		m_geometry = new Geometry();
+
 		float width =  GetAABB().GetMaxX() - GetAABB().GetMinX();
 		float height = GetAABB().GetMaxY() - GetAABB().GetMinY();
 		Vector2D mins, maxes;
+
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y},
 			sides,
@@ -26,6 +27,7 @@ namespace object
 			maxes
 		);
 		load_geometry();
+
 		GetAABB().SetSize({ width, height, 0 });
 		GetAABB().SetPos({ GetPosition().x + mins.x, GetPosition().y + mins.y, 0 }); // TODO : rarely doesnt work as indended
 	}

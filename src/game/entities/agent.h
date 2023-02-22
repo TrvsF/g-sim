@@ -63,6 +63,9 @@ namespace object
 		void moveforward();
 		void movebackward();
 
+		// TODO : move
+		SDL_Color get_randomcolour();
+
 		~Agent();
 	public:
 		Agent(GameObject* gameobject, int sides);

@@ -26,6 +26,11 @@ namespace event
 		// object::GameObject* killer;
 	};
 
+	struct eAgentBorn
+	{
+		object::GameObject* agent;
+	};
+
 	class Event
 	{
 	private:

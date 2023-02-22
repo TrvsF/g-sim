@@ -253,9 +253,9 @@ namespace renderer
 			SDL_FPoint p3 = { v3.x, v3.y };
 
 			std::vector< SDL_Vertex > v = {
-				{ p1, SDL_Color{ 50, 130, 0, 255}},
-				{ p2, SDL_Color{ 50, 130, 0, 255 } },
-				{ p3, SDL_Color{ 0, 0, 0, 255 } }
+				{ p1, geometry_object->Colour()},
+				{ p2, geometry_object->Colour()},
+				{ p3, SDL_Color{ 255, 255, 255, 200 } }
 			};
 			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);
 		}
