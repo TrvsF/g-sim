@@ -31,7 +31,7 @@ namespace ai
 		printf("\033[%d;%dH", 0, 0);
 		for (const auto& agent : getagents())
 		{
-			std::cout << agent->GetName() << "\n";
+			std::cout << agent->GetName() << " " << agent->GetHealth() << "\n";
 		}
 	}
 

@@ -72,6 +72,11 @@ namespace object
 			return m_name;
 		}
 
+		inline int GetHealth()
+		{
+			return m_health;
+		}
+
 		inline void AddCollidedObj(object::GameObject* obj)
 		{
 			m_collidedobjs.push_back(obj);
