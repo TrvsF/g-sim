@@ -213,26 +213,40 @@ namespace renderer
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry_object)
 	{
-		float poop = geometry_object->Rotation();
+		float ang = geometry_object->Rotation();
+		Vector2D midpoint = VEC2_ZERO;
+
 		for (const auto& tri : geometry_object->Tris())
 		{
-			Vector2D v1 = { tri.GetPoint1().x + geometry_object->Pos().x, tri.GetPoint1().y + geometry_object->Pos().y };
-			Vector2D v2 = { tri.GetPoint2().x + geometry_object->Pos().x, tri.GetPoint2().y + geometry_object->Pos().y };
-			Vector2D v3 = { tri.GetPoint3().x + geometry_object->Pos().x, tri.GetPoint3().y + geometry_object->Pos().y };
+			// hack : find midpoint
+			for (Vector2D vec1 : geometry_object->Tris()[0].GetPoints())
+			{
+				for (Vector2D vec2 : geometry_object->Tris()[1].GetPoints())
+				{
+					if (vec1 == vec2) 
+					{
+						midpoint = vec1; break; 
+					}
+				}
+			}
+
+			Vector2D v1 = tri.GetPoint1() + geometry_object->Pos();
+			Vector2D v2 = tri.GetPoint2() + geometry_object->Pos();
+			Vector2D v3 = tri.GetPoint3() + geometry_object->Pos();
 
 			// cool rotation
 			/*
-			v1 = maths::GetRotatedPoint(v1, geometry_object->CenterPos(), poop);
-			v2 = maths::GetRotatedPoint(v2, geometry_object->CenterPos(), poop);
-			v3 = maths::GetRotatedPoint(v3, geometry_object->CenterPos(), poop);
+			v1 = maths::GetRotatedPointBad(v1, geometry_object->CenterPos(), ang);
+			v2 = maths::GetRotatedPointBad(v2, geometry_object->CenterPos(), ang);
+			v3 = maths::GetRotatedPointBad(v3, geometry_object->CenterPos(), ang);
 			*/
 
 			// circle rotation
-			/*
-			v1 = maths::GetRotatedPointRoundCircle(v1, geometry_object->CenterPos(), poop);
-			v2 = maths::GetRotatedPointRoundCircle(v2, geometry_object->CenterPos(), poop);
-			v3 = maths::GetRotatedPointRoundCircle(v3, geometry_object->CenterPos(), poop);
-			*/
+			///*
+			maths::GetRotatedPoint(v1, midpoint + geometry_object->Pos(), ang);
+			maths::GetRotatedPoint(v2, midpoint + geometry_object->Pos(), ang);
+			maths::GetRotatedPoint(v3, midpoint + geometry_object->Pos(), ang);
+			//*/
 
 			SDL_FPoint p1 = { v1.x, v1.y };
 			SDL_FPoint p2 = { v2.x, v2.y };

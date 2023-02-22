@@ -20,6 +20,10 @@ namespace object
 		inline Vector2D GetPoint1() const;
 		inline Vector2D GetPoint2() const;
 		inline Vector2D GetPoint3() const;
+		inline std::vector<Vector2D> GetPoints() const
+		{
+			return { m_v1, m_v2, m_v3 };
+		}
 	};
 }
 

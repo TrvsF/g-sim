@@ -28,7 +28,7 @@ namespace maths
         if (angle < 0) { angle += 360; }
     }
 
-    static Vector2D GetRotatedPoint(Vector2D point, Vector2D rotator, float degrees)
+    static Vector2D GetRotatedPointBad(Vector2D point, Vector2D rotator, float degrees)
     {
         float rang = degrees * DEG_TO_RAD;
         float rsin = sinf(rang);
@@ -47,11 +47,21 @@ namespace maths
         return (_x * _x) + (_y * _y);
     }
 
-    static Vector2D GetRotatedPointRoundCircle(Vector2D point, Vector2D midpoint, float degrees)
+    static void GetRotatedPoint(Vector2D& point, Vector2D midpoint, float degrees)
     {
-        float radius = sqrtf(GetDistanceBetweenPoints_sq(midpoint, midpoint));
+        Vector2D temppoint = VEC2_ZERO;
         float rang = degrees * DEG_TO_RAD;
-        return { radius * cosf(rang) + midpoint.x, radius * sinf(rang) + midpoint.y };
+        float sin = sinf(rang);
+        float cos = cosf(rang);
+
+        temppoint.x = point.x - midpoint.x;
+        temppoint.y = point.y - midpoint.y;
+
+        float _x = temppoint.x * cos - temppoint.y * sin;
+        float _y = temppoint.x * sin + temppoint.y * cos;
+
+        point.x = _x + midpoint.x;
+        point.y = _y + midpoint.y;
     }
 
     static int GetAngleBetweenPoints(Vector2D point1, Vector2D point2)

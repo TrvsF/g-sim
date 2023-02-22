@@ -2,6 +2,16 @@
 
 namespace ai
 {
+	AI::AI()
+	{
+		m_listener.listen<event::eAgentDeath>(std::bind(&AI::e_agentdeath, this, std::placeholders::_1));
+	}
+
+	void AI::e_agentdeath(const event::eAgentDeath& event)
+	{
+		do_debugconsole();
+	}
+
 	std::vector<object::Agent*> AI::getagents()
 	{
 		std::vector <object::Agent*> agents;
@@ -27,6 +37,6 @@ namespace ai
 
 	void AI::Tick()
 	{
-		do_debugconsole();
+		
 	}
 }

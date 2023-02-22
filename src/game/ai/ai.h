@@ -5,13 +5,21 @@
 #include "../entities/agent.h"
 #include "../object/game-object.h"
 
+#include "../src/event/event.h"
+
+#include <dexode/EventBus.hpp>
+using Listener = dexode::EventBus::Listener;
+
 namespace ai
 {
 	class AI
 	{
 	private:
-		AI() = default;
+		AI();
 		virtual ~AI() = default;
+
+		Listener m_listener{ event::Event::SharedInstace().EventBus };
+		void e_agentdeath(const event::eAgentDeath& event);
 
 		std::vector<object::Agent*> getagents();
 		void do_debugconsole();

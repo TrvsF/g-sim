@@ -54,7 +54,7 @@ namespace game
 		// TODO : this another way maybe?
 		object::TextObject* m_consoletxt;
 		object::TextObject* m_coords;
-		void do_textelements();
+		void do_textelements ();
 
 		object::GameObject* m_selected_obj;
 		Vector2D			m_selected_obj_offset;
