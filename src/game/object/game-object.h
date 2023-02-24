@@ -84,11 +84,6 @@ namespace object
 
 			Update();
 			HandleOffsets();
-
-			if (m_debug)
-			{
-			
-			}
 		}
 	};
 }

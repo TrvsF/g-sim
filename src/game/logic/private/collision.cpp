@@ -41,7 +41,6 @@ namespace game
 		}
 	}
 
-	// TODO : (((somehow))) cut down on the nested fors
 	void Collision::DoCollision()
 	{
 		// first  = grid pos pair

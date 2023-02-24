@@ -11,8 +11,6 @@ namespace game
 		m_consoletxt = nullptr;
 		m_coords     = nullptr;
 
-		m_selected_obj = nullptr;
-
 		m_listener.listen<event::ePosChange> (std::bind(&Game::e_poschange,  this, std::placeholders::_1));
 		m_listener.listen<event::eAgentDeath>(std::bind(&Game::e_agentdeath, this, std::placeholders::_1));
 	}
@@ -60,6 +58,29 @@ namespace game
 		AddGameObject(m_coords);
 	}
 
+	void Game::zoom(int zoom, Vector2D mousepos)
+	{
+		float scale = renderer::Renderer::SharedInstace().Scale();
+		float newscale = scale + (zoom * 0.005f);
+		renderer::Renderer::SharedInstace().Scale(newscale);
+
+		for (const auto& gameobject : m_gameobjects)
+		{
+			Vector2D pos = gameobject->Get2DPosition();
+			Vector2D offset = (mousepos - pos) * newscale;
+			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
+			{
+				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
+				gobject->GetGeometry()->OffsetPos(offset);
+			}
+			if (gameobject->GetObjType() == object::GameObjectType::Texture)
+			{
+				object::TextureObject* gobject = static_cast<object::TextureObject*> (gameobject);
+				gobject->GetTexture()->OffsetPos(offset);
+			}
+		}
+	}
+
 	void Game::do_textelements()
 	{
 		// console
@@ -87,33 +108,30 @@ namespace game
 		}
 	}
 
-	void Game::OnMouseRelease(int mousebutton)
+	void Game::MouseRelease(int mousebutton)
 	{
 		switch (mousebutton)
 		{
 		case 1:
-			m_selected_obj = nullptr;
 			break;
 		}
 	}
 
-	void Game::OnMouseDown(int mousebutton, int x, int y)
+	void Game::MouseDown(int mousebutton, int x, int y)
 	{
-		// TODO : fix
 		switch (mousebutton)
 		{
-		case 1:
-			// if there is no selected object see if we can find one
-			m_selected_obj = get_clickedobject(x, y);
-			if (m_selected_obj == nullptr) { return; }
-			// move the about around :D
-			Vector3D pos = { x - m_selected_obj_offset.x, y - m_selected_obj_offset.y, 0 };
-			m_selected_obj->SetPosition(pos);
+		case 8:
+			zoom(-2.0f, {(float)x, (float)y});
+			break;
+		case 16:
+			zoom(2.0f, { (float)x, (float)y });
+			break;
 		}
 	}
 
 	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
-	void Game::OnMouseClick(int mousebutton, int x, int y)
+	void Game::MouseClick(int mousebutton, int x, int y)
 	{
 		switch (mousebutton)	
 		{
@@ -148,6 +166,16 @@ namespace game
 		}
 	}
 
+	void Game::ScrollDown(int mousebutton, int x, int y)
+	{
+
+	}
+
+	void Game::ScrollUp(int mousebutton, int x, int y)
+	{
+
+	}
+
 	object::GameObject* Game::get_clickedobject(int x, int y)
 	{
 		for (object::GameObject* object : m_gameobjects)
@@ -165,13 +193,6 @@ namespace game
 				screenpos = screenobj->GetGeometry()->Pos();
 			}
 			object::AABB aabb = object::AABB::Create({ screenpos.x, screenpos.y, 0 }, object->GetSize());
-
-			if (aabb.IntersectsPoint(x, y))
-			{
-				m_selected_obj = object;
-				m_selected_obj_offset = { x - object->GetPosition().x, y - object->GetPosition().y };
-				return object;
-			}
 		}
 		return nullptr;
 	}

@@ -28,14 +28,14 @@ namespace object
 		bool       m_dead;
 
 		// traits
-		std::string m_name;
-		int m_food;
-		int m_health;
-		int m_damage;
-		float m_maxvel;
-		float m_maxturn;
-		SDL_Color m_maincolour;
-		SDL_Color m_secondarycolour;
+		std::string t_name;
+		int t_food;
+		int t_health;
+		int t_damage;
+		float t_maxvel;
+		float t_maxturn;
+		SDL_Color t_colour;
+
 		void set_name();
 
 		// targets
@@ -51,8 +51,7 @@ namespace object
 
 		void do_brain();
 		void do_friction();
-		void calc_offsetrotation();
-		void calc_offsetpos();
+		void calc_transformoffsets();
 
 		void  rotate_to_pos(Vector2D pos);
 		float get_deg_to_pos(Vector2D pos);
@@ -72,12 +71,12 @@ namespace object
 
 		inline std::string GetName()
 		{
-			return m_name;
+			return t_name;
 		}
 
 		inline int GetHealth()
 		{
-			return m_health;
+			return t_health;
 		}
 
 		inline void AddCollidedObj(object::GameObject* obj)

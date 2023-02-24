@@ -28,20 +28,37 @@ namespace updater
 		int x, y;
 		if (m_input->MousePressed(Right, x, y))
 		{
-			game::Game::SharedInstace().OnMouseClick(Right, x, y);
+			game::Game::SharedInstace().MouseClick(Right, x, y);
 		}
 		if (m_input->MousePressed(Left, x, y))
 		{
-			game::Game::SharedInstace().OnMouseClick(Left, x, y);
+			game::Game::SharedInstace().MouseClick(Left, x, y);
 		}
 		// click & drag
 		if (m_input->MouseDown(Left, x, y))
 		{
-			game::Game::SharedInstace().OnMouseDown(Left, x, y);
+			game::Game::SharedInstace().MouseDown(Left, x, y);
+		}
+		if (m_input->MouseDown(Back, x, y))
+		{
+			game::Game::SharedInstace().MouseDown(Back, x, y);
+		}
+		if (m_input->MouseDown(Forward, x, y))
+		{
+			game::Game::SharedInstace().MouseDown(Forward, x, y);
 		}
 		if (m_input->MouseReleased(Left, x, y))
 		{
-			game::Game::SharedInstace().OnMouseRelease(Left);
+			game::Game::SharedInstace().MouseRelease(Left);
+		}
+
+		if (m_input->MouseReleased(Back, x, y))
+		{
+			game::Game::SharedInstace().MouseDown(Back, x, y);
+		}
+		if (m_input->MouseReleased(Forward, x, y))
+		{
+			game::Game::SharedInstace().MouseDown(Forward, x, y);
 		}
 	}
 

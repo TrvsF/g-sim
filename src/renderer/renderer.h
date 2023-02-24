@@ -19,12 +19,15 @@
 
 namespace renderer
 {
-	class Renderer
+	class Renderer // TODO : move console & window
 	{
 	private:
+		// window things : TODO move
 		int				m_width;
 		int				m_height;
 		const char*		m_title;
+
+		float m_scale;
 
 		SDL_Window*		m_window;
 		SDL_Renderer*	m_renderer;
@@ -73,8 +76,10 @@ namespace renderer
 		void LoadGeometry  (object::Geometry* geometry_object);
 
 		inline SDL_Renderer* GetRendererObj();
-
 		inline Vector2D GetScreensize();
+
+		inline void Scale(float scale) { m_scale = scale; }
+		inline float Scale()           { return m_scale;  }
 
 		bool Start(const char* window_title, int width, int height);
 		void Render();

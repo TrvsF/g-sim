@@ -11,6 +11,8 @@ namespace renderer
 		m_title		= "";
 		m_width		= 0;
 		m_height	= 0;
+
+		m_scale     = 1.0f;
 	}
 
 	Renderer::~Renderer()
@@ -193,7 +195,7 @@ namespace renderer
 
 	void Renderer::render_texture_object(object::Texture* texture_object)
 	{
-		float scale		= texture_object->Scale();
+		float scale		= m_scale;
 		int width		= texture_object->Width();
 		int height		= texture_object->Height();
 		int x			= (int)roundf(texture_object->Pos().x - (((width * scale) - width) / 2));
@@ -211,17 +213,18 @@ namespace renderer
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}
 	
-	void Renderer::render_geometry_object(object::Geometry* geometry_object)
+	void Renderer::render_geometry_object(object::Geometry* geometry)
 	{
-		float ang = geometry_object->Rotation();
-		Vector2D midpoint = VEC2_ZERO;
 
-		for (const auto& tri : geometry_object->Tris())
+		float ang = geometry->Rotation();
+		float scale = m_scale;
+		Vector2D midpoint = VEC2_ZERO;
+		for (const auto& tri : geometry->Tris())
 		{
 			// hack : find midpoint
-			for (Vector2D vec1 : geometry_object->Tris()[0].GetPoints())
+			for (Vector2D vec1 : geometry->Tris()[0].GetPoints())
 			{
-				for (Vector2D vec2 : geometry_object->Tris()[1].GetPoints())
+				for (Vector2D vec2 : geometry->Tris()[1].GetPoints())
 				{
 					if (vec1 == vec2) 
 					{
@@ -230,9 +233,9 @@ namespace renderer
 				}
 			}
 
-			Vector2D v1 = tri.GetPoint1() + geometry_object->Pos();
-			Vector2D v2 = tri.GetPoint2() + geometry_object->Pos();
-			Vector2D v3 = tri.GetPoint3() + geometry_object->Pos();
+			Vector2D v1 = (tri.GetPoint1() * scale) + geometry->Pos();
+			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos();
+			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos();
 
 			// cool rotation
 			/*
@@ -242,19 +245,19 @@ namespace renderer
 			*/
 
 			// circle rotation
-			///*
+			/*
 			maths::GetRotatedPoint(v1, midpoint + geometry_object->Pos(), ang);
 			maths::GetRotatedPoint(v2, midpoint + geometry_object->Pos(), ang);
 			maths::GetRotatedPoint(v3, midpoint + geometry_object->Pos(), ang);
-			//*/
+			*/
 
 			SDL_FPoint p1 = { v1.x, v1.y };
 			SDL_FPoint p2 = { v2.x, v2.y };
 			SDL_FPoint p3 = { v3.x, v3.y };
 
 			std::vector< SDL_Vertex > v = {
-				{ p1, geometry_object->Colour()},
-				{ p2, geometry_object->Colour()},
+				{ p1, geometry->Colour()},
+				{ p2, geometry->Colour()},
 				{ p3, SDL_Color{ 255, 255, 255, 200 } }
 			};
 			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);

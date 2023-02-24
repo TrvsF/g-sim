@@ -39,32 +39,35 @@ namespace game
 		void e_poschange(const event::ePosChange& event);
 		void e_agentdeath(const event::eAgentDeath& event);
 
-		std::vector<object::GameObject*> m_toremove;
-
 		// logic objects
 		Collision*	m_collision;
 
 		// world object stuff
+		std::vector<object::GameObject*> m_toremove;
 		std::vector<object::GameObject*> m_gameobjects;
 		object::Player* m_player;
 		object::Camera* m_camera;
 		void init_entities();
 		void init_textelements();
 
+		// zoom
+		void zoom(int zoom, Vector2D mousepos);
+
 		// TODO : this another way maybe?
 		object::TextObject* m_consoletxt;
 		object::TextObject* m_coords;
-		void do_textelements ();
+		void do_textelements();
 
-		object::GameObject* m_selected_obj;
-		Vector2D			m_selected_obj_offset;
+		// input help TODO : move
 		object::GameObject* get_clickedobject(int x, int y);
 	public:
 		static Game& SharedInstace() { static Game game; return game; }
 
-		void OnMouseRelease(int mousebutton);
-		void OnMouseDown(int mousebutton, int x, int y);
-		void OnMouseClick(int mousebutton,int x, int y);
+		void MouseRelease(int mousebutton);
+		void MouseDown( int mousebutton, int x, int y);
+		void MouseClick(int mousebutton, int x, int y);
+		void ScrollDown(int mousebutton, int x, int y);
+		void ScrollUp(  int mousebutton, int x, int y);
 
 		inline void AddGameObject(object::GameObject* gameobject);
 		inline void RemoveGameObject(object::GameObject* gameobject);

@@ -16,15 +16,14 @@ namespace object
 		// - A dicates solely the geometry object
 		// - B will determine personality triats (agression, etc)
 		// - below vars are made up of either B or B/A(mix)
+		t_maxvel  = maths::GetRandomFloat(1.0f, 3.0f);
+		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
+		t_health  = maths::GetRandomInt(70, 250);
+		t_food    = maths::GetRandomInt(-10, 10) + t_health;
+		t_damage  = maths::GetRandomInt(5, 15);
+		t_colour  = get_randomcolour();
+		GetGeometry()->Colour(t_colour);
 		set_name();
-		m_maxvel  = maths::GetRandomFloat(1.0f, 3.0f);
-		m_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
-		m_health = maths::GetRandomInt(70, 250);
-		m_food   = maths::GetRandomInt(-10, 10) + m_health;
-		m_damage = maths::GetRandomInt(5, 15);
-		m_maincolour	  = get_randomcolour(); // TODO : sync to geometry
-		m_secondarycolour = get_randomcolour();
-		GetGeometry()->Colour(m_maincolour);
 
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
@@ -48,7 +47,7 @@ namespace object
 	{
 		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
 		std::vector<std::string> lastnames  = file::GetLinesFromFile("lastnames.txt");
-		m_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
+		t_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
 			+ " " + *maths::select_randomly(lastnames.begin(), lastnames.end());
 	}
 
@@ -78,7 +77,7 @@ namespace object
 		m_ismoving  = false;
 	}
 
-	void Agent::calc_offsetpos()
+	void Agent::calc_transformoffsets()
 	{
 		float yaw = (GetTransform().GetRotation().z + m_turnspeed) * DEG_TO_RAD;
 
@@ -91,25 +90,25 @@ namespace object
 
 	void Agent::turnright()
 	{
-		m_turnspeed = fminf(m_maxturn, m_turnspeed + 0.5f);
+		m_turnspeed = fminf(t_maxturn, m_turnspeed + 0.5f);
 		m_isturning = true;
 	}
 
 	void Agent::turnleft()
 	{
-		m_turnspeed = fmaxf(-m_maxturn, m_turnspeed - 0.5f);
+		m_turnspeed = fmaxf(-t_maxturn, m_turnspeed - 0.5f);
 		m_isturning = true;
 	}
 
 	void Agent::moveforward()
 	{
-		m_velocity = fminf(m_maxvel, m_velocity + 0.5f);
+		m_velocity = fminf(t_maxvel, m_velocity + 0.5f);
 		m_ismoving = true;
 	}
 
 	void Agent::movebackward()
 	{
-		m_velocity = fmaxf(-m_maxvel, m_velocity - 0.5f);
+		m_velocity = fmaxf(-t_maxvel, m_velocity - 0.5f);
 		m_ismoving = true;
 	}
 
@@ -138,8 +137,8 @@ namespace object
 
 	void Agent::DoDamage(int damage)
 	{
-		m_health = std::max(m_health - damage, 0);
-		if (m_health <= 0 && !m_dead) { Kill(); }
+		t_health = std::max(t_health - damage, 0);
+		if (t_health <= 0 && !m_dead) { Kill(); }
 	}
 
 	void Agent::Kill()
@@ -247,6 +246,6 @@ namespace object
 	{
 		do_brain();
 		do_friction();
-		calc_offsetpos();
+		calc_transformoffsets();
 	}
 }
