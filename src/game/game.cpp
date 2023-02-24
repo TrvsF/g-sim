@@ -20,6 +20,11 @@ namespace game
 		m_player->SetPosition({event.pos.x, event.pos.y, 0});
 	}
 
+	void Game::e_scalechange(const event::eScaleChange& event)
+	{
+		renderer::Renderer::SharedInstace().Scale(event.scale);
+	}
+
 	void Game::e_agentdeath(const event::eAgentDeath& event)
 	{
 		object::GameObject* gameobject = event.victim;
@@ -64,14 +69,17 @@ namespace game
 		float newscale = scale + (zoom * 0.005f);
 		renderer::Renderer::SharedInstace().Scale(newscale);
 
-		for (const auto& gameobject : m_gameobjects)
+		for (object::GameObject* gameobject : m_gameobjects)
 		{
 			Vector2D pos = gameobject->Get2DPosition();
-			Vector2D offset = (mousepos - pos) * newscale;
+			float offsetX = std::lerp(mousepos.x, pos.x, newscale);
+			float offsetY = std::lerp(mousepos.y, pos.y, newscale);
+			//Vector2D offset = (mousepos - pos) * newscale;
+			Vector2D offset = pos - Vector2D{ offsetX, offsetY };
 			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
 			{
 				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
-				gobject->GetGeometry()->OffsetPos(offset);
+				gobject->GetGeometry()->OffsetScale(offset);
 			}
 			if (gameobject->GetObjType() == object::GameObjectType::Texture)
 			{

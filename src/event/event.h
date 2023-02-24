@@ -19,6 +19,10 @@ namespace event
 	{
 		Vector2D pos;
 	};
+	struct eScaleChange
+	{
+		float scale;
+	};
 	// agents
 	struct eAgentDeath
 	{

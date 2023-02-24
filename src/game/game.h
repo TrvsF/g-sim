@@ -37,6 +37,7 @@ namespace game
 		// event objects & methods
 		Listener m_listener { event::Event::SharedInstace().EventBus };
 		void e_poschange(const event::ePosChange& event);
+		void e_scalechange(const event::eScaleChange& event);
 		void e_agentdeath(const event::eAgentDeath& event);
 
 		// logic objects

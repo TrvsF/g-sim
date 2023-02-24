@@ -39,11 +39,11 @@ namespace updater
 		{
 			game::Game::SharedInstace().MouseDown(Left, x, y);
 		}
-		if (m_input->MouseDown(Back, x, y))
+		if (m_input->MouseDown(Back, x, y) || m_input->KeyDown("p"))
 		{
 			game::Game::SharedInstace().MouseDown(Back, x, y);
 		}
-		if (m_input->MouseDown(Forward, x, y))
+		if (m_input->MouseDown(Forward, x, y) || m_input->KeyDown("o"))
 		{
 			game::Game::SharedInstace().MouseDown(Forward, x, y);
 		}
