@@ -65,10 +65,10 @@ namespace game
 		static Game& SharedInstace() { static Game game; return game; }
 
 		void MouseRelease(int mousebutton);
-		void MouseDown( int mousebutton, int x, int y);
+		void MouseDown (int mousebutton, int x, int y);
 		void MouseClick(int mousebutton, int x, int y);
 		void ScrollDown(int mousebutton, int x, int y);
-		void ScrollUp(  int mousebutton, int x, int y);
+		void ScrollUp  (int mousebutton, int x, int y);
 
 		inline void AddGameObject(object::GameObject* gameobject);
 		inline void RemoveGameObject(object::GameObject* gameobject);

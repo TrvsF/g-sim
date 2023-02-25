@@ -4,13 +4,13 @@ namespace object
 {
 	void GeometryObject::setup()
 	{
-		// load into the renderer
-		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
-		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
 		// set type
 		SetObjType(GameObjectType::Geometry);
 		// create geometry object
 		m_geometry = new Geometry();
+		// load into the renderer
+		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
+		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
 	}
 
 	GeometryObject::GeometryObject(GameObject* object, int sides)
