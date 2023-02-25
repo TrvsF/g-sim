@@ -75,8 +75,8 @@ namespace game
 			}
 			if (gameobject->GetObjType() == object::GameObjectType::Texture)
 			{
-				object::TextureObject* gobject = static_cast<object::TextureObject*> (gameobject);
-				gobject->GetTexture()->OffsetPos(offset);
+				object::TextureObject* tobject = static_cast<object::TextureObject*> (gameobject);
+				gobject->GetTexture()->OffsetPos(tobject);
 			}
 		}
 	}
