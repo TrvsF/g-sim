@@ -244,10 +244,10 @@ namespace object
 
 	void Agent::Update()
 	{
-		/*
+		
 		do_brain();
 		do_friction();
 		calc_transformoffsets();
-		*/
+		
 	}
 }

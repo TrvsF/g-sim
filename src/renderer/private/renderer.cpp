@@ -12,7 +12,7 @@ namespace renderer
 		m_width		= 0;
 		m_height	= 0;
 
-		m_scale     = 1.0f;
+		m_globalscale     = 1.0f;
 	}
 
 	Renderer::~Renderer()
@@ -195,7 +195,7 @@ namespace renderer
 
 	void Renderer::render_texture_object(object::Texture* texture_object)
 	{
-		float scale		= m_scale;
+		float scale		= 1;
 		int width		= texture_object->Width();
 		int height		= texture_object->Height();
 		int x			= (int)roundf(texture_object->Pos().x - (((width * scale) - width) / 2));
@@ -217,7 +217,7 @@ namespace renderer
 	{
 
 		float ang = geometry->Rotation();
-		float scale = m_scale;
+		float scale = m_globalscale;
 		Vector2D midpoint = VEC2_ZERO;
 		for (const auto& tri : geometry->Tris())
 		{
@@ -233,9 +233,9 @@ namespace renderer
 				}
 			}
 
-			Vector2D v1 = (tri.GetPoint1() * scale) + geometry->Pos() - geometry->Scaleoffset();
-			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos() - geometry->Scaleoffset();
-			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos() - geometry->Scaleoffset();
+			Vector2D v1 = (tri.GetPoint1() * scale) + geometry->Pos() - geometry->OffsetScale();
+			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos() - geometry->OffsetScale();
+			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos() - geometry->OffsetScale();
 
 			// cool rotation
 			/*
@@ -262,18 +262,6 @@ namespace renderer
 			};
 			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);
 		}
-	}
-
-	void Renderer::render_tri(object::Triangle* tri)
-	{
-		/*
-		std::vector< SDL_Vertex > v = {
-				{ SDL_FPoint{ tri->GetPoint1() }, SDL_Color{255, 0, 0, 255}},
-				{ SDL_FPoint{ tri->GetPoint2() }, SDL_Color{ 0, 0, 255, 255 } },
-				{ SDL_FPoint{ tri->GetPoint3() }, SDL_Color{ 0, 255, 0, 255 } }
-		};
-		SDL_RenderGeometry(m_renderer, nullptr, v.data(), v.size(), nullptr, 0);
-		*/
 	}
 
 	void Renderer::render_aabb(object::AABB* aabb)

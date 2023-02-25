@@ -2,22 +2,25 @@
 
 namespace object
 {
-	void GeometryObject::load_geometry()
+	void GeometryObject::setup()
 	{
-		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
+		// load into the renderer
 		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
+		renderer::Renderer::SharedInstace().LoadGeometry(m_geometry);
+		// set type
+		SetObjType(GameObjectType::Geometry);
+		// create geometry object
+		m_geometry = new Geometry();
 	}
 
 	GeometryObject::GeometryObject(GameObject* object, int sides)
 		: GameObject(object)
 	{
-		SetObjType(GameObjectType::Geometry);
-		m_geometry = new Geometry();
+		setup();
 
 		float width =  GetAABB().GetMaxX() - GetAABB().GetMinX();
 		float height = GetAABB().GetMaxY() - GetAABB().GetMinY();
 		Vector2D mins, maxes;
-
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y},
 			sides,
@@ -26,8 +29,6 @@ namespace object
 			mins,
 			maxes
 		);
-		load_geometry();
-
 		GetAABB().SetSize({ width, height, 0 });
 		GetAABB().SetPos({ GetPosition().x + mins.x, GetPosition().y + mins.y, 0 }); // TODO : rarely doesnt work as indended
 	}
@@ -35,13 +36,12 @@ namespace object
 	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points)
 		: GameObject(object)
 	{
-		SetObjType(GameObjectType::Geometry);
-		m_geometry = new Geometry();
+		setup();
+
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y },
 			points
 		);
-		load_geometry();
 	}
 
 	GeometryObject::~GeometryObject()

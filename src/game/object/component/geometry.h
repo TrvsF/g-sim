@@ -41,7 +41,7 @@ namespace object
 		inline Vector2D Pos() const;
 		inline Vector2D CenterPos() const;
 
-		inline Vector2D Scaleoffset()		  { return m_scaleoffset; }
+		inline Vector2D OffsetScale()		  { return m_scaleoffset; }
 		inline void OffsetScale(Vector2D pos) { m_scaleoffset = pos;  }
 
 		inline void Active(bool active);

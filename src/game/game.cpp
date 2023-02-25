@@ -11,8 +11,12 @@ namespace game
 		m_consoletxt = nullptr;
 		m_coords     = nullptr;
 
-		m_listener.listen<event::ePosChange> (std::bind(&Game::e_poschange,  this, std::placeholders::_1));
-		m_listener.listen<event::eAgentDeath>(std::bind(&Game::e_agentdeath, this, std::placeholders::_1));
+		m_listener.listen<event::ePosChange> (std::bind(
+			&Game::e_poschange, this, std::placeholders::_1));
+		m_listener.listen<event::eAgentDeath>(std::bind(
+			&Game::e_agentdeath, this, std::placeholders::_1));
+		m_listener.listen<event::eScaleChange>(std::bind(
+			&Game::e_scalechange, this, std::placeholders::_1));
 	}
 
 	void Game::e_poschange(const event::ePosChange& event)
@@ -65,17 +69,20 @@ namespace game
 
 	void Game::zoom(int zoom, Vector2D mousepos)
 	{
+		// set global zoom
 		float scale = renderer::Renderer::SharedInstace().Scale();
 		float newscale = scale + (zoom * 0.005f);
+		if (newscale < 0) { return; }
 		renderer::Renderer::SharedInstace().Scale(newscale);
-
+		// move each object relative to mousepos
 		for (object::GameObject* gameobject : m_gameobjects)
-		{
+		{ 
 			Vector2D pos = gameobject->Get2DPosition();
+
 			float offsetX = std::lerp(mousepos.x, pos.x, newscale);
 			float offsetY = std::lerp(mousepos.y, pos.y, newscale);
-			//Vector2D offset = (mousepos - pos) * newscale;
 			Vector2D offset = pos - Vector2D{ offsetX, offsetY };
+
 			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
 			{
 				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
@@ -84,7 +91,7 @@ namespace game
 			if (gameobject->GetObjType() == object::GameObjectType::Texture)
 			{
 				object::TextureObject* tobject = static_cast<object::TextureObject*> (gameobject);
-				gobject->GetTexture()->OffsetPos(tobject);
+				tobject->GetTexture()->OffsetPos(offset);
 			}
 		}
 	}

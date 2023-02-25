@@ -27,7 +27,7 @@ namespace renderer
 		int				m_height;
 		const char*		m_title;
 
-		float m_scale;
+		float m_globalscale;
 
 		SDL_Window*		m_window;
 		SDL_Renderer*	m_renderer;
@@ -38,24 +38,18 @@ namespace renderer
 		std::vector<object::Texture*>	m_texutreobjects;
 
 		void render_geometry_object(object::Geometry* geometry_object);
-		void render_tri(object::Triangle* tri);
-
-		void render_aabb(object::AABB* aabb);
+		void render_texture_object (object::Texture* texture_object);
+		void render_aabb		   (object::AABB*     aabb);
+		void render_rect		   (SDL_Rect rect, SDL_Color colour);
+		void render_fillrect	   (SDL_Rect rect, SDL_Color outline, SDL_Color fill);
 
 		inline void add_texture_object(object::Texture* texture_object);
 		inline void remove_texture_object(object::Texture* texture_object);
-		void render_texture_object(object::Texture* texture_object);
 
 		SDL_Texture* create_texture_from_text(const char* font, std::string text, SDL_Color colour);
 
-		// console
 		void render_console();
-
-		void render_rect(SDL_Rect rect, SDL_Color colour);
-		void render_fillrect(SDL_Rect rect, SDL_Color outline, SDL_Color fill);
-
 		void set_window_icon();
-
 		void clear_buffer();
 
 		Renderer();
@@ -78,8 +72,8 @@ namespace renderer
 		inline SDL_Renderer* GetRendererObj();
 		inline Vector2D GetScreensize();
 
-		inline void Scale(float scale) { m_scale = scale; }
-		inline float Scale()           { return m_scale;  }
+		inline void Scale(float scale) { m_globalscale = scale; }
+		inline float Scale()           { return m_globalscale;  }
 
 		bool Start(const char* window_title, int width, int height);
 		void Render();

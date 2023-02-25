@@ -14,6 +14,7 @@ namespace object
 	{
 		Texture,
 		Geometry,
+		Text,
 		None
 	};
 

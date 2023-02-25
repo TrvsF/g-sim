@@ -5,7 +5,7 @@ namespace object
 	TextObject::TextObject(GameObject* object, const char* font, std::string text, SDL_Color colour)
 		: GameObject(object)
 	{
-		SetObjType(GameObjectType::Texture);
+		SetObjType(GameObjectType::Text);
 		set_text(font, text, colour);
 		m_debug = false;
 	}
