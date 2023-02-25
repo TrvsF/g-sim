@@ -233,9 +233,9 @@ namespace renderer
 				}
 			}
 
-			Vector2D v1 = (tri.GetPoint1() * scale) + geometry->Pos();
-			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos();
-			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos();
+			Vector2D v1 = (tri.GetPoint1() * scale) + geometry->Pos() - geometry->Scaleoffset();
+			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos() - geometry->Scaleoffset();
+			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos() - geometry->Scaleoffset();
 
 			// cool rotation
 			/*

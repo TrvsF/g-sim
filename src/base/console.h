@@ -85,7 +85,9 @@ namespace console
 			int size = sizeof(newscale) / sizeof(newscale[0]);
 			GetSubcommands(input, newscale, size);
 
-			// TODO : set render scale to newscale[0]
+			float scale = newscale[0] / 100.0f;
+			bus->postpone(event::eScaleChange {scale});
+			bus->process();
 
 			SPECIAL = true;
 		}

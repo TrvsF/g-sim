@@ -15,6 +15,7 @@ namespace object
 	protected:
 		std::vector<Triangle>	m_tris;
 		Vector2D				m_pos;
+		Vector2D				m_scaleoffset;
 		float					m_rotation;
 		float					m_width;
 		float					m_height;
@@ -39,6 +40,9 @@ namespace object
 		inline void Pos(Vector2D pos);
 		inline Vector2D Pos() const;
 		inline Vector2D CenterPos() const;
+
+		inline Vector2D Scaleoffset()		  { return m_scaleoffset; }
+		inline void OffsetScale(Vector2D pos) { m_scaleoffset = pos;  }
 
 		inline void Active(bool active);
 		inline bool Active();

@@ -57,7 +57,8 @@ namespace object
 		}
 
 		set_tris(points);
-		m_pos	 = pos;
+		m_pos		  = pos;
+		m_scaleoffset = VEC2_ZERO;
 		m_active = true;
 		m_height = height = maxes.y - mins.y;
 		m_width  = width  = maxes.x - mins.x;
