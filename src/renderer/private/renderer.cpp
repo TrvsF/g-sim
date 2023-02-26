@@ -232,18 +232,18 @@ namespace renderer
 					}
 				}
 			}
+			midpoint = midpoint * m_globalscale;
 
-			// offet by offsets
-			Vector2D v1 = (tri.GetPoint1() * scale) + geometry->Pos() - geometry->OffsetScale();
-			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos() - geometry->OffsetScale();
-			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos() - geometry->OffsetScale();
-
-			// rotation TODO : broken with scaling
-			/*
-			maths::GetRotatedPoint(v1, midpoint + geometry->Pos(), ang);
-			maths::GetRotatedPoint(v2, midpoint + geometry->Pos(), ang);
-			maths::GetRotatedPoint(v3, midpoint + geometry->Pos(), ang);
-			*/
+			// create base verts
+			Vector2D offsetscale = geometry->OffsetScale();
+			Vector2D offsetpos   = geometry->Pos() - geometry->OffsetScale();
+			Vector2D v1 = (tri.GetPoint1() * scale) + offsetpos;
+			Vector2D v2 = (tri.GetPoint2() * scale) + offsetpos;
+			Vector2D v3 = (tri.GetPoint3() * scale) + offsetpos;
+			maths::GetRotatedPoint(v1, midpoint + offsetpos, ang);
+			maths::GetRotatedPoint(v2, midpoint + offsetpos, ang);
+			maths::GetRotatedPoint(v3, midpoint + offsetpos, ang);
+			
 
 			SDL_FPoint p1 = { v1.x, v1.y };
 			SDL_FPoint p2 = { v2.x, v2.y };
