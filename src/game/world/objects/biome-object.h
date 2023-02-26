@@ -8,14 +8,24 @@
 
 namespace object
 {
-	class BiomeObject : public GameObject
+	enum class BiomeType
+	{
+		Desert,
+		Aquatic,
+		Grassland,
+		Forest,
+		Tundra
+	};
+
+	class BiomeObject : public Geometry
 	{
 	private:
 		Geometry* m_geometry;
 	public:
-		BiomeOjbect(BiomeObject* object, Vector2D size);
+		BiomeObject(Vector2D size);
+		~BiomeObject();
 
-		GetBiomeFromPos(Vector2D pos);
+		BiomeType GetBiomeFromPos(Vector2D pos);
 	};
 }
 

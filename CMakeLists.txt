@@ -92,7 +92,7 @@ add_executable (
  "src/util/private/timer.cpp" 
  "src/util/maths.h" 
  "src/util/file.h"
-  "src/game/world/objects/biome-object.h")
+  "src/game/world/objects/biome-object.h" "src/game/world/objects/private/biome-object.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
