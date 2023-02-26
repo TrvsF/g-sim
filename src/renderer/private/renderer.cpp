@@ -238,10 +238,12 @@ namespace renderer
 			Vector2D v2 = (tri.GetPoint2() * scale) + geometry->Pos() - geometry->OffsetScale();
 			Vector2D v3 = (tri.GetPoint3() * scale) + geometry->Pos() - geometry->OffsetScale();
 
-			// rotation
+			// rotation TODO : broken with scaling
+			/*
 			maths::GetRotatedPoint(v1, midpoint + geometry->Pos(), ang);
 			maths::GetRotatedPoint(v2, midpoint + geometry->Pos(), ang);
 			maths::GetRotatedPoint(v3, midpoint + geometry->Pos(), ang);
+			*/
 
 			SDL_FPoint p1 = { v1.x, v1.y };
 			SDL_FPoint p2 = { v2.x, v2.y };
