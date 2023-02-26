@@ -11,9 +11,9 @@
 #include <filesystem>
 
 #include "../base/helper_macos.h"
-#include "../game/object/component/aabb.h"
-#include "../game/object/component/texture.h"
-#include "../game/object/component/geometry.h"
+#include "../game/world/component/aabb.h"
+#include "../game/world/component/texture.h"
+#include "../game/world/component/geometry.h"
 #include "../base/console.h"
 #include "../renderer/assets.h"
 

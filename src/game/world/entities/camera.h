@@ -1,11 +1,11 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "../object/game-object.h"
-#include "../object/objects/texture-object.h"
-#include "../object/objects/geometry-object.h"
-#include "../object/component/geometry.h"
-#include "../object/component/texture.h"
+#include "../src/game/world/game-object.h"
+#include "../src/game/world/objects/texture-object.h"
+#include "../src/game/world/objects/geometry-object.h"
+#include "../src/game/world/component/geometry.h"
+#include "../src/game/world/component/texture.h"
 
 namespace object
 {

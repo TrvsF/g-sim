@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "../base/helper_macos.h"
-#include "../game/object/game-object.h"
+#include "../game/world/game-object.h"
 #include "controller.h"
 #include "input.h"
 

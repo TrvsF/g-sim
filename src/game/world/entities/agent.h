@@ -1,7 +1,7 @@
 #ifndef AGENT_H_
 #define AGENT_H_
 
-#include "../object/objects/geometry-object.h"
+#include "../src/game/world/objects/geometry-object.h"
 #include "../src/util/file.h"
 
 namespace object

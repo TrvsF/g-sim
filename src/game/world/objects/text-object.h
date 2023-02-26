@@ -1,8 +1,8 @@
 #ifndef TEXTOBJECT_H_
 #define TEXTOBJECT_H_ 
 
-#include "../src/game/object/game-object.h"
-#include "../src/game/object/component/texture.h"
+#include "../src/game/world/game-object.h"
+#include "../src/game/world/component/texture.h"
 #include "../src/renderer/renderer.h"
 
 namespace object

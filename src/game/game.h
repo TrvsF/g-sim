@@ -5,15 +5,15 @@
 
 #include "../base/console.h"
 
-#include "object/game-object.h"
-#include "entities/camera.h"
-#include "entities/player.h"
-#include "entities/agent.h"
-#include "entities/food.h"
+#include "world/game-object.h"
+#include "world/entities/camera.h"
+#include "world/entities/player.h"
+#include "world/entities/agent.h"
+#include "world/entities/food.h"
 
-#include "object/objects/text-object.h"
-#include "object/objects/texture-object.h"
-#include "object/objects/geometry-object.h"
+#include "world/objects/text-object.h"
+#include "world/objects/texture-object.h"
+#include "world/objects/geometry-object.h"
 
 #include "logic/collision.h"
 

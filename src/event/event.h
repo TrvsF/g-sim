@@ -3,7 +3,7 @@
 
 #include <dexode/EventBus.hpp>
 
-#include "../game/object/game-object.h"
+#include "../game/world/game-object.h"
 #include "../util/vector2d.h"
 
 #include <iostream>

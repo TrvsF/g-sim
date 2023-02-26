@@ -2,8 +2,8 @@
 #define AI_H_
 
 #include "../game.h"
-#include "../entities/agent.h"
-#include "../object/game-object.h"
+#include "../world/entities/agent.h"
+#include "../world/game-object.h"
 
 #include "../src/event/event.h"
 

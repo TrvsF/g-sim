@@ -1,9 +1,9 @@
 #ifndef COLLISION_H_
 #define COLLISION_H_
 
-#include "../object/game-object.h"
-#include "../entities/food.h"
-#include "../entities/agent.h"
+#include "../world/game-object.h"
+#include "../world/entities/food.h"
+#include "../world/entities/agent.h"
 #include "../src/util/maths.h"
 
 #include <unordered_map>

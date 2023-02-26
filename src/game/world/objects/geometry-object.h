@@ -1,8 +1,8 @@
 #ifndef GEOMETRYOBJECT_H_
 #define GEOMETRYOBJECT_H_
 
-#include "../src/game/object/component/geometry.h"
-#include "../src/game/object/game-object.h"
+#include "../src/game/world/component/geometry.h"
+#include "../src/game/world/game-object.h"
 #include "../src/renderer/renderer.h"
 #include "../src/event/event.h"
 
