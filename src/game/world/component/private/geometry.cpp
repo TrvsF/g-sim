@@ -64,11 +64,12 @@ namespace object
 		m_width  = width  = maxes.x - mins.x;
 	}
 
-	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points)
+	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points, float height, float width)
 	{
 		set_tris(points);
 		m_active	= true;
 		m_pos		= pos;
-		// TODO : no width or height
+		m_height	= height;
+		m_width		= width;
 	}
 }

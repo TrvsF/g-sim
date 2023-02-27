@@ -30,7 +30,7 @@ namespace object
 		Geometry(std::vector<Triangle> tris, Vector2D pos);
 
 		void Set(Vector2D pos, int sides, float& width, float& height, Vector2D& mins, Vector2D& maxes);
-		void Set(Vector2D pos, std::vector<Vector2D> points);
+		void Set(Vector2D pos, std::vector<Vector2D> points, float height, float width);
 
 		inline const std::vector<Triangle>& Tris() const { return m_tris; }
 
@@ -47,8 +47,8 @@ namespace object
 		inline void Active(bool active);
 		inline bool Active();
 
-		inline void		 Colour(SDL_Color colour) { m_maincolour = colour; }
-		inline SDL_Color Colour() { return m_maincolour; }
+		inline SDL_Color Colour()			 { return m_maincolour; }
+		inline void	Colour(SDL_Color colour) { m_maincolour = colour; }
 
 		inline void OffsetPos(Vector2D offset);
 		inline void OffsetRotation(float rotation);

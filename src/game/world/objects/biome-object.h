@@ -23,7 +23,11 @@ namespace object
 	{
 	private:
 		std::vector<std::pair<GameObject*, BiomeType>> m_objectbiomepairs;
+		
+		Vector2D  m_size;
 		Geometry* m_geometry;
+
+		std::vector<Vector2D> getpoints();
 	public:
 		BiomeObject(Vector2D size);
 		~BiomeObject();
@@ -31,5 +35,4 @@ namespace object
 		BiomeType GetBiomeFromPos(Vector2D pos);
 	};
 }
-
 #endif

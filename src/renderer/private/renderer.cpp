@@ -240,11 +240,11 @@ namespace renderer
 			Vector2D v1 = (tri.GetPoint1() * scale) + offsetpos;
 			Vector2D v2 = (tri.GetPoint2() * scale) + offsetpos;
 			Vector2D v3 = (tri.GetPoint3() * scale) + offsetpos;
+			// rotate
 			maths::GetRotatedPoint(v1, midpoint + offsetpos, ang);
 			maths::GetRotatedPoint(v2, midpoint + offsetpos, ang);
 			maths::GetRotatedPoint(v3, midpoint + offsetpos, ang);
 			
-
 			SDL_FPoint p1 = { v1.x, v1.y };
 			SDL_FPoint p2 = { v2.x, v2.y };
 			SDL_FPoint p3 = { v3.x, v3.y };
