@@ -39,6 +39,7 @@ namespace game
 			// TODO : this can push a garbage pointer (for 1 tick)
 			agent->AddCollidedObj(victim);
 		}
+		// TODO : check for worldborder
 	}
 
 	void Collision::DoCollision()
