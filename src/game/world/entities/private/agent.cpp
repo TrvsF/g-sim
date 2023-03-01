@@ -28,7 +28,7 @@ namespace object
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
 
-		m_targetentity = NULL;
+		m_targetagent = NULL;
 		m_targetpos	   = {500, 500};
 
 		m_velocity  = 0;
@@ -57,6 +57,34 @@ namespace object
 		unsigned char g = maths::GetRandomInt(0, 255);
 		unsigned char b = maths::GetRandomInt(0, 255);
 		return { r, g, b };
+	}
+
+	void Agent::add_objecttomemory(GameObject* object)
+	{
+		// TODO : forget objects that arent there anymore
+		/*
+		for (auto& pair : m_objectmemory)
+		{
+			if (pair.first == object)
+			{
+				pair.second = object->Get2DPosition();
+				return;
+			}
+		}
+		*/
+		Vector2D pos = object->Get2DPosition();
+		GameEntityType type = object->GetEntityType();
+		m_objectmemory.push_back({type , pos});
+	}
+
+	Vector2D Agent::get_memoryentitypos(GameEntityType type)
+	{
+		for (const auto& pair : m_objectmemory)
+		{
+			if (pair.first == type)
+			{ return pair.second; }
+		}
+		return VEC2_ZERO;
 	}
 
 	void Agent::do_friction()
@@ -119,16 +147,16 @@ namespace object
 
 	void Agent::SetTargetent(Agent* ent)
 	{
-		m_targetentity = ent;
+		m_targetagent = ent;
 	}
 
-	void Agent::rotate_to_pos(Vector2D pos)
+	void Agent::rotate_topos(Vector2D pos)
 	{
-		float rotation = get_deg_to_pos(pos);
+		float rotation = get_degtopos(pos);
 		SetRotation(rotation);
 	}
 
-	float Agent::get_deg_to_pos(Vector2D pos)
+	float Agent::get_degtopos(Vector2D pos)
 	{
 		int ang = maths::GetAngleBetweenPoints({ GetPosition().x, GetPosition().y }, { pos });
 		maths::GetBoundedAngleDeg(ang);
@@ -149,13 +177,19 @@ namespace object
 		m_dead = true;
 	}
 
+	void Agent::SeenEnt(GameObject* ent)
+	{
+		add_objecttomemory(ent);
+	}
+
+	// TODO : remove & replace with above
 	void Agent::SeenEnt(Agent* ent)
 	{
 		m_mood.y++;
 		if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
 		{
 			m_aistate	   = AgentState::Attacking;
-			m_targetentity = ent;
+			m_targetagent = ent;
 		}
 	}
 
@@ -178,17 +212,30 @@ namespace object
 		}
 		else 
 		{
-			float r = GetTransform().GetRotation().z - get_deg_to_pos(m_targetpos);
+			float r = GetTransform().GetRotation().z - get_degtopos(m_targetpos);
 			r > 0 ? turnleft() : turnright();
 		}
 	}
 
+	void Agent::Eat()
+	{
+		if (t_food > 50)
+		{ m_aistate = AgentState::Wandering; return; }
+	
+		// if can see food TODO
+		// if cannot see food
+		Vector2D mempos = get_memoryentitypos(GameEntityType::Food);
+		if (mempos != VEC2_ZERO) 
+		{ SetTargetpos(mempos); }
+		Wander();
+	}
+
 	void Agent::Attack()
 	{
-		if (m_targetentity == NULL)
+		if (m_targetagent == NULL)
 		{ m_aistate = AgentState::Wandering; return; }
 
-		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
+		rotate_topos({ m_targetagent->GetPosition().x, m_targetagent->GetPosition().y });
 		moveforward();
 		
 		// if is inside target
@@ -198,16 +245,16 @@ namespace object
 			if (object->GetEntityType() == GameEntityType::Agent)
 			{
 				Agent* entity = dynamic_cast<Agent*>(object);
-				if (entity == m_targetentity) { iscollided = true; break; }
+				if (entity == m_targetagent) { iscollided = true; break; }
 			}
 		}
 
 		if (iscollided)
 		{
-			m_targetentity->DoDamage(10);
-			if (m_targetentity->IsDead()) 
+			m_targetagent->DoDamage(10);
+			if (m_targetagent->IsDead()) 
 			{
-				m_targetentity = NULL;
+				m_targetagent = NULL;
 				m_aistate = AgentState::Wandering;
 			}
 		}
@@ -215,10 +262,10 @@ namespace object
 
 	void Agent::Flee()
 	{
-		if (m_targetentity == NULL)
+		if (m_targetagent == NULL)
 		{ m_aistate = AgentState::Wandering; return; }
 
-		rotate_to_pos({ m_targetentity->GetPosition().x, m_targetentity->GetPosition().y });
+		rotate_topos({ m_targetagent->GetPosition().x, m_targetagent->GetPosition().y });
 		movebackward();
 	}
 
@@ -238,7 +285,7 @@ namespace object
 		default:
 			break;
 		}
-		m_targetentity = NULL;
+		m_targetagent = NULL;
 		m_collidedobjs.clear();
 	}
 

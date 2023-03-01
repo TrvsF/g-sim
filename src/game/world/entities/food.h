@@ -2,19 +2,22 @@
 #define FOOD_H_
 
 #include "../src/game/world/objects/texture-object.h"
+#include <vector>
 
 namespace object
 {
 	class Food : public TextureObject
 	{
 	private:
-		// TODO : move to setup
-		int		m_hp = 25000;
-		bool	m_is_being_eaten = false;
-	public:
-		Food(GameObject* gameobject, const char* textureid);
+		std::vector<GameObject*> m_collidingobjects;
+		int m_ammount;
 
-		void SetCollision(GameEntityType type);
+		void setup();
+	public:
+		Food(GameObject* gameobject, int ammount);
+
+		inline void AddCollidingObject(GameObject* object)
+		{ m_collidingobjects.push_back(object); }
 		void Update();
 	};
 }

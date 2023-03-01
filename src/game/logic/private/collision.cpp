@@ -15,7 +15,8 @@ namespace game
 	// -1 for infinite range
 	bool Collision::is_looking(object::GameObject* searcher, object::GameObject* gameobject, int fov, int range)
 	{
-		bool inrange = range == -1 ? true : maths::GetDistanceBetweenPoints_sq(searcher->Get2DPosition(), gameobject->Get2DPosition()) < range * range;
+		float distancesq = maths::GetDistanceBetweenPoints_sq(searcher->Get2DPosition(), gameobject->Get2DPosition());
+		bool inrange = range == -1 ? true : distancesq < range * range;
 		return maths::IsInConeOfVision
 		(
 			searcher->GetTransform().Get2DPosition(),
@@ -29,7 +30,7 @@ namespace game
 	{
 		if (victim->IsDead() || agent->IsDead()) { return; }
 		// if gridobject is looking @ searchedobject
-		if (is_looking(agent, victim, 120, -1))
+		if (is_looking(agent, victim, 120, 50))
 		{
 			if (!victim->IsDead()) { agent->SeenEnt(victim); }
 		}
@@ -39,7 +40,6 @@ namespace game
 			// TODO : this can push a garbage pointer (for 1 tick)
 			agent->AddCollidedObj(victim);
 		}
-		// TODO : check for worldborder
 	}
 
 	void Collision::DoCollision()
@@ -62,15 +62,30 @@ namespace game
 				{
 					for (auto& searchedobj : searchedobjs)
 					{
+						// TODO : check for worldborder
 						// if looping over self/null
 						if (searchedobj == gridobj || searchedobj == nullptr || gridobj == nullptr) { continue; }
 
-						// TODO : move this block
-						// if obj is an agent
+						// if both objects are agents
 						if (gridobj->GetEntityType() == object::GameEntityType::Agent
 							&& searchedobj->GetEntityType() == object::GameEntityType::Agent)
 						{
 							check_agentcollision(static_cast<object::Agent*>(gridobj), static_cast<object::Agent*> (searchedobj));
+						}
+						if (gridobj->GetEntityType() == object::GameEntityType::Agent)
+						{
+							object::Agent* agent = static_cast<object::Agent*>(gridobj);
+							// TODO : add agent fov & sight distance
+							if (is_looking(agent, searchedobj, 120, 200))
+							{ agent->SeenEnt(searchedobj); }
+						}
+						if (gridobj->GetEntityType() == object::GameEntityType::Food)
+						{
+							if (is_colliding(gridobj, searchedobj))
+							{
+								object::Food* food = static_cast<object::Food*>(gridobj);
+								food->AddCollidingObject(searchedobj);
+							}
 						}
 					}
 				}

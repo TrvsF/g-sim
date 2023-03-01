@@ -33,14 +33,14 @@ namespace object
 		GetAABB().SetPos({ GetPosition().x + mins.x, GetPosition().y + mins.y, 0 }); // TODO : rarely doesnt work as indended
 	}
 
-	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points)
+	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points, float width, float height)
 		: GameObject(object)
 	{
 		setup();
 
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y },
-			points
+			points, width, height
 		);
 	}
 

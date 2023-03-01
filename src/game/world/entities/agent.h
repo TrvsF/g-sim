@@ -2,6 +2,7 @@
 #define AGENT_H_
 
 #include "../src/game/world/objects/geometry-object.h"
+#include "food.h"
 #include "../src/util/file.h"
 
 namespace object
@@ -40,23 +41,25 @@ namespace object
 
 		// targets
 		Vector2D m_targetpos;
-		Agent*	 m_targetentity;
+		Agent*	 m_targetagent;
+		Food*	 m_targetfood;
 		std::vector<GameObject*> m_collidedobjs;
+		std::vector<std::pair<GameEntityType, Vector2D>> m_objectmemory;
+		
+		void add_objecttomemory(GameObject* object);
+		Vector2D get_memoryentitypos(GameEntityType type);
 
 		// movement
+		void do_brain();
+		void do_friction();
+		void calc_transformoffsets();
+		void  rotate_topos(Vector2D pos);
+		float get_degtopos(Vector2D pos);
+
 		float m_velocity;
 		float m_turnspeed;
 		bool  m_isturning;
 		bool  m_ismoving;
-
-		void do_brain();
-		void do_friction();
-		void calc_transformoffsets();
-
-		void  rotate_to_pos(Vector2D pos);
-		float get_deg_to_pos(Vector2D pos);
-
-		// movement
 		void turnleft();
 		void turnright();
 		void moveforward();
@@ -70,19 +73,16 @@ namespace object
 		Agent(GameObject* gameobject, int sides);
 
 		inline std::string GetName()
-		{
-			return t_name;
-		}
+		{ return t_name; }
 
 		inline int GetHealth()
-		{
-			return t_health;
-		}
+		{ return t_health; }
 
-		inline void AddCollidedObj(object::GameObject* obj)
-		{
-			m_collidedobjs.push_back(obj);
-		}
+		inline void AddCollidedObj(GameObject* obj)
+		{ m_collidedobjs.push_back(obj); }
+
+		inline bool IsDead()
+		{ return m_dead; }
 
 		// navigation
 		void SetTargetpos(Vector2D pos);
@@ -90,10 +90,10 @@ namespace object
 		void Attack();
 		void Wander();
 		void   Flee();
-		void SeenEnt(GeometryObject* ent);
+		void	Eat();
+		void SeenEnt(GameObject* ent);
 		void SeenEnt(Agent* ent);
 
-		inline bool IsDead() { return m_dead; }
 		void Kill();
 		void DoDamage(int damage);
 

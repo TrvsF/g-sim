@@ -6,6 +6,8 @@
 #include "../src/game/world/component/triangle.h"
 #include "../src/util/vector2d.h"
 #include "../src/util/maths.h"
+
+#include <limits>
 #include <vector>
 
 namespace object

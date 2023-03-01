@@ -40,7 +40,7 @@ namespace object
 		if (sides < 3) { sides = 3; }
 		// set width & height properly
 		maxes = VEC2_ZERO;
-		mins  = { 50000.0f, 50000.0f };
+		mins = { std::numeric_limits<float>::max(), std::numeric_limits<float>::max() };
 		// generate random points
 		std::vector<Vector2D> points;
 		for (int i = 0; i < sides; i++)
@@ -67,7 +67,8 @@ namespace object
 	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points, float height, float width)
 	{
 		set_tris(points);
-		m_active	= true;
+		m_active	  = true;
+		m_scaleoffset = VEC2_ZERO;
 		m_pos		= pos;
 		m_height	= height;
 		m_width		= width;

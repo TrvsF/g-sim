@@ -137,10 +137,10 @@ namespace game
 		switch (mousebutton)
 		{
 		case 8:
-			zoom(-2.0f, {(float)x, (float)y});
+			zoom(-2, {(float)x, (float)y});
 			break;
 		case 16:
-			zoom(2.0f, { (float)x, (float)y });
+			zoom(2, { (float)x, (float)y });
 			break;
 		}
 	}
@@ -219,6 +219,8 @@ namespace game
 		init_entities();
 
 		// debug
+		// m_biome = new object::BiomeObject({ 5000, 5000 });
+
 		object::GameObject* miscagent = object::GameObject::Create(
 			{ 100.0f,  400.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
@@ -231,7 +233,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		AddGameObject(new object::Food(food, "food"));
+		AddGameObject(new object::Food(food, 150));
 
 		object::GameObject* triman = object::GameObject::Create(
 			{ 0.0f,     0.0f,    0.0f },

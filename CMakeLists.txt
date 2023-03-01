@@ -79,7 +79,7 @@ add_executable (
  "src/updater/private/input.cpp" 
 
  "src/renderer/renderer.h"
- "src/renderer/renderer-inl.h"
+ 
  "src/renderer/assets.h" 
  
  "src/renderer/private/assets.cpp"

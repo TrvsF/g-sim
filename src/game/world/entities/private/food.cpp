@@ -2,34 +2,24 @@
 
 namespace object
 {
-	Food::Food(GameObject* gameobject, const char* textureid)
-		: TextureObject(gameobject, textureid)
+	Food::Food(GameObject* gameobject, int ammount)
+		: TextureObject(gameobject, "food")
+	{
+		m_ammount = ammount;
+		setup();
+	}
+
+	void Food::setup()
 	{
 		SetEntityType(GameEntityType::Food);
 	}
 
 	void Food::Update()
 	{
-		if (m_is_being_eaten)
+		if (!m_collidingobjects.empty())
 		{
-			float scale = GetTexture()->Scale();
-			scale -= 0.005f;
-	
-			GetTexture()->Scale(scale);
+			// TODO : be eaten
 		}
-
-		m_is_being_eaten = false;
-	}
-
-	void Food::SetCollision(GameEntityType type)
-	{
-		switch (type)
-		{
-			case GameEntityType::Player:
-				m_is_being_eaten = true;
-				break;
-			default:
-				break;
-		}
+		m_collidingobjects.clear();
 	}
 }

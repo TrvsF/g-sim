@@ -43,8 +43,8 @@ namespace renderer
 		void render_rect		   (SDL_Rect rect, SDL_Color colour);
 		void render_fillrect	   (SDL_Rect rect, SDL_Color outline, SDL_Color fill);
 
-		inline void add_texture_object(object::Texture* texture_object);
-		inline void remove_texture_object(object::Texture* texture_object);
+		inline void add_texture_object(object::Texture* texture_object)
+		{ m_texutreobjects.push_back(texture_object); }
 
 		SDL_Texture* create_texture_from_text(const char* font, std::string text, SDL_Color colour);
 
@@ -68,19 +68,21 @@ namespace renderer
 		void LoadAABB  (object::AABB* aabb);
 		void UnloadGeometry(object::Geometry* geometry_object);
 		void LoadGeometry  (object::Geometry* geometry_object);
+		void UnloadTexture (object::Texture* texture_object);
 
-		inline SDL_Renderer* GetRendererObj();
-		inline Vector2D GetScreensize();
+		inline SDL_Renderer* GetRendererObj()
+		{ return Renderer::m_renderer; }
+		inline Vector2D GetScreensize()
+		{ return { (float)m_width, (float)m_height }; }
 
-		inline void Scale(float scale) { m_globalscale = scale; }
-		inline float Scale()           { return m_globalscale;  }
+		inline void Scale(float scale)
+		{ m_globalscale = scale; }
+		inline float Scale()
+		{ return m_globalscale; }
 
 		bool Start(const char* window_title, int width, int height);
 		void Render();
 		void Clean();
 	};
 }
-
-#include "renderer-inl.h"
-
 #endif

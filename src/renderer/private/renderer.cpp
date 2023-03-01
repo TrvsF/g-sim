@@ -165,6 +165,12 @@ namespace renderer
 		SDL_Quit();
 	}
 
+	void Renderer::UnloadTexture(object::Texture* texture_object)
+	{
+		std::vector<object::Texture*>::iterator pos = std::find(m_texutreobjects.begin(), m_texutreobjects.end(), texture_object);
+		if (pos != m_texutreobjects.end()) { m_texutreobjects.erase(pos); }
+	}
+
 	void Renderer::LoadGeometry(object::Geometry* geometry_object)
 	{
 		m_geometryobjects.push_back(geometry_object);
@@ -303,5 +309,4 @@ namespace renderer
 	{
 		SDL_RenderClear(m_renderer);
 	}
-
 }

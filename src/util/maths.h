@@ -41,8 +41,8 @@ namespace maths
 
     static float GetDistanceBetweenPoints_sq(Vector2D point1, Vector2D point2)
     {
-        float _x = point1.x * point2.x;
-        float _y = point1.y * point2.y;
+        float _x = point2.x - point1.x;
+        float _y = point2.y - point1.y;
 
         return (_x * _x) + (_y * _y);
     }

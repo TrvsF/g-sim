@@ -24,7 +24,8 @@ namespace object
 	private:
 		std::vector<std::pair<GameObject*, BiomeType>> m_objectbiomepairs;
 		
-		Vector2D  m_size;
+		float m_width;
+		float m_height;
 		Geometry* m_geometry;
 
 		std::vector<Vector2D> getpoints();

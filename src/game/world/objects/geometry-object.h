@@ -19,7 +19,7 @@ namespace object
 		void setup();
 	public:
 		GeometryObject(GameObject* object, int sides);
-		GeometryObject(GameObject* object, std::vector<Vector2D> points);
+		GeometryObject(GameObject* object, std::vector<Vector2D> points, float width, float height);
 		~GeometryObject();
 
 		void SetRotation(float rotation);

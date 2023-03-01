@@ -14,6 +14,7 @@
 #include "world/objects/text-object.h"
 #include "world/objects/texture-object.h"
 #include "world/objects/geometry-object.h"
+#include "world/objects/biome-object.h"
 
 #include "logic/collision.h"
 
@@ -48,6 +49,7 @@ namespace game
 		std::vector<object::GameObject*> m_gameobjects;
 		object::Player* m_player;
 		object::Camera* m_camera;
+		object::BiomeObject* m_biome;
 		void init_entities();
 		void init_textelements();
 
