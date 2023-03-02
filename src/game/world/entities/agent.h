@@ -92,7 +92,6 @@ namespace object
 		void   Flee();
 		void	Eat();
 		void SeenEnt(GameObject* ent);
-		void SeenEnt(Agent* ent);
 
 		void Kill();
 		void DoDamage(int damage);

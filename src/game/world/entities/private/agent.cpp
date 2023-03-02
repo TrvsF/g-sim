@@ -179,17 +179,23 @@ namespace object
 
 	void Agent::SeenEnt(GameObject* ent)
 	{
-		add_objecttomemory(ent);
-	}
-
-	// TODO : remove & replace with above
-	void Agent::SeenEnt(Agent* ent)
-	{
-		m_mood.y++;
-		if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
+		if (ent->GetEntityType() == GameEntityType::Agent)
 		{
-			m_aistate	   = AgentState::Attacking;
-			m_targetagent = ent;
+			m_mood.y++;
+			if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
+			{
+				m_aistate = AgentState::Attacking;
+				m_targetagent = static_cast<Agent*>(ent);
+			}
+		}
+		if (ent->GetEntityType() == GameEntityType::Food)
+		{
+			for (const auto& memory : m_objectmemory)
+			{
+				if (memory.second == ent->Get2DPosition())
+				{ return; }
+			}
+			add_objecttomemory(ent);
 		}
 	}
 
@@ -291,10 +297,8 @@ namespace object
 
 	void Agent::Update()
 	{
-		
 		do_brain();
 		do_friction();
 		calc_transformoffsets();
-		
 	}
 }
