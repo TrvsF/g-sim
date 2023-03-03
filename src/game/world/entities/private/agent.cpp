@@ -245,7 +245,7 @@ namespace object
 
 	void Agent::eat()
 	{
-		if (m_stamina > 4000)
+		if (m_stamina > 5000)
 		{ m_aistate = AgentState::Wandering; return; }
 
 		// if is in food eat it

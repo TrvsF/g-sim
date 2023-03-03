@@ -36,14 +36,14 @@ namespace ai
 		printf("\033[2J");
 		printf("\033[%d;%dH", 0, 0);
 		std::cout
-			<< std::left << std::setfill(' ') << std::setw(24) << "name"  << " "
+			<< std::left << std::setfill(' ') << std::setw(20) << "name"  << " "
 			<< std::left << std::setfill(' ') << std::setw(12) << "state" << " "
 			<< std::left << std::setfill(' ') << std::setw(4)  << "hp"    << " "
 			<< std::left << std::setfill(' ') << std::setw(5)  << "stamina" << "\n";
 		for (const auto& agent : getagents())
 		{
 			std::cout
-				<< std::left << std::setfill(' ') << std::setw(24) << agent->GetName()		<< " "
+				<< std::left << std::setfill(' ') << std::setw(20) << agent->GetName()		<< " "
 				<< std::left << std::setfill(' ') << std::setw(12) << agent->GetStateStr()	<< " "
 				<< std::left << std::setfill(' ') << std::setw(4)  << agent->GetHealth()	<< " "
 				<< std::left << std::setfill(' ') << std::setw(5)  << agent->GetStamina()	<<
