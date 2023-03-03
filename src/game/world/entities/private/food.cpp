@@ -9,17 +9,30 @@ namespace object
 		setup();
 	}
 
+	Food::~Food()
+	{
+
+	}
+
 	void Food::setup()
 	{
 		SetEntityType(GameEntityType::Food);
 	}
 
+	int Food::Eat()
+	{
+		int start = m_ammount;
+		m_ammount -= 10;
+		if (m_ammount < 0)
+		{
+			die();
+			return start;
+		}
+		return 100;
+	}
+
 	void Food::Update()
 	{
-		if (!m_collidingobjects.empty())
-		{
-			// TODO : be eaten
-		}
-		m_collidingobjects.clear();
+		
 	}
 }

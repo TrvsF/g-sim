@@ -35,7 +35,7 @@ namespace renderer
 
 		std::vector<object::AABB*>		m_aabbs;
 		std::vector<object::Geometry*>	m_geometryobjects;
-		std::vector<object::Texture*>	m_texutreobjects;
+		std::vector<object::Texture*>	m_textureobjects;
 
 		void render_geometry_object(object::Geometry* geometry_object);
 		void render_texture_object (object::Texture* texture_object);
@@ -44,7 +44,7 @@ namespace renderer
 		void render_fillrect	   (SDL_Rect rect, SDL_Color outline, SDL_Color fill);
 
 		inline void add_texture_object(object::Texture* texture_object)
-		{ m_texutreobjects.push_back(texture_object); }
+		{m_textureobjects.push_back(texture_object); }
 
 		SDL_Texture* create_texture_from_text(const char* font, std::string text, SDL_Color colour);
 

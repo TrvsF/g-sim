@@ -7,6 +7,7 @@
 
 namespace object
 {
+	inline std::shared_ptr<_EventBus> bus = event::Event::SharedInstace().EventBus;
 	class TextureObject : public GameObject
 	{
 	private:
@@ -15,6 +16,7 @@ namespace object
 		void set_texture_from_id(const char* id);
 	public:
 		TextureObject(GameObject* object, const char* textureid);
+		~TextureObject();
 
 		void HandleOffsets();
 		void Update();

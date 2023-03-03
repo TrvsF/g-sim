@@ -4,6 +4,7 @@
 #include "component/aabb.h"
 #include "component/transform.h"
 #include "../src/util/vector2d.h"
+
 // debug includes
 #include <iostream>
 #include "SDL.h"
@@ -47,7 +48,7 @@ namespace object
 		GameObject(GameObject* gameobject)
 			: m_aabb(gameobject->GetAABB()), m_transform(gameobject->GetTransform())
 		{}
-		virtual ~GameObject() = default;
+		~GameObject() = default;
 
 		inline static GameObject* Create(Vector3D position, Vector3D rotation, Size size);
 

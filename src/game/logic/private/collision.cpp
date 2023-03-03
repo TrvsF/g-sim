@@ -30,7 +30,7 @@ namespace game
 	{
 		if (victim->IsDead() || agent->IsDead()) { return; }
 		// if gridobject is looking @ searchedobject
-		if (is_looking(agent, victim, 120, 50))
+		if (is_looking(agent, victim, 120, 30))
 		{
 			if (!victim->IsDead()) { agent->SeenEnt(victim); }
 		}
@@ -75,17 +75,12 @@ namespace game
 						if (gridobj->GetEntityType() == object::GameEntityType::Agent)
 						{
 							object::Agent* agent = static_cast<object::Agent*>(gridobj);
-							// TODO : add agent fov & sight distance
-							if (is_looking(agent, searchedobj, 120, 200))
+
+							if (is_looking(agent, searchedobj, 120, 1000))
 							{ agent->SeenEnt(searchedobj); }
-						}
-						if (gridobj->GetEntityType() == object::GameEntityType::Food)
-						{
-							if (is_colliding(gridobj, searchedobj))
-							{
-								object::Food* food = static_cast<object::Food*>(gridobj);
-								food->AddCollidingObject(searchedobj);
-							}
+
+							if (is_colliding(agent, searchedobj))
+							{ agent->AddCollidedObj(searchedobj); }
 						}
 					}
 				}

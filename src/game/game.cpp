@@ -13,8 +13,8 @@ namespace game
 
 		m_listener.listen<event::ePosChange> (std::bind(
 			&Game::e_poschange, this, std::placeholders::_1));
-		m_listener.listen<event::eAgentDeath>(std::bind(
-			&Game::e_agentdeath, this, std::placeholders::_1));
+		m_listener.listen<event::eObjectDeath>(std::bind(
+			&Game::e_objectdeath, this, std::placeholders::_1));
 		m_listener.listen<event::eScaleChange>(std::bind(
 			&Game::e_scalechange, this, std::placeholders::_1));
 	}
@@ -29,7 +29,7 @@ namespace game
 		renderer::Renderer::SharedInstace().Scale(event.scale);
 	}
 
-	void Game::e_agentdeath(const event::eAgentDeath& event)
+	void Game::e_objectdeath(const event::eObjectDeath& event)
 	{
 		object::GameObject* gameobject = event.victim;
 		RemoveGameObject(gameobject);
@@ -233,7 +233,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		AddGameObject(new object::Food(food, 150));
+		AddGameObject(new object::Food(food, 5000));
 
 		object::GameObject* triman = object::GameObject::Create(
 			{ 0.0f,     0.0f,    0.0f },
@@ -242,7 +242,6 @@ namespace game
 		);
 		object::Agent* triagent = new object::Agent(triman, 4);
 		AddGameObject(triagent);
-		triagent->SetTargetpos({ 500, 500 });
 
 		init_textelements();
 	}
@@ -271,6 +270,7 @@ namespace game
 			m_camera->SetTexturePos(gameobject);
 		}
 
+		// TODO : check for performance
 		for (int i = 0; i < m_toremove.size(); i++)
 		{
 			delete m_toremove[i];

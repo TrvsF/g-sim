@@ -72,6 +72,14 @@ namespace maths
         return angle;
     }
 
+    static bool IsPointInsideOfRadius(Vector2D point, Vector2D circlepoint, int radius)
+    {
+        int r2 = radius * radius;
+        float px2 = (point.x - circlepoint.x) * (point.x - circlepoint.x);
+        float py2 = (point.y - circlepoint.y) * (point.y - circlepoint.y);
+        return px2 + py2 < r2;
+    }
+
     static bool IsInConeOfVision(Vector2D origin, Vector2D point, int fov, float rotation)
     {
         int ang = GetAngleBetweenPoints(origin, point);
@@ -88,6 +96,12 @@ namespace maths
         int calcdistance = (int)roundf(sqrtf(x + y));
 
         return calcdistance <= distance;
+    }
+
+    template <std::ranges::input_range R, typename T>
+        requires std::indirect_binary_predicate<std::ranges::equal_to, std::ranges::iterator_t<R>, const T*>
+    bool index(R&& range, const T& value) {
+        return std::ranges::find(range, value) != std::ranges::end(range);
     }
 
     template<typename T>

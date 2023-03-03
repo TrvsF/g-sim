@@ -19,8 +19,10 @@ namespace ai
 		virtual ~AI() = default;
 
 		Listener m_listener{ event::Event::SharedInstace().EventBus };
-		void e_agentdeath(const event::eAgentDeath& event);
+		void e_objectdeath(const event::eObjectDeath& event);
 		void e_agentborn(const event::eAgentBorn& event);
+
+		long m_tickcounter; // TODO : probably not a good idea
 
 		std::vector<object::Agent*> getagents();
 		void do_debugconsole();

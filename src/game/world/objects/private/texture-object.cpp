@@ -26,6 +26,11 @@ namespace object
 		if (m_debug) { renderer::Renderer::SharedInstace().LoadAABB(&GetAABB()); }
 	}
 
+	TextureObject::~TextureObject()
+	{
+		renderer::Renderer::SharedInstace().UnloadTexture(GetTexture());
+	}
+
 	void TextureObject::HandleOffsets()
 	{
 		GetTransform().OffsetPosition(m_offset_pos);

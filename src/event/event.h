@@ -24,7 +24,7 @@ namespace event
 		float scale;
 	};
 	// agents
-	struct eAgentDeath
+	struct eObjectDeath
 	{
 		object::GameObject* victim;
 		// object::GameObject* killer;

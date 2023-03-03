@@ -10,7 +10,6 @@
 
 namespace object
 {
-	inline std::shared_ptr<_EventBus> bus = event::Event::SharedInstace().EventBus;
 	class GeometryObject : public GameObject
 	{
 	private:

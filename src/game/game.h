@@ -39,7 +39,7 @@ namespace game
 		Listener m_listener { event::Event::SharedInstace().EventBus };
 		void e_poschange(const event::ePosChange& event);
 		void e_scalechange(const event::eScaleChange& event);
-		void e_agentdeath(const event::eAgentDeath& event);
+		void e_objectdeath(const event::eObjectDeath& event);
 
 		// logic objects
 		Collision*	m_collision;

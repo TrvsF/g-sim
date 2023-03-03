@@ -10,6 +10,7 @@ namespace object
 		m_aistate   = AgentState::Wandering;
 		m_mood		= VEC2_ZERO;
 		m_dead		= false;
+		m_stamina	= 5000;
 
 		// TODO : set by genome
 		// - gneome will have 2 chromosomes
@@ -24,65 +25,74 @@ namespace object
 		t_colour  = get_randomcolour();
 		GetGeometry()->Colour(t_colour);
 		set_name();
+		// --------------------------
 
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
 
-		m_targetagent = NULL;
-		m_targetpos	   = {500, 500};
+		m_seenagent = NULL;
+		m_targetpos	= VEC2_ZERO;
 
 		m_velocity  = 0;
 		m_turnspeed = 0;
 		m_isturning = false;
 		m_ismoving  = false;
-
-		bus->postpone(event::eAgentBorn { this });
-		bus->process();
 	}
 
 	Agent::~Agent()
 	{}
 
-	void Agent::set_name()
+	void Agent::TakeDamage(int damage)
 	{
-		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
-		std::vector<std::string> lastnames  = file::GetLinesFromFile("lastnames.txt");
-		t_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
-			+ " " + *maths::select_randomly(lastnames.begin(), lastnames.end());
+		t_health = std::max(t_health - damage, 0);
+		if (t_health <= 0 && !m_dead) { Die(); }
 	}
 
-	SDL_Color Agent::get_randomcolour()
+	void Agent::Die()
 	{
-		unsigned char r = maths::GetRandomInt(0, 255);
-		unsigned char g = maths::GetRandomInt(0, 255);
-		unsigned char b = maths::GetRandomInt(0, 255);
-		return { r, g, b };
+		console::bus->postpone(event::eObjectDeath { this });
+		console::bus->process();
+		GetGeometry()->Active(false);
+		m_dead = true;
+	}
+
+	void Agent::SeenEnt(GameObject* ent)
+	{
+		if (ent->GetEntityType() == GameEntityType::Agent)
+		{
+			m_mood.y++;
+			if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
+			{
+				m_aistate = AgentState::Attacking;
+				m_seenagent = static_cast<Agent*>(ent);
+			}
+		}
+		if (ent->GetEntityType() == GameEntityType::Food)
+		{
+			for (const auto& memory : m_objectmemory)
+			{
+				if (memory.first == ent->Get2DPosition())
+				{
+					return;
+				}
+			}
+			add_objecttomemory(ent);
+		}
 	}
 
 	void Agent::add_objecttomemory(GameObject* object)
 	{
-		// TODO : forget objects that arent there anymore
-		/*
-		for (auto& pair : m_objectmemory)
-		{
-			if (pair.first == object)
-			{
-				pair.second = object->Get2DPosition();
-				return;
-			}
-		}
-		*/
 		Vector2D pos = object->Get2DPosition();
 		GameEntityType type = object->GetEntityType();
-		m_objectmemory.push_back({type , pos});
+		m_objectmemory.push_back({pos, type });
 	}
 
 	Vector2D Agent::get_memoryentitypos(GameEntityType type)
 	{
 		for (const auto& pair : m_objectmemory)
 		{
-			if (pair.first == type)
-			{ return pair.second; }
+			if (pair.second == type)
+			{ return pair.first; }
 		}
 		return VEC2_ZERO;
 	}
@@ -140,16 +150,6 @@ namespace object
 		m_ismoving = true;
 	}
 
-	void Agent::SetTargetpos(Vector2D pos)
-	{
-		m_targetpos = pos;
-	}
-
-	void Agent::SetTargetent(Agent* ent)
-	{
-		m_targetagent = ent;
-	}
-
 	void Agent::rotate_topos(Vector2D pos)
 	{
 		float rotation = get_degtopos(pos);
@@ -163,50 +163,14 @@ namespace object
 		return (float)ang;
 	}
 
-	void Agent::DoDamage(int damage)
-	{
-		t_health = std::max(t_health - damage, 0);
-		if (t_health <= 0 && !m_dead) { Kill(); }
-	}
-
-	void Agent::Kill()
-	{
-		bus->postpone(event::eAgentDeath { this });
-		bus->process();
-		GetGeometry()->Active(false);
-		m_dead = true;
-	}
-
-	void Agent::SeenEnt(GameObject* ent)
-	{
-		if (ent->GetEntityType() == GameEntityType::Agent)
-		{
-			m_mood.y++;
-			if (m_mood.y > 5 && m_aistate == AgentState::Wandering)
-			{
-				m_aistate = AgentState::Attacking;
-				m_targetagent = static_cast<Agent*>(ent);
-			}
-		}
-		if (ent->GetEntityType() == GameEntityType::Food)
-		{
-			for (const auto& memory : m_objectmemory)
-			{
-				if (memory.second == ent->Get2DPosition())
-				{ return; }
-			}
-			add_objecttomemory(ent);
-		}
-	}
-
-	void Agent::Wander()
+	void Agent::move_towardtargetpos()
 	{
 		moveforward();
 
 		// 1/250 chance to create new turnobj (sim random wondering)
-		if (maths::GetRandomInt(0, 249) == 0)
+		if (maths::GetRandomInt(0, 249) == 0 && m_aistate != AgentState::Eating)
 		{
-			m_turnobj.left  = maths::GetRandomInt(0, 1);
+			m_turnobj.left = maths::GetRandomInt(0, 1);
 			m_turnobj.steps = maths::GetRandomInt(0, 50);
 		}
 
@@ -216,32 +180,102 @@ namespace object
 			m_turnobj.left ? turnleft() : turnright();
 			m_turnobj.steps--;
 		}
-		else 
+		else
 		{
 			float r = GetTransform().GetRotation().z - get_degtopos(m_targetpos);
 			r > 0 ? turnleft() : turnright();
 		}
 	}
 
-	void Agent::Eat()
+	Vector2D Agent::get_newtargetpos()
 	{
-		if (t_food > 50)
-		{ m_aistate = AgentState::Wandering; return; }
-	
-		// if can see food TODO
-		// if cannot see food
-		Vector2D mempos = get_memoryentitypos(GameEntityType::Food);
-		if (mempos != VEC2_ZERO) 
-		{ SetTargetpos(mempos); }
-		Wander();
+		// TODO : offset by 'adventureous' trait?
+		Vector2D vec = Get2DPosition();
+		vec += {(float)maths::GetRandomInt(-600, 600), (float)maths::GetRandomInt(-600, 600)};
+		return vec;
 	}
 
-	void Agent::Attack()
+	bool Agent::is_attargetpos(int radius)
 	{
-		if (m_targetagent == NULL)
+		return maths::IsPointInsideOfRadius(Get2DPosition(), m_targetpos, radius);
+	}
+
+	bool Agent::is_infood(Food*& food)
+	{
+		for (const auto& object : m_collidedobjs)
+		{
+			if (object->GetEntityType() == GameEntityType::Food)
+			{
+				food = static_cast<Food*> (object);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void Agent::forget(Vector2D pos)
+	{
+		std::vector<std::pair<Vector2D, GameEntityType>>::iterator it = m_objectmemory.begin();
+		while (it != m_objectmemory.end())
+		{
+			if ((*it).first == pos)
+			{
+				it = m_objectmemory.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+	}
+
+	void Agent::check_targetpos()
+	{
+		if (m_targetpos == VEC2_ZERO || is_attargetpos(50))
+		{
+			set_targetpos(get_newtargetpos());
+		}
+	}
+
+	void Agent::wander()
+	{
+		check_targetpos();
+		move_towardtargetpos();
+	}
+
+	void Agent::eat()
+	{
+		if (m_stamina > 4000)
 		{ m_aistate = AgentState::Wandering; return; }
 
-		rotate_topos({ m_targetagent->GetPosition().x, m_targetagent->GetPosition().y });
+		// if is in food eat it
+		Food* food = {};
+		if (is_infood(food))
+		{
+			m_stamina += food->Eat();
+			return;
+		}
+
+		// see if food is in memory
+		Vector2D mempos = get_memoryentitypos(GameEntityType::Food);
+		if (mempos != VEC2_ZERO) // can remember
+		{
+			set_targetpos(mempos); 
+		}
+		else
+		{
+			check_targetpos();
+		}
+		move_towardtargetpos();
+	}
+
+	void Agent::attack()
+	{
+		if (m_seenagent == NULL)
+		{ m_aistate = AgentState::Wandering; return; }
+
+		// move towards the target
+		rotate_topos({ m_seenagent->GetPosition().x, m_seenagent->GetPosition().y });
 		moveforward();
 		
 		// if is inside target
@@ -251,28 +285,31 @@ namespace object
 			if (object->GetEntityType() == GameEntityType::Agent)
 			{
 				Agent* entity = dynamic_cast<Agent*>(object);
-				if (entity == m_targetagent) { iscollided = true; break; }
+				if (entity == m_seenagent) { iscollided = true; break; }
 			}
 		}
-
 		if (iscollided)
 		{
-			m_targetagent->DoDamage(10);
-			if (m_targetagent->IsDead()) 
+			// do damage
+			m_seenagent->TakeDamage(10);
+			if (m_seenagent->IsDead()) 
 			{
-				m_targetagent = NULL;
+				// if dead, act like nothing happened
+				m_seenagent = NULL;
 				m_aistate = AgentState::Wandering;
 			}
 		}
 	}
 
-	void Agent::Flee()
+	void Agent::flee()
 	{
-		if (m_targetagent == NULL)
+		if (m_seenagent == NULL)
 		{ m_aistate = AgentState::Wandering; return; }
 
-		rotate_topos({ m_targetagent->GetPosition().x, m_targetagent->GetPosition().y });
-		movebackward();
+		// face away from 
+		rotate_topos(Vector2D{ m_seenagent->GetPosition().x, m_seenagent->GetPosition().y }
+		+ 180.0f);
+		moveforward();
 	}
 
 	void Agent::do_brain()
@@ -280,25 +317,64 @@ namespace object
 		switch (m_aistate)
 		{
 		case AgentState::Wandering:
-			Wander();
+			wander();
 			break;
 		case AgentState::Attacking:
-			Attack();
+			attack();
 			break;
 		case AgentState::Fleeing:
-			Flee();
+			flee();
+			break;
+		case AgentState::Eating:
+			eat();
 			break;
 		default:
 			break;
 		}
-		m_targetagent = NULL;
+		m_seenagent = NULL;
 		m_collidedobjs.clear();
 	}
 
 	void Agent::Update()
 	{
 		do_brain();
+		m_stamina--;
+		if (m_stamina < 3500) { m_aistate = AgentState::Eating; }
+		// transformations
 		do_friction();
 		calc_transformoffsets();
+	}
+
+	// debug
+
+	std::string Agent::GetStateStr()
+	{
+		switch (m_aistate)
+		{
+		case AgentState::Wandering:
+			return "wandering";
+		case AgentState::Attacking:
+			return "attacking";
+		case AgentState::Fleeing:
+			return "fleeing";
+		case AgentState::Eating:
+			return "eating";
+		}
+	}
+
+	void Agent::set_name()
+	{
+		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
+		std::vector<std::string> lastnames = file::GetLinesFromFile("lastnames.txt");
+		t_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
+			+ "." + *maths::select_randomly(lastnames.begin(), lastnames.end());
+	}
+
+	SDL_Color Agent::get_randomcolour()
+	{
+		unsigned char r = maths::GetRandomInt(0, 255);
+		unsigned char g = maths::GetRandomInt(0, 255);
+		unsigned char b = maths::GetRandomInt(0, 255);
+		return { r, g, b };
 	}
 }

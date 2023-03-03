@@ -142,7 +142,7 @@ namespace renderer
 			render_console();
 		}
 
-		for (object::Texture* textureobj : m_texutreobjects)
+		for (object::Texture* textureobj : m_textureobjects)
 		{
 			if (!textureobj->Active()) { continue; }
 
@@ -167,8 +167,8 @@ namespace renderer
 
 	void Renderer::UnloadTexture(object::Texture* texture_object)
 	{
-		std::vector<object::Texture*>::iterator pos = std::find(m_texutreobjects.begin(), m_texutreobjects.end(), texture_object);
-		if (pos != m_texutreobjects.end()) { m_texutreobjects.erase(pos); }
+		auto it = std::find(m_textureobjects.begin(), m_textureobjects.end(), texture_object);
+		if (it != m_textureobjects.end()) { m_textureobjects.erase(it); }
 	}
 
 	void Renderer::LoadGeometry(object::Geometry* geometry_object)

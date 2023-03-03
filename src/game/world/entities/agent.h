@@ -16,7 +16,8 @@ namespace object
 	{
 		Wandering,
 		Attacking,
-		Fleeing
+		Fleeing,
+		Eating
 	};
 
 	class Agent : public GeometryObject
@@ -26,6 +27,7 @@ namespace object
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
 		Vector2D   m_mood; // happy/sad & fear/confidence
+		int		   m_stamina;
 		bool       m_dead;
 
 		// traits
@@ -37,46 +39,63 @@ namespace object
 		float t_maxturn;
 		SDL_Color t_colour;
 
-		void set_name();
-
-		// targets
-		Vector2D m_targetpos;
-		Agent*	 m_targetagent;
-		Food*	 m_targetfood;
-		std::vector<GameObject*> m_collidedobjs;
-		std::vector<std::pair<GameEntityType, Vector2D>> m_objectmemory;
+		// settargets
+		Vector2D	m_targetpos;
+		GameObject*	m_targetobject;
 		
+		// memory
+		Agent* m_seenagent;
+		std::vector<GameObject*> m_collidedobjs;
+		std::vector<std::pair<Vector2D, GameEntityType>> m_objectmemory;
 		void add_objecttomemory(GameObject* object);
+		void forget(Vector2D pos);
 		Vector2D get_memoryentitypos(GameEntityType type);
 
-		// movement
+		// movement util
 		void do_brain();
 		void do_friction();
 		void calc_transformoffsets();
-		void  rotate_topos(Vector2D pos);
+		void rotate_topos(Vector2D pos);
 		float get_degtopos(Vector2D pos);
 
+		// target util
+		bool is_attargetpos(int radius);
+		bool is_infood(Food*& food);
+		Vector2D get_newtargetpos();
+
+		// movement vars
 		float m_velocity;
 		float m_turnspeed;
 		bool  m_isturning;
 		bool  m_ismoving;
+
+		// movement methods
 		void turnleft();
 		void turnright();
 		void moveforward();
 		void movebackward();
+		void move_towardtargetpos();
+
+		// navigation
+		void check_targetpos();
+		inline void set_targetpos(Vector2D pos)
+		{ m_targetpos = pos; }
+		inline void set_targetagent(Agent* agent)
+		{ m_seenagent = agent; }
+
+		// states
+		void attack();
+		void wander();
+		void   flee();
+		void	eat();
 
 		// TODO : move
+		void set_name();
 		SDL_Color get_randomcolour();
 
 		~Agent();
 	public:
 		Agent(GameObject* gameobject, int sides);
-
-		inline std::string GetName()
-		{ return t_name; }
-
-		inline int GetHealth()
-		{ return t_health; }
 
 		inline void AddCollidedObj(GameObject* obj)
 		{ m_collidedobjs.push_back(obj); }
@@ -84,20 +103,23 @@ namespace object
 		inline bool IsDead()
 		{ return m_dead; }
 
-		// navigation
-		void SetTargetpos(Vector2D pos);
-		void SetTargetent(Agent*   ent);
-		void Attack();
-		void Wander();
-		void   Flee();
-		void	Eat();
+		void Die();
+		void TakeDamage(int damage);
 		void SeenEnt(GameObject* ent);
 
-		void Kill();
-		void DoDamage(int damage);
-
 		void Update();
+
+		// debug
+		inline std::string GetName()
+		{ return t_name; }
+
+		inline int GetHealth()
+		{ return t_health; }
+
+		inline int GetStamina()
+		{ return m_stamina; }
+		
+		std::string GetStateStr();
 	};
 }
-
 #endif // !AGENT_H_

@@ -4,18 +4,18 @@ namespace ai
 {
 	AI::AI()
 	{
-		m_listener.listen<event::eAgentDeath>(std::bind(&AI::e_agentdeath, this, std::placeholders::_1));
+		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
 		m_listener.listen<event::eAgentBorn> (std::bind(&AI::e_agentborn,  this, std::placeholders::_1));
 	}
 
-	void AI::e_agentdeath(const event::eAgentDeath& event)
+	void AI::e_objectdeath(const event::eObjectDeath& event)
 	{
-		do_debugconsole();
+		// do_debugconsole();
 	}
 
 	void AI::e_agentborn(const event::eAgentBorn& event)
 	{
-		do_debugconsole();
+		// do_debugconsole();
 	}
 
 	std::vector<object::Agent*> AI::getagents()
@@ -35,14 +35,28 @@ namespace ai
 	{
 		printf("\033[2J");
 		printf("\033[%d;%dH", 0, 0);
+		std::cout
+			<< std::left << std::setfill(' ') << std::setw(24) << "name"  << " "
+			<< std::left << std::setfill(' ') << std::setw(12) << "state" << " "
+			<< std::left << std::setfill(' ') << std::setw(4)  << "hp"    << " "
+			<< std::left << std::setfill(' ') << std::setw(5)  << "stamina" << "\n";
 		for (const auto& agent : getagents())
 		{
-			std::cout << agent->GetName() << " " << agent->GetHealth() << "\n";
+			std::cout
+				<< std::left << std::setfill(' ') << std::setw(24) << agent->GetName()		<< " "
+				<< std::left << std::setfill(' ') << std::setw(12) << agent->GetStateStr()	<< " "
+				<< std::left << std::setfill(' ') << std::setw(4)  << agent->GetHealth()	<< " "
+				<< std::left << std::setfill(' ') << std::setw(5)  << agent->GetStamina()	<<
+			"\n";
 		}
 	}
 
 	void AI::Tick()
 	{
-		
+		m_tickcounter++;
+		if (m_tickcounter % 64 == 0)
+		{
+			do_debugconsole();
+		}
 	}
 }
