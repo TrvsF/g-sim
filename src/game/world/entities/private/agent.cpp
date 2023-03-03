@@ -338,6 +338,8 @@ namespace object
 	void Agent::Update()
 	{
 		do_brain();
+		// TODO : move
+		if (m_stamina < 0) { Die(); }
 		m_stamina--;
 		if (m_stamina < 3500) { m_aistate = AgentState::Eating; }
 		// transformations

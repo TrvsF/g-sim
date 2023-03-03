@@ -66,17 +66,23 @@ namespace game
 						// if looping over self/null
 						if (searchedobj == gridobj || searchedobj == nullptr || gridobj == nullptr) { continue; }
 
-						// if both objects are agents
-						if (gridobj->GetEntityType() == object::GameEntityType::Agent
-							&& searchedobj->GetEntityType() == object::GameEntityType::Agent)
-						{
-							check_agentcollision(static_cast<object::Agent*>(gridobj), static_cast<object::Agent*> (searchedobj));
-						}
 						if (gridobj->GetEntityType() == object::GameEntityType::Agent)
 						{
+							// cast & check current obj
 							object::Agent* agent = static_cast<object::Agent*>(gridobj);
+							if (agent->IsDead())
+							{ return; }
 
-							if (is_looking(agent, searchedobj, 120, 1000))
+							// TODO : both distance values set by trait
+							int distance = 1000;
+							if (searchedobj->GetEntityType() == object::GameEntityType::Agent)
+							{
+								if (static_cast<object::Agent*>(searchedobj)->IsDead())
+								{ return; }
+								distance = 50;
+							}
+
+							if (is_looking(agent, searchedobj, 120, distance))
 							{ agent->SeenEnt(searchedobj); }
 
 							if (is_colliding(agent, searchedobj))
