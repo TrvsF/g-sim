@@ -5,7 +5,8 @@ namespace ai
 	AI::AI()
 	{
 		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
-		m_listener.listen<event::eAgentBorn> (std::bind(&AI::e_agentborn,  this, std::placeholders::_1));
+		m_listener.listen<event::eAgentBorn>  (std::bind(&AI::e_agentborn,   this, std::placeholders::_1));
+		m_tickcounter = 0;
 	}
 
 	void AI::e_objectdeath(const event::eObjectDeath& event)
@@ -36,9 +37,9 @@ namespace ai
 		printf("\033[2J");
 		printf("\033[%d;%dH", 0, 0);
 		std::cout
-			<< std::left << std::setfill(' ') << std::setw(24) << "name"  << " "
-			<< std::left << std::setfill(' ') << std::setw(12) << "state" << " "
-			<< std::left << std::setfill(' ') << std::setw(6)  << "hp"    << " "
+			<< std::left << std::setfill(' ') << std::setw(24) << "name"    << " "
+			<< std::left << std::setfill(' ') << std::setw(12) << "state"   << " "
+			<< std::left << std::setfill(' ') << std::setw(6)  << "hp"      << " "
 			<< std::left << std::setfill(' ') << std::setw(6)  << "stamina" << "\n";
 		for (const auto& agent : getagents())
 		{

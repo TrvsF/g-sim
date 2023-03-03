@@ -258,7 +258,7 @@ namespace renderer
 			std::vector< SDL_Vertex > v = {
 				{ p1, geometry->Colour()},
 				{ p2, geometry->Colour()},
-				{ p3, SDL_Color{ 255, 255, 255, 200 } }
+				{ p3, SDL_Color{ 0, 0, 0, 200 } }
 			};
 			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);
 		}

@@ -207,7 +207,10 @@ namespace game
 				object::GeometryObject* screenobj = static_cast<object::GeometryObject*> (object);
 				screenpos = screenobj->GetGeometry()->Pos();
 			}
+
 			object::AABB aabb = object::AABB::Create({ screenpos.x, screenpos.y, 0 }, object->GetSize());
+			if (aabb.IntersectsPoint(x, y))
+			{ return object; }
 		}
 		return nullptr;
 	}
