@@ -28,12 +28,13 @@ namespace object
 		AgentState m_aistate;
 		Vector2D   m_mood; // happy/sad & fear/confidence
 		int		   m_stamina;
+		int		   m_health;
 		bool       m_dead;
 
 		// traits
 		std::string t_name;
 		int t_food;
-		int t_health;
+		int t_maxhealth;
 		int t_damage;
 		float t_maxvel;
 		float t_maxturn;
@@ -114,8 +115,11 @@ namespace object
 		inline std::string GetName()
 		{ return t_name; }
 
+		inline int GetMaxHealth()
+		{ return t_maxhealth; }
+
 		inline int GetHealth()
-		{ return t_health; }
+		{ return m_health; }
 
 		inline int GetStamina()
 		{ return m_stamina; }
