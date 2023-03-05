@@ -39,14 +39,16 @@ namespace ai
 		std::cout
 			<< std::left << std::setfill(' ') << std::setw(24) << "name"    << " "
 			<< std::left << std::setfill(' ') << std::setw(12) << "state"   << " "
-			<< std::left << std::setfill(' ') << std::setw(6)  << "hp"      << " "
+			<< std::right<< std::setfill(' ') << std::setw(3)  << "hp"     << "/"
+			<< std::left << std::setfill(' ') << std::setw(5)  << "max"		<< " "
 			<< std::left << std::setfill(' ') << std::setw(6)  << "stamina" << "\n";
 		for (const auto& agent : getagents())
 		{
 			std::cout
 				<< std::left << std::setfill(' ') << std::setw(24) << agent->GetName()		<< " "
 				<< std::left << std::setfill(' ') << std::setw(12) << agent->GetStateStr()	<< " "
-				<< std::left << std::setfill(' ') << std::setw(6)  << agent->GetHealth()	<< " "
+				<< std::right<< std::setfill(' ') << std::setw(3)  << agent->GetHealth()	<< "/"
+				<< std::left << std::setfill(' ') << std::setw(5)  << agent->GetMaxHealth() << " "
 				<< std::left << std::setfill(' ') << std::setw(6)  << agent->GetStamina()	<<
 			"\n";
 		}
@@ -57,7 +59,7 @@ namespace ai
 		m_tickcounter++;
 		if (m_tickcounter % 64 == 0)
 		{
-			// do_debugconsole();
+			do_debugconsole();
 		}
 	}
 }

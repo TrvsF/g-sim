@@ -45,11 +45,6 @@ namespace object
 	{
 		SetEntityType(GameEntityType::Agent);
 
-		m_aistate = AgentState::Wandering;
-		m_mood = VEC2_ZERO;
-		m_dead = false;
-		m_stamina = 5000;
-
 		// TODO : set by genome
 		// - gneome will have 2 chromosomes
 		// - A dicates solely the geometry object
@@ -57,13 +52,19 @@ namespace object
 		// - below vars are made up of either B or B/A(mix)
 		t_maxvel = maths::GetRandomFloat(1.0f, 3.0f);
 		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
-		t_health = maths::GetRandomInt(70, 250);
-		t_food = maths::GetRandomInt(-10, 10) + t_health;
+		t_maxhealth = maths::GetRandomInt(70, 250);
+		t_food = maths::GetRandomInt(-10, 10) + t_maxhealth;
 		t_damage = maths::GetRandomInt(5, 15);
 		t_colour = get_randomcolour();
 		GetGeometry()->Colour(t_colour);
 		set_name();
 		// --------------------------
+
+		m_aistate = AgentState::Wandering;
+		m_mood = VEC2_ZERO;
+		m_dead = false;
+		m_stamina = 5000;
+		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
 		m_turnobj.left = 0;
@@ -377,7 +378,7 @@ namespace object
 
 	void Agent::Update()
 	{
-		/*
+		
 		do_brain();
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
@@ -386,7 +387,7 @@ namespace object
 		// transformations
 		do_friction();
 		calc_transformoffsets();
-		*/
+		
 	}
 
 	// debug

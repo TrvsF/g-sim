@@ -172,8 +172,8 @@ namespace game
 			std::vector<Vector2D> points = {
 				{ 30, 30 },
 				{ 60, 30 },
-				{ 80, 100 },
-				{ 20, 130 }
+				{ 60, 80 },
+				{ 20, 100 }
 			};
 			// int sides = maths::GetRandomInt(2, 6);
 			AddGameObject(new object::Agent(miscagent, points));
