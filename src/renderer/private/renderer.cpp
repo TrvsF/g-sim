@@ -241,8 +241,8 @@ namespace renderer
 			midpoint = midpoint * m_globalscale;
 
 			// create base verts
-			Vector2D offsetscale = geometry->OffsetScale();
-			Vector2D offsetpos   = geometry->Pos() - geometry->OffsetScale();
+			Vector2D offsetscale = geometry->Offsetscale();
+			Vector2D offsetpos   = geometry->Pos() + geometry->Offsetscale();
 			Vector2D v1 = (tri.GetPoint1() * scale) + offsetpos;
 			Vector2D v2 = (tri.GetPoint2() * scale) + offsetpos;
 			Vector2D v3 = (tri.GetPoint3() * scale) + offsetpos;

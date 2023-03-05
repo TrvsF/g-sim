@@ -39,6 +39,43 @@ namespace object
 		m_ismoving  = false;
 	}
 
+	Agent::Agent(GameObject* gameobject, std::vector<Vector2D> points)
+		: GeometryObject(gameobject, points)
+	{
+		SetEntityType(GameEntityType::Agent);
+
+		m_aistate = AgentState::Wandering;
+		m_mood = VEC2_ZERO;
+		m_dead = false;
+		m_stamina = 5000;
+
+		// TODO : set by genome
+		// - gneome will have 2 chromosomes
+		// - A dicates solely the geometry object
+		// - B will determine personality triats (agression, etc)
+		// - below vars are made up of either B or B/A(mix)
+		t_maxvel = maths::GetRandomFloat(1.0f, 3.0f);
+		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
+		t_health = maths::GetRandomInt(70, 250);
+		t_food = maths::GetRandomInt(-10, 10) + t_health;
+		t_damage = maths::GetRandomInt(5, 15);
+		t_colour = get_randomcolour();
+		GetGeometry()->Colour(t_colour);
+		set_name();
+		// --------------------------
+
+		m_turnobj.steps = 0;
+		m_turnobj.left = 0;
+
+		m_seenagent = NULL;
+		m_targetpos = VEC2_ZERO;
+
+		m_velocity = 0;
+		m_turnspeed = 0;
+		m_isturning = false;
+		m_ismoving = false;
+	}
+
 	Agent::~Agent()
 	{}
 
@@ -337,6 +374,7 @@ namespace object
 
 	void Agent::Update()
 	{
+		/*
 		do_brain();
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
@@ -345,6 +383,7 @@ namespace object
 		// transformations
 		do_friction();
 		calc_transformoffsets();
+		*/
 	}
 
 	// debug
@@ -362,6 +401,7 @@ namespace object
 		case AgentState::Eating:
 			return "eating";
 		}
+		return "";
 	}
 
 	void Agent::set_name()

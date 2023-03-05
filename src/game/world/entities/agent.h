@@ -96,6 +96,7 @@ namespace object
 		~Agent();
 	public:
 		Agent(GameObject* gameobject, int sides);
+		Agent(GameObject* gameobject, std::vector<Vector2D> points);
 
 		inline void AddCollidedObj(GameObject* obj)
 		{ m_collidedobjs.push_back(obj); }

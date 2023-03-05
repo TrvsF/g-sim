@@ -20,32 +20,30 @@ namespace object
 
 		float width =  GetAABB().GetMaxX() - GetAABB().GetMinX();
 		float height = GetAABB().GetMaxY() - GetAABB().GetMinY();
-		Vector2D mins, maxes;
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y},
 			sides,
 			width,
-			height,
-			mins,
-			maxes
+			height
 		);
 		GetAABB().SetSize({ width, height, 0 });
-		GetAABB().SetPos({ GetPosition().x + mins.x, GetPosition().y + mins.y, 0 }); // TODO : rarely doesnt work as indended
 	}
 
-	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points, float width, float height)
+	GeometryObject::GeometryObject(GameObject* object, std::vector<Vector2D> points)
 		: GameObject(object)
 	{
 		setup();
 
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y },
-			points, width, height
+			points
 		);
+		Vector2D size = m_geometry->Size();
+		GetAABB().SetSize({ size.x, size.y });
 	}
 
 	GeometryObject::~GeometryObject()
-	{
+ 	{
 		if (m_debug) { renderer::Renderer::SharedInstace().UnloadAABB(&GetAABB()); }
 		renderer::Renderer::SharedInstace().UnloadGeometry(GetGeometry());
 	}

@@ -28,7 +28,7 @@ namespace object
 		// set points
 		m_geometry = new Geometry();
 		m_geometry->Set(
-			pos, points, m_height, m_width
+			pos, points
 		);
 		m_geometry->Colour({ 255, 0, 0 });
 		m_geometry->Active(true);

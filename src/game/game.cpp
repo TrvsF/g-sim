@@ -67,31 +67,41 @@ namespace game
 		AddGameObject(m_coords);
 	}
 
-	void Game::zoom(int zoom, Vector2D mousepos)
+	void Game::zoom(float zoom, Vector2D mousepos)
 	{
 		// set global zoom
 		float scale = renderer::Renderer::SharedInstace().Scale();
-		float newscale = scale + (zoom * 0.005f);
-		if (newscale < 0) { return; }
+		float newscale = scale + (zoom);
+		if (newscale < 0.5f) { return; }
 		renderer::Renderer::SharedInstace().Scale(newscale);
 		// move each object relative to mousepos
 		for (object::GameObject* gameobject : m_gameobjects)
-		{ 
-			Vector2D pos = gameobject->Get2DPosition();
+		{
+			/*
+			float offsetX, offsetY;
 
-			float offsetX = std::lerp(mousepos.x, pos.x, newscale);
-			float offsetY = std::lerp(mousepos.y, pos.y, newscale);
-			Vector2D offset = pos - Vector2D{ offsetX, offsetY };
+			offsetX = std::lerp(pos.x, mousepos.x, 0.01);
+			offsetY = std::lerp(pos.y, mousepos.y, 0.01);
+
+			Vector2D offset = Vector2D{ offsetX / 10, offsetY / 10 };
+			*/
 
 			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
 			{
 				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
-				gobject->GetGeometry()->OffsetScale(offset);
+				Vector2D pos = gobject->GetGeometry()->CenterPos();
+
+				Vector2D offset = {
+					(pos.x - mousepos.x) * zoom,
+					(pos.y - mousepos.y) * zoom
+				};
+				gobject->GetGeometry()->Offsetscale(offset);
+				// TODO : when spawned at different scale the offset isnt updated
 			}
 			if (gameobject->GetObjType() == object::GameObjectType::Texture)
 			{
-				object::TextureObject* tobject = static_cast<object::TextureObject*> (gameobject);
-				tobject->GetTexture()->OffsetPos(offset);
+				// object::TextureObject* tobject = static_cast<object::TextureObject*> (gameobject);
+				// tobject->GetTexture()->OffsetPos(offset);
 			}
 		}
 	}
@@ -137,10 +147,10 @@ namespace game
 		switch (mousebutton)
 		{
 		case 8:
-			zoom(-2, {(float)x, (float)y});
+			zoom(-0.02f, {(float)x, (float)y });
 			break;
 		case 16:
-			zoom(2, { (float)x, (float)y });
+			zoom(0.02f, { (float)x, (float)y });
 			break;
 		}
 	}
@@ -159,8 +169,14 @@ namespace game
 				{ 0.0f,    0.0f,    0.0f },
 				{ 64.0f,   64.0f,   64.0f }
 			);
-			int sides = maths::GetRandomInt(2, 6);
-			AddGameObject(new object::Agent(miscagent, sides));
+			std::vector<Vector2D> points = {
+				{ 30, 30 },
+				{ 60, 30 },
+				{ 80, 100 },
+				{ 20, 130 }
+			};
+			// int sides = maths::GetRandomInt(2, 6);
+			AddGameObject(new object::Agent(miscagent, points));
 		}
 		break;
 		case 2: // mm

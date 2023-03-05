@@ -54,7 +54,7 @@ namespace game
 		void init_textelements();
 
 		// zoom
-		void zoom(int zoom, Vector2D mousepos);
+		void zoom(float zoom, Vector2D mousepos);
 
 		// TODO : this another way maybe?
 		object::TextObject* m_consoletxt;

@@ -54,11 +54,11 @@ namespace updater
 
 		if (m_input->MouseReleased(Back, x, y))
 		{
-			game::Game::SharedInstace().MouseDown(Back, x, y);
+			//game::Game::SharedInstace().MouseDown(Back, x, y);
 		}
 		if (m_input->MouseReleased(Forward, x, y))
 		{
-			game::Game::SharedInstace().MouseDown(Forward, x, y);
+			//game::Game::SharedInstace().MouseDown(Forward, x, y);
 		}
 	}
 
