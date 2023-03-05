@@ -208,15 +208,26 @@ namespace renderer
 		int y			= (int)roundf(texture_object->Pos().y - (((height * scale) - height) / 2));
 		float rotation  = texture_object->Rotation();
 
+		int offsetx = 0;
+		int offsety = 0;
+		if (texture_object->Type() == object::TextureType::Dynamic)
+		{
+			int frames = texture_object->Data().frames;
+			width = width / frames;
+			texture_object->Frame(texture_object->Frame() + 1);
+			int f = roundf(texture_object->Frame() / 64.0f);
+			offsetx = width * (f % frames);
+		}
+
 		SDL_Rect render_rect {
 			x, y, (int)roundf(width * scale), (int)roundf(height * scale)
 		};
 
 		SDL_Rect src_rect {
-			0, 0, (int)roundf(width * scale), (int)roundf(height * scale)
+			offsetx, offsety, (int)roundf(width * scale), (int)roundf(height * scale)
 		};
 
-		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), NULL, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), &src_rect, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry)

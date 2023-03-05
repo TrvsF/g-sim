@@ -13,9 +13,10 @@ namespace object
 	private:
 		Texture*	m_texture;
 
-		void set_texture_from_id(const char* id);
+		void set_texture_from_id(const char* id, int frames, int offset);
 	public:
 		TextureObject(GameObject* object, const char* textureid);
+		TextureObject(GameObject* object, const char* textureid, int frames, int offset);
 		~TextureObject();
 
 		void HandleOffsets();

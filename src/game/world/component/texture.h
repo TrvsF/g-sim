@@ -7,10 +7,25 @@
 
 namespace object
 {
+	enum class TextureType
+	{
+		Static,
+		Dynamic
+	};
+
+	struct DynamicData
+	{
+		int frames = 0;
+		int offset = 0;
+	};
+
 	class Texture
 	{
 	protected:
 		SDL_Texture*	m_texutre;
+		TextureType		m_type;
+		DynamicData		m_data;
+		int				m_frame = 0;
 		Vector2D		m_pos;
 		float			m_rotation;
 		float			m_scale;
@@ -24,11 +39,19 @@ namespace object
 
 		void Set(SDL_Texture* texture);
 		void Set(SDL_Texture* texture, Vector2D pos, float rotation);
-		void Set(SDL_Texture* texture, float x, float y, float rotation);
+		void Set(SDL_Texture* texture, Vector2D pos, float rotation, int frames, int offset);
 
 		inline SDL_Texture* GetTexture();
 
 		inline bool IsInitialized();
+
+		inline TextureType Type() 
+		{ return m_type; }
+		inline DynamicData& Data()
+		{ return m_data; }
+
+		inline int Frame() { return m_frame; }
+		inline void Frame(int frame) { m_frame = frame; }
 
 		inline void Rotation(float rotation);
 		inline float Rotation() const;
@@ -52,7 +75,6 @@ namespace object
 		inline void OffsetRotation(float rotation);
 	};
 }
-
 #include "texture-inl.h"
 
 #endif // !TEXTURE_H_

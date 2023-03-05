@@ -3,7 +3,7 @@
 namespace object
 {
 	Food::Food(GameObject* gameobject, int ammount)
-		: TextureObject(gameobject, "food")
+		: TextureObject(gameobject, "food-full", 10, 64)
 	{
 		m_ammount = ammount;
 		setup();

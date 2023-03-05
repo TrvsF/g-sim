@@ -44,7 +44,7 @@ namespace renderer
 		void render_fillrect	   (SDL_Rect rect, SDL_Color outline, SDL_Color fill);
 
 		inline void add_texture_object(object::Texture* texture_object)
-		{m_textureobjects.push_back(texture_object); }
+		{ m_textureobjects.push_back(texture_object); }
 
 		SDL_Texture* create_texture_from_text(const char* font, std::string text, SDL_Color colour);
 

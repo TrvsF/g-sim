@@ -175,8 +175,8 @@ namespace game
 				{ 60, 80 },
 				{ 20, 100 }
 			};
-			// int sides = maths::GetRandomInt(2, 6);
-			AddGameObject(new object::Agent(miscagent, points));
+			int sides = maths::GetRandomInt(2, 6);
+			AddGameObject(new object::Agent(miscagent, sides));
 		}
 		break;
 		case 2: // mm
