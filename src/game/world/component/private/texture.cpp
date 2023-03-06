@@ -33,7 +33,7 @@ namespace object
 		m_texutre = texture;
 		m_active = true;
 		m_pos = pos;
-		m_data = { frames, offset };
+		m_data = { frames, frames, offset };
 		SDL_QueryTexture(m_texutre, NULL, NULL, &m_width, &m_height);
 	}
 }

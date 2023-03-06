@@ -89,11 +89,12 @@ namespace game
 			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
 			{
 				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
-				Vector2D pos = gobject->GetGeometry()->CenterPos();
-
+				Vector2D pos = gobject->GetGeometry()->Pos();
+				// when the scale is = to 1everything should be the
+				// same distance apart as their game objects
 				Vector2D offset = {
-					(pos.x - mousepos.x) * zoom,
-					(pos.y - mousepos.y) * zoom
+					(pos.x - mousepos.x) * (newscale - 1),
+					(pos.y - mousepos.y) * (newscale - 1) 
 				};
 				gobject->GetGeometry()->Offsetscale(offset);
 				// TODO : when spawned at different scale the offset isnt updated

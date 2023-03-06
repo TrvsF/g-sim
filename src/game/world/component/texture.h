@@ -15,7 +15,8 @@ namespace object
 
 	struct DynamicData
 	{
-		int frames = 0;
+		int xframes = 0;
+		int yframes = 0;
 		int offset = 0;
 	};
 

@@ -201,31 +201,38 @@ namespace renderer
 
 	void Renderer::render_texture_object(object::Texture* texture_object)
 	{
+		// float scale		= m_globalscale;
 		float scale		= 1;
-		int width		= texture_object->Width();
-		int height		= texture_object->Height();
+		/*
+		int width		= (int)roundf(texture_object->Width()  * scale);
+		int height		= (int)roundf(texture_object->Height() * scale);
+		*/
+		int width  = texture_object->Width();
+		int height = texture_object->Height();
 		int x			= (int)roundf(texture_object->Pos().x - (((width * scale) - width) / 2));
 		int y			= (int)roundf(texture_object->Pos().y - (((height * scale) - height) / 2));
 		float rotation  = texture_object->Rotation();
 
+		// TODO : clean
 		int offsetx = 0;
 		int offsety = 0;
 		if (texture_object->Type() == object::TextureType::Dynamic)
 		{
-			int frames = texture_object->Data().frames;
-			width = width / frames;
+			int xframes = texture_object->Data().xframes;
+			int yframes = 2;
+			width /= xframes;
+			height /= yframes;
+
 			texture_object->Frame(texture_object->Frame() + 1);
 			int f = roundf(texture_object->Frame() / 64.0f);
-			offsetx = width * (f % frames);
+			// offsetx = width * (f % xframes);
+			offsety = height * (f % yframes);
 		}
 
-		SDL_Rect render_rect {
-			x, y, (int)roundf(width * scale), (int)roundf(height * scale)
-		};
-
-		SDL_Rect src_rect {
-			offsetx, offsety, (int)roundf(width * scale), (int)roundf(height * scale)
-		};
+		SDL_Rect render_rect 
+		{ x, y, width * scale, height * scale };
+		SDL_Rect src_rect 
+		{ offsetx, offsety, width, height };
 
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), &src_rect, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}
@@ -252,8 +259,7 @@ namespace renderer
 			midpoint = midpoint * m_globalscale;
 
 			// create base verts
-			Vector2D offsetscale = geometry->Offsetscale();
-			Vector2D offsetpos   = geometry->Pos() + geometry->Offsetscale();
+			Vector2D offsetpos = geometry->Pos();
 			Vector2D v1 = (tri.GetPoint1() * scale) + offsetpos;
 			Vector2D v2 = (tri.GetPoint2() * scale) + offsetpos;
 			Vector2D v3 = (tri.GetPoint3() * scale) + offsetpos;
