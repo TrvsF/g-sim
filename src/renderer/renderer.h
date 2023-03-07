@@ -27,7 +27,8 @@ namespace renderer
 		int				m_height;
 		const char*		m_title;
 
-		float m_globalscale;
+		float			m_globalscale;
+		long			m_count;
 
 		SDL_Window*		m_window;
 		SDL_Renderer*	m_renderer;

@@ -26,8 +26,8 @@ namespace object
 		SDL_Texture*	m_texutre;
 		TextureType		m_type;
 		DynamicData		m_data;
-		int				m_frame = 0;
 		Vector2D		m_pos;
+		Vector2D		m_currentframe;
 		float			m_rotation;
 		float			m_scale;
 		int				m_width;
@@ -51,8 +51,11 @@ namespace object
 		inline DynamicData& Data()
 		{ return m_data; }
 
-		inline int Frame() { return m_frame; }
-		inline void Frame(int frame) { m_frame = frame; }
+		inline Vector2D CurrentFrame()
+		{ return m_currentframe; }
+		inline void CurrentFrame(Vector2D frame) 
+		{ m_currentframe = frame; }
+
 
 		inline void Rotation(float rotation);
 		inline float Rotation() const;

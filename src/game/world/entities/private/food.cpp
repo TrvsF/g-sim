@@ -6,6 +6,7 @@ namespace object
 		: TextureObject(gameobject, "food-full", 10, 64)
 	{
 		m_ammount = ammount;
+		GetTexture()->CurrentFrame({ 0, 0 });
 		setup();
 	}
 
@@ -33,6 +34,9 @@ namespace object
 
 	void Food::Update()
 	{
-		
+		if (m_ammount < 5000)
+		{
+			GetTexture()->CurrentFrame({ 2, 2 });
+		}
 	}
 }

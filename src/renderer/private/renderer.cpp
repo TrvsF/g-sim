@@ -13,6 +13,7 @@ namespace renderer
 		m_height	= 0;
 
 		m_globalscale = 1.0f;
+		m_count = 0;
 	}
 
 	Renderer::~Renderer()
@@ -220,11 +221,13 @@ namespace renderer
 		{
 			int xframes = texture_object->Data().xframes;
 			int yframes = 2;
-			width /= xframes;
+			width  /= xframes;
 			height /= yframes;
 
-			texture_object->Frame(texture_object->Frame() + 1);
-			int f = roundf(texture_object->Frame() / 64.0f);
+			offsetx += width * texture_object->CurrentFrame().x;
+
+			m_count++;
+			int f = roundf(m_count / 64.0f);
 			// offsetx = width * (f % xframes);
 			offsety = height * (f % yframes);
 		}

@@ -378,7 +378,7 @@ namespace object
 
 	void Agent::Update()
 	{
-		/*
+		
 		do_brain();
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
@@ -387,7 +387,7 @@ namespace object
 		// transformations
 		do_friction();
 		calc_transformoffsets();
-		*/
+		
 	}
 
 	// debug
