@@ -155,6 +155,7 @@ namespace renderer
 			render_aabb(aabb);
 		}
 
+		m_count++; // TODO : better way to do this?
 		// !!! the last thing to be called from renderer
 		SDL_RenderPresent(m_renderer);
 	}
@@ -214,7 +215,6 @@ namespace renderer
 		int y			= (int)roundf(texture_object->Pos().y - (((height * scale) - height) / 2));
 		float rotation  = texture_object->Rotation();
 
-		// TODO : clean
 		int offsetx = 0;
 		int offsety = 0;
 		if (texture_object->Type() == object::TextureType::Dynamic)
@@ -223,18 +223,35 @@ namespace renderer
 			int yframes = 2;
 			width  /= xframes;
 			height /= yframes;
+			
+			int currentxframe = texture_object->CurrentXFrame();
+			int currentyframe = texture_object->CurrentYFrame();
+			
+			// TODO : clean
+			if (currentxframe >= 0)
+			{
+				offsetx = width * currentxframe;
+			}
+			else
+			{
+				int fx = roundf(m_count / -currentxframe);
+				offsetx = width * (fx % xframes);
+			}
 
-			offsetx += width * texture_object->CurrentFrame().x;
-
-			m_count++;
-			int f = roundf(m_count / 64.0f);
-			// offsetx = width * (f % xframes);
-			offsety = height * (f % yframes);
+			if (currentyframe >= 0)
+			{
+				offsety = width * currentyframe;
+			}
+			else
+			{
+				int fy = roundf(m_count / -currentyframe);
+				offsety = width * (fy % yframes);
+			}
 		}
 
-		SDL_Rect render_rect 
+		SDL_Rect render_rect // big
 		{ x, y, width * scale, height * scale };
-		SDL_Rect src_rect 
+		SDL_Rect src_rect	 // little
 		{ offsetx, offsety, width, height };
 
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), &src_rect, &render_rect, rotation, NULL, SDL_FLIP_NONE);

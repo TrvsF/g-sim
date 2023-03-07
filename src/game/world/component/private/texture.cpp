@@ -27,13 +27,13 @@ namespace object
 		m_pos = pos;
 	}
 
-	void Texture::Set(SDL_Texture* texture, Vector2D pos, float rotation, int frames, int offset)
+	void Texture::Set(SDL_Texture* texture, Vector2D pos, float rotation, int frames)
 	{
 		m_type = TextureType::Dynamic;
 		m_texutre = texture;
 		m_active = true;
 		m_pos = pos;
-		m_data = { frames, frames, offset };
+		m_data = { frames, frames };
 		SDL_QueryTexture(m_texutre, NULL, NULL, &m_width, &m_height);
 	}
 }

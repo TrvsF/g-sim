@@ -10,6 +10,7 @@ namespace object
 	class Food : public TextureObject
 	{
 	private:
+		int m_maxammount;
 		int m_ammount;
 
 		inline void die()

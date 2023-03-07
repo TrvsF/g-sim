@@ -253,7 +253,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		AddGameObject(new object::Food(food, 5000));
+		AddGameObject(new object::Food(food, 1500));
 
 		object::GameObject* triman = object::GameObject::Create(
 			{ 0.0f,     0.0f,    0.0f },

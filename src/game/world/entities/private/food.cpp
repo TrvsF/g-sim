@@ -3,10 +3,13 @@
 namespace object
 {
 	Food::Food(GameObject* gameobject, int ammount)
-		: TextureObject(gameobject, "food-full", 10, 64)
+		: TextureObject(gameobject, "food-full", 10)
 	{
-		m_ammount = ammount;
-		GetTexture()->CurrentFrame({ 0, 0 });
+		m_maxammount	= ammount;
+		m_ammount		= ammount;
+
+		GetTexture()->CurrentXFrame(0);
+		GetTexture()->CurrentYFrame(-64 );
 		setup();
 	}
 
@@ -34,9 +37,18 @@ namespace object
 
 	void Food::Update()
 	{
-		if (m_ammount < 5000)
+		int iammount = round(m_maxammount / 10);
+		int framecount = 0;
+		for (int i = m_maxammount; i > 0; i -= iammount)
 		{
-			GetTexture()->CurrentFrame({ 2, 2 });
+			if (m_ammount >= i)
+			{
+				if (framecount != 0)
+				{ GetTexture()->CurrentYFrame(0); }
+				GetTexture()->CurrentXFrame(framecount);
+				break;
+			}
+			framecount++;
 		}
 	}
 }

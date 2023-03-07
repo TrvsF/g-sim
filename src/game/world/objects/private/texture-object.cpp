@@ -6,19 +6,19 @@ namespace object
 		: GameObject(object)
 	{
 		SetObjType(GameObjectType::Texture);
-		set_texture_from_id(textureid, 1, 0);
+		set_texture_from_id(textureid, 1);
 		m_debug = true;
 	}
 
-	TextureObject::TextureObject(GameObject* object, const char* textureid, int frames, int offset)
+	TextureObject::TextureObject(GameObject* object, const char* textureid, int frames)
 		: GameObject(object)
 	{
 		SetObjType(GameObjectType::Texture);
-		set_texture_from_id(textureid, frames, offset);
+		set_texture_from_id(textureid, frames);
 		m_debug = true;
 	}
 
-	void TextureObject::set_texture_from_id(const char* id, int frames, int offset)
+	void TextureObject::set_texture_from_id(const char* id, int frames)
 	{
 		m_texture = new Texture();
 		SDL_Texture* texture = renderer::Renderer::SharedInstace().GetSetTextureObjFromId(id, m_texture);
@@ -42,8 +42,7 @@ namespace object
 					GetPosition().y
 				},
 				GetTransform().GetRotation().z,
-				frames,
-				offset
+				frames
 			);
 		}
 		
