@@ -43,7 +43,7 @@ namespace object
 		inline Vector2D Offsetscale()
 		{ return m_scaleoffset; }
 		inline void Offsetscale(Vector2D pos)
-		{ m_scaleoffset += pos;  }
+		{ m_scaleoffset = pos;  }
 
 		inline SDL_Color Colour()
 		{ return m_maincolour; }

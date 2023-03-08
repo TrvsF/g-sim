@@ -41,7 +41,7 @@ namespace game
 		object::GameObject* playerobj = object::GameObject::Create(
 			{ 200.0f,  200.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
-			{ 32.0f,   32.0f,   32.0f }
+			{ 16.0f,   16.0f,   32.0f }
 		);
 		m_player = new object::Player(playerobj, "player");
 		AddGameObject(m_player);
@@ -73,36 +73,35 @@ namespace game
 		float scale = renderer::Renderer::SharedInstace().Scale();
 		float newscale = scale + (zoom);
 		if (newscale < 0.5f) { return; }
+		// 'globally' set the new scale
 		renderer::Renderer::SharedInstace().Scale(newscale);
+
 		// move each object relative to mousepos
+		float zoomscalar = newscale * 0.1f;
 		for (object::GameObject* gameobject : m_gameobjects)
 		{
-			/*
-			float offsetX, offsetY;
-
-			offsetX = std::lerp(pos.x, mousepos.x, 0.01);
-			offsetY = std::lerp(pos.y, mousepos.y, 0.01);
-
-			Vector2D offset = Vector2D{ offsetX / 10, offsetY / 10 };
-			*/
-
+			// TODO : make into 1 func for each
 			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
 			{
 				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
 				Vector2D pos = gobject->GetGeometry()->Pos();
-				// when the scale is = to 1 everything should be the
-				// same distance apart as their game objects
 				Vector2D offset = {
-					(pos.x - mousepos.x) * zoom,
-					(pos.y - mousepos.y) * zoom 
+					(pos.x - mousepos.x) * zoomscalar,
+					(pos.y - mousepos.y) * zoomscalar
 				};
+
 				gobject->GetGeometry()->Offsetscale(offset);
-				// TODO : when spawned at different scale the offset isnt updated
 			}
 			if (gameobject->GetObjType() == object::GameObjectType::Texture)
 			{
-				// object::TextureObject* tobject = static_cast<object::TextureObject*> (gameobject);
-				// tobject->GetTexture()->OffsetPos(offset);
+				object::TextObject* tobject = static_cast<object::TextObject*> (gameobject);
+				Vector2D pos = tobject->GetTexture()->Pos();
+				Vector2D offset = {
+					(pos.x - mousepos.x) * zoomscalar,
+					(pos.y - mousepos.y) * zoomscalar
+				};
+
+				tobject->GetTexture()->Offsetscale(offset);
 			}
 		}
 	}
@@ -168,7 +167,7 @@ namespace game
 			object::GameObject* miscagent = object::GameObject::Create(
 				{ _x,	   _y,      0.0f },
 				{ 0.0f,    0.0f,    0.0f },
-				{ 64.0f,   64.0f,   64.0f }
+				{ 24.0f,   24.0f,   24.0f }
 			);
 			std::vector<Vector2D> points = {
 				{ 30, 30 },
@@ -240,28 +239,12 @@ namespace game
 
 		// debug
 		// m_biome = new object::BiomeObject({ 5000, 5000 });
-
-		object::GameObject* miscagent = object::GameObject::Create(
-			{ 100.0f,  400.0f,  0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 32.0f,   32.0f,   32.0f }
-		);
-		AddGameObject(new object::Agent(miscagent, 8));
-
 		object::GameObject* food = object::GameObject::Create(
 			{ 600.0f,  400.0f,  0.0f },
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		AddGameObject(new object::Food(food, 1500));
-
-		object::GameObject* triman = object::GameObject::Create(
-			{ 0.0f,     0.0f,    0.0f },
-			{ 0.0f,     0.0f,    0.0f },
-			{ 64.0f,    64.0f,   64.0f }
-		);
-		object::Agent* triagent = new object::Agent(triman, 4);
-		AddGameObject(triagent);
+		AddGameObject(new object::Food(food, 200));
 
 		init_textelements();
 	}

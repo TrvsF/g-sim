@@ -23,6 +23,13 @@ namespace object
 		SetEntityType(GameEntityType::Food);
 	}
 
+	void Food::die()
+	{
+		bus->postpone(event::eObjectDeath { this });
+		bus->process(); 
+		GetTexture()->Active(false);
+	}
+
 	int Food::Eat()
 	{
 		int start = m_ammount;

@@ -17,7 +17,7 @@ namespace base
         SDL_Event m_events;
 
         // start the renderer
-        if (!renderer::Renderer::SharedInstace().Start("tri-engine", 960, 720)) 
+        if (!renderer::Renderer::SharedInstace().Start("g-sim", 720, 720)) 
         { m_shutdown_requested = true; }
 
         // start the game

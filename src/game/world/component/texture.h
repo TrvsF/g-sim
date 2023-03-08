@@ -1,7 +1,7 @@
 #ifndef TEXTURE_H_
 #define TEXTURE_H_
 
-#include <SDL.h> // TODO: only texture
+#include <SDL.h>
 
 #include "../src/util/vector2d.h"
 
@@ -26,12 +26,15 @@ namespace object
 		TextureType		m_type;
 		DynamicData		m_data;
 		Vector2D		m_pos;
+		Vector2D		m_scaleoffset;
 		int				m_xcurrentframe;
 		int				m_ycurrentframe;
 		float			m_rotation;
 		float			m_scale;
 		int				m_width;
 		int				m_height;
+		int				m_twidth;
+		int				m_theight;
 		bool			m_active;
 
 	public:
@@ -39,8 +42,8 @@ namespace object
 		Texture(SDL_Texture* texture);
 
 		void Set(SDL_Texture* texture);
-		void Set(SDL_Texture* texture, Vector2D pos, float rotation);
-		void Set(SDL_Texture* texture, Vector2D pos, float rotation, int frames);
+		void Set(SDL_Texture* texture, Vector2D pos, float rotation, int width, int height);
+		void Set(SDL_Texture* texture, Vector2D pos, float rotation, int frames, int width, int height);
 
 		inline SDL_Texture* GetTexture();
 
@@ -53,14 +56,25 @@ namespace object
 
 		inline void CurrentXFrame(int xframe)
 		{ m_xcurrentframe = xframe; }
-		inline void CurrentYFrame(int yframe)
-		{ m_ycurrentframe = yframe; }
-
 		inline int CurrentXFrame()
 		{ return m_xcurrentframe; }
+		inline void CurrentYFrame(int yframe)
+		{ m_ycurrentframe = yframe; }
 		inline int CurrentYFrame()
 		{ return m_ycurrentframe; }
 
+		inline Vector2D Offsetscale()
+		{ return m_scaleoffset; }
+		inline void Offsetscale(Vector2D pos)
+		{ m_scaleoffset = pos; }
+
+		inline void Pos(Vector2D pos)
+		{ m_pos = pos; }
+		inline Vector2D Pos() const
+		{ return m_pos + m_scaleoffset; }
+		inline Vector2D CenterPos() const
+		{ return Vector2D{ m_pos.x + (m_width / 2), m_pos.y + (m_height / 2) }
+		+ m_scaleoffset; }
 
 		inline void Rotation(float rotation);
 		inline float Rotation() const;
@@ -71,8 +85,8 @@ namespace object
 		inline void Height(int height);
 		inline int Height() const;
 
-		inline void Pos(Vector2D pos);
-		inline Vector2D Pos() const;
+		inline int THeight() { return m_theight; }
+		inline int TWidth()  { return m_twidth; }
 
 		inline void Active(bool active);
 		inline bool Active();

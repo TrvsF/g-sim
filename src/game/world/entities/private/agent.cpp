@@ -383,7 +383,7 @@ namespace object
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
 		m_stamina--;
-		if (m_stamina < 3500) { m_aistate = AgentState::Eating; }
+		if (m_stamina < 4500) { m_aistate = AgentState::Eating; }
 		// transformations
 		do_friction();
 		calc_transformoffsets();

@@ -42,16 +42,6 @@ namespace object
 		return m_height;
 	}
 
-	inline void Texture::Pos(Vector2D pos)
-	{
-		m_pos = pos;
-	}
-
-	inline Vector2D Texture::Pos() const
-	{
-		return m_pos;
-	}
-
 	inline void Texture::OffsetPos(Vector2D offset)
 	{
 		m_pos += offset;

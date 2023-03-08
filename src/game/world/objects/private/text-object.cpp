@@ -24,7 +24,9 @@ namespace object
 				GetPosition().x,
 				GetPosition().y
 			},
-			GetTransform().GetRotation().z
+			GetTransform().GetRotation().z,
+			GetAABB().GetMaxX() - GetAABB().GetMinX(),
+			GetAABB().GetMaxY() - GetAABB().GetMinY()
 		);
 	}
 

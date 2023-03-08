@@ -203,16 +203,13 @@ namespace renderer
 
 	void Renderer::render_texture_object(object::Texture* texture_object)
 	{
-		// float scale		= m_globalscale;
-		float scale		= 1;
-		/*
-		int width		= (int)roundf(texture_object->Width()  * scale);
-		int height		= (int)roundf(texture_object->Height() * scale);
-		*/
-		int width  = texture_object->Width();
-		int height = texture_object->Height();
-		int x			= (int)roundf(texture_object->Pos().x - (((width * scale) - width) / 2));
-		int y			= (int)roundf(texture_object->Pos().y - (((height * scale) - height) / 2));
+		float scale		= m_globalscale;
+		int twidth		= texture_object->TWidth();
+		int theight		= texture_object->THeight();
+		int width		= texture_object->Width();
+		int height		= texture_object->Height();
+		int x			= (int)roundf(texture_object->Pos().x);
+		int y			= (int)roundf(texture_object->Pos().y);
 		float rotation  = texture_object->Rotation();
 
 		int offsetx = 0;
@@ -221,8 +218,8 @@ namespace renderer
 		{
 			int xframes = texture_object->Data().xframes;
 			int yframes = 2;
-			width  /= xframes;
-			height /= yframes;
+			twidth  /= xframes;
+			theight /= yframes;
 			
 			int currentxframe = texture_object->CurrentXFrame();
 			int currentyframe = texture_object->CurrentYFrame();
@@ -230,29 +227,30 @@ namespace renderer
 			// TODO : clean
 			if (currentxframe >= 0)
 			{
-				offsetx = width * currentxframe;
+				offsetx = twidth * currentxframe;
 			}
 			else
 			{
 				int fx = roundf(m_count / -currentxframe);
-				offsetx = width * (fx % xframes);
+				offsetx = twidth * (fx % xframes);
 			}
 
 			if (currentyframe >= 0)
 			{
-				offsety = width * currentyframe;
+				offsety = theight * currentyframe;
 			}
 			else
 			{
 				int fy = roundf(m_count / -currentyframe);
-				offsety = width * (fy % yframes);
+				offsety = twidth * (fy % yframes);
 			}
 		}
 
+		Vector2D ofs = texture_object->Offsetscale();
 		SDL_Rect render_rect // big
-		{ x, y, width * scale, height * scale };
+		{ x + ofs.x, y + ofs.y, width * scale, height * scale};
 		SDL_Rect src_rect	 // little
-		{ offsetx, offsety, width, height };
+		{ offsetx, offsety, twidth, theight };
 
 		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), &src_rect, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}

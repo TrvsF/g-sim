@@ -13,9 +13,8 @@ namespace object
 		int m_maxammount;
 		int m_ammount;
 
-		inline void die()
-		{ bus->postpone(event::eObjectDeath { this }); bus->process(); }
-
+		void die();
+		
 		void setup();
 	public:
 		Food(GameObject* gameobject, int ammount);
