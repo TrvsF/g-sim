@@ -49,11 +49,12 @@ namespace game
 		std::vector<object::GameObject*> m_gameobjects;
 		object::Player* m_player;
 		object::Camera* m_camera;
-		object::BiomeObject* m_biome;
+		// object::BiomeObject* m_biome;
 		void init_entities();
 		void init_textelements();
 
 		// zoom
+		Vector2D m_zoommousepos;
 		void zoom(float zoom, Vector2D mousepos);
 
 		// TODO : this another way maybe?

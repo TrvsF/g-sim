@@ -27,6 +27,7 @@ namespace renderer
 		int				m_height;
 		const char*		m_title;
 
+		Vector2D		m_scalepos;
 		float			m_globalscale;
 		long			m_count;
 
@@ -80,6 +81,9 @@ namespace renderer
 		{ m_globalscale = scale; }
 		inline float Scale()
 		{ return m_globalscale; }
+
+		inline void ScalePos(Vector2D scalepos)
+		{ m_scalepos = scalepos; }
 
 		bool Start(const char* window_title, int width, int height);
 		void Render();

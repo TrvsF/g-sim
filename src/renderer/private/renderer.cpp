@@ -12,6 +12,7 @@ namespace renderer
 		m_width		= 0;
 		m_height	= 0;
 
+		m_scalepos = VEC2_ZERO;
 		m_globalscale = 1.0f;
 		m_count = 0;
 	}
@@ -201,28 +202,28 @@ namespace renderer
 		SDL_SetWindowIcon(m_window, icon_surface);
 	}
 
-	void Renderer::render_texture_object(object::Texture* texture_object)
+	void Renderer::render_texture_object(object::Texture* texture)
 	{
 		float scale		= m_globalscale;
-		int twidth		= texture_object->TWidth();
-		int theight		= texture_object->THeight();
-		int width		= texture_object->Width();
-		int height		= texture_object->Height();
-		int x			= (int)roundf(texture_object->Pos().x);
-		int y			= (int)roundf(texture_object->Pos().y);
-		float rotation  = texture_object->Rotation();
+		int twidth		= texture->TWidth();
+		int theight		= texture->THeight();
+		int width		= texture->Width();
+		int height		= texture->Height();
+		int x			= (int)roundf(texture->Pos().x);
+		int y			= (int)roundf(texture->Pos().y);
+		float rotation  = texture->Rotation();
 
 		int offsetx = 0;
 		int offsety = 0;
-		if (texture_object->Type() == object::TextureType::Dynamic)
+		if (texture->Type() == object::TextureType::Dynamic)
 		{
-			int xframes = texture_object->Data().xframes;
+			int xframes = texture->Data().xframes;
 			int yframes = 2;
 			twidth  /= xframes;
 			theight /= yframes;
 			
-			int currentxframe = texture_object->CurrentXFrame();
-			int currentyframe = texture_object->CurrentYFrame();
+			int currentxframe = texture->CurrentXFrame();
+			int currentyframe = texture->CurrentYFrame();
 			
 			// TODO : clean
 			if (currentxframe >= 0)
@@ -246,13 +247,16 @@ namespace renderer
 			}
 		}
 
-		Vector2D ofs = texture_object->Offsetscale();
+		Vector2D ofs = {
+			(texture->Pos().x - m_scalepos.x) * m_globalscale * 0.3f,
+			(texture->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
+		};
 		SDL_Rect render_rect // big
 		{ x + ofs.x, y + ofs.y, width * scale, height * scale};
 		SDL_Rect src_rect	 // little
 		{ offsetx, offsety, twidth, theight };
 
-		SDL_RenderCopyEx(m_renderer, texture_object->GetTexture(), &src_rect, &render_rect, rotation, NULL, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(m_renderer, texture->GetTexture(), &src_rect, &render_rect, rotation, NULL, SDL_FLIP_NONE);
 	}
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry)
@@ -276,8 +280,13 @@ namespace renderer
 			}
 			midpoint = midpoint * m_globalscale;
 
+			Vector2D offset = {
+					(geometry->Pos().x - m_scalepos.x) * m_globalscale * 0.3f,
+					(geometry->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
+			};
+
 			// create base verts
-			Vector2D offsetpos = geometry->Pos();
+			Vector2D offsetpos = geometry->Pos() + offset;
 			Vector2D v1 = (tri.GetPoint1() * scale) + offsetpos;
 			Vector2D v2 = (tri.GetPoint2() * scale) + offsetpos;
 			Vector2D v3 = (tri.GetPoint3() * scale) + offsetpos;

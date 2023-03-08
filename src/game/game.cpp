@@ -6,10 +6,11 @@ namespace game
 	{
 		m_collision = new Collision(128);
 
-		m_player = nullptr;
-		m_camera = nullptr;
-		m_consoletxt = nullptr;
-		m_coords     = nullptr;
+		m_player	   = nullptr;
+		m_camera       = nullptr;
+		m_consoletxt   = nullptr;
+		m_coords       = nullptr;
+		m_zoommousepos = VEC2_ZERO;
 
 		m_listener.listen<event::ePosChange> (std::bind(
 			&Game::e_poschange, this, std::placeholders::_1));
@@ -69,41 +70,14 @@ namespace game
 
 	void Game::zoom(float zoom, Vector2D mousepos)
 	{
+		m_zoommousepos = mousepos;
 		// set global zoom
 		float scale = renderer::Renderer::SharedInstace().Scale();
 		float newscale = scale + (zoom);
 		if (newscale < 0.5f) { return; }
 		// 'globally' set the new scale
 		renderer::Renderer::SharedInstace().Scale(newscale);
-
-		// move each object relative to mousepos
-		float zoomscalar = newscale * 0.1f;
-		for (object::GameObject* gameobject : m_gameobjects)
-		{
-			// TODO : make into 1 func for each
-			if (gameobject->GetObjType() == object::GameObjectType::Geometry)
-			{
-				object::GeometryObject* gobject = static_cast<object::GeometryObject*> (gameobject);
-				Vector2D pos = gobject->GetGeometry()->Pos();
-				Vector2D offset = {
-					(pos.x - mousepos.x) * zoomscalar,
-					(pos.y - mousepos.y) * zoomscalar
-				};
-
-				gobject->GetGeometry()->Offsetscale(offset);
-			}
-			if (gameobject->GetObjType() == object::GameObjectType::Texture)
-			{
-				object::TextObject* tobject = static_cast<object::TextObject*> (gameobject);
-				Vector2D pos = tobject->GetTexture()->Pos();
-				Vector2D offset = {
-					(pos.x - mousepos.x) * zoomscalar,
-					(pos.y - mousepos.y) * zoomscalar
-				};
-
-				tobject->GetTexture()->Offsetscale(offset);
-			}
-		}
+		renderer::Renderer::SharedInstace().ScalePos(mousepos);
 	}
 
 	void Game::do_textelements()
@@ -167,7 +141,7 @@ namespace game
 			object::GameObject* miscagent = object::GameObject::Create(
 				{ _x,	   _y,      0.0f },
 				{ 0.0f,    0.0f,    0.0f },
-				{ 24.0f,   24.0f,   24.0f }
+				{ 64.0f,   64.0f,   64.0f }
 			);
 			std::vector<Vector2D> points = {
 				{ 30, 30 },
@@ -271,6 +245,7 @@ namespace game
 		{
 			if (gameobject == m_consoletxt || gameobject == m_coords) { continue; } // hack for console & coord text
 			m_camera->SetTexturePos(gameobject);
+			m_zoommousepos;
 		}
 
 		// TODO : check for performance

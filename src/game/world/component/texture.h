@@ -66,15 +66,14 @@ namespace object
 		inline Vector2D Offsetscale()
 		{ return m_scaleoffset; }
 		inline void Offsetscale(Vector2D pos)
-		{ m_scaleoffset = pos; }
+		{ m_scaleoffset += pos; }
 
 		inline void Pos(Vector2D pos)
 		{ m_pos = pos; }
 		inline Vector2D Pos() const
-		{ return m_pos + m_scaleoffset; }
+		{ return m_pos; }
 		inline Vector2D CenterPos() const
-		{ return Vector2D{ m_pos.x + (m_width / 2), m_pos.y + (m_height / 2) }
-		+ m_scaleoffset; }
+		{ return Vector2D{ m_pos.x + (m_width / 2), m_pos.y + (m_height / 2) }; }
 
 		inline void Rotation(float rotation);
 		inline float Rotation() const;

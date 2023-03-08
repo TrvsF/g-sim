@@ -11,7 +11,7 @@ namespace object
 	class TextureObject : public GameObject
 	{
 	private:
-		Texture*	m_texture;
+		Texture* m_texture;
 
 		void set_texture_from_id(const char* id, int frames);
 	public:

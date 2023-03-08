@@ -59,7 +59,7 @@ namespace ai
 		m_tickcounter++;
 		if (m_tickcounter % 64 == 0)
 		{
-			do_debugconsole();
+			// do_debugconsole();
 		}
 	}
 }
