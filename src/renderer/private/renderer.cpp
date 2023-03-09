@@ -215,42 +215,37 @@ namespace renderer
 
 		int offsetx = 0;
 		int offsety = 0;
+		// animated texture frame finder
 		if (texture->Type() == object::TextureType::Dynamic)
 		{
 			int xframes = texture->Data().xframes;
-			int yframes = 2;
+			int yframes = 2; // hack
 			twidth  /= xframes;
 			theight /= yframes;
 			
 			int currentxframe = texture->CurrentXFrame();
 			int currentyframe = texture->CurrentYFrame();
-			
-			// TODO : clean
-			if (currentxframe >= 0)
-			{
-				offsetx = twidth * currentxframe;
-			}
-			else
-			{
-				int fx = roundf(m_count / -currentxframe);
-				offsetx = twidth * (fx % xframes);
-			}
 
-			if (currentyframe >= 0)
+			if (currentxframe < 0)
 			{
-				offsety = theight * currentyframe;
+				int fx  = roundf(m_count / -currentxframe);
+				currentxframe = (fx % xframes);
 			}
-			else
+			offsetx = twidth * currentxframe;
+
+			if (currentyframe < 0)
 			{
 				int fy = roundf(m_count / -currentyframe);
-				offsety = twidth * (fy % yframes);
+				currentyframe = (fy % yframes);
 			}
+			offsety = theight * currentyframe;
 		}
 
 		Vector2D ofs = {
 			(texture->Pos().x - m_scalepos.x) * m_globalscale * 0.3f,
 			(texture->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
 		};
+
 		SDL_Rect render_rect // big
 		{ x + ofs.x, y + ofs.y, width * scale, height * scale};
 		SDL_Rect src_rect	 // little
@@ -261,25 +256,27 @@ namespace renderer
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry)
 	{
-
 		float ang = geometry->Rotation();
 		float scale = m_globalscale;
+
+		// hack : find midpoint
 		Vector2D midpoint = VEC2_ZERO;
-		for (const auto& tri : geometry->Tris())
+		for (Vector2D vec1 : geometry->Tris()[0].GetPoints())
 		{
-			// hack : find midpoint
-			for (Vector2D vec1 : geometry->Tris()[0].GetPoints())
+			for (Vector2D vec2 : geometry->Tris()[1].GetPoints())
 			{
-				for (Vector2D vec2 : geometry->Tris()[1].GetPoints())
+				if (vec1 == vec2)
 				{
-					if (vec1 == vec2) 
-					{
-						midpoint = vec1; break; 
-					}
+					midpoint = vec1; break;
 				}
 			}
-			midpoint = midpoint * m_globalscale;
-
+		}
+		midpoint = midpoint * m_globalscale;
+		
+		// foreach tri that makes up the geometry 
+		for (const auto& tri : geometry->Tris())
+		{
+			// offset to mousepoint
 			Vector2D offset = {
 					(geometry->Pos().x - m_scalepos.x) * m_globalscale * 0.3f,
 					(geometry->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
@@ -299,7 +296,7 @@ namespace renderer
 			SDL_FPoint p2 = { v2.x, v2.y };
 			SDL_FPoint p3 = { v3.x, v3.y };
 
-			std::vector< SDL_Vertex > v = {
+			std::vector<SDL_Vertex> v = {
 				{ p1, geometry->Colour()},
 				{ p2, geometry->Colour()},
 				{ p3, SDL_Color{ 0, 0, 0, 200 } }
