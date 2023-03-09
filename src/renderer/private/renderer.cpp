@@ -282,26 +282,19 @@ namespace renderer
 					(geometry->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
 			};
 
-			// create base verts
+			// create verts from goemetry
 			Vector2D offsetpos = geometry->Pos() + offset;
-			Vector2D v1 = (tri.GetPoint1() * scale) + offsetpos;
-			Vector2D v2 = (tri.GetPoint2() * scale) + offsetpos;
-			Vector2D v3 = (tri.GetPoint3() * scale) + offsetpos;
-			// rotate
-			maths::GetRotatedPoint(v1, midpoint + offsetpos, ang);
-			maths::GetRotatedPoint(v2, midpoint + offsetpos, ang);
-			maths::GetRotatedPoint(v3, midpoint + offsetpos, ang);
-			
-			SDL_FPoint p1 = { v1.x, v1.y };
-			SDL_FPoint p2 = { v2.x, v2.y };
-			SDL_FPoint p3 = { v3.x, v3.y };
+			std::vector<SDL_Vertex> verts;
+			for (const auto& point : tri.GetPoints())
+			{
+				Vector2D vec = (point * scale) + offsetpos;
+				maths::GetRotatedPoint(vec, midpoint + offsetpos, ang);
 
-			std::vector<SDL_Vertex> v = {
-				{ p1, geometry->Colour()},
-				{ p2, geometry->Colour()},
-				{ p3, SDL_Color{ 0, 0, 0, 200 } }
-			};
-			SDL_RenderGeometry(m_renderer, nullptr, v.data(), (int)v.size(), nullptr, 0);
+				SDL_FPoint point = { vec.x, vec.y };
+				verts.push_back({ point, geometry->Colour() });
+			}
+
+			SDL_RenderGeometry(m_renderer, nullptr, verts.data(), (int)verts.size(), nullptr, 0);
 		}
 	}
 

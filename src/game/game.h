@@ -54,7 +54,6 @@ namespace game
 		void init_textelements();
 
 		// zoom
-		Vector2D m_zoommousepos;
 		void zoom(float zoom, Vector2D mousepos);
 
 		// TODO : this another way maybe?

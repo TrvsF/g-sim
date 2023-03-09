@@ -10,7 +10,6 @@ namespace game
 		m_camera       = nullptr;
 		m_consoletxt   = nullptr;
 		m_coords       = nullptr;
-		m_zoommousepos = VEC2_ZERO;
 
 		m_listener.listen<event::ePosChange> (std::bind(
 			&Game::e_poschange, this, std::placeholders::_1));
@@ -70,7 +69,6 @@ namespace game
 
 	void Game::zoom(float zoom, Vector2D mousepos)
 	{
-		m_zoommousepos = mousepos;
 		// set global zoom
 		float scale = renderer::Renderer::SharedInstace().Scale();
 		float newscale = scale + (zoom);
@@ -245,7 +243,6 @@ namespace game
 		{
 			if (gameobject == m_consoletxt || gameobject == m_coords) { continue; } // hack for console & coord text
 			m_camera->SetTexturePos(gameobject);
-			m_zoommousepos;
 		}
 
 		// TODO : check for performance
