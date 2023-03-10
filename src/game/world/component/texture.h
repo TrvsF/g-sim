@@ -9,6 +9,7 @@ namespace object
 {
 	enum class TextureType
 	{
+		Text,
 		Static,
 		Dynamic
 	};
@@ -22,7 +23,7 @@ namespace object
 	class Texture
 	{
 	protected:
-		SDL_Texture*	m_texutre;
+		SDL_Texture*	m_texture;
 		TextureType		m_type;
 		DynamicData		m_data;
 		Vector2D		m_pos;
@@ -42,8 +43,10 @@ namespace object
 		Texture(SDL_Texture* texture);
 
 		void Set(SDL_Texture* texture);
-		void Set(SDL_Texture* texture, Vector2D pos, float rotation, int width, int height);
-		void Set(SDL_Texture* texture, Vector2D pos, float rotation, int frames, int width, int height);
+		void SetStatic(SDL_Texture* texture, Vector2D pos, float rotation, int width, int height);
+		void SetAnimated(SDL_Texture* texture, Vector2D pos, float rotation, int frames, int width, int height);
+		void SetText(SDL_Texture* texture, Vector2D pos, float rotation, int width, int height);
+
 
 		inline SDL_Texture* GetTexture();
 

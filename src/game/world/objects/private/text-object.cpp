@@ -18,7 +18,7 @@ namespace object
 		m_colour = colour;
 
 		SDL_Texture* texture = renderer::Renderer::SharedInstace().GetSetTextureObjFromText(m_font, m_text, m_colour, m_texture);
-		m_texture->Set(
+		m_texture->SetText(
 			texture,
 			{
 				GetPosition().x,

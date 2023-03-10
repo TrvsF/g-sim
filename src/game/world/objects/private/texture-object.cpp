@@ -24,7 +24,7 @@ namespace object
 		SDL_Texture* texture = renderer::Renderer::SharedInstace().GetSetTextureObjFromId(id, m_texture);
 		if (frames == 1)
 		{
-			m_texture->Set(
+			m_texture->SetStatic(
 				texture,
 				{
 					GetPosition().x,
@@ -37,7 +37,7 @@ namespace object
 		}
 		else
 		{
-			m_texture->Set(
+			m_texture->SetAnimated(
 				texture,
 				{
 					GetPosition().x,

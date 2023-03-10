@@ -4,12 +4,12 @@ namespace object
 {
 	inline bool Texture::IsInitialized()
 	{
-		return !(m_texutre == nullptr);
+		return !(m_texture == nullptr);
 	}
 
 	inline SDL_Texture* Texture::GetTexture()
 	{
-		return m_texutre;
+		return m_texture;
 	}
 
 	inline void Texture::Rotation(float rotation)

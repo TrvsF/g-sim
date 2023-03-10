@@ -228,23 +228,28 @@ namespace renderer
 
 			if (currentxframe < 0)
 			{
-				int fx  = roundf(m_count / -currentxframe);
+				int fx  = (int)roundf(m_count / -currentxframe);
 				currentxframe = (fx % xframes);
 			}
 			offsetx = twidth * currentxframe;
 
 			if (currentyframe < 0)
 			{
-				int fy = roundf(m_count / -currentyframe);
+				int fy = (int)roundf(m_count / -currentyframe);
 				currentyframe = (fy % yframes);
 			}
 			offsety = theight * currentyframe;
 		}
-
-		Vector2D ofs = {
-			(texture->Pos().x - m_scalepos.x) * m_globalscale * 0.3f,
-			(texture->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
-		};
+		Vector2D ofs = VEC2_ZERO;
+		if (texture->Type() != object::TextureType::Text)
+		{
+			float scaleoffset = m_globalscale + 1.5f;
+			ofs = {
+				(x - m_scalepos.x) * m_globalscale * 0.3f,
+				(y - m_scalepos.y) * m_globalscale * 0.3f
+			};
+			ofs += {width / scaleoffset, height / scaleoffset};
+		}
 
 		SDL_Rect render_rect // big
 		{ x + ofs.x, y + ofs.y, width * scale, height * scale};
@@ -256,8 +261,11 @@ namespace renderer
 	
 	void Renderer::render_geometry_object(object::Geometry* geometry)
 	{
-		float ang = geometry->Rotation();
-		float scale = m_globalscale;
+		Vector2D pos = geometry->Pos();
+		float width  = geometry->Size().x;
+		float height = geometry->Size().y;
+		float ang	 = geometry->Rotation();
+		float scale  = m_globalscale;
 
 		// hack : find midpoint
 		Vector2D midpoint = VEC2_ZERO;
@@ -273,17 +281,22 @@ namespace renderer
 		}
 		midpoint = midpoint * m_globalscale;
 		
+		// as scale gets smaller > offset gets bigger > 2.0f gets smaller
+
 		// foreach tri that makes up the geometry 
 		for (const auto& tri : geometry->Tris())
 		{
+			float scaleoffset = m_globalscale + 1.5f;
+			// as scale > inf offset divice > 0
 			// offset to mousepoint
 			Vector2D offset = {
-					(geometry->Pos().x - m_scalepos.x) * m_globalscale * 0.3f,
-					(geometry->Pos().y - m_scalepos.y) * m_globalscale * 0.3f
+					(pos.x - m_scalepos.x) * m_globalscale * 0.3f,
+					(pos.y - m_scalepos.y) * m_globalscale * 0.3f
 			};
+			offset += {width / scaleoffset, height / scaleoffset};
 
 			// create verts from goemetry
-			Vector2D offsetpos = geometry->Pos() + offset;
+			Vector2D offsetpos = pos + offset;
 			std::vector<SDL_Vertex> verts;
 			for (const auto& point : tri.GetPoints())
 			{

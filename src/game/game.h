@@ -49,7 +49,10 @@ namespace game
 		std::vector<object::GameObject*> m_gameobjects;
 		object::Player* m_player;
 		object::Camera* m_camera;
+
+		// world gen TODO : move?
 		// object::BiomeObject* m_biome;
+		void spawn_food();
 		void init_entities();
 		void init_textelements();
 
@@ -57,6 +60,7 @@ namespace game
 		void zoom(float zoom, Vector2D mousepos);
 
 		// TODO : this another way maybe?
+		// URGENT TODO : all text is broke idk why
 		object::TextObject* m_consoletxt;
 		object::TextObject* m_coords;
 		void do_textelements();

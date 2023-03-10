@@ -67,6 +67,22 @@ namespace game
 		AddGameObject(m_coords);
 	}
 
+	void Game::spawn_food()
+	{
+		for (int i = 24; i >= -24; i--)
+		{
+			float x = (float)maths::GetRandomInt(64 * (i - 1), 64 * i);
+			float y = (float)maths::GetRandomInt(64 * (i - 1), 64 * i);
+			object::GameObject* food = object::GameObject::Create(
+				{ x,     y,     0.0f },
+				{ 0.0f,  0.0f,  0.0f },
+				{ 64.0f, 64.0f, 64.0f }
+			);
+			AddGameObject(new object::Food(food, 1000));
+		}
+		
+	}
+
 	void Game::zoom(float zoom, Vector2D mousepos)
 	{
 		// set global zoom
@@ -127,7 +143,6 @@ namespace game
 		}
 	}
 
-	// TODO : compleatly redone with getting texture pos instead of object pos - shouldnt be here as this holds OBJECTS
 	void Game::MouseClick(int mousebutton, int x, int y)
 	{
 		switch (mousebutton)	
@@ -219,6 +234,7 @@ namespace game
 		AddGameObject(new object::Food(food, 200));
 
 		init_textelements();
+		spawn_food();
 	}
 
 	// entities -> camera
