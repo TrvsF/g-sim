@@ -22,7 +22,7 @@ namespace game
 			searcher->GetTransform().Get2DPosition(),
 			gameobject->GetTransform().Get2DPosition(),
 			fov,
-			searcher->GetTransform().GetRotation().z
+			searcher->GetTransform().GetRotation()
 		) && inrange;
 	}
 

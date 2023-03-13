@@ -8,9 +8,9 @@
 
 namespace maths
 {
-    #define PI 3.14159265f
-    #define DEG_TO_RAD PI / 180.0f
-    #define RAD_TO_DEG 180.0f / PI
+#define PI 3.14159265f
+#define DEG_TO_RAD PI / 180.0f
+#define RAD_TO_DEG 180.0f / PI
 
     static int GetRandomInt(int min, int max)
     {
@@ -102,13 +102,6 @@ namespace maths
         requires std::indirect_binary_predicate<std::ranges::equal_to, std::ranges::iterator_t<R>, const T*>
     bool index(R&& range, const T& value) {
         return std::ranges::find(range, value) != std::ranges::end(range);
-    }
-
-    template<typename T>
-    void pop_front(std::vector<T>& vec)
-    {
-        assert(!vec.empty());
-        vec.erase(vec.begin());
     }
 
     template<typename Iter, typename RandomGenerator>

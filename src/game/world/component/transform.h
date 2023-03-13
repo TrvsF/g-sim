@@ -1,9 +1,10 @@
 #ifndef TRANSFORM_H_
 #define TRANSFORM_H_
 
+
 #include "../src/util/vector3d.h"
 #include "../src/util/vector2d.h"
-
+#include "../src/util/maths.h"
 namespace object
 {
 	class Transform
@@ -21,7 +22,7 @@ namespace object
 		inline void SetPosition(Vector3D position);
 		inline void OffsetPosition(Vector3D offset);
 
-		inline const Vector3D GetRotation() const;
+		inline int GetRotation();
 		inline void SetRotation(Vector3D rotation);
 		inline void OffsetRotation(Vector3D offset);
 

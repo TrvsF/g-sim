@@ -25,7 +25,7 @@ namespace object
 		m_aistate = AgentState::Wandering;
 		m_mood = VEC2_ZERO;
 		m_dead = false;
-		m_stamina = 5000;
+		m_stamina = 15000;
 		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
@@ -63,7 +63,7 @@ namespace object
 		m_aistate = AgentState::Wandering;
 		m_mood = VEC2_ZERO;
 		m_dead = false;
-		m_stamina = 5000;
+		m_stamina = 15000;
 		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
@@ -156,7 +156,7 @@ namespace object
 
 	void Agent::calc_transformoffsets()
 	{
-		float yaw = (GetTransform().GetRotation().z + m_turnspeed) * DEG_TO_RAD;
+		float yaw = (GetTransform().GetRotation() + m_turnspeed) * DEG_TO_RAD;
 
 		Vector2D direction_vec2d  = { cosf(yaw), sinf(yaw) };
 		Vector2D pos_change_vec2d = direction_vec2d * m_velocity;
@@ -197,15 +197,13 @@ namespace object
 
 	float Agent::get_degtopos(Vector2D pos)
 	{
-		int ang = maths::GetAngleBetweenPoints({ GetPosition().x, GetPosition().y }, { pos });
+		int ang = maths::GetAngleBetweenPoints({ GetPosition().x, GetPosition().y }, pos);
 		maths::GetBoundedAngleDeg(ang);
 		return (float)ang;
 	}
 
 	void Agent::move_towardtargetpos()
 	{
-		moveforward();
-
 		// 1/250 chance to create new turnobj (sim random wondering)
 		if (maths::GetRandomInt(0, 249) == 0 && m_aistate != AgentState::Eating)
 		{
@@ -221,9 +219,14 @@ namespace object
 		}
 		else
 		{
-			float r = GetTransform().GetRotation().z - get_degtopos(m_targetpos);
-			r > 0 ? turnleft() : turnright();
+			int agentrotation  = GetTransform().GetRotation();
+			int targetrotation = get_degtopos(m_targetpos);
+
+			float delta = (targetrotation - agentrotation + 540) % 360 - 180;
+
+			delta < 0 ? turnleft() : turnright();
 		}
+		moveforward();
 	}
 
 	Vector2D Agent::get_newtargetpos()
@@ -284,7 +287,7 @@ namespace object
 
 	void Agent::eat()
 	{
-		if (m_stamina > 5000)
+		if (m_stamina > 14500)
 		{ m_aistate = AgentState::Wandering; return; }
 
 		// if is in food eat it
@@ -382,7 +385,7 @@ namespace object
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
 		m_stamina--;
-		if (m_stamina < 3500) { m_aistate = AgentState::Eating; }
+		if (m_stamina < 14500) { m_aistate = AgentState::Eating; }
 		// transformations
 		do_friction();
 		calc_transformoffsets();

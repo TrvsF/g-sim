@@ -69,10 +69,10 @@ namespace game
 
 	void Game::spawn_food()
 	{
-		for (int i = 24; i >= -24; i--)
+		for (int i = 0; i < 32; i++)
 		{
-			float x = (float)maths::GetRandomInt(64 * (i - 1), 64 * i);
-			float y = (float)maths::GetRandomInt(64 * (i - 1), 64 * i);
+			float x = (float)maths::GetRandomInt(-5000, 5000);
+			float y = (float)maths::GetRandomInt(-5000, 5000);
 			object::GameObject* food = object::GameObject::Create(
 				{ x,     y,     0.0f },
 				{ 0.0f,  0.0f,  0.0f },
@@ -231,10 +231,10 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		AddGameObject(new object::Food(food, 200));
+		AddGameObject(new object::Food(food, 50000));
 
 		init_textelements();
-		spawn_food();
+		// spawn_food();
 	}
 
 	// entities -> camera

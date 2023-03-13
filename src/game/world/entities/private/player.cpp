@@ -12,7 +12,7 @@ namespace object
 	void Player::Update()
 	{
 		m_offset_rotation.z = (float)m_rotation;
-		float yaw = (GetTransform().GetRotation().z + m_rotation) * DEG_TO_RAD;
+		float yaw = (GetTransform().GetRotation() + m_rotation) * DEG_TO_RAD;
 
 		Vector2D direction_vec2d = { (float)cosf(yaw), (float)sin(yaw) };
 		Vector2D pos_change_vec2d = direction_vec2d * (float)m_velocity;

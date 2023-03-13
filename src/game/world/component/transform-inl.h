@@ -27,9 +27,11 @@ namespace object
 		m_position += offset;
 	}
 
-	inline const Vector3D Transform::GetRotation() const
+	inline int Transform::GetRotation()
 	{
-		return m_rotation;
+		int r = m_rotation.z;
+		maths::GetBoundedAngleDeg(r);
+		return r;
 	}
 
 	inline void Transform::SetRotation(Vector3D rotation)
