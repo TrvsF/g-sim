@@ -19,7 +19,7 @@ namespace ai
 		// do_debugconsole();
 	}
 
-	std::vector<object::Agent*> AI::getagents()
+	std::vector<object::Agent*> AI::get_agents()
 	{
 		std::vector <object::Agent*> agents;
 		for (const auto& gameobject : game::Game::SharedInstace().GetGameObjects())
@@ -39,17 +39,21 @@ namespace ai
 		std::cout
 			<< std::left << std::setfill(' ') << std::setw(24) << "name"    << " "
 			<< std::left << std::setfill(' ') << std::setw(12) << "state"   << " "
-			<< std::right<< std::setfill(' ') << std::setw(3)  << "hp"     << "/"
+			<< std::right<< std::setfill(' ') << std::setw(3)  << "hp"      << "/"
 			<< std::left << std::setfill(' ') << std::setw(5)  << "max"		<< " "
-			<< std::left << std::setfill(' ') << std::setw(6)  << "stamina" << "\n";
-		for (const auto& agent : getagents())
+			<< std::right<< std::setfill(' ') << std::setw(5)  << "stamina" << "/"
+			<< std::left << std::setfill(' ') << std::setw(5)  << "max"		<< 
+		"\n";
+
+		for (const auto& agent : get_agents())
 		{
 			std::cout
-				<< std::left << std::setfill(' ') << std::setw(24) << agent->GetName()		<< " "
-				<< std::left << std::setfill(' ') << std::setw(12) << agent->GetStateStr()	<< " "
-				<< std::right<< std::setfill(' ') << std::setw(3)  << agent->GetHealth()	<< "/"
-				<< std::left << std::setfill(' ') << std::setw(5)  << agent->GetMaxHealth() << " "
-				<< std::left << std::setfill(' ') << std::setw(6)  << agent->GetStamina()	<<
+				<< std::left << std::setfill(' ') << std::setw(24) << agent->GetName()		 << " "
+				<< std::left << std::setfill(' ') << std::setw(12) << agent->GetStateStr()	 << " "
+				<< std::right<< std::setfill(' ') << std::setw(3)  << agent->GetHealth()	 << "/"
+				<< std::left << std::setfill(' ') << std::setw(5)  << agent->GetMaxHealth()  << " "
+				<< std::right<< std::setfill(' ') << std::setw(6)  << agent->GetStamina()	 << "/"
+				<< std::left << std::setfill(' ') << std::setw(5)  << agent->GetMaxStamina() <<
 			"\n";
 		}
 	}

@@ -3,7 +3,7 @@
 namespace object
 {
 	Food::Food(GameObject* gameobject, int ammount)
-		: TextureObject(gameobject, "food-full", 10)
+		: TextureObject(gameobject, "food-green", 11)
 	{
 		m_maxammount	= ammount;
 		m_ammount		= ammount;
@@ -33,13 +33,13 @@ namespace object
 	int Food::Eat()
 	{
 		int start = m_ammount;
-		m_ammount -= 10;
+		m_ammount -= 5;
 		if (m_ammount < 0)
 		{
 			die();
 			return start;
 		}
-		return 100;
+		return 5;
 	}
 
 	void Food::Update()

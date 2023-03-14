@@ -15,7 +15,7 @@ namespace object
 		t_maxvel  = maths::GetRandomFloat(1.0f, 3.0f);
 		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
 		t_maxhealth  = maths::GetRandomInt(70, 250);
-		t_food    = maths::GetRandomInt(-10, 10) + t_maxhealth;
+		t_food    = maths::GetRandomInt(750, 1500) + t_maxhealth;
 		t_damage  = maths::GetRandomInt(5, 15);
 		t_colour  = get_randomcolour();
 		GetGeometry()->Colour(t_colour);
@@ -25,7 +25,7 @@ namespace object
 		m_aistate = AgentState::Wandering;
 		m_mood = VEC2_ZERO;
 		m_dead = false;
-		m_stamina = 15000;
+		m_stamina = t_food;
 		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
@@ -53,7 +53,7 @@ namespace object
 		t_maxvel = maths::GetRandomFloat(1.0f, 3.0f);
 		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
 		t_maxhealth = maths::GetRandomInt(70, 250);
-		t_food = maths::GetRandomInt(-10, 10) + t_maxhealth;
+		t_food = maths::GetRandomInt(2000, 3500);
 		t_damage = maths::GetRandomInt(5, 15);
 		t_colour = get_randomcolour();
 		GetGeometry()->Colour(t_colour);
@@ -63,7 +63,7 @@ namespace object
 		m_aistate = AgentState::Wandering;
 		m_mood = VEC2_ZERO;
 		m_dead = false;
-		m_stamina = 15000;
+		m_stamina = t_food;
 		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
@@ -106,6 +106,7 @@ namespace object
 				m_seenagent = static_cast<Agent*>(ent);
 			}
 		}
+
 		if (ent->GetEntityType() == GameEntityType::Food)
 		{
 			for (const auto& memory : m_objectmemory)
@@ -287,7 +288,7 @@ namespace object
 
 	void Agent::eat()
 	{
-		if (m_stamina > 14500)
+		if (m_stamina > t_food - 100)
 		{ m_aistate = AgentState::Wandering; return; }
 
 		// if is in food eat it
@@ -385,7 +386,7 @@ namespace object
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
 		m_stamina--;
-		if (m_stamina < 14500) { m_aistate = AgentState::Eating; }
+		if (m_stamina < t_food - 300) { m_aistate = AgentState::Eating; }
 		// transformations
 		do_friction();
 		calc_transformoffsets();

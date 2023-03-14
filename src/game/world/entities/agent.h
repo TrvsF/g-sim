@@ -115,14 +115,16 @@ namespace object
 		inline std::string GetName()
 		{ return t_name; }
 
+		
+		inline int GetHealth()
+		{ return m_health; }
 		inline int GetMaxHealth()
 		{ return t_maxhealth; }
 
-		inline int GetHealth()
-		{ return m_health; }
-
 		inline int GetStamina()
 		{ return m_stamina; }
+		inline int GetMaxStamina()
+		{ return t_food; }
 		
 		std::string GetStateStr();
 	};

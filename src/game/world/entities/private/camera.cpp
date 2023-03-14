@@ -19,6 +19,7 @@ namespace object
 
 	void Camera::SetTexturePos(GameObject* gameobject)
 	{
+		// TODO : clean
 		if (gameobject->GetObjType() == GameObjectType::Texture)
 		{
 			// if is a texture game object get its texture companant
@@ -39,6 +40,7 @@ namespace object
 			textureobj->Active(true);
 			textureobj->Pos(pos);
 		}
+
 		if (gameobject->GetObjType() == GameObjectType::Geometry)
 		{
 			// if is a texture game object get its texture companant

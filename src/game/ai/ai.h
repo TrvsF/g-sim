@@ -24,7 +24,7 @@ namespace ai
 
 		long m_tickcounter; // TODO : probably not a good idea
 
-		std::vector<object::Agent*> getagents();
+		std::vector<object::Agent*> get_agents();
 		void do_debugconsole();
 	public:
 		static AI& SharedInstace() { static AI ai; return ai; }

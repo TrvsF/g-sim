@@ -215,7 +215,8 @@ namespace renderer
 
 		int offsetx = 0;
 		int offsety = 0;
-		// animated texture frame finder
+
+		// offset setter for animated textures
 		if (texture->Type() == object::TextureType::Dynamic)
 		{
 			int xframes = texture->Data().xframes;
@@ -240,6 +241,8 @@ namespace renderer
 			}
 			offsety = theight * currentyframe;
 		}
+
+		// calc scale
 		Vector2D ofs = VEC2_ZERO;
 		if (texture->Type() != object::TextureType::Text)
 		{
@@ -249,6 +252,13 @@ namespace renderer
 				(y - m_scalepos.y) * m_globalscale * 0.3f
 			};
 			ofs += {width / scaleoffset, height / scaleoffset};
+			// TODO : offset renderer by ammount
+		}
+		else
+		{
+			scale  = 1;
+			width  = texture->TWidth();
+			height = texture->THeight();
 		}
 
 		SDL_Rect render_rect // big
@@ -280,8 +290,6 @@ namespace renderer
 			}
 		}
 		midpoint = midpoint * m_globalscale;
-		
-		// as scale gets smaller > offset gets bigger > 2.0f gets smaller
 
 		// foreach tri that makes up the geometry 
 		for (const auto& tri : geometry->Tris())
