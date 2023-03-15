@@ -66,9 +66,9 @@ namespace object
 		inline int CurrentYFrame()
 		{ return m_ycurrentframe; }
 
-		inline Vector2D Scaleoffset()
+		inline Vector2D Offsetscale()
 		{ return m_scaleoffset; }
-		inline void Scaleoffset(Vector2D pos)
+		inline void Offsetscale(Vector2D pos)
 		{ m_scaleoffset = pos; }
 
 		inline void Pos(Vector2D pos)
