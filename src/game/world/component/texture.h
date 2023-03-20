@@ -27,7 +27,7 @@ namespace object
 		TextureType		m_type;
 		DynamicData		m_data;
 		Vector2D		m_pos;
-		Vector2D		m_scaleoffset;
+		Vector2D		m_offsetpos;
 		int				m_xcurrentframe;
 		int				m_ycurrentframe;
 		float			m_rotation;
@@ -66,10 +66,10 @@ namespace object
 		inline int CurrentYFrame()
 		{ return m_ycurrentframe; }
 
-		inline Vector2D Offsetscale()
-		{ return m_scaleoffset; }
-		inline void Offsetscale(Vector2D pos)
-		{ m_scaleoffset = pos; }
+		inline Vector2D Offsetpos()
+		{ return m_offsetpos; }
+		inline void Offsetpos(Vector2D pos)
+		{ m_offsetpos = pos; }
 
 		inline void Pos(Vector2D pos)
 		{ m_pos = pos; }

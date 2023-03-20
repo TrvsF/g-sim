@@ -4,12 +4,7 @@
 
 /*--------
  TODO:
- [bugs]
- -
- [improvements]
- - 
- [additions]
- -
+ CAMERA NEEDS A COMPLETE REWORK!
 --------*/
 
 int main(int argc, char* argv[])

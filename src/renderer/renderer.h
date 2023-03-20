@@ -15,7 +15,12 @@
 #include "../game/world/component/texture.h"
 #include "../game/world/component/geometry.h"
 #include "../base/console.h"
-#include "../renderer/assets.h"
+#include "../event/event.h"
+#include "camera.h"
+#include "assets.h"
+
+#include <dexode/EventBus.hpp>
+using Listener = dexode::EventBus::Listener;
 
 namespace renderer
 {
@@ -33,7 +38,14 @@ namespace renderer
 
 		SDL_Window*		m_window;
 		SDL_Renderer*	m_renderer;
+
+		Camera*			m_camera;
 		Assets*			m_assets;
+
+		bool			m_debugrender;
+
+		Listener m_listener{ event::Event::SharedInstace().EventBus };
+		void e_renderaabbchange(const event::eSetDrawAABB& event);
 
 		std::vector<object::AABB*>		m_aabbs;
 		std::vector<object::Geometry*>	m_geometryobjects;
@@ -41,7 +53,7 @@ namespace renderer
 
 		void render_geometry_object(object::Geometry* geometry_object);
 		void render_texture_object (object::Texture* texture_object);
-		void render_aabb		   (object::AABB*     aabb);
+		void render_aabb		   (object::AABB* aabb);
 		void render_rect		   (SDL_Rect rect, SDL_Color colour);
 		void render_fillrect	   (SDL_Rect rect, SDL_Color outline, SDL_Color fill);
 
@@ -72,8 +84,6 @@ namespace renderer
 		void LoadGeometry  (object::Geometry* geometry_object);
 		void UnloadTexture (object::Texture* texture_object);
 
-		inline SDL_Renderer* GetRendererObj()
-		{ return Renderer::m_renderer; }
 		inline Vector2D GetScreensize()
 		{ return { (float)m_width, (float)m_height }; }
 

@@ -7,6 +7,7 @@ namespace renderer
 		m_window	= nullptr;
 		m_renderer	= nullptr;
 		m_assets	= nullptr;
+		m_camera	= nullptr;
 
 		m_title		= "";
 		m_width		= 0;
@@ -15,10 +16,20 @@ namespace renderer
 		m_scalepos = VEC2_ZERO;
 		m_globalscale = 1.0f;
 		m_count = 0;
+
+		m_debugrender = false;
+
+		m_listener.listen<event::eSetDrawAABB> (std::bind(
+			&Renderer::e_renderaabbchange, this, std::placeholders::_1));
 	}
 
 	Renderer::~Renderer()
 	{
+	}
+
+	void Renderer::e_renderaabbchange(const event::eSetDrawAABB& event)
+	{
+		m_debugrender = event.flag;
 	}
 
 	SDL_Texture* Renderer::GetSetTextureObjFromId(const char* id, object::Texture* texture_obj)
@@ -119,6 +130,9 @@ namespace renderer
 		// create the asset manager object
 		m_assets = new Assets();
 
+		// create init camera
+		m_camera = new Camera(&m_textureobjects, &m_geometryobjects);
+
 		SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 
 		LoadAllFonts();
@@ -151,9 +165,12 @@ namespace renderer
 			render_texture_object(textureobj);
 		}
 
-		for (object::AABB* aabb : m_aabbs)
+		if (m_debugrender)
 		{
-			render_aabb(aabb);
+			for (object::AABB* aabb : m_aabbs)
+			{
+				render_aabb(aabb);
+			}
 		}
 
 		m_count++; // TODO : better way to do this?
@@ -257,10 +274,7 @@ namespace renderer
 				(x - m_scalepos.x) * m_globalscale * 0.3f,
 				(y - m_scalepos.y) * m_globalscale * 0.3f
 			};
-			offset += {width / scaleoffset, height / scaleoffset};
-			// TODO : offset renderer by ammount
-			texture->OffsetPos(texture->Offsetscale() - offset);
-			texture->Offsetscale(offset);
+			// offset += {width / scaleoffset, height / scaleoffset};
 		}
 
 		SDL_Rect render_rect // big
@@ -302,8 +316,6 @@ namespace renderer
 				(pos.y - m_scalepos.y) * m_globalscale * 0.3f
 		};
 		offset += {width / scaleoffset, height / scaleoffset};
-		geometry->OffsetPos(geometry->Offsetscale() - offset);
-		geometry->Offsetscale(offset);
 
 		// foreach tri that makes up the geometry 
 		for (const auto& tri : geometry->Tris())

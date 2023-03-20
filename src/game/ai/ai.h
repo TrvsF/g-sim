@@ -1,6 +1,7 @@
 #ifndef AI_H_
 #define AI_H_
 
+#include "god.h"
 #include "../game.h"
 #include "../world/entities/agent.h"
 #include "../world/game-object.h"

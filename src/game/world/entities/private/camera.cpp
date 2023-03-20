@@ -30,7 +30,7 @@ namespace object
 				object->GetTransform().GetPosition().x - m_local_offset_pos.x,
 				object->GetTransform().GetPosition().y - m_local_offset_pos.y
 			};
-			pos += textureobj->Offsetscale();
+
 			// if offscreen dont render
 			if (pos.x + textureobj->Width() < 0 || pos.x > m_screensize.x || pos.y + textureobj->Height() < 0 || pos.y > m_screensize.y)
 			{
@@ -52,7 +52,7 @@ namespace object
 				object->GetTransform().GetPosition().x - m_local_offset_pos.x,
 				object->GetTransform().GetPosition().y - m_local_offset_pos.y
 			};
-			pos += geometry->Offsetscale();
+
 			// if offscreen dont render
 			if (pos.x + object->GetSize().width < 0 || pos.x > m_screensize.x || pos.y + object->GetSize().height < 0 || pos.y > m_screensize.y)
 			{

@@ -92,6 +92,20 @@ namespace console
 			SPECIAL = true;
 		}
 
+		// - aabb
+		if (command == "aabb")
+		{
+			int newflag[1];
+			int size = sizeof(newflag) / sizeof(newflag[0]);
+			GetSubcommands(input, newflag, size);
+
+			bool flag = newflag[0];
+			bus->postpone(event::eSetDrawAABB {flag});
+			bus->process();
+
+			SPECIAL = true;
+		}
+
 		m_inputstr[0] = '\0';
 	}
 }

@@ -3,11 +3,11 @@
 namespace object
 {
 	Texture::Texture()
-		: m_texture(nullptr), m_pos(VEC2_ZERO), m_rotation(0), m_width(0), m_height(0), m_active(false), m_scale(1), m_type(TextureType::Static), m_xcurrentframe(0), m_ycurrentframe(0), m_scaleoffset(VEC2_ZERO)
+		: m_texture(nullptr), m_pos(VEC2_ZERO), m_rotation(0), m_width(0), m_height(0), m_active(false), m_scale(1), m_type(TextureType::Static), m_xcurrentframe(0), m_ycurrentframe(0), m_offsetpos(VEC2_ZERO)
 	{}
 
 	Texture::Texture(SDL_Texture* texture)
-		: m_texture(texture), m_pos(VEC2_ZERO), m_rotation(0), m_width(0), m_height(0), m_active(false), m_scale(1), m_type(TextureType::Static), m_xcurrentframe(0), m_ycurrentframe(0), m_scaleoffset(VEC2_ZERO)
+		: m_texture(texture), m_pos(VEC2_ZERO), m_rotation(0), m_width(0), m_height(0), m_active(false), m_scale(1), m_type(TextureType::Static), m_xcurrentframe(0), m_ycurrentframe(0), m_offsetpos(VEC2_ZERO)
 	{
 		SDL_QueryTexture(m_texture, NULL, NULL, &m_twidth, &m_theight);
 	}

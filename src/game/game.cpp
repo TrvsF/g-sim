@@ -78,7 +78,7 @@ namespace game
 				{ 0.0f,  0.0f,  0.0f },
 				{ 64.0f, 64.0f, 64.0f }
 			);
-			AddGameObject(new object::Food(food, 1000));
+			AddGameObject(new object::Food(food, 100));
 		}
 		
 	}
@@ -116,7 +116,7 @@ namespace game
 
 			// offset pos & draw coords
 			Vector2D offsetpos = pos - m_camera->GetOffsetpos();
-			m_coords->GetTexture()->Pos(offsetpos + Vector2D{0, -20});
+			m_coords->GetTexture()->Pos(Vector2D{10, 600});
 			m_coords->SetText(coords);
 		}
 	}
@@ -231,7 +231,7 @@ namespace game
 			{ 0.0f,    0.0f,    0.0f },
 			{ 64.0f,   64.0f,   64.0f }
 		);
-		AddGameObject(new object::Food(food, 50000));
+		AddGameObject(new object::Food(food, 1000));
 
 		init_textelements();
 		// spawn_food();

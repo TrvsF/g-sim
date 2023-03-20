@@ -76,7 +76,7 @@ namespace object
 		set_tris(points);
 
 		m_pos = pos;
-		m_scaleoffset = VEC2_ZERO;
+		m_offsetpos = VEC2_ZERO;
 		m_active = true;
 		m_height = height;
 		m_width = width;
@@ -89,7 +89,7 @@ namespace object
 		set_tris(points);
 		
 		m_active	  = true;
-		m_scaleoffset = VEC2_ZERO;
+		m_offsetpos = VEC2_ZERO;
 		m_pos		= pos;
 		m_height	= height;
 		m_width		= width;

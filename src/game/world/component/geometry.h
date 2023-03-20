@@ -17,7 +17,7 @@ namespace object
 	protected:
 		std::vector<Triangle>	m_tris;
 		Vector2D				m_pos;
-		Vector2D				m_scaleoffset;
+		Vector2D				m_offsetpos;
 		float					m_rotation;
 		float					m_width;
 		float					m_height;
@@ -40,10 +40,10 @@ namespace object
 		inline Vector2D Size()
 		{ return { m_width, m_height }; }
 
-		inline Vector2D Offsetscale()
-		{ return m_scaleoffset; }
-		inline void Offsetscale(Vector2D pos)
-		{ m_scaleoffset = pos;  }
+		inline Vector2D Offsetpos()
+		{ return m_offsetpos; }
+		inline void Offsetpos(Vector2D pos)
+		{ m_offsetpos = pos;  }
 
 		inline SDL_Color Colour()
 		{ return m_maincolour; }

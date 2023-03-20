@@ -14,7 +14,8 @@ using _Listener = dexode::EventBus::Listener;
 namespace event
 {
 	// EVENTS
-	// commands
+	// ---------------------
+	// misc
 	struct ePosChange
 	{
 		Vector2D pos;
@@ -23,18 +24,21 @@ namespace event
 	{
 		float scale;
 	};
+	struct eSetDrawAABB
+	{
+		bool flag;
+	};
 	// agents
 	struct eObjectDeath
 	{
 		object::GameObject* victim;
 		// object::GameObject* killer;
 	};
-
 	struct eAgentBorn
 	{
 		object::GameObject* agent;
 	};
-
+	// ---------------------
 	class Event
 	{
 	private:
