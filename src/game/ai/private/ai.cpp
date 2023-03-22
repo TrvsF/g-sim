@@ -60,10 +60,20 @@ namespace ai
 
 	void AI::Tick()
 	{
+		std::string genus;
+		GenerateGenus(genus);
+		std::cout << genus;
+		std::cout << "\n";
+		PrintGenus(genus);
+		ReadGenus(genus);
+		std::cout << "\n";
+		std::cout << "\n";
+			/*
 		m_tickcounter++;
 		if (m_tickcounter % 64 == 0)
 		{
 			do_debugconsole();
 		}
+		*/
 	}
 }
