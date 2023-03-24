@@ -65,7 +65,8 @@ namespace ai
 		std::cout << genus;
 		std::cout << "\n";
 		PrintGenus(genus);
-		ReadGenus(genus);
+		std::vector<std::string> genes   = GetGenes(genus);
+		std::vector<std::string> condons = GetCodons(genes[1]);
 		std::cout << "\n";
 		std::cout << "\n";
 			/*

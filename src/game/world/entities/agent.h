@@ -7,7 +7,8 @@
 
 namespace object
 {
-	struct Turnobj {
+	struct Turnobj 
+	{
 		int   steps;
 		bool  left;
 	};
@@ -31,6 +32,9 @@ namespace object
 		int		   m_health;
 		bool       m_dead;
 
+		// genes
+		std::string g_genome;
+
 		// traits
 		std::string t_name;
 		int t_food;
@@ -39,17 +43,17 @@ namespace object
 		float t_maxvel;
 		float t_maxturn;
 		SDL_Color t_colour;
-
-		// settargets
-		Vector2D	m_targetpos;
-		GameObject*	m_targetobject;
 		
-		// memory
+		// memory/targets
+		Vector2D	m_targetpos;
+		GameObject* m_targetobject;
 		Agent* m_seenagent;
+
 		std::vector<GameObject*> m_collidedobjs;
 		std::vector<std::pair<Vector2D, GameEntityType>> m_objectmemory;
-		void add_objecttomemory(GameObject* object);
+
 		void forget(Vector2D pos);
+		void add_objecttomemory(GameObject* object);
 		Vector2D get_memoryentitypos(GameEntityType type);
 
 		// movement util
@@ -105,6 +109,11 @@ namespace object
 		inline bool IsDead()
 		{ return m_dead; }
 
+		inline void SetGenome(std::string genome) 
+		{ g_genome = genome; }
+		inline std::string GetGenome() 
+		{ return g_genome; }
+
 		void Die();
 		void TakeDamage(int damage);
 		void SeenEnt(GameObject* ent);
@@ -114,7 +123,6 @@ namespace object
 		// debug
 		inline std::string GetName()
 		{ return t_name; }
-
 		
 		inline int GetHealth()
 		{ return m_health; }
@@ -127,6 +135,7 @@ namespace object
 		{ return t_food; }
 		
 		std::string GetStateStr();
+		// ------
 	};
 }
 #endif // !AGENT_H_

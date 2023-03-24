@@ -4,12 +4,13 @@
 #include "../world/entities/agent.h"
 #include "../world/game-object.h"
 
+#include <vector>
 #include <string>
 #include "../src/util/maths.h"
 
 namespace ai
 {
-	enum GenomeSections
+	enum Genes
 	{
 		MIDPOINTS = 0,
 		TRIEDGES  = 1
@@ -17,13 +18,16 @@ namespace ai
 
 	const std::string STOP = "000";
 
-	void get_newgene(std::string& genus);
-	inline void get_newgene(std::string& genus)
+	// i dont think these should be inlines??
+
+	void		append_codon(std::string& genus);
+	inline void append_codon(std::string& genus)
 	{
+		// generate random codon
 		int one = maths::GetRandomInt(0, 1);
 		int two = maths::GetRandomInt(0, 1);
 		int thr = maths::GetRandomInt(0, 1);
-		// if is early stop regen 
+		// if is stop regen 
 		bool stopcheck = !one && !two && !thr;
 		if (stopcheck)
 		{
@@ -31,40 +35,96 @@ namespace ai
 			two = maths::GetRandomInt(0, 1);
 			thr = maths::GetRandomInt(0, 1);
 		}
+		// add to genus
+		genus += char(one + 48);
+		genus += char(two + 48);
+		genus += char(thr + 48);
+	}
 
-		char c_one = char(one + 48);
-		char c_two = char(two + 48);
-		char c_thr = char(thr + 48);
+	std::vector<std::string>		GetGenes(std::string genus);
+	inline std::vector<std::string> GetGenes(std::string genus)
+	{
+		// reads each codon from gene
+		std::vector<std::string> genes;
+		std::string gbuilder;
 
-		genus += c_one;
-		genus += c_two;
-		genus += c_thr;
+		int splits = std::floor(genus.size() / 3);
+		for (int i = 0; i < splits; i++)
+		{
+			int gindex = i * 3;
+			int left  = genus[gindex]	  - 48;
+			int mid   = genus[gindex + 1] - 48;
+			int right = genus[gindex + 2] - 48;
+
+			bool isstop = !left && !mid && !right;
+			if (isstop) 
+			{
+				// add gene & reset gene builder
+				genes.push_back(gbuilder);
+				gbuilder = "";
+				continue;
+			}
+
+			gbuilder += genus[gindex];
+			gbuilder += genus[gindex + 1];
+			gbuilder += genus[gindex + 2];
+		}
+		return genes;
+	}
+
+	std::vector<std::string>		GetCodons(std::string gene);
+	inline std::vector<std::string> GetCodons(std::string gene)
+	{
+		// for each codon from gene
+		std::vector<std::string> codons;
+
+		int splits = std::floor(gene.size() / 3);
+		for (int i = 0; i < splits; i++)
+		{
+			int cindex = i * 3;
+			int left  = gene[cindex]	 - 48;
+			int mid   = gene[cindex + 1] - 48;
+			int right = gene[cindex + 2] - 48;
+
+			bool isstop = !left && !mid && !right;
+			if (isstop) 
+			{ 
+				return codons; 
+			}
+
+			std::string codon;
+			codon += gene[cindex];
+			codon += gene[cindex + 1];
+			codon += gene[cindex + 2];
+			codons.push_back(codon);
+		}
+		return codons;
 	}
 
 	inline void GenerateGenus(std::string& genus)
 	{
-		int GENES;
+		int CODONS;
 		int GENESIZE;
-		// genomes are sperated by 
+		// size of chromosome
 		for (int i = 0; i < 2; i++)
 		{ 
 			switch (i)
 			{
 			case MIDPOINTS:
-				GENES	 = 2; 
-				GENESIZE = 4; 
-				for (int t = 0; t < GENES * GENESIZE; t++)
+				CODONS   = 4; 
+				GENESIZE = 1; // points
+				for (int t = 0; t < CODONS * GENESIZE; t++)
 				{
-					get_newgene(genus);
+					append_codon(genus);
 				}
 				genus += STOP;
 				break;
 			case TRIEDGES:
-				GENES = 6;
-				GENESIZE = 4;
-				for (int t = 0; t < GENES * GENESIZE; t++)
+				CODONS   = 6;
+				GENESIZE = 4; // points
+				for (int t = 0; t < CODONS * GENESIZE; t++)
 				{
-					get_newgene(genus);
+					append_codon(genus);
 				}
 				genus += STOP;
 				break;
@@ -72,18 +132,27 @@ namespace ai
 		}
 	}
 
-	inline void ReadGenus(std::string genus)
+	inline void CreateGenus(object::Agent* agent)
 	{
-		int splits = std::floor(genus.size() / 3) - 1; // skips last stop
-		for (int i = 0; i < splits; i++)
-		{
-			int geneindex = i * 3;
-			const char left  = genus[geneindex];
-			const char mid   = genus[geneindex + 1];
-			const char right = genus[geneindex + 2];
+		// randomly generate genus
+		std::string genus;
+		GenerateGenus(genus);
 
-			bool isstop = !left && !mid && !right;
-			if (isstop) {  }
+		// get codons for each gene
+		std::vector<std::string> genes = GetGenes(genus);
+		std::vector<std::string> midpointcodons = GetCodons(genes[0]);
+		std::vector<std::string> pointcodons = GetCodons(genes[1]);
+
+		std::vector<Vector2D> points;
+		bool right = true;
+		Vector2D	cvec;
+		std::string cstr;
+		// TODO : pop points
+		for (int c = 0; c < pointcodons.size(); c++)
+		{
+			if (c % 3 == 0) // codons/2
+			{ right = !right; }
+			std::string codon = pointcodons[c];
 		}
 	}
 	
