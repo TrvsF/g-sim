@@ -18,6 +18,8 @@
 
 #include "logic/collision.h"
 
+#include "ai/god.h"
+
 #include "../src/updater/controller.h"
 #include "../event/event.h"
 

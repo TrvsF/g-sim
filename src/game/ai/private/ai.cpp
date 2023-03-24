@@ -61,12 +61,12 @@ namespace ai
 	void AI::Tick()
 	{
 		std::string genus;
-		GenerateGenus(genus);
+		god::GenerateGenus(genus);
 		std::cout << genus;
 		std::cout << "\n";
-		PrintGenus(genus);
-		std::vector<std::string> genes   = GetGenes(genus);
-		std::vector<std::string> condons = GetCodons(genes[1]);
+		god::PrintGenus(genus);
+		std::vector<std::string> genes   = god::GetGenes(genus);
+		std::vector<std::string> condons = god::GetCodons(genes[1]);
 		std::cout << "\n";
 		std::cout << "\n";
 			/*

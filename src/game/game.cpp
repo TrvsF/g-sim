@@ -151,19 +151,16 @@ namespace game
 		{
 			float _x = x + m_camera->GetOffsetpos().x;
 			float _y = y + m_camera->GetOffsetpos().y;
-			object::GameObject* miscagent = object::GameObject::Create(
+			object::GameObject* gameobject = object::GameObject::Create(
 				{ _x,	   _y,      0.0f },
 				{ 0.0f,    0.0f,    0.0f },
 				{ 64.0f,   64.0f,   64.0f }
 			);
-			std::vector<Vector2D> points = {
-				{ 30, 30 },
-				{ 60, 30 },
-				{ 60, 80 },
-				{ 20, 100 }
-			};
-			int sides = maths::GetRandomInt(2, 6);
-			AddGameObject(new object::Agent(miscagent, sides));
+
+			object::Agent* agent = new object::Agent(gameobject, 0);
+			god::BuildAgent(gameobject, agent);
+
+			AddGameObject(agent);
 		}
 		break;
 		case 2: // mm

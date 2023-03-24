@@ -8,7 +8,7 @@
 #include <string>
 #include "../src/util/maths.h"
 
-namespace ai
+namespace god
 {
 	enum Genes
 	{
@@ -120,7 +120,7 @@ namespace ai
 				genus += STOP;
 				break;
 			case TRIEDGES:
-				CODONS   = 6;
+				CODONS   = 4;
 				GENESIZE = 4; // points
 				for (int t = 0; t < CODONS * GENESIZE; t++)
 				{
@@ -132,28 +132,46 @@ namespace ai
 		}
 	}
 
-	inline void CreateGenus(object::Agent* agent)
+	inline void BuildAgent(object::GameObject* object, object::Agent* agent)
 	{
 		// randomly generate genus
 		std::string genus;
 		GenerateGenus(genus);
 
 		// get codons for each gene
-		std::vector<std::string> genes = GetGenes(genus);
-		std::vector<std::string> midpointcodons = GetCodons(genes[0]);
-		std::vector<std::string> pointcodons = GetCodons(genes[1]);
-
+		std::vector<std::string> genes			= GetGenes(genus);
+		std::vector<std::string> midpointcodons = GetCodons(genes[0]); // unused
+		std::vector<std::string> pointcodons	= GetCodons(genes[1]);
+		
+		// extract points
 		std::vector<Vector2D> points;
-		bool right = true;
 		Vector2D	cvec;
 		std::string cstr;
-		// TODO : pop points
+
+		bool right = true;
 		for (int c = 0; c < pointcodons.size(); c++)
 		{
-			if (c % 3 == 0) // codons/2
-			{ right = !right; }
-			std::string codon = pointcodons[c];
+			if (c % 2 == 0) // codons/2
+			{ 
+				char* end;
+				float f = strtoull(cstr.c_str(), &end, 2);
+				right ? cvec.y = f : cvec.x = f;
+				right = !right;
+				cstr = "";
+			}
+
+			if (c % 4 == 0 && c) 
+			{ 
+				points.push_back(cvec);
+				cvec = VEC2_ZERO;
+			}
+
+			cstr += pointcodons[c];
 		}
+
+		// build agent
+		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
+		agent->SetGenome(genus);
 	}
 	
 	inline void PrintGenus(std::string genus)
