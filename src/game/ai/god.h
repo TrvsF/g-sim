@@ -121,7 +121,7 @@ namespace god
 				break;
 			case TRIEDGES:
 				CODONS   = 4;
-				GENESIZE = 4; // points
+				GENESIZE = 6; // points
 				for (int t = 0; t < CODONS * GENESIZE; t++)
 				{
 					append_codon(genus);

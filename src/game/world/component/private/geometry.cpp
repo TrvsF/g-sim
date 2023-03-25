@@ -86,6 +86,7 @@ namespace object
 	{
 		float width, height;
 		normalisepoints(points, width, height);
+		m_tris.clear(); // hack for genome TODO : proper solution
 		set_tris(points);
 		
 		m_active	  = true;

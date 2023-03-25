@@ -157,7 +157,7 @@ namespace game
 				{ 64.0f,   64.0f,   64.0f }
 			);
 
-			object::Agent* agent = new object::Agent(gameobject, 0);
+			object::Agent* agent = new object::Agent(gameobject, 6);
 			god::BuildAgent(gameobject, agent);
 
 			AddGameObject(agent);
