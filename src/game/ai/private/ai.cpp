@@ -60,21 +60,10 @@ namespace ai
 
 	void AI::Tick()
 	{
-		std::string genus;
-		god::GenerateGenus(genus);
-		std::cout << genus;
-		std::cout << "\n";
-		god::PrintGenus(genus);
-		std::vector<std::string> genes   = god::GetGenes(genus);
-		std::vector<std::string> condons = god::GetCodons(genes[1]);
-		std::cout << "\n";
-		std::cout << "\n";
-			/*
 		m_tickcounter++;
 		if (m_tickcounter % 64 == 0)
 		{
 			do_debugconsole();
 		}
-		*/
 	}
 }
