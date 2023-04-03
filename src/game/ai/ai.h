@@ -11,7 +11,7 @@
 #include <dexode/EventBus.hpp>
 using Listener = dexode::EventBus::Listener;
 
-namespace ai
+namespace ai 
 {
 	class AI
 	{

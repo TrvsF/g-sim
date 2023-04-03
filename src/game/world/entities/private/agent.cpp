@@ -7,26 +7,9 @@ namespace object
 	{
 		SetEntityType(GameEntityType::Agent);
 
-		// TODO : set by genome
-		// - gneome will have 2 chromosomes
-		// - A dicates solely the geometry object
-		// - B will determine personality triats (agression, etc)
-		// - below vars are made up of either B or B/A(mix)
-		t_maxvel  = maths::GetRandomFloat(1.0f, 3.0f);
-		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
-		t_maxhealth  = maths::GetRandomInt(70, 250);
-		t_food    = maths::GetRandomInt(750, 1500) + t_maxhealth;
-		t_damage  = maths::GetRandomInt(5, 15);
-		t_colour  = get_randomcolour();
-		GetGeometry()->Colour(t_colour);
-		set_name();
-		// --------------------------
-
 		m_aistate = AgentState::Wandering;
 		m_mood = VEC2_ZERO;
 		m_dead = false;
-		m_stamina = t_food;
-		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
@@ -38,6 +21,9 @@ namespace object
 		m_turnspeed = 0;
 		m_isturning = false;
 		m_ismoving  = false;
+
+		set_randomtraits();
+		reset_keyvars();
 	}
 
 	Agent::Agent(GameObject* gameobject, std::vector<Vector2D> points)
@@ -45,26 +31,9 @@ namespace object
 	{
 		SetEntityType(GameEntityType::Agent);
 
-		// TODO : set by genome
-		// - gneome will have 2 chromosomes
-		// - A dicates solely the geometry object
-		// - B will determine personality triats (agression, etc)
-		// - below vars are made up of either B or B/A(mix)
-		t_maxvel = maths::GetRandomFloat(1.0f, 3.0f);
-		t_maxturn = maths::GetRandomFloat(1.0f, 3.0f);
-		t_maxhealth = maths::GetRandomInt(70, 250);
-		t_food = maths::GetRandomInt(2000, 3500);
-		t_damage = maths::GetRandomInt(5, 15);
-		t_colour = get_randomcolour();
-		GetGeometry()->Colour(t_colour);
-		set_name();
-		// --------------------------
-
 		m_aistate = AgentState::Wandering;
 		m_mood = VEC2_ZERO;
 		m_dead = false;
-		m_stamina = t_food;
-		m_health = t_maxhealth;
 
 		m_turnobj.steps = 0;
 		m_turnobj.left = 0;
@@ -76,6 +45,9 @@ namespace object
 		m_turnspeed = 0;
 		m_isturning = false;
 		m_ismoving = false;
+
+		set_randomtraits();
+		reset_keyvars();
 	}
 
 	Agent::~Agent()
@@ -118,6 +90,28 @@ namespace object
 			}
 			add_objecttomemory(ent);
 		}
+	}
+
+	void Agent::set_randomtraits()
+	{
+		m_traits =
+		{
+			get_randomname(),
+			get_randomcolour(),
+
+			maths::GetRandomFloat(1.0f, 3.0f),
+			maths::GetRandomFloat(1.0f, 3.0f),
+			maths::GetRandomInt(70, 250),
+			maths::GetRandomInt(750, 1500),
+			maths::GetRandomInt(5, 15)
+		};
+	}
+
+	void Agent::reset_keyvars()
+	{
+		m_stamina = m_traits.maxstamina;
+		m_health  = m_traits.maxhealth;
+		GetGeometry()->Colour(m_traits.colour);
 	}
 
 	void Agent::add_objecttomemory(GameObject* object)
@@ -168,25 +162,25 @@ namespace object
 
 	void Agent::turnright()
 	{
-		m_turnspeed = fminf(t_maxturn, m_turnspeed + 0.5f);
+		m_turnspeed = fminf(m_traits.maxturnspeed, m_turnspeed + 0.5f);
 		m_isturning = true;
 	}
 
 	void Agent::turnleft()
 	{
-		m_turnspeed = fmaxf(-t_maxturn, m_turnspeed - 0.5f);
+		m_turnspeed = fmaxf(-m_traits.maxturnspeed, m_turnspeed - 0.5f);
 		m_isturning = true;
 	}
 
 	void Agent::moveforward()
 	{
-		m_velocity = fminf(t_maxvel, m_velocity + 0.5f);
+		m_velocity = fminf(m_traits.maxwalkspeed, m_velocity + 0.5f);
 		m_ismoving = true;
 	}
 
 	void Agent::movebackward()
 	{
-		m_velocity = fmaxf(-t_maxvel, m_velocity - 0.5f);
+		m_velocity = fmaxf(-m_traits.maxwalkspeed, m_velocity - 0.5f);
 		m_ismoving = true;
 	}
 
@@ -288,7 +282,7 @@ namespace object
 
 	void Agent::eat()
 	{
-		if (m_stamina > t_food - 100)
+		if (m_stamina > m_traits.maxstamina - 100)
 		{ m_aistate = AgentState::Wandering; return; }
 
 		// if is in food eat it
@@ -296,7 +290,7 @@ namespace object
 		if (is_infood(food))
 		{
 			int eaten = food->Eat();
-			m_health  = std::min(m_health + eaten, t_maxhealth);
+			m_health  = std::min(m_health + eaten, m_traits.maxhealth);
 			m_stamina += eaten;
 			return;
 		}
@@ -386,7 +380,7 @@ namespace object
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
 		m_stamina--;
-		if (m_stamina < t_food - 500) { m_aistate = AgentState::Eating; }
+		if (m_stamina < m_traits.maxstamina - 500) { m_aistate = AgentState::Eating; }
 		// transformations
 		do_friction();
 		calc_transformoffsets();
@@ -410,11 +404,11 @@ namespace object
 		return "";
 	}
 
-	void Agent::set_name()
+	std::string Agent::get_randomname()
 	{
 		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
 		std::vector<std::string> lastnames = file::GetLinesFromFile("lastnames.txt");
-		t_name = *maths::select_randomly(firstnames.begin(), firstnames.end())
+		return *maths::select_randomly(firstnames.begin(), firstnames.end())
 			+ "." + *maths::select_randomly(lastnames.begin(), lastnames.end());
 	}
 

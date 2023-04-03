@@ -13,6 +13,18 @@ namespace object
 		bool  left;
 	};
 
+	struct Traits
+	{
+		std::string name;
+		SDL_Color colour;
+
+		float maxwalkspeed;
+		float maxturnspeed;
+		int maxhealth;
+		int maxstamina;
+		int maxdamage;
+	};
+
 	enum class AgentState
 	{
 		Wandering,
@@ -36,13 +48,9 @@ namespace object
 		std::string g_genome;
 
 		// traits
-		std::string t_name;
-		int t_food;
-		int t_maxhealth;
-		int t_damage;
-		float t_maxvel;
-		float t_maxturn;
-		SDL_Color t_colour;
+		Traits m_traits;
+		void set_randomtraits();
+		void reset_keyvars();
 		
 		// memory/targets
 		Vector2D	m_targetpos;
@@ -95,7 +103,7 @@ namespace object
 		void	eat();
 
 		// TODO : move
-		void set_name();
+		std::string get_randomname();
 		SDL_Color get_randomcolour();
 
 		~Agent();
@@ -115,6 +123,9 @@ namespace object
 		inline std::string GetGenome() 
 		{ return g_genome; }
 
+		inline void SetTraits(Traits traits)
+		{ m_traits = traits; }
+
 		void Die();
 		void TakeDamage(int damage);
 		void SeenEnt(GameObject* ent);
@@ -123,17 +134,17 @@ namespace object
 
 		// debug
 		inline std::string GetName()
-		{ return t_name; }
+		{ return m_traits.name; }
 		
 		inline int GetHealth()
 		{ return m_health; }
 		inline int GetMaxHealth()
-		{ return t_maxhealth; }
+		{ return m_traits.maxhealth; }
 
 		inline int GetStamina()
 		{ return m_stamina; }
 		inline int GetMaxStamina()
-		{ return t_food; }
+		{ return m_traits.maxstamina; }
 		
 		std::string GetStateStr();
 		// ------
