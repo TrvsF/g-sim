@@ -172,7 +172,7 @@ namespace god
 		// build agent
 		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
 		agent->SetGenome(genus);
-		// agent->SetTraits({ "name", {255, 255, 255}, 5.0f, 3.0f, 2000, 2000, 100 });
+		// agent->SetTraits({ "name", {255, 255, 255}, 5.0f, 3.0f, 2000, 2000, 100, 5 });
 	}
 	
 	inline void PrintGenus(std::string genus)

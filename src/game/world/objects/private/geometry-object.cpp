@@ -69,6 +69,32 @@ namespace object
 		m_geometry->Rotation(rotation);
 	}
 
+	float GeometryObject::GetSpikyness()
+	{
+		const auto& tris = m_geometry->Tris();
+		int tricount = tris.size();
+
+		// hack : find midpoint
+		Vector2D midpoint = tris[0].GetPoint3();
+
+		// get each other point
+		float totalangle = 0;
+		for (int i = 0; i < tris.size(); i++)
+		{
+			Vector2D p1 = tris[i].GetPoint1();
+			Vector2D p2 = tris[i].GetPoint2();
+			Vector2D p3 = i == tris.size()-1 ? tris[0].GetPoint1() : tris[i + 1].GetPoint1();
+
+			float a = atan2f(p3.y - p1.y, p3.x - p1.x);
+			float b = atan2f(p2.y - p1.y, p2.x - p1.x);
+			float ang = a - b;
+
+			totalangle += fabsf(ang);
+		}
+
+		return totalangle / tricount;
+	}
+
 	void GeometryObject::Update()
 	{
 	}

@@ -15,14 +15,15 @@ namespace object
 
 	struct Traits
 	{
-		std::string name;
-		SDL_Color colour;
+		std::string name; // ent name
+		SDL_Color colour; // ent colour
 
-		float maxwalkspeed;
-		float maxturnspeed;
-		int maxhealth;
-		int maxstamina;
-		int maxdamage;
+		float maxwalkspeed; // 1-5
+		float maxturnspeed; // 1-5
+		int maxhealth;      // 50 - 500     [based too on size]
+		int maxstamina;     // 1000 - 10000 [based too on size]
+		int maxdamage;		// 5 - 25
+		int agression;		// 0 - 10
 	};
 
 	enum class AgentState
@@ -30,7 +31,8 @@ namespace object
 		Wandering,
 		Attacking,
 		Fleeing,
-		Eating
+		Eating,
+		Mating
 	};
 
 	class Agent : public GeometryObject
@@ -39,7 +41,7 @@ namespace object
 		// brain/stats
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
-		Vector2D   m_mood; // happy/sad & fear/confidence
+		int		   m_agression;
 		int		   m_stamina;
 		int		   m_health;
 		bool       m_dead;
@@ -54,7 +56,6 @@ namespace object
 		
 		// memory/targets
 		Vector2D	m_targetpos;
-		GameObject* m_targetobject;
 		Agent* m_seenagent;
 
 		std::vector<GameObject*> m_collidedobjs;

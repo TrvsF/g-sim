@@ -8,7 +8,6 @@ namespace object
 		SetEntityType(GameEntityType::Agent);
 
 		m_aistate = AgentState::Wandering;
-		m_mood = VEC2_ZERO;
 		m_dead = false;
 
 		m_turnobj.steps = 0;
@@ -32,7 +31,6 @@ namespace object
 		SetEntityType(GameEntityType::Agent);
 
 		m_aistate = AgentState::Wandering;
-		m_mood = VEC2_ZERO;
 		m_dead = false;
 
 		m_turnobj.steps = 0;
@@ -71,8 +69,8 @@ namespace object
 	{
 		if (ent->GetEntityType() == GameEntityType::Agent)
 		{
-			m_mood.y++;
-			if (m_mood.y > 5)
+			const auto& distsq = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
+			if (distsq < 5e3 * m_traits.agression)
 			{
 				m_aistate = AgentState::Attacking;
 				m_seenagent = static_cast<Agent*>(ent);
@@ -96,21 +94,23 @@ namespace object
 	{
 		m_traits =
 		{
-			get_randomname(),
-			get_randomcolour(),
+			get_randomname(), // name
+			get_randomcolour(), // colour
 
-			maths::GetRandomFloat(1.0f, 3.0f),
-			maths::GetRandomFloat(1.0f, 3.0f),
-			maths::GetRandomInt(70, 250),
-			maths::GetRandomInt(750, 1500),
-			maths::GetRandomInt(5, 15)
+			maths::GetRandomFloat(1.0f, 3.0f), // walkspeed
+			maths::GetRandomFloat(1.0f, 3.0f), // turnspeed
+			maths::GetRandomInt(70, 250),	   // health 
+			maths::GetRandomInt(750, 1500),    // stamina
+			maths::GetRandomInt(5, 15),        // damage
+			maths::GetRandomInt(0, 10)         // aggresion
 		};
 	}
 
 	void Agent::reset_keyvars()
 	{
-		m_stamina = m_traits.maxstamina;
-		m_health  = m_traits.maxhealth;
+		m_agression = m_traits.agression;
+		m_stamina   = m_traits.maxstamina;
+		m_health    = m_traits.maxhealth;
 		GetGeometry()->Colour(m_traits.colour);
 	}
 

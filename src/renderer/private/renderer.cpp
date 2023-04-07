@@ -215,7 +215,7 @@ namespace renderer
 
 	void Renderer::set_window_icon()
 	{
-		SDL_Surface* icon_surface = IMG_Load(m_assets->GetPathToTexture("icon.png").c_str());
+		SDL_Surface* icon_surface = IMG_Load(m_assets->GetPathToTexture("icon-2.png").c_str());
 		SDL_SetWindowIcon(m_window, icon_surface);
 	}
 
