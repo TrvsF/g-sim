@@ -17,6 +17,7 @@ namespace object
 		
 		void setup();
 	public:
+		Food(GameObject* gameobject, int id, int ammount);
 		Food(GameObject* gameobject, int ammount);
 		~Food();
 

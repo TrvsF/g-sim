@@ -169,6 +169,15 @@ namespace game
 		break;
 		case 4: // m2
 		{
+			float _x = x + m_camera->GetOffsetpos().x;
+			float _y = y + m_camera->GetOffsetpos().y;
+			object::GameObject* food = object::GameObject::Create(
+				{ _x,    _y,    0.0f },
+				{ 0.0f,  0.0f,  0.0f },
+				{ 64.0f, 64.0f, 64.0f }
+			);
+			AddGameObject(new object::Food(food, maths::GetRandomInt(0, 3), 500));
+			/*
 			object::GameObject* obj = get_clickedobject(x, y);
 			if (obj == nullptr && m_camera->GetSubject() != m_player)
 			{
@@ -176,6 +185,7 @@ namespace game
 				return;
 			}
 			m_camera->SetSubject(obj);
+			*/
 		}
 		break;
 		}

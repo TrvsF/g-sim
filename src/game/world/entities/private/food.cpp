@@ -9,7 +9,18 @@ namespace object
 		m_ammount		= ammount;
 
 		GetTexture()->CurrentXFrame(0);
-		GetTexture()->CurrentYFrame(-64 );
+		GetTexture()->CurrentYFrame(-64);
+		setup();
+	}
+
+	Food::Food(GameObject* gameobject, int id, int ammount)
+		: TextureObject(gameobject, std::format("food-{}", id).c_str(), 11)
+	{
+		m_maxammount = ammount;
+		m_ammount = ammount;
+
+		GetTexture()->CurrentXFrame(0);
+		GetTexture()->CurrentYFrame(-64);
 		setup();
 	}
 

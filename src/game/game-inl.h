@@ -13,6 +13,9 @@ namespace game
 		// remove from gameworldobjects
 		auto it = std::find(m_gameobjects.begin(), m_gameobjects.end(), gameobject);
 		if (it != m_gameobjects.end()) { m_gameobjects.erase(it); }
+		// if already exists 
+		it = std::find(m_toremove.begin(), m_toremove.end(), gameobject);
+		if (it != m_toremove.end()) { return; }
 		// delete gameobject;
 		m_toremove.push_back(gameobject);
 	}

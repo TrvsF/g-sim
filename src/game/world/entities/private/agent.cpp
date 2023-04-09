@@ -92,6 +92,7 @@ namespace object
 
 	void Agent::set_randomtraits()
 	{
+		int hp = GetArea() * 3;
 		m_traits =
 		{
 			get_randomname(), // name
@@ -99,7 +100,7 @@ namespace object
 
 			maths::GetRandomFloat(1.0f, 3.0f), // walkspeed
 			maths::GetRandomFloat(1.0f, 3.0f), // turnspeed
-			maths::GetRandomInt(70, 250),	   // health 
+			hp,	   // health 
 			maths::GetRandomInt(750, 1500),    // stamina
 			maths::GetRandomInt(5, 15),        // damage
 			maths::GetRandomInt(0, 10)         // aggresion
