@@ -52,7 +52,7 @@ namespace object
 		// traits
 		Traits m_traits;
 		void set_randomtraits();
-		void reset_keyvars();
+		void set_traits();
 		
 		// memory/targets
 		Vector2D	m_targetpos;

@@ -22,7 +22,7 @@ namespace object
 		m_ismoving  = false;
 
 		set_randomtraits();
-		reset_keyvars();
+		set_traits();
 	}
 
 	Agent::Agent(GameObject* gameobject, std::vector<Vector2D> points)
@@ -45,7 +45,7 @@ namespace object
 		m_ismoving = false;
 
 		set_randomtraits();
-		reset_keyvars();
+		set_traits();
 	}
 
 	Agent::~Agent()
@@ -106,7 +106,7 @@ namespace object
 		};
 	}
 
-	void Agent::reset_keyvars()
+	void Agent::set_traits()
 	{
 		m_agression = m_traits.agression;
 		m_stamina   = m_traits.maxstamina;

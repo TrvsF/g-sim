@@ -21,7 +21,7 @@ namespace object
 
 		inline Vector2D GetPoint1() const { return m_v1; }
 		inline Vector2D GetPoint2() const { return m_v2; }
-		inline Vector2D GetPoint3() const { return m_v3; }
+		inline Vector2D GetMidpoint() const { return m_v3; }
 		inline std::vector<Vector2D> GetPoints() const { return { m_v1, m_v2, m_v3 }; }
 	};
 }

@@ -293,19 +293,8 @@ namespace renderer
 		float ang	 = geometry->Rotation();
 		float scale  = m_globalscale;
 
-		// hack : find midpoint
-		Vector2D midpoint = VEC2_ZERO;
-		for (Vector2D vec1 : geometry->Tris()[0].GetPoints())
-		{
-			for (Vector2D vec2 : geometry->Tris()[1].GetPoints())
-			{
-				if (vec1 == vec2)
-				{
-					midpoint = vec1; break;
-				}
-			}
-		}
-		midpoint = midpoint * m_globalscale;
+		// find midpoint & scale up
+		Vector2D midpoint = geometry->Tris()[0].GetMidpoint() * m_globalscale;
 
 		// get scaleoffset
 		float scaleoffset = m_globalscale + 1.5f;

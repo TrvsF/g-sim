@@ -27,6 +27,7 @@ namespace object
 		void HandleOffsets();
 		void Update();
 
+		float GetArea();
 		float GetSpikyness();
 
 		inline Geometry* GetGeometry();
