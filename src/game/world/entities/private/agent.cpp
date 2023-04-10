@@ -301,6 +301,10 @@ namespace object
 		if (mempos != VEC2_ZERO) // can remember
 		{
 			set_targetpos(mempos); 
+			if (is_attargetpos(30))
+			{
+				forget(mempos);
+			}
 		}
 		else
 		{

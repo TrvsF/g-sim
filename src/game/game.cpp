@@ -79,7 +79,7 @@ namespace game
 				{ 0.0f,  0.0f,  0.0f },
 				{ 64.0f, 64.0f, 64.0f }
 			);
-			// AddGameObject(new object::Food(food, 100));
+			// AddGameObject(new object::Food(food, 1000));
 		}
 		
 	}
@@ -178,15 +178,6 @@ namespace game
 				{ 64.0f, 64.0f, 64.0f }
 			);
 			AddGameObject(new object::Food(food, maths::GetRandomInt(0, 3), 1500));
-			/*
-			object::GameObject* obj = get_clickedobject(x, y);
-			if (obj == nullptr && m_camera->GetSubject() != m_player)
-			{
-				m_camera->SetSubject(m_player);
-				return;
-			}
-			m_camera->SetSubject(obj);
-			*/
 		}
 		break;
 		}
