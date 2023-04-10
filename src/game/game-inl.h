@@ -16,6 +16,7 @@ namespace game
 		// if already exists 
 		it = std::find(m_toremove.begin(), m_toremove.end(), gameobject);
 		if (it != m_toremove.end()) { return; }
+		m_collision->RemoveCollisionObj(gameobject);
 		// delete gameobject;
 		m_toremove.push_back(gameobject);
 	}

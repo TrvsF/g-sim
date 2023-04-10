@@ -117,5 +117,14 @@ namespace maths
         static std::mt19937 gen(rd());
         return select_randomly(start, end, gen);
     }
+
+    template<typename T>
+    struct delete_pointer_element
+    {
+        void operator()(T element) const
+        {
+            delete element;
+        }
+    };
 }
 #endif

@@ -67,9 +67,10 @@ namespace game
 		AddGameObject(m_coords);
 	}
 
-	void Game::spawn_food()
+	void Game::generate_map()
 	{
-		for (int i = 0; i < 32; i++)
+		srand(m_seed);
+		for (int i = 0; i < 64; i++)
 		{
 			float x = (float)maths::GetRandomInt(-5000, 5000);
 			float y = (float)maths::GetRandomInt(-5000, 5000);
@@ -78,7 +79,7 @@ namespace game
 				{ 0.0f,  0.0f,  0.0f },
 				{ 64.0f, 64.0f, 64.0f }
 			);
-			AddGameObject(new object::Food(food, 100));
+			// AddGameObject(new object::Food(food, 100));
 		}
 		
 	}
@@ -176,7 +177,7 @@ namespace game
 				{ 0.0f,  0.0f,  0.0f },
 				{ 64.0f, 64.0f, 64.0f }
 			);
-			AddGameObject(new object::Food(food, maths::GetRandomInt(0, 3), 500));
+			AddGameObject(new object::Food(food, maths::GetRandomInt(0, 3), 1500));
 			/*
 			object::GameObject* obj = get_clickedobject(x, y);
 			if (obj == nullptr && m_camera->GetSubject() != m_player)
@@ -230,18 +231,8 @@ namespace game
 		srand((int)time(NULL)); // move me
 
 		init_entities();
-
-		// debug
-		// m_biome = new object::BiomeObject({ 5000, 5000 });
-		object::GameObject* food = object::GameObject::Create(
-			{ 600.0f,  400.0f,  0.0f },
-			{ 0.0f,    0.0f,    0.0f },
-			{ 64.0f,   64.0f,   64.0f }
-		);
-		AddGameObject(new object::Food(food, 1000));
-
 		init_textelements();
-		// spawn_food();
+		generate_map();
 	}
 
 	// entities -> camera
@@ -268,11 +259,7 @@ namespace game
 			m_camera->SetTexturePos(gameobject);
 		}
 
-		// TODO : check for performance
-		for (int i = 0; i < m_toremove.size(); i++)
-		{
-			delete m_toremove[i];
-		}
+		std::for_each(m_toremove.begin(), m_toremove.end(), maths::delete_pointer_element<object::GameObject*>());
 		m_toremove.clear();
 	}
 }

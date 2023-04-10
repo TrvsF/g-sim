@@ -37,6 +37,7 @@ namespace game
 	public:
 		Collision(int scale);
 
+		void RemoveCollisionObj(object::GameObject* game_object);
 		void CheckCollisionObj(object::GameObject* game_object);
 		void AddCollisionObj(object::GameObject* game_object);
 		void DoCollision();

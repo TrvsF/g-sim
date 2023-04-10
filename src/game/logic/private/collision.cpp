@@ -94,6 +94,17 @@ namespace game
 		}
 	}
 
+	void Collision::RemoveCollisionObj(object::GameObject* game_object)
+	{
+		std::pair<int, int> gridpair = get_gridfromcoords(game_object->GetPosition().x, game_object->GetPosition().y);
+		auto& listofgridobjs = m_mapped_objects[gridpair];
+		listofgridobjs.erase(std::remove(listofgridobjs.begin(), listofgridobjs.end(), game_object), listofgridobjs.end());
+		if (listofgridobjs.empty())
+		{
+			m_mapped_objects.erase(gridpair);
+		}
+	}
+
 	void Collision::CheckCollisionObj(object::GameObject* game_object)
 	{
 		std::pair<int, int> gridpair = get_gridfromcoords(game_object->GetPosition().x, game_object->GetPosition().y);

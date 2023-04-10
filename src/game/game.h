@@ -52,9 +52,10 @@ namespace game
 		object::Player* m_player;
 		object::Camera* m_camera;
 
-		// world gen TODO : move?
+		// world gen TODO : move
 		// object::BiomeObject* m_biome;
-		void spawn_food();
+		int m_seed = 0;
+		void generate_map();
 		void init_entities();
 		void init_textelements();
 
