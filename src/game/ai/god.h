@@ -16,10 +16,12 @@ namespace god
 		TRIEDGES  = 1
 	};
 
+	// STOP codon
 	const std::string STOP = "000";
 
-	// i dont think these should be inlines??
+	// (i dont think these should be inlines??)
 
+	// append random non-stop codon to genus
 	void		append_codon(std::string& genus);
 	inline void append_codon(std::string& genus)
 	{
@@ -27,7 +29,7 @@ namespace god
 		int one = maths::GetRandomInt(0, 1);
 		int two = maths::GetRandomInt(0, 1);
 		int thr = maths::GetRandomInt(0, 1);
-		// if is stop regen 
+		// if is stop regen with first bit being a 1
 		bool stopcheck = !one && !two && !thr;
 		if (stopcheck)
 		{
@@ -41,21 +43,23 @@ namespace god
 		genus += char(thr + 48);
 	}
 
+	// get list of genes from genus
 	std::vector<std::string>		GetGenes(std::string genus);
 	inline std::vector<std::string> GetGenes(std::string genus)
 	{
-		// reads each codon from gene
+		// setup vars
 		std::vector<std::string> genes;
 		std::string gbuilder;
-
+		// split genus into codon parts to iterate through
 		int splits = std::floor(genus.size() / 3);
 		for (int i = 0; i < splits; i++)
 		{
+			// get codon
 			int gindex = i * 3;
 			int left  = genus[gindex]	  - 48;
 			int mid   = genus[gindex + 1] - 48;
 			int right = genus[gindex + 2] - 48;
-
+			// if is stop codon
 			bool isstop = !left && !mid && !right;
 			if (isstop) 
 			{
@@ -64,7 +68,7 @@ namespace god
 				gbuilder = "";
 				continue;
 			}
-
+			// append codon to genebuilder
 			gbuilder += genus[gindex];
 			gbuilder += genus[gindex + 1];
 			gbuilder += genus[gindex + 2];
@@ -72,26 +76,28 @@ namespace god
 		return genes;
 	}
 
+	// get list of codons from gene (NOT including stop codons)
 	std::vector<std::string>		GetCodons(std::string gene);
 	inline std::vector<std::string> GetCodons(std::string gene)
 	{
-		// for each codon from gene
+		// setup vars
 		std::vector<std::string> codons;
-
+		// split genus into codon parts to iterate through
 		int splits = std::floor(gene.size() / 3);
 		for (int i = 0; i < splits; i++)
 		{
+			// get codon
 			int cindex = i * 3;
 			int left  = gene[cindex]	 - 48;
 			int mid   = gene[cindex + 1] - 48;
 			int right = gene[cindex + 2] - 48;
-
+			// if is stop codon return list
 			bool isstop = !left && !mid && !right;
 			if (isstop) 
 			{ 
 				return codons; 
 			}
-
+			// read codon & push
 			std::string codon;
 			codon += gene[cindex];
 			codon += gene[cindex + 1];
@@ -101,6 +107,7 @@ namespace god
 		return codons;
 	}
 
+	// generate random genus
 	inline void GenerateGenus(std::string& genus)
 	{
 		int CODONS;
