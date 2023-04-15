@@ -5,13 +5,14 @@
 #include <random>
 #include <time.h>
 #include <assert.h>
+#include <SDL_pixels.h>
 
 namespace maths
 {
 #define PI 3.14159265f
 #define DEG_TO_RAD PI / 180.0f
 #define RAD_TO_DEG 180.0f / PI
-
+    
     static int GetRandomInt(int min, int max)
     {
         return min + (rand() % static_cast<int>(max - min + 1));
@@ -96,6 +97,15 @@ namespace maths
         int calcdistance = (int)roundf(sqrtf(x + y));
 
         return calcdistance <= distance;
+    }
+
+    static double ColorDifference(SDL_Color c1, SDL_Color c2)
+    {
+        long rmean = ((long)c1.r + (long)c2.r) / 2;
+        long r = (long)c1.r - (long)c2.r;
+        long g = (long)c1.g - (long)c2.g;
+        long b = (long)c1.b - (long)c2.b;
+        return sqrt((((512 + rmean) * r * r) >> 8) + 4 * g * g + (((767 - rmean) * b * b) >> 8));
     }
 
     template <std::ranges::input_range R, typename T>

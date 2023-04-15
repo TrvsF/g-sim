@@ -17,7 +17,7 @@ namespace object
 		: TextureObject(gameobject, std::format("food-{}", id).c_str(), 11)
 	{
 		m_maxammount = ammount;
-		m_ammount = ammount;
+		m_ammount    = ammount;
 
 		GetTexture()->CurrentXFrame(0);
 		GetTexture()->CurrentYFrame(-64);

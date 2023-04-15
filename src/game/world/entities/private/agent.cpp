@@ -2,29 +2,6 @@
 
 namespace object
 {
-	Agent::Agent(GameObject* gameobject, int sides)
-		: GeometryObject(gameobject, sides)
-	{
-		SetEntityType(GameEntityType::Agent);
-
-		m_aistate = AgentState::Wandering;
-		m_dead = false;
-
-		m_turnobj.steps = 0;
-		m_turnobj.left  = 0;
-
-		m_seenagent = NULL;
-		m_targetpos	= VEC2_ZERO;
-
-		m_velocity  = 0;
-		m_turnspeed = 0;
-		m_isturning = false;
-		m_ismoving  = false;
-
-		set_randomtraits();
-		set_traits();
-	}
-
 	Agent::Agent(GameObject* gameobject, std::vector<Vector2D> points)
 		: GeometryObject(gameobject, points)
 	{
@@ -69,11 +46,19 @@ namespace object
 	{
 		if (ent->GetEntityType() == GameEntityType::Agent)
 		{
-			const auto& distsq = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
-			if (distsq < 5e3 * m_traits.agression)
+			Agent* agent = static_cast<Agent*>(ent);
+			// mating checks
+			bool is_mateable = check_mate(agent);
+
+			// enemy checks
+			if (!is_mateable)
 			{
-				m_aistate = AgentState::Attacking;
-				m_seenagent = static_cast<Agent*>(ent);
+				const auto& distsq = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
+				if (distsq < 5e3 * m_traits.agression)
+				{
+					m_aistate = AgentState::Attacking;
+					m_seenagent = agent;
+				}
 			}
 		}
 
@@ -88,6 +73,16 @@ namespace object
 			}
 			add_objecttomemory(ent);
 		}
+	}
+
+	bool Agent::check_mate(Agent* mate)
+	{
+		// has to be different gender
+		if (mate->Gender() == m_gender) 
+		{ return false; }
+		// colour has to be close
+		double cdifference = maths::ColorDifference(m_traits.colour, mate->Colour());
+		return cdifference < 50;
 	}
 
 	void Agent::set_randomtraits()
@@ -109,6 +104,7 @@ namespace object
 
 	void Agent::set_traits()
 	{
+		m_gender	= maths::GetRandomInt(0, 1);
 		m_agression = m_traits.agression;
 		m_stamina   = m_traits.maxstamina;
 		m_health    = m_traits.maxhealth;
@@ -279,6 +275,11 @@ namespace object
 	{
 		check_targetpos();
 		move_towardtargetpos();
+	}
+
+	void Agent::mate()
+	{
+
 	}
 
 	void Agent::eat()

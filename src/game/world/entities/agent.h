@@ -44,6 +44,7 @@ namespace object
 		int		   m_agression;
 		int		   m_stamina;
 		int		   m_health;
+		bool	   m_gender;
 		bool       m_dead;
 
 		// genes
@@ -56,7 +57,7 @@ namespace object
 		
 		// memory/targets
 		Vector2D	m_targetpos;
-		Agent* m_seenagent;
+		Agent*		m_seenagent;
 
 		std::vector<GameObject*> m_collidedobjs;
 		std::vector<std::pair<Vector2D, GameEntityType>> m_objectmemory;
@@ -97,11 +98,16 @@ namespace object
 		inline void set_targetagent(Agent* agent)
 		{ m_seenagent = agent; }
 
+		// mating
+		Agent* m_matetarget;
+		bool check_mate(Agent* mate);
+
 		// states
 		void attack();
 		void wander();
 		void   flee();
 		void	eat();
+		void   mate();
 
 		// TODO : move
 		std::string get_randomname();
@@ -109,8 +115,6 @@ namespace object
 
 		~Agent();
 	public:
-		Agent(GameObject* gameobject);
-		Agent(GameObject* gameobject, int sides);
 		Agent(GameObject* gameobject, std::vector<Vector2D> points);
 
 		inline void AddCollidedObj(GameObject* obj)
@@ -118,6 +122,10 @@ namespace object
 
 		inline bool IsDead()
 		{ return m_dead; }
+		inline bool Gender()
+		{ return m_gender; }
+		inline SDL_Color Colour()
+		{ return m_traits.colour; }
 
 		inline void SetGenome(std::string genome) 
 		{ g_genome = genome; }
