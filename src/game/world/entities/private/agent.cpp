@@ -50,11 +50,19 @@ namespace object
 			// mating checks
 			bool is_mateable = check_mate(agent);
 
+			// owo
+			if (is_mateable)
+			{
+				m_targetpos = agent->Get2DPosition();
+			}
 			// enemy checks
 			if (!is_mateable)
 			{
+				int agro = m_traits.agression;
 				const auto& distsq = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
-				if (distsq < 5e3 * m_traits.agression)
+				bool colourdistancecheck = maths::ColourDifference(m_traits.colour, agent->Colour())
+					> 150.0 / (agro + 1);
+				if (distsq < 5e3 * agro && agro > 3 && colourdistancecheck)
 				{
 					m_aistate = AgentState::Attacking;
 					m_seenagent = agent;
@@ -81,13 +89,12 @@ namespace object
 		if (mate->Gender() == m_gender) 
 		{ return false; }
 		// colour has to be close
-		double cdifference = maths::ColorDifference(m_traits.colour, mate->Colour());
+		double cdifference = maths::ColourDifference(m_traits.colour, mate->Colour());
 		return cdifference < 50;
 	}
 
 	void Agent::set_randomtraits()
 	{
-		int hp = GetArea() * 3;
 		m_traits =
 		{
 			get_randomname(), // name
@@ -95,7 +102,7 @@ namespace object
 
 			maths::GetRandomFloat(1.0f, 3.0f), // walkspeed
 			maths::GetRandomFloat(1.0f, 3.0f), // turnspeed
-			hp,	   // health 
+			maths::GetRandomInt(100, 500),	   // health 
 			maths::GetRandomInt(750, 1500),    // stamina
 			maths::GetRandomInt(5, 15),        // damage
 			maths::GetRandomInt(0, 10)         // aggresion

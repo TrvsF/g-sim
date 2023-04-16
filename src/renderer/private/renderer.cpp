@@ -13,7 +13,7 @@ namespace renderer
 		m_width		= 0;
 		m_height	= 0;
 
-		m_scalepos = VEC2_ZERO;
+		m_scalepos = { 360.0f, 360.0f };
 		m_globalscale = 1.0f;
 		m_count = 0;
 

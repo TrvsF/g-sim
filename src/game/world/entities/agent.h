@@ -20,7 +20,7 @@ namespace object
 
 		float maxwalkspeed; // 1-5
 		float maxturnspeed; // 1-5
-		int maxhealth;      // 50 - 500     [based too on size]
+		int maxhealth;      // 100 - 500    [based too on size]
 		int maxstamina;     // 1000 - 10000 [based too on size]
 		int maxdamage;		// 5 - 25
 		int agression;		// 0 - 10
@@ -118,7 +118,10 @@ namespace object
 		Agent(GameObject* gameobject, std::vector<Vector2D> points);
 
 		inline void AddCollidedObj(GameObject* obj)
-		{ m_collidedobjs.push_back(obj); }
+		{ 
+			auto it = std::find(m_collidedobjs.begin(), m_collidedobjs.end(), obj);
+			if (it == m_collidedobjs.end()) { m_collidedobjs.push_back(obj); }
+		}
 
 		inline bool IsDead()
 		{ return m_dead; }

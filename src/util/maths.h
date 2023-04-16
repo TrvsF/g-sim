@@ -99,7 +99,7 @@ namespace maths
         return calcdistance <= distance;
     }
 
-    static double ColorDifference(SDL_Color c1, SDL_Color c2)
+    static double ColourDifference(SDL_Color c1, SDL_Color c2)
     {
         long rmean = ((long)c1.r + (long)c2.r) / 2;
         long r = (long)c1.r - (long)c2.r;

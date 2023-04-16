@@ -29,16 +29,11 @@ namespace game
 	void Collision::check_agentcollision(object::Agent* agent, object::Agent* victim)
 	{
 		if (victim->IsDead() || agent->IsDead()) { return; }
-		// if gridobject is looking @ searchedobject
-		if (is_looking(agent, victim, 120, 30))
+		// if gridobject is looking @ searchedobject or nearby
+		if (is_looking(agent, victim, 160, 1440) || 
+			maths::GetDistanceBetweenPoints_sq(agent->Get2DPosition(), victim->Get2DPosition()) < 1e4)
 		{
 			if (!victim->IsDead()) { agent->SeenEnt(victim); }
-		}
-		// if gridobject is colliding with searchedobject
-		if (is_colliding(agent, victim))
-		{
-			// TODO : this can push a garbage pointer (for 1 tick)
-			agent->AddCollidedObj(victim);
 		}
 	}
 
@@ -68,25 +63,31 @@ namespace game
 
 						if (gridobj->GetEntityType() == object::GameEntityType::Agent)
 						{
-							// cast & check current obj
-							object::Agent* agent = static_cast<object::Agent*>(gridobj);
-							if (agent->IsDead())
-							{ return; }
+							const auto& agent = static_cast<object::Agent*>(gridobj);
 
-							// TODO : both distance values set by trait
-							int distance = 1000;
-							if (searchedobj->GetEntityType() == object::GameEntityType::Agent)
+							// collision
+							if (is_colliding(agent, searchedobj))
 							{
-								if (static_cast<object::Agent*>(searchedobj)->IsDead())
-								{ return; }
-								distance = 50;
+								// TODO : this can push a garbage pointer (for 1 tick)
+								agent->AddCollidedObj(searchedobj);
 							}
 
-							if (is_looking(agent, searchedobj, 120, distance))
-							{ agent->SeenEnt(searchedobj); }
+							// agent check
+							if (searchedobj->GetEntityType() == object::GameEntityType::Agent)
+							{
+								const auto& victim = static_cast<object::Agent*>(searchedobj);
+								check_agentcollision(agent, victim); // TODO : bad name!
 
-							if (is_colliding(agent, searchedobj))
-							{ agent->AddCollidedObj(searchedobj); }
+							}
+							// food check
+							if (searchedobj->GetEntityType() == object::GameEntityType::Food)
+							{
+								const auto& food = static_cast<object::Food*>(searchedobj);
+								if (maths::GetDistanceBetweenPoints_sq(agent->Get2DPosition(), food->Get2DPosition()) > 5e3)
+								{
+									agent->SeenEnt(food);
+								}
+							}
 						}
 					}
 				}

@@ -93,7 +93,10 @@ namespace renderer
 		{ return m_globalscale; }
 
 		inline void ScalePos(Vector2D scalepos)
-		{ m_scalepos = scalepos; }
+		{ 
+			auto offset = (scalepos - m_scalepos) / 10;
+			m_scalepos += offset;
+		}
 
 		bool Start(const char* window_title, int width, int height);
 		void Render();
