@@ -131,7 +131,10 @@ namespace object
 		{ return m_traits.colour; }
 
 		inline void SetGenome(std::string genome) 
-		{ g_genome = genome; }
+		{  
+
+			g_genome = genome; 
+		}
 		inline std::string GetGenome() 
 		{ return g_genome; }
 

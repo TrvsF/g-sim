@@ -48,9 +48,8 @@ namespace object
 		GameObject(GameObject* gameobject)
 			: m_aabb(gameobject->GetAABB()), m_transform(gameobject->GetTransform())
 		{}
-		~GameObject() {
-			std::cout << "heck";
-		};
+		~GameObject() 
+		{}
 
 		inline static GameObject* Create(Vector3D position, Vector3D rotation, Size size);
 

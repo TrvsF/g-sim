@@ -30,6 +30,8 @@ namespace object
 
 	void Agent::TakeDamage(int damage)
 	{
+		// TODO : more rules for this
+		m_aistate = AgentState::Fleeing;
 		m_health = std::max(m_health - damage, 0);
 		if (m_health <= 0 && !m_dead) { Die(); }
 	}
@@ -47,6 +49,7 @@ namespace object
 		if (ent->GetEntityType() == GameEntityType::Agent)
 		{
 			Agent* agent = static_cast<Agent*>(ent);
+			m_seenagent  = agent;
 			// mating checks
 			bool is_mateable = check_mate(agent);
 
@@ -62,10 +65,10 @@ namespace object
 				const auto& distsq = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
 				bool colourdistancecheck = maths::ColourDifference(m_traits.colour, agent->Colour())
 					> 150.0 / (agro + 1);
-				if (distsq < 5e3 * agro && agro > 3 && colourdistancecheck)
+				if (distsq < 5e3 * agro && agro > 3 && colourdistancecheck
+					&& m_aistate != AgentState::Fleeing && m_aistate != AgentState::Mating)
 				{
 					m_aistate = AgentState::Attacking;
-					m_seenagent = agent;
 				}
 			}
 		}
@@ -291,7 +294,7 @@ namespace object
 
 	void Agent::eat()
 	{
-		if (m_stamina > m_traits.maxstamina - 100)
+		if (m_stamina > m_traits.maxstamina * 0.9)
 		{ m_aistate = AgentState::Wandering; return; }
 
 		// if is in food eat it
@@ -342,8 +345,9 @@ namespace object
 		}
 		if (iscollided)
 		{
-			// do damage
-			m_seenagent->TakeDamage(10);
+			// do damage based on spikeyness
+			int damage = 15.0 / GetSpikyness();
+			m_seenagent->TakeDamage(damage);
 			if (m_seenagent->IsDead()) 
 			{
 				// if dead, act like nothing happened
@@ -366,6 +370,9 @@ namespace object
 
 	void Agent::do_brain()
 	{
+		if (m_stamina < m_traits.maxstamina - 500) 
+		{ m_aistate = AgentState::Eating; }
+
 		switch (m_aistate)
 		{
 		case AgentState::Wandering:
@@ -380,6 +387,9 @@ namespace object
 		case AgentState::Eating:
 			eat();
 			break;
+		case AgentState::Mating:
+			mate();
+			break;
 		default:
 			break;
 		}
@@ -393,7 +403,6 @@ namespace object
 		// TODO : move
 		if (m_stamina < 0) { Die(); }
 		m_stamina--;
-		if (m_stamina < m_traits.maxstamina - 500) { m_aistate = AgentState::Eating; }
 		// transformations
 		do_friction();
 		calc_transformoffsets();

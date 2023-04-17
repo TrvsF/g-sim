@@ -13,7 +13,8 @@ namespace god
 	enum Genes
 	{
 		MIDPOINTS = 0,
-		TRIEDGES  = 1
+		TRIEDGES  = 1,
+		AGRESSION = 2
 	};
 
 	// STOP codon
@@ -22,25 +23,28 @@ namespace god
 	// (i dont think these should be inlines??)
 
 	// append random non-stop codon to genus
-	void		append_codon(std::string& genus);
-	inline void append_codon(std::string& genus)
+	void		append_codon(std::string& genus, int ammount);
+	inline void append_codon(std::string& genus, int ammount)
 	{
-		// generate random codon
-		int one = maths::GetRandomInt(0, 1);
-		int two = maths::GetRandomInt(0, 1);
-		int thr = maths::GetRandomInt(0, 1);
-		// if is stop regen with first bit being a 1
-		bool stopcheck = !one && !two && !thr;
-		if (stopcheck)
+		for (int i = 0; i < ammount; i++)
 		{
-			one = 1;
-			two = maths::GetRandomInt(0, 1);
-			thr = maths::GetRandomInt(0, 1);
+			// generate random codon
+			int one = maths::GetRandomInt(0, 1);
+			int two = maths::GetRandomInt(0, 1);
+			int thr = maths::GetRandomInt(0, 1);
+			// if is stop regen with first bit being a 1
+			bool stopcheck = !one && !two && !thr;
+			if (stopcheck)
+			{
+				one = 1;
+				two = maths::GetRandomInt(0, 1);
+				thr = maths::GetRandomInt(0, 1);
+			}
+			// add to genus
+			genus += char(one + 48);
+			genus += char(two + 48);
+			genus += char(thr + 48);
 		}
-		// add to genus
-		genus += char(one + 48);
-		genus += char(two + 48);
-		genus += char(thr + 48);
 	}
 
 	// get list of genes from genus
@@ -118,21 +122,21 @@ namespace god
 			switch (i)
 			{
 			case MIDPOINTS:
-				CODONS   = 4; 
-				GENESIZE = 1; // points
-				for (int t = 0; t < CODONS * GENESIZE; t++)
-				{
-					append_codon(genus);
-				}
+				CODONS   = 4; // coordinate base 2 size / 2
+				GENESIZE = 1; // 1 set of points
+				append_codon(genus, CODONS * GENESIZE);
 				genus += STOP;
 				break;
 			case TRIEDGES:
+				CODONS   = 8; // coordinate size / 2
+				GENESIZE = 4; // 4 set of points
+				append_codon(genus, CODONS * GENESIZE);
+				genus += STOP;
+				break;
+			case AGRESSION:
 				CODONS   = 4;
-				GENESIZE = 6; // points
-				for (int t = 0; t < CODONS * GENESIZE; t++)
-				{
-					append_codon(genus);
-				}
+				GENESIZE = 1; // points
+				append_codon(genus, CODONS * GENESIZE);
 				genus += STOP;
 				break;
 			}
@@ -149,20 +153,69 @@ namespace god
 		std::vector<std::string> genes			= GetGenes(genus);
 		std::vector<std::string> midpointcodons = GetCodons(genes[0]); // unused
 		std::vector<std::string> pointcodons	= GetCodons(genes[1]);
-		
-		// extract points
+	
+		// midpoint 
+		Vector2D midpointvec = VEC2_ZERO;
+		int codonsize = midpointcodons.size();
+		int codonmidpoint = (int)round(codonsize / 2.0);
+		for (int i = 0; i < codonsize; i++)
+		{
+			if (i < codonmidpoint)
+			{
+				char* end;
+				int decimal = strtoull(midpointcodons[i].c_str(), &end, 2);
+				midpointvec.x += decimal;
+			}
+			else
+			{
+				char* end;
+				int decimal = strtoull(midpointcodons[i].c_str(), &end, 2);
+				midpointvec.y += decimal;
+			}
+		}
+
+		// !!!WANT TO READ EVERY 4 CODONS!!!
+		// POINTS
 		std::vector<Vector2D> points;
-		Vector2D	cvec;
+		int split = 4; // TODO : can be changed?
+		int ammount = floor(pointcodons.size() / split);
+		Vector2D currentvec = VEC2_ZERO;
+
+		bool x = true;
+		for (int i = 0; i < pointcodons.size(); i++)
+		{
+			// read current codon
+			char* end;
+			int decimal = strtoull(pointcodons[i].c_str(), &end, 2);
+			if (decimal & 1 << 11) decimal |= ~0xfff;
+
+			if (i % split/2 == 0 && i) // not on first pass
+			{ 
+				if (x)
+				{
+
+				}
+				else
+				{
+
+				}
+				x = !x;
+			}
+		}
+
+		
 		std::string cstr;
+		Vector2D	cvec;
 
 		bool right = true;
 		for (int c = 0; c < pointcodons.size(); c++)
 		{
+			// reads 
 			if (c % 2 == 0) // codons/2
 			{ 
 				char* end;
-				float f = strtoull(cstr.c_str(), &end, 2);
-				right ? cvec.y = f : cvec.x = f;
+				int decimal = strtoull(cstr.c_str(), &end, 2);
+				right ? cvec.y = (float)decimal : cvec.x = (float)decimal;
 				right = !right;
 				cstr = "";
 			}
