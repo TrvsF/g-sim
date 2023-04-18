@@ -23,8 +23,8 @@ namespace god
 	// (i dont think these should be inlines??)
 
 	// append random non-stop codon to genus
-	void		append_codon(std::string& genus, int ammount);
-	inline void append_codon(std::string& genus, int ammount)
+	void		append_codons(std::string& genus, int ammount);
+	inline void append_codons(std::string& genus, int ammount)
 	{
 		for (int i = 0; i < ammount; i++)
 		{
@@ -114,29 +114,21 @@ namespace god
 	// generate random genus
 	inline void GenerateGenus(std::string& genus)
 	{
-		int CODONS;
-		int GENESIZE;
 		// size of chromosome
 		for (int i = 0; i < 2; i++)
 		{ 
 			switch (i)
 			{
 			case MIDPOINTS:
-				CODONS   = 4; // coordinate base 2 size / 2
-				GENESIZE = 1; // 1 set of points
-				append_codon(genus, CODONS * GENESIZE);
+				append_codons(genus, 4);
 				genus += STOP;
 				break;
 			case TRIEDGES:
-				CODONS   = 8; // coordinate size / 2
-				GENESIZE = 4; // 4 set of points
-				append_codon(genus, CODONS * GENESIZE);
+				append_codons(genus, 24);
 				genus += STOP;
 				break;
 			case AGRESSION:
-				CODONS   = 4;
-				GENESIZE = 1; // points
-				append_codon(genus, CODONS * GENESIZE);
+				append_codons(genus, 2);
 				genus += STOP;
 				break;
 			}
@@ -154,12 +146,13 @@ namespace god
 		std::vector<std::string> midpointcodons = GetCodons(genes[0]); // unused
 		std::vector<std::string> pointcodons	= GetCodons(genes[1]);
 	
-		// midpoint 
+		// get midpoint of agent 
 		Vector2D midpointvec = VEC2_ZERO;
 		int codonsize = midpointcodons.size();
 		int codonmidpoint = (int)round(codonsize / 2.0);
 		for (int i = 0; i < codonsize; i++)
 		{
+			// split codon list into 2, lhs for x & rhs for y
 			if (i < codonmidpoint)
 			{
 				char* end;
@@ -174,63 +167,51 @@ namespace god
 			}
 		}
 
-		// !!!WANT TO READ EVERY 4 CODONS!!!
-		// POINTS
-		std::vector<Vector2D> points;
-		int split = 4; // TODO : can be changed?
-		int ammount = floor(pointcodons.size() / split);
+		// get other points of agent
 		Vector2D currentvec = VEC2_ZERO;
+		std::vector<Vector2D> points;
+		std::string currentcodons;
 
+		int split = 2; // TODO : can be changed?
 		bool x = true;
+		const int N = split * 3;
+
 		for (int i = 0; i < pointcodons.size(); i++)
 		{
 			// read current codon
-			char* end;
-			int decimal = strtoull(pointcodons[i].c_str(), &end, 2);
-			if (decimal & 1 << 11) decimal |= ~0xfff;
-
-			if (i % split/2 == 0 && i) // not on first pass
+			currentcodons += pointcodons[i];
+			// every split change from x to y or vica versa
+			if (i % split == 0 && i) // not on first pass
 			{ 
 				if (x)
 				{
-
+					char* end;
+					int decimal = strtoull(currentcodons.c_str(), &end, 2);
+					if (decimal & 1 << (N - 1)) decimal |= ~((1 << N) - 1);
+				
+					decimal = fmin(20, decimal); // silly hack : TODO fix random first x being very big!
+					currentvec.x = decimal;
 				}
 				else
 				{
+					char* end;
+					int decimal = strtoull(currentcodons.c_str(), &end, 2);
+					if (decimal & 1 << (N - 1)) decimal |= ~((1 << N) - 1);
 
+					currentvec.y = decimal;
+					// push point to list
+					points.push_back(currentvec + midpointvec);
 				}
+				currentcodons = "";
 				x = !x;
 			}
 		}
 
-		
-		std::string cstr;
-		Vector2D	cvec;
-
-		bool right = true;
-		for (int c = 0; c < pointcodons.size(); c++)
-		{
-			// reads 
-			if (c % 2 == 0) // codons/2
-			{ 
-				char* end;
-				int decimal = strtoull(cstr.c_str(), &end, 2);
-				right ? cvec.y = (float)decimal : cvec.x = (float)decimal;
-				right = !right;
-				cstr = "";
-			}
-
-			if (c % 4 == 0 && c) 
-			{ 
-				points.push_back(cvec);
-				cvec = VEC2_ZERO;
-			}
-
-			cstr += pointcodons[c];
-		}
-
-		// build agent
+		// build agent from generated points
 		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
+
+		// TODO : traits
+
 		agent->SetGenome(genus);
 		// agent->SetTraits({ "name", {255, 255, 255}, 5.0f, 3.0f, 2000, 2000, 100, 5 });
 	}
