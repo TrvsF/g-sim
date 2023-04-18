@@ -108,6 +108,15 @@ namespace maths
         return sqrt((((512 + rmean) * r * r) >> 8) + 4 * g * g + (((767 - rmean) * b * b) >> 8));
     }
 
+    static int StringToDecimal(std::string str, bool twos)
+    {
+        const int N = str.length();
+        char* end;
+        int decimal = strtoull(str.c_str(), &end, 2);
+        if (decimal & 1 << (N - 1) && twos) decimal |= ~((1 << N) - 1);
+        return decimal;
+    }
+
     template <std::ranges::input_range R, typename T>
         requires std::indirect_binary_predicate<std::ranges::equal_to, std::ranges::iterator_t<R>, const T*>
     bool index(R&& range, const T& value) {

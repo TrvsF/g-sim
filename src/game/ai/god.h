@@ -148,21 +148,19 @@ namespace god
 	
 		// get midpoint of agent 
 		Vector2D midpointvec = VEC2_ZERO;
-		int codonsize = midpointcodons.size();
-		int codonmidpoint = (int)round(codonsize / 2.0);
+		int codonsize		 = midpointcodons.size();
+		int codonmidpoint    = (int)round(codonsize / 2.0);
 		for (int i = 0; i < codonsize; i++)
 		{
 			// split codon list into 2, lhs for x & rhs for y
 			if (i < codonmidpoint)
 			{
-				char* end;
-				int decimal = strtoull(midpointcodons[i].c_str(), &end, 2);
+				int decimal = maths::StringToDecimal(midpointcodons[i], false);
 				midpointvec.x += decimal;
 			}
 			else
 			{
-				char* end;
-				int decimal = strtoull(midpointcodons[i].c_str(), &end, 2);
+				int decimal = maths::StringToDecimal(midpointcodons[i], false);
 				midpointvec.y += decimal;
 			}
 		}
@@ -172,9 +170,9 @@ namespace god
 		std::vector<Vector2D> points;
 		std::string currentcodons;
 
-		int split = 2; // TODO : can be changed?
-		bool x = true;
-		const int N = split * 3;
+		const int split	= 2;		 // TODO : can be changed?
+		const int N		= split * 3; // * codon size
+		bool x			= true;
 
 		for (int i = 0; i < pointcodons.size(); i++)
 		{
@@ -185,20 +183,14 @@ namespace god
 			{ 
 				if (x)
 				{
-					char* end;
-					int decimal = strtoull(currentcodons.c_str(), &end, 2);
-					if (decimal & 1 << (N - 1)) decimal |= ~((1 << N) - 1);
-				
-					decimal = fmin(20, decimal); // silly hack : TODO fix random first x being very big!
+					int decimal = maths::StringToDecimal(currentcodons, true);
 					currentvec.x = decimal;
 				}
 				else
 				{
-					char* end;
-					int decimal = strtoull(currentcodons.c_str(), &end, 2);
-					if (decimal & 1 << (N - 1)) decimal |= ~((1 << N) - 1);
-
+					int decimal = maths::StringToDecimal(currentcodons, true);
 					currentvec.y = decimal;
+
 					// push point to list
 					points.push_back(currentvec + midpointvec);
 				}

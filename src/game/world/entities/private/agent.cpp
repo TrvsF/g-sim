@@ -61,11 +61,10 @@ namespace object
 			// enemy checks
 			if (!is_mateable)
 			{
-				int agro = m_traits.agression;
-				const auto& distsq = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
-				bool colourdistancecheck = maths::ColourDifference(m_traits.colour, agent->Colour())
-					> 150.0 / (agro + 1);
-				if (distsq < 5e3 * agro && agro > 3 && colourdistancecheck
+				int agro				 = m_traits.agression;
+				const auto& distsq		 = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
+				bool colourdistancecheck = maths::ColourDifference(m_traits.colour, agent->Colour()) > 150.0 / (agro + 1);
+				if (distsq < 5e2 * agro && agro > 3 && colourdistancecheck
 					&& m_aistate != AgentState::Fleeing && m_aistate != AgentState::Mating)
 				{
 					m_aistate = AgentState::Attacking;
