@@ -115,7 +115,7 @@ namespace god
 	inline void GenerateGenus(std::string& genus)
 	{
 		// size of chromosome
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 3; i++)
 		{ 
 			switch (i)
 			{
@@ -142,10 +142,12 @@ namespace god
 		GenerateGenus(genus);
 
 		// get codons for each gene
-		std::vector<std::string> genes			= GetGenes(genus);
-		std::vector<std::string> midpointcodons = GetCodons(genes[0]); // unused
-		std::vector<std::string> pointcodons	= GetCodons(genes[1]);
-	
+		std::vector<std::string> genes			 = GetGenes(genus);
+		// TODO : relook @ this
+		std::vector<std::string> midpointcodons  = GetCodons(genes[0]);
+		std::vector<std::string> pointcodons	 = GetCodons(genes[1]);
+		std::vector<std::string> agressioncodons = GetCodons(genes[2]);
+
 		// get midpoint of agent 
 		Vector2D midpointvec = VEC2_ZERO;
 		int codonsize		 = midpointcodons.size();
@@ -184,12 +186,12 @@ namespace god
 				if (x)
 				{
 					int decimal = maths::StringToDecimal(currentcodons, true);
-					currentvec.x = decimal;
+					currentvec.x = decimal % 24;
 				}
 				else
 				{
 					int decimal = maths::StringToDecimal(currentcodons, true);
-					currentvec.y = decimal;
+					currentvec.y = decimal % 24;
 
 					// push point to list
 					points.push_back(currentvec + midpointvec);
@@ -198,6 +200,16 @@ namespace god
 				x = !x;
 			}
 		}
+
+		int agression;
+		std::string codons;
+		for (const auto& codon : agressioncodons)
+		{
+			codons += codon;
+		}
+		int decimal = maths::StringToDecimal(codons, false);
+		agression = decimal % 10;
+		
 
 		// build agent from generated points
 		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
