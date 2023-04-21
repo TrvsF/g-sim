@@ -21,6 +21,8 @@ namespace object
 		m_isturning = false;
 		m_ismoving = false;
 
+		m_rdytomate = false;
+
 		set_randomtraits();
 		set_traits();
 	}
@@ -43,6 +45,12 @@ namespace object
 		GetGeometry()->Active(false);
 		m_dead = true;
 	}
+	
+	void Agent::AddCollidedObj(GameObject* obj)
+	{
+		auto it = std::find(m_collidedobjs.begin(), m_collidedobjs.end(), obj);
+		if (it == m_collidedobjs.end()) { m_collidedobjs.push_back(obj); }
+	}
 
 	void Agent::SeenEnt(GameObject* ent)
 	{
@@ -52,14 +60,14 @@ namespace object
 			m_seenagent  = agent;
 			// mating checks
 			bool is_mateable = check_mate(agent);
-
 			// owo
 			if (is_mateable)
 			{
 				m_targetpos = agent->Get2DPosition();
+				m_aistate	= AgentState::Mating;
 			}
 			// enemy checks
-			if (!is_mateable)
+			else
 			{
 				int agro				 = m_traits.agression;
 				const auto& distsq		 = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
@@ -92,7 +100,7 @@ namespace object
 		{ return false; }
 		// colour has to be close
 		double cdifference = maths::ColourDifference(m_traits.colour, mate->Colour());
-		return cdifference < 50;
+		return cdifference < 150;
 	}
 
 	void Agent::set_randomtraits()
@@ -256,6 +264,20 @@ namespace object
 		return false;
 	}
 
+	// returns if is collided with entity type & gets first instance of collision
+	bool Agent::is_inenttype(GameEntityType type, GameObject*& object)
+	{
+		for (const auto& collidedobj : m_collidedobjs)
+		{
+			if (collidedobj->GetEntityType() == type)
+			{
+				object = collidedobj;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void Agent::forget(Vector2D pos)
 	{
 		std::vector<std::pair<Vector2D, GameEntityType>>::iterator it = m_objectmemory.begin();
@@ -288,7 +310,29 @@ namespace object
 
 	void Agent::mate()
 	{
-
+		if (m_baby.genus1 != "")
+		{ m_aistate = AgentState::Wandering; return; }
+		// if is in food eat it
+		m_rdytomate = true;
+		GameObject* mate = {};
+		if (is_inenttype(GameEntityType::Agent, mate))
+		{
+			const auto& mateobj = static_cast<Agent*> (mate);
+			bool ready = mateobj->IsReadyToMate() && m_rdytomate;
+			if (ready)
+			{
+				// make a baby
+				if (m_gender)
+				{
+					m_baby.genus1 = g_genome;
+					m_baby.genus2 = mateobj->GetGenome();
+					m_baby.aliveticks = 0;
+				}
+				m_rdytomate  = false;
+				m_aistate = AgentState::Wandering;
+			}
+		}
+		move_towardtargetpos();
 	}
 
 	void Agent::eat()
@@ -297,10 +341,10 @@ namespace object
 		{ m_aistate = AgentState::Wandering; return; }
 
 		// if is in food eat it
-		Food* food = {};
-		if (is_infood(food))
+		GameObject* food = {};
+		if (is_inenttype(GameEntityType::Food, food))
 		{
-			int eaten = food->Eat();
+			int eaten = static_cast<Food*> (food)->Eat();
 			m_health  = std::min(m_health + eaten, m_traits.maxhealth);
 			m_stamina += eaten;
 			return;
@@ -369,8 +413,10 @@ namespace object
 
 	void Agent::do_brain()
 	{
-		if (m_stamina < m_traits.maxstamina - 500) 
+		if (m_stamina < m_traits.maxstamina * 0.25) 
 		{ m_aistate = AgentState::Eating; }
+		if (m_health <= 0)
+		{ Die(); }
 
 		switch (m_aistate)
 		{
@@ -398,10 +444,13 @@ namespace object
 
 	void Agent::Update()
 	{
+		// baby
+		m_baby.aliveticks++;
+		// health checks
+		if (m_stamina <= 0) { m_health--; }
+		else { m_stamina--; }
+		// brain
 		do_brain();
-		// TODO : move
-		if (m_stamina < 0) { Die(); }
-		m_stamina--;
 		// transformations
 		do_friction();
 		calc_transformoffsets();
@@ -421,6 +470,8 @@ namespace object
 			return "fleeing";
 		case AgentState::Eating:
 			return "eating";
+		case AgentState::Mating:
+			return "mating";
 		}
 		return "";
 	}
@@ -428,7 +479,7 @@ namespace object
 	std::string Agent::get_randomname()
 	{
 		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
-		std::vector<std::string> lastnames = file::GetLinesFromFile("lastnames.txt");
+		std::vector<std::string> lastnames  = file::GetLinesFromFile("lastnames.txt");
 		return *maths::select_randomly(firstnames.begin(), firstnames.end())
 			+ "." + *maths::select_randomly(lastnames.begin(), lastnames.end());
 	}

@@ -148,6 +148,11 @@ namespace god
 		std::vector<std::string> pointcodons	 = GetCodons(genes[1]);
 		std::vector<std::string> agressioncodons = GetCodons(genes[2]);
 
+		/*
+		 -------------------------------
+				AGENT MIDPOINT
+		 -------------------------------
+		*/
 		// get midpoint of agent 
 		Vector2D midpointvec = VEC2_ZERO;
 		int codonsize		 = midpointcodons.size();
@@ -167,6 +172,11 @@ namespace god
 			}
 		}
 
+		/*
+		 -------------------------------
+				AGENT OUTERPOINTS
+		 -------------------------------
+		*/
 		// get other points of agent
 		Vector2D currentvec = VEC2_ZERO;
 		std::vector<Vector2D> points;
@@ -201,6 +211,14 @@ namespace god
 			}
 		}
 
+		// build agent from generated points
+		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
+
+		/*
+		 -------------------------------
+				AGENT agression
+		 -------------------------------
+		*/
 		int agression;
 		std::string codons;
 		for (const auto& codon : agressioncodons)
@@ -208,13 +226,7 @@ namespace god
 			codons += codon;
 		}
 		int decimal = maths::StringToDecimal(codons, false);
-		agression = decimal % 10;
-		
-
-		// build agent from generated points
-		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
-
-		// TODO : traits
+		agression = decimal % 11;
 
 		agent->SetGenome(genus);
 		// agent->SetTraits({ "name", {255, 255, 255}, 5.0f, 3.0f, 2000, 2000, 100, 5 });

@@ -13,6 +13,14 @@ namespace object
 		bool  left;
 	};
 
+	struct BabyAgent
+	{
+		std::string genus1;
+		std::string genus2;
+
+		int aliveticks;
+	};
+
 	struct Traits
 	{
 		std::string name; // ent name
@@ -75,6 +83,7 @@ namespace object
 
 		// target util
 		bool is_attargetpos(int radius);
+		bool is_inenttype(GameEntityType type, GameObject*& object);
 		bool is_infood(Food*& food);
 		Vector2D get_newtargetpos();
 
@@ -99,7 +108,8 @@ namespace object
 		{ m_seenagent = agent; }
 
 		// mating
-		Agent* m_matetarget;
+		BabyAgent m_baby = { "", "", 0 };
+		bool m_rdytomate;
 		bool check_mate(Agent* mate);
 
 		// states
@@ -117,12 +127,10 @@ namespace object
 	public:
 		Agent(GameObject* gameobject, std::vector<Vector2D> points);
 
-		inline void AddCollidedObj(GameObject* obj)
-		{ 
-			auto it = std::find(m_collidedobjs.begin(), m_collidedobjs.end(), obj);
-			if (it == m_collidedobjs.end()) { m_collidedobjs.push_back(obj); }
-		}
+		void AddCollidedObj(GameObject* obj);
 
+		inline bool IsReadyToMate() 
+		{ return m_rdytomate; }
 		inline bool IsDead()
 		{ return m_dead; }
 		inline bool Gender()
@@ -131,10 +139,7 @@ namespace object
 		{ return m_traits.colour; }
 
 		inline void SetGenome(std::string genome) 
-		{  
-
-			g_genome = genome; 
-		}
+		{ g_genome = genome; }
 		inline std::string GetGenome() 
 		{ return g_genome; }
 
