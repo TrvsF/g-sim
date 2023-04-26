@@ -71,7 +71,7 @@ namespace object
 			{
 				int agro				 = m_traits.agression;
 				const auto& distsq		 = maths::GetDistanceBetweenPoints_sq(ent->Get2DPosition(), Get2DPosition());
-				bool colourdistancecheck = maths::ColourDifference(m_traits.colour, agent->Colour()) > 150.0 / (agro + 1);
+				bool colourdistancecheck = maths::ColourDifference(m_traits.colour, agent->Colour()) > 200.0 / (agro + 1);
 				if (distsq < 5e2 * agro && agro > 3 && colourdistancecheck
 					&& m_aistate != AgentState::Fleeing && m_aistate != AgentState::Mating)
 				{
@@ -100,7 +100,7 @@ namespace object
 		{ return false; }
 		// colour has to be close
 		double cdifference = maths::ColourDifference(m_traits.colour, mate->Colour());
-		return cdifference < 150;
+		return cdifference < 100;
 	}
 
 	void Agent::set_randomtraits()
@@ -411,8 +411,28 @@ namespace object
 		moveforward();
 	}
 
+	void Agent::check_baby()
+	{
+		if (m_baby.genus1 != "")
+		{
+			m_baby.aliveticks++;
+		}
+
+		if (m_baby.aliveticks > 3840)
+		{
+			// give birth
+
+			m_baby.genus1 = "";
+			m_baby.genus2 = "";
+			m_baby.aliveticks = 0;
+		}
+	}
+
 	void Agent::do_brain()
 	{
+		if (m_stamina <= 0) { m_health--; }
+		else { m_stamina--; }
+
 		if (m_stamina < m_traits.maxstamina * 0.25) 
 		{ m_aistate = AgentState::Eating; }
 		if (m_health <= 0)
@@ -438,17 +458,15 @@ namespace object
 		default:
 			break;
 		}
+
 		m_seenagent = NULL;
 		m_collidedobjs.clear();
 	}
 
 	void Agent::Update()
 	{
-		// baby
-		m_baby.aliveticks++;
+		check_baby();
 		// health checks
-		if (m_stamina <= 0) { m_health--; }
-		else { m_stamina--; }
 		// brain
 		do_brain();
 		// transformations

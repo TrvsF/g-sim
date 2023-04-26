@@ -14,7 +14,10 @@ namespace god
 	{
 		MIDPOINTS = 0,
 		TRIEDGES  = 1,
-		AGRESSION = 2
+		AGRESSION = 2,
+		R		  = 3,
+		G		  = 4,
+		B		  = 5
 	};
 
 	// STOP codon
@@ -22,34 +25,9 @@ namespace god
 
 	// (i dont think these should be inlines??)
 
-	// append random non-stop codon to genus
-	void		append_codons(std::string& genus, int ammount);
-	inline void append_codons(std::string& genus, int ammount)
-	{
-		for (int i = 0; i < ammount; i++)
-		{
-			// generate random codon
-			int one = maths::GetRandomInt(0, 1);
-			int two = maths::GetRandomInt(0, 1);
-			int thr = maths::GetRandomInt(0, 1);
-			// if is stop regen with first bit being a 1
-			bool stopcheck = !one && !two && !thr;
-			if (stopcheck)
-			{
-				one = 1;
-				two = maths::GetRandomInt(0, 1);
-				thr = maths::GetRandomInt(0, 1);
-			}
-			// add to genus
-			genus += char(one + 48);
-			genus += char(two + 48);
-			genus += char(thr + 48);
-		}
-	}
-
 	// get list of genes from genus
-	std::vector<std::string>		GetGenes(std::string genus);
-	inline std::vector<std::string> GetGenes(std::string genus)
+	std::vector<std::string>		get_genes(std::string genus);
+	inline std::vector<std::string> get_genes(std::string genus)
 	{
 		// setup vars
 		std::vector<std::string> genes;
@@ -81,8 +59,8 @@ namespace god
 	}
 
 	// get list of codons from gene (NOT including stop codons)
-	std::vector<std::string>		GetCodons(std::string gene);
-	inline std::vector<std::string> GetCodons(std::string gene)
+	std::vector<std::string>		get_codons(std::string gene);
+	inline std::vector<std::string> get_codons(std::string gene)
 	{
 		// setup vars
 		std::vector<std::string> codons;
@@ -111,11 +89,61 @@ namespace god
 		return codons;
 	}
 
+	// append random non-stop codon to genus
+	void		append_codons(std::string& genus, int ammount);
+	inline void append_codons(std::string& genus, int ammount)
+	{
+		for (int i = 0; i < ammount; i++)
+		{
+			// generate random codon
+			int one = maths::GetRandomInt(0, 1);
+			int two = maths::GetRandomInt(0, 1);
+			int thr = maths::GetRandomInt(0, 1);
+			// if is stop regen with first bit being a 1
+			bool stopcheck = !one && !two && !thr;
+			if (stopcheck)
+			{
+				one = 1;
+				two = maths::GetRandomInt(0, 1);
+				thr = maths::GetRandomInt(0, 1);
+			}
+			// add to genus
+			genus += char(one + 48);
+			genus += char(two + 48);
+			genus += char(thr + 48);
+		}
+	}
+
+	void		generate_child(std::string parent1, std::string parent2, std::string& child);
+	inline void generate_child(std::string parent1, std::string parent2, std::string& child)
+	{
+		bool parentflag = false;
+		std::vector<std::string> genes1 = get_genes(parent1);
+		std::vector<std::string> genes2 = get_genes(parent2);
+
+		for (int i = 0; i < genes1.size(); i++)
+		{
+			if (parentflag)
+			{
+				child += genes1[i];
+			}
+			else
+			{
+				child += genes2[i];
+			}
+
+			if (maths::GetRandomInt(0, 3) == 0)
+			{
+				parentflag = !parentflag;
+			}
+		}
+	}
+
 	// generate random genus
 	inline void GenerateGenus(std::string& genus)
 	{
 		// size of chromosome
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 6; i++)
 		{ 
 			switch (i)
 			{
@@ -131,6 +159,18 @@ namespace god
 				append_codons(genus, 2);
 				genus += STOP;
 				break;
+			case R:
+				append_codons(genus, 8);
+				genus += STOP;
+				break;
+			case G:
+				append_codons(genus, 8);
+				genus += STOP;
+				break;
+			case B:
+				append_codons(genus, 8);
+				genus += STOP;
+				break;
 			}
 		}
 	}
@@ -142,11 +182,14 @@ namespace god
 		GenerateGenus(genus);
 
 		// get codons for each gene
-		std::vector<std::string> genes			 = GetGenes(genus);
+		std::vector<std::string> genes			 = get_genes(genus);
 		// TODO : relook @ this
-		std::vector<std::string> midpointcodons  = GetCodons(genes[0]);
-		std::vector<std::string> pointcodons	 = GetCodons(genes[1]);
-		std::vector<std::string> agressioncodons = GetCodons(genes[2]);
+		std::vector<std::string> midpointcodons  = get_codons(genes[0]);
+		std::vector<std::string> pointcodons	 = get_codons(genes[1]);
+		std::vector<std::string> agressioncodons = get_codons(genes[2]);
+		std::vector<std::string> rcodons		 = get_codons(genes[3]);
+		std::vector<std::string> gcodons		 = get_codons(genes[4]);
+		std::vector<std::string> bcodons		 = get_codons(genes[5]);
 
 		/*
 		 -------------------------------
@@ -178,13 +221,11 @@ namespace god
 		 -------------------------------
 		*/
 		// get other points of agent
-		Vector2D currentvec = VEC2_ZERO;
 		std::vector<Vector2D> points;
 		std::string currentcodons;
-
-		const int split	= 2;		 // TODO : can be changed?
-		const int N		= split * 3; // * codon size
-		bool x			= true;
+		Vector2D currentvec = VEC2_ZERO;
+		int split = 2;		 // TODO : can be changed?
+		bool x    = true;
 
 		for (int i = 0; i < pointcodons.size(); i++)
 		{
@@ -216,7 +257,7 @@ namespace god
 
 		/*
 		 -------------------------------
-				AGENT agression
+				AGENT AGRESSION
 		 -------------------------------
 		*/
 		int agression;
@@ -228,7 +269,67 @@ namespace god
 		int decimal = maths::StringToDecimal(codons, false);
 		agression = decimal % 11;
 
+		/*
+		 -------------------------------
+				AGENT COLOUR
+		 -------------------------------
+		*/
+		int colourcodonsize = rcodons.size(); // should be 8!
+
+		std::string rgene;
+		for (int i = 0; i < colourcodonsize; i++)
+		{
+			const auto& codons = rcodons[i];
+			int totalbits	   = 0;
+
+			for (const auto& codon : codons)
+			{
+				if (codon == '1')
+				{
+					totalbits++;
+				}
+			}
+			rgene += totalbits > 1 ? '1' : '0';
+		}
+		std::string bgene;
+		for (int i = 0; i < colourcodonsize; i++)
+		{
+			const auto& codons = bcodons[i];
+			int totalbits = 0;
+
+			for (const auto& codon : codons)
+			{
+				if (codon == '1')
+				{
+					totalbits++;
+				}
+			}
+			bgene += totalbits > 1 ? '1' : '0';
+		}
+		std::string ggene;
+		for (int i = 0; i < colourcodonsize; i++)
+		{
+			const auto& codons = gcodons[i];
+			int totalbits = 0;
+
+			for (const auto& codon : codons)
+			{
+				if (codon == '1')
+				{
+					totalbits++;
+				}
+			}
+			ggene += totalbits > 1 ? '1' : '0';
+		}
+
+		int r = maths::StringToDecimal(rgene, false);
+		int g = maths::StringToDecimal(ggene, false);
+		int b = maths::StringToDecimal(bgene, false);
+		SDL_Color agentcolour = { r, g, b };
+
+
 		agent->SetGenome(genus);
+		agent->Colour(agentcolour);
 		// agent->SetTraits({ "name", {255, 255, 255}, 5.0f, 3.0f, 2000, 2000, 100, 5 });
 	}
 	

@@ -111,6 +111,7 @@ namespace object
 		BabyAgent m_baby = { "", "", 0 };
 		bool m_rdytomate;
 		bool check_mate(Agent* mate);
+		void check_baby();
 
 		// states
 		void attack();
@@ -137,6 +138,8 @@ namespace object
 		{ return m_gender; }
 		inline SDL_Color Colour()
 		{ return m_traits.colour; }
+		inline void Colour(SDL_Color colour)
+		{ m_traits.colour = colour; }
 
 		inline void SetGenome(std::string genome) 
 		{ g_genome = genome; }
