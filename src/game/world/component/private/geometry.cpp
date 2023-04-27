@@ -82,14 +82,16 @@ namespace object
 		m_width = width;
 	}
 
-	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points)
+	void Geometry::Set(Vector2D pos, std::vector<Vector2D> points, AABB* aabb)
 	{
 		float width, height;
 		normalisepoints(points, width, height);
 		m_tris.clear(); // hack for genome TODO : proper solution
 		set_tris(points);
-		
-		m_active	  = true;
+
+		aabb->SetSize({ Size().x, Size().y });
+
+		m_active	= true;
 		m_offsetpos = VEC2_ZERO;
 		m_pos		= pos;
 		m_height	= height;

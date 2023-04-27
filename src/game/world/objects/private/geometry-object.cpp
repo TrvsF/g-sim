@@ -36,10 +36,9 @@ namespace object
 
 		m_geometry->Set(
 			{ GetPosition().x, GetPosition().y },
-			points
+			points,
+			&GetAABB()
 		);
-		Vector2D size = m_geometry->Size();
-		GetAABB().SetSize({ size.x, size.y });
 	}
 
 	GeometryObject::~GeometryObject()
@@ -103,7 +102,9 @@ namespace object
 			totalangle += fabsf(ang);
 		}
 
-		return totalangle / tricount;
+		float avgangle = totalangle / tricount;
+
+		return (1 / avgangle) * 15;
 	}
 
 	void GeometryObject::Update()

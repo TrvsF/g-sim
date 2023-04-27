@@ -95,8 +95,8 @@ namespace object
 
 	bool Agent::check_mate(Agent* mate)
 	{
-		// has to be different gender
-		if (mate->Gender() == m_gender) 
+		// has to be different sex
+		if (mate->Sex() == m_traits.sex)
 		{ return false; }
 		// colour has to be close
 		double cdifference = maths::ColourDifference(m_traits.colour, mate->Colour());
@@ -109,6 +109,7 @@ namespace object
 		{
 			get_randomname(), // name
 			get_randomcolour(), // colour
+			maths::GetRandomInt(0, 1), // sex
 
 			maths::GetRandomFloat(1.0f, 3.0f), // walkspeed
 			maths::GetRandomFloat(1.0f, 3.0f), // turnspeed
@@ -121,11 +122,10 @@ namespace object
 
 	void Agent::set_traits()
 	{
-		m_gender	= maths::GetRandomInt(0, 1);
-		m_agression = m_traits.agression;
-		m_stamina   = m_traits.maxstamina;
-		m_health    = m_traits.maxhealth;
 		GetGeometry()->Colour(m_traits.colour);
+
+		m_health  = m_traits.maxhealth;
+		m_stamina = m_traits.maxstamina;
 	}
 
 	void Agent::add_objecttomemory(GameObject* object)
@@ -322,7 +322,7 @@ namespace object
 			if (ready)
 			{
 				// make a baby
-				if (m_gender)
+				if (m_traits.sex)
 				{
 					m_baby.genus1 = g_genome;
 					m_baby.genus2 = mateobj->GetGenome();
@@ -421,6 +421,7 @@ namespace object
 		if (m_baby.aliveticks > 3840)
 		{
 			// give birth
+			console::bus->postpone(event::eAgentBorn { Get2DPosition(), m_baby.genus1, m_baby.genus2 });
 
 			m_baby.genus1 = "";
 			m_baby.genus2 = "";

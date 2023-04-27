@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 
+#include "aabb.h"
 #include "../src/game/world/component/triangle.h"
 #include "../src/util/vector2d.h"
 #include "../src/util/maths.h"
@@ -32,7 +33,7 @@ namespace object
 		Geometry(std::vector<Triangle> tris, Vector2D pos);
 
 		void Set(Vector2D pos, int sides, float& width, float& height);
-		void Set(Vector2D pos, std::vector<Vector2D> points);
+		void Set(Vector2D pos, std::vector<Vector2D> points, AABB* aabb);
 
 		inline const std::vector<Triangle>& Tris() const
 		{ return m_tris; }

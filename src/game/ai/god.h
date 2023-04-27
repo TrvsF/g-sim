@@ -17,7 +17,8 @@ namespace god
 		AGRESSION = 2,
 		R		  = 3,
 		G		  = 4,
-		B		  = 5
+		B		  = 5,
+		SEX		  = 6,
 	};
 
 	// STOP codon
@@ -114,8 +115,8 @@ namespace god
 		}
 	}
 
-	void		generate_child(std::string parent1, std::string parent2, std::string& child);
-	inline void generate_child(std::string parent1, std::string parent2, std::string& child)
+	void		generate_child_genome(std::string parent1, std::string parent2, std::string& child);
+	inline void generate_child_genome(std::string parent1, std::string parent2, std::string& child)
 	{
 		bool parentflag = false;
 		std::vector<std::string> genes1 = get_genes(parent1);
@@ -143,7 +144,7 @@ namespace god
 	inline void GenerateGenus(std::string& genus)
 	{
 		// size of chromosome
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 7; i++)
 		{ 
 			switch (i)
 			{
@@ -171,16 +172,17 @@ namespace god
 				append_codons(genus, 8);
 				genus += STOP;
 				break;
+			case SEX:
+				append_codons(genus, 1);
+				genus += STOP;
+				break;
 			}
 		}
 	}
 
-	inline void BuildAgent(object::GameObject* object, object::Agent* agent)
+	void BuildAgent(object::Agent* agent, std::string genus);
+	inline void BuildAgent(object::Agent* agent, std::string genus)
 	{
-		// randomly generate genus
-		std::string genus;
-		GenerateGenus(genus);
-
 		// get codons for each gene
 		std::vector<std::string> genes			 = get_genes(genus);
 		// TODO : relook @ this
@@ -190,6 +192,7 @@ namespace god
 		std::vector<std::string> rcodons		 = get_codons(genes[3]);
 		std::vector<std::string> gcodons		 = get_codons(genes[4]);
 		std::vector<std::string> bcodons		 = get_codons(genes[5]);
+		std::vector<std::string> sexcodons		 = get_codons(genes[6]);
 
 		/*
 		 -------------------------------
@@ -251,9 +254,6 @@ namespace god
 				x = !x;
 			}
 		}
-
-		// build agent from generated points
-		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points);
 
 		/*
 		 -------------------------------
@@ -325,12 +325,38 @@ namespace god
 		int r = maths::StringToDecimal(rgene, false);
 		int g = maths::StringToDecimal(ggene, false);
 		int b = maths::StringToDecimal(bgene, false);
+
+		/*
+		 -------------------------------
+				AGENT SEX
+		 -------------------------------
+		*/
+		std::string bittle = sexcodons[0];
+		int sex = maths::StringToDecimal(bittle, false) % 2;
+
+		// build agent from generated points
+		agent->GetGeometry()->Set({ agent->GetGeometry()->Pos() }, points, &agent->GetAABB());
+		float area		 = agent->GetArea();
+		float spikeyness = agent->GetSpikyness();
+		
 		SDL_Color agentcolour = { r, g, b };
+		float walkspeed		= (spikeyness / (area * 0.1f)) + 1.0f;
+		float maxturnspeed  = maths::GetRandomFloat(0.5f, 5.0f); // TODO : not random 
+		int maxhealth		= area;
+		int maxstamina		= area * 10;
+		int maxdamage		= spikeyness;
 
-
+		agent->SetTraits({ "", agentcolour, sex, walkspeed, maxturnspeed, maxhealth, maxstamina, maxdamage, agression });
 		agent->SetGenome(genus);
-		agent->Colour(agentcolour);
-		// agent->SetTraits({ "name", {255, 255, 255}, 5.0f, 3.0f, 2000, 2000, 100, 5 });
+	}
+
+	inline void BuildAgent(object::Agent* agent)
+	{
+		// randomly generate genus
+		std::string genus;
+		GenerateGenus(genus);
+
+		BuildAgent(agent, genus);
 	}
 	
 	inline void PrintGenus(std::string genus)

@@ -35,6 +35,23 @@ namespace game
 		RemoveGameObject(gameobject);
 	}
 
+	void Game::e_agentbirth(const event::eAgentBorn& event)
+	{
+		std::string genus;
+		god::generate_child_genome(event.g1, event.g2, genus);
+
+		object::GameObject* gameobject = object::GameObject::Create(
+			{ event.pos.x, event.pos.y, 0.0f  },
+			{ 0.0f,		   0.0f,		0.0f  },
+			{ 64.0f,	   64.0f,		64.0f }
+		);
+
+		object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
+		god::BuildAgent(agent, genus);
+
+		AddGameObject(agent);
+	}
+
 	void Game::init_entities()
 	{
 		// player
@@ -159,7 +176,7 @@ namespace game
 			);
 
 			object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
-			god::BuildAgent(gameobject, agent);
+			god::BuildAgent(agent);
 
 			AddGameObject(agent);
 		}

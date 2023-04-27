@@ -42,6 +42,7 @@ namespace game
 		void e_poschange(const event::ePosChange& event);
 		void e_scalechange(const event::eScaleChange& event);
 		void e_objectdeath(const event::eObjectDeath& event);
+		void e_agentbirth(const event::eAgentBorn& event);
 
 		// logic objects
 		Collision*	m_collision;

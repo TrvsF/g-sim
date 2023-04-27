@@ -2,6 +2,7 @@
 #define AGENT_H_
 
 #include "../src/game/world/objects/geometry-object.h"
+
 #include "food.h"
 #include "../src/util/file.h"
 
@@ -25,6 +26,7 @@ namespace object
 	{
 		std::string name; // ent name
 		SDL_Color colour; // ent colour
+		int sex; // 0-1
 
 		float maxwalkspeed; // 1-5
 		float maxturnspeed; // 1-5
@@ -49,10 +51,9 @@ namespace object
 		// brain/stats
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
-		int		   m_agression;
-		int		   m_stamina;
+		
 		int		   m_health;
-		bool	   m_gender;
+		int		   m_stamina;
 		bool       m_dead;
 
 		// genes
@@ -134,8 +135,8 @@ namespace object
 		{ return m_rdytomate; }
 		inline bool IsDead()
 		{ return m_dead; }
-		inline bool Gender()
-		{ return m_gender; }
+		inline bool Sex()
+		{ return m_traits.sex; }
 		inline SDL_Color Colour()
 		{ return m_traits.colour; }
 		inline void Colour(SDL_Color colour)
@@ -147,7 +148,10 @@ namespace object
 		{ return g_genome; }
 
 		inline void SetTraits(Traits traits)
-		{ m_traits = traits; }
+		{
+			m_traits = traits; 
+			set_traits();
+		}
 
 		void Die();
 		void TakeDamage(int damage);

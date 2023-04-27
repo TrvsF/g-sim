@@ -36,7 +36,10 @@ namespace event
 	};
 	struct eAgentBorn
 	{
-		object::GameObject* agent;
+		Vector2D pos;
+
+		std::string g1;
+		std::string g2;
 	};
 	// ---------------------
 	class Event
