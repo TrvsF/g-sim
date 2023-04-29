@@ -61,7 +61,7 @@ namespace object
 			// mating checks
 			bool is_mateable = check_mate(agent);
 			// owo
-			if (is_mateable)
+			if (is_mateable && m_baby.genus1 == "")
 			{
 				m_targetpos = agent->Get2DPosition();
 				m_aistate	= AgentState::Mating;
@@ -298,7 +298,7 @@ namespace object
 	{
 		if (m_targetpos == VEC2_ZERO || is_attargetpos(50))
 		{
-			set_targetpos(get_newtargetpos());
+			m_targetpos = get_newtargetpos();
 		}
 	}
 
@@ -328,8 +328,10 @@ namespace object
 					m_baby.genus2 = mateobj->GetGenome();
 					m_baby.aliveticks = 0;
 				}
+
 				m_rdytomate  = false;
 				m_aistate = AgentState::Wandering;
+				return;
 			}
 		}
 		move_towardtargetpos();
@@ -354,7 +356,7 @@ namespace object
 		Vector2D mempos = get_memoryentitypos(GameEntityType::Food);
 		if (mempos != VEC2_ZERO) // can remember
 		{
-			set_targetpos(mempos); 
+			m_targetpos = mempos; 
 			if (is_attargetpos(30))
 			{
 				forget(mempos);

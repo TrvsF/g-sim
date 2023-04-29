@@ -103,10 +103,6 @@ namespace object
 
 		// navigation
 		void check_targetpos();
-		inline void set_targetpos(Vector2D pos)
-		{ m_targetpos = pos; }
-		inline void set_targetagent(Agent* agent)
-		{ m_seenagent = agent; }
 
 		// mating
 		BabyAgent m_baby = { "", "", 0 };
