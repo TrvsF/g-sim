@@ -40,6 +40,8 @@ namespace event
 
 		std::string g1;
 		std::string g2;
+
+		std::string lastname;
 	};
 	// ---------------------
 	class Event

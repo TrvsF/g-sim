@@ -1,6 +1,8 @@
 #ifndef MATHS_H_
 #define MATHS_H_
 
+#include "file.h"
+
 #include <iterator>
 #include <random>
 #include <time.h>
@@ -145,5 +147,16 @@ namespace maths
             delete element;
         }
     };
+
+    // TODO : move
+    
+    
+    static std::string get_randomname()
+    {
+        std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
+        std::vector<std::string> lastnames = file::GetLinesFromFile("lastnames.txt");
+        return *select_randomly(firstnames.begin(), firstnames.end())
+            + "." + *select_randomly(lastnames.begin(), lastnames.end());
+    }
 }
 #endif

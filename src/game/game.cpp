@@ -17,6 +17,8 @@ namespace game
 			&Game::e_objectdeath, this, std::placeholders::_1));
 		m_listener.listen<event::eScaleChange>(std::bind(
 			&Game::e_scalechange, this, std::placeholders::_1));
+		m_listener.listen<event::eAgentBorn>(std::bind(
+			&Game::e_agentbirth, this, std::placeholders::_1));
 	}
 
 	void Game::e_poschange(const event::ePosChange& event)
@@ -45,9 +47,12 @@ namespace game
 			{ 0.0f,		   0.0f,		0.0f  },
 			{ 64.0f,	   64.0f,		64.0f }
 		);
-
 		object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
 		god::BuildAgent(agent, genus);
+
+		// set names
+		agent->SetName("", false);
+		agent->SetName(event.lastname, true);
 
 		AddGameObject(agent);
 	}
@@ -177,6 +182,10 @@ namespace game
 
 			object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
 			god::BuildAgent(agent);
+
+			// random first & last name
+			agent->SetName("", false);
+			agent->SetName("", true);
 
 			AddGameObject(agent);
 		}

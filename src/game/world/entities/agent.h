@@ -118,6 +118,8 @@ namespace object
 		void   mate();
 
 		// TODO : move
+		std::string get_randomfirstname();
+		std::string get_randomlastname();
 		std::string get_randomname();
 		SDL_Color get_randomcolour();
 
@@ -131,23 +133,28 @@ namespace object
 		{ return m_rdytomate; }
 		inline bool IsDead()
 		{ return m_dead; }
+
+		// traits
 		inline bool Sex()
 		{ return m_traits.sex; }
+
 		inline SDL_Color Colour()
 		{ return m_traits.colour; }
 		inline void Colour(SDL_Color colour)
 		{ m_traits.colour = colour; }
 
+		inline void SetTraits(Traits traits)
+		{
+			m_traits = traits;
+			set_traits();
+		}
+		void SetName(std::string name, bool overwrite);
+
+		// genome
 		inline void SetGenome(std::string genome) 
 		{ g_genome = genome; }
 		inline std::string GetGenome() 
 		{ return g_genome; }
-
-		inline void SetTraits(Traits traits)
-		{
-			m_traits = traits; 
-			set_traits();
-		}
 
 		void Die();
 		void TakeDamage(int damage);

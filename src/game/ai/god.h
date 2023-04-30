@@ -132,6 +132,7 @@ namespace god
 			{
 				child += genes2[i];
 			}
+			child += STOP;
 
 			if (maths::GetRandomInt(0, 3) == 0)
 			{

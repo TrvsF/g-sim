@@ -93,6 +93,23 @@ namespace object
 		}
 	}
 
+	void Agent::SetName(std::string name, bool overwrite)
+	{
+		if (name == "")
+		{
+			name = overwrite ? get_randomlastname() : get_randomfirstname();
+		}
+
+		if (overwrite)
+		{
+			m_traits.name = name;
+		}
+		else
+		{
+			m_traits.name += "." + name;
+		}
+	}
+
 	bool Agent::check_mate(Agent* mate)
 	{
 		// has to be different sex
@@ -415,15 +432,16 @@ namespace object
 
 	void Agent::check_baby()
 	{
-		if (m_baby.genus1 != "")
-		{
-			m_baby.aliveticks++;
-		}
+		if (m_baby.genus1 == "")
+		{ return; }
+
+		m_baby.aliveticks++;
 
 		if (m_baby.aliveticks > 3840)
 		{
 			// give birth
-			console::bus->postpone(event::eAgentBorn { Get2DPosition(), m_baby.genus1, m_baby.genus2 });
+			console::bus->postpone(event::eAgentBorn { Get2DPosition(), m_baby.genus1, m_baby.genus2, "AWESOME" });
+			console::bus->process();
 
 			m_baby.genus1 = "";
 			m_baby.genus2 = "";
@@ -499,10 +517,20 @@ namespace object
 
 	std::string Agent::get_randomname()
 	{
+		return get_randomfirstname() + "." + get_randomlastname();
+	}
+
+	std::string Agent::get_randomfirstname()
+	{
 		std::vector<std::string> firstnames = file::GetLinesFromFile("firstnames.txt");
-		std::vector<std::string> lastnames  = file::GetLinesFromFile("lastnames.txt");
-		return *maths::select_randomly(firstnames.begin(), firstnames.end())
-			+ "." + *maths::select_randomly(lastnames.begin(), lastnames.end());
+		return *maths::select_randomly(firstnames.begin(), firstnames.end());
+	}
+
+	// TODO : move
+	std::string Agent::get_randomlastname()
+	{
+		std::vector<std::string> lastnames = file::GetLinesFromFile("lastnames.txt");
+		return *maths::select_randomly(lastnames.begin(), lastnames.end());
 	}
 
 	SDL_Color Agent::get_randomcolour()
