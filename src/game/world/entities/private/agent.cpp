@@ -9,6 +9,7 @@ namespace object
 
 		m_aistate = AgentState::Wandering;
 		m_dead = false;
+		m_age  = 0;
 
 		m_turnobj.steps = 0;
 		m_turnobj.left = 0;
@@ -97,7 +98,7 @@ namespace object
 	{
 		if (name == "")
 		{
-			name = overwrite ? get_randomlastname() : get_randomfirstname();
+			name = overwrite ? get_randomfirstname() : get_randomlastname();
 		}
 
 		if (overwrite)
@@ -112,6 +113,9 @@ namespace object
 
 	bool Agent::check_mate(Agent* mate)
 	{
+		// cant be underage!
+		if (m_age < 1200)
+		{ return false; }
 		// has to be different sex
 		if (mate->Sex() == m_traits.sex)
 		{ return false; }
@@ -456,7 +460,7 @@ namespace object
 
 		if (m_stamina < m_traits.maxstamina * 0.25) 
 		{ m_aistate = AgentState::Eating; }
-		if (m_health <= 0)
+		if (m_health <= 0 || m_age >= 19200)
 		{ Die(); }
 
 		switch (m_aistate)
@@ -486,6 +490,7 @@ namespace object
 
 	void Agent::Update()
 	{
+		m_age++;
 		check_baby();
 		// health checks
 		// brain

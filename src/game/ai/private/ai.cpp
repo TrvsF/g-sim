@@ -61,7 +61,7 @@ namespace ai
 	void AI::Tick()
 	{
 		m_tickcounter++;
-		if (m_tickcounter % (5 * get_agents().size() + 1) == 0)
+		if (m_tickcounter % 32 == 0)
 		{
 			do_debugconsole();
 		}

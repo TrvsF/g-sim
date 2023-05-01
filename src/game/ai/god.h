@@ -359,18 +359,5 @@ namespace god
 
 		BuildAgent(agent, genus);
 	}
-	
-	inline void PrintGenus(std::string genus)
-	{
-		// get char array of genus
-		bool nexttrait = false;
-		const char* dnabit;
-		for (dnabit = genus.c_str(); *dnabit != '\0'; dnabit++)
-		{
-			if (nexttrait) {}
-			const char dna = dnabit[0];
-			std::cout << dna;
-		}
-	}
 }
 #endif

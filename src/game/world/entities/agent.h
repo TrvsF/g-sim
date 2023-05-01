@@ -52,6 +52,7 @@ namespace object
 		Turnobj	   m_turnobj;
 		AgentState m_aistate;
 		
+		int		   m_age;
 		int		   m_health;
 		int		   m_stamina;
 		bool       m_dead;
@@ -141,7 +142,7 @@ namespace object
 		inline SDL_Color Colour()
 		{ return m_traits.colour; }
 		inline void Colour(SDL_Color colour)
-		{ m_traits.colour = colour; }
+		{ m_traits.colour = colour; GetGeometry()->Colour(m_traits.colour); }
 
 		inline void SetTraits(Traits traits)
 		{

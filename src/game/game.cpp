@@ -51,8 +51,8 @@ namespace game
 		god::BuildAgent(agent, genus);
 
 		// set names
-		agent->SetName("", false);
-		agent->SetName(event.lastname, true);
+		agent->SetName("", true);
+		agent->SetName(event.lastname, false);
 
 		AddGameObject(agent);
 	}
@@ -184,8 +184,8 @@ namespace game
 			god::BuildAgent(agent);
 
 			// random first & last name
-			agent->SetName("", false);
 			agent->SetName("", true);
+			agent->SetName("", false);
 
 			AddGameObject(agent);
 		}
