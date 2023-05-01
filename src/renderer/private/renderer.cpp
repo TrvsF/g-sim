@@ -277,8 +277,8 @@ namespace renderer
 			// offset += {width / scaleoffset, height / scaleoffset};
 		}
 
-		SDL_Rect render_rect // big
-		{ x + offset.x, y + offset.y, width * scale, height * scale};
+		SDL_Rect render_rect // big  + offset.x
+		{ x, y, width * scale, height * scale};
 		SDL_Rect src_rect	 // little
 		{ offsetx, offsety, twidth, theight };
 
@@ -310,7 +310,7 @@ namespace renderer
 		for (const auto& tri : geometry->Tris())
 		{
 			// create verts from goemetry
-			Vector2D offsetpos = pos + offset;
+			Vector2D offsetpos = pos;//+ offset;
 			std::vector<SDL_Vertex> verts;
 			for (const auto& point : tri.GetPoints())
 			{

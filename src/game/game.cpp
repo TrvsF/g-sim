@@ -72,7 +72,7 @@ namespace game
 		object::GameObject* cameraobj = object::GameObject::Create(
 			{ 0.0f,   0.0f,   0.0f },
 			{ 0.0f,   0.0f,   0.0f },
-			{ 300.0f, 300.0f, 300.0f }
+			{ 720.0f, 720.0f, 300.0f }
 		);
 		m_camera = new object::Camera(cameraobj);
 		m_camera->SetSubject(m_player);
@@ -217,6 +217,11 @@ namespace game
 	void Game::ScrollUp(int mousebutton, int x, int y)
 	{
 
+	}
+
+	void Game::MoveCamera(Vector2D movevec)
+	{
+		m_camera->Offset(movevec);
 	}
 
 	object::GameObject* Game::get_clickedobject(int x, int y)

@@ -79,6 +79,7 @@ namespace game
 		void MouseClick(int mousebutton, int x, int y);
 		void ScrollDown(int mousebutton, int x, int y);
 		void ScrollUp  (int mousebutton, int x, int y);
+		void MoveCamera(Vector2D movevec);
 
 		inline void AddGameObject(object::GameObject* gameobject);
 		inline void RemoveGameObject(object::GameObject* gameobject);

@@ -30,8 +30,8 @@ namespace object
 
 		float maxwalkspeed; // 1-5
 		float maxturnspeed; // 1-5
-		int maxhealth;      // 100 - 500    [based too on size]
-		int maxstamina;     // 1000 - 10000 [based too on size]
+		int maxhealth;      // 100 - 500
+		int maxstamina;     // 1000 - 10000
 		int maxdamage;		// 5 - 25
 		int agression;		// 0 - 10
 	};

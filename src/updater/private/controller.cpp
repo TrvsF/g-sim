@@ -17,13 +17,21 @@ namespace updater
 		}
 
 		if (m_input->KeyDown("w"))
-		{ m_player->MoveUp(); }
+		{
+			game::Game::SharedInstace().MoveCamera({ 0, 10 });
+		}
 		if (m_input->KeyDown("s"))
-		{ m_player->MoveDown(); }
+		{
+			game::Game::SharedInstace().MoveCamera({ 0, -10 });
+		}
 		if (m_input->KeyDown("a"))
-		{ m_player->MoveLeft(); }
+		{
+			game::Game::SharedInstace().MoveCamera({ 10, 0 });
+		}
 		if (m_input->KeyDown("d"))
-		{ m_player->MoveRight(); }
+		{
+			game::Game::SharedInstace().MoveCamera({ -10, 0 });
+		}
 
 		int x, y;
 		if (m_input->MousePressed(Right, x, y))

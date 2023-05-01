@@ -13,6 +13,8 @@ namespace object
 	{
 	private:
 		GameObject*				m_subject;
+		Vector2D				m_offset;
+
 		std::vector<Texture*>	m_textureobjs;
 		Vector2D				m_screensize;
 		Vector2D				m_local_offset_pos;
@@ -25,6 +27,9 @@ namespace object
 		}
 		void SetSubject(GameObject* gameobject);
 		void SetTexturePos(GameObject* gameobject);
+		
+		inline void Offset(Vector2D offset) 
+		{ GetTransform().OffsetPosition({ offset.x, offset.y }); }
 
 		inline const Vector2D GetOffsetpos()
 		{

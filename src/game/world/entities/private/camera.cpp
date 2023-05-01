@@ -75,7 +75,7 @@ namespace object
 		Vector3D offsetpos = { 
 			(subject_midpoint.x - (GetPosition().x + m_local_offset_pos.x)) - (GetSize().width / 2),
 			(subject_midpoint.y - (GetPosition().y + m_local_offset_pos.y)) - (GetSize().height / 2),
-			(subject_midpoint.z - GetPosition().z) - (GetSize().depth / 2)
+			0
 		};
 
 		m_screensize = renderer::Renderer::SharedInstace().GetScreensize();
