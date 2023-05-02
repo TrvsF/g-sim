@@ -90,6 +90,19 @@ namespace god
 		return codons;
 	}
 
+	// overwrite segment of genome
+	// TODO : make not just for colour
+	void		overwrite_gene(std::string& genus, int pos, const char bit);
+	inline void overwrite_gene(std::string& genus, int pos, const char bit)
+	{
+		int c = 0;
+		for (int i = pos; i < pos + 24; i++)
+		{
+			genus[i] = c % 3 == 0 ? '1' : bit;
+			c++; // int trick to not produce stop codons
+		}
+	}
+
 	// append random non-stop codon to genus
 	void		append_codons(std::string& genus, int ammount);
 	inline void append_codons(std::string& genus, int ammount)
@@ -184,6 +197,12 @@ namespace god
 	void BuildAgent(object::Agent* agent, std::string genus);
 	inline void BuildAgent(object::Agent* agent, std::string genus)
 	{
+		// RED
+		overwrite_gene(genus, 99,  '1');
+		// GREEN
+		overwrite_gene(genus, 126, '0');
+		// BLUE
+		overwrite_gene(genus, 153, '0');
 		// get codons for each gene
 		std::vector<std::string> genes			 = get_genes(genus);
 		// TODO : relook @ this

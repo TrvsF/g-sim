@@ -1,9 +1,10 @@
 #ifndef AGENT_H_
 #define AGENT_H_
 
-#include "../src/game/world/objects/geometry-object.h"
+#include <sstream>
 
 #include "food.h"
+#include "../src/game/world/objects/geometry-object.h"
 #include "../src/util/file.h"
 
 namespace object
@@ -166,6 +167,19 @@ namespace object
 		// debug
 		inline std::string GetName()
 		{ return m_traits.name; }
+		// TODO : this is clunky & pasted! pls fix
+		inline std::string GetLastname()
+		{
+			std::stringstream ss(m_traits.name);
+			std::string segment;
+			std::vector<std::string> seglist;
+
+			while (std::getline(ss, segment, '.'))
+			{
+				seglist.push_back(segment);
+			}
+			return seglist[1];
+		}
 		
 		inline int GetHealth()
 		{ return m_health; }
