@@ -63,6 +63,10 @@ namespace updater
 		{
 			game::Game::SharedInstace().MouseClick(Right, x, y);
 		}
+		if (m_input->MousePressed(Middle, x, y))
+		{
+			game::Game::SharedInstace().MouseClick(Middle, x, y);
+		}
 		if (m_input->MousePressed(Left, x, y))
 		{
 			game::Game::SharedInstace().MouseClick(Left, x, y);

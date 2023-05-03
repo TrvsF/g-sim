@@ -10,6 +10,8 @@ namespace game
 		m_camera       = nullptr;
 		m_consoletxt   = nullptr;
 		m_coords       = nullptr;
+		m_debugname	   = nullptr;
+		m_debugfollow  = nullptr;
 
 		m_listener.listen<event::ePosChange> (std::bind(
 			&Game::e_poschange, this, std::placeholders::_1));
@@ -87,6 +89,10 @@ namespace game
 		object::GameObject* coordtextobj = object::GameObject::Create(0, 0, 0);
 		m_coords = new object::TextObject(coordtextobj, "HenryBlue-Regular", "", { 0, 0, 0 });
 		AddGameObject(m_coords);
+
+		object::GameObject* debugtextobj = object::GameObject::Create(0, 0, 0);
+		m_debugname = new object::TextObject(debugtextobj, "HenryBlue-Regular", "", { 0, 0, 0 });
+		AddGameObject(m_debugname);
 	}
 
 	void Game::generate_map()
@@ -141,6 +147,16 @@ namespace game
 			Vector2D offsetpos = pos - m_camera->GetOffsetpos();
 			m_coords->GetTexture()->Pos(Vector2D{10, 600});
 			m_coords->SetText(coords);
+		}
+
+		// debug agent
+		if (m_debugfollow != nullptr)
+		{
+			object::Transform* subject_transform = &m_debugfollow->GetTransform();
+			Vector2D pos = subject_transform->Get2DPosition();
+
+			m_debugname->GetTexture()->Pos(Vector2D{20, 300});
+			m_debugname->SetText(m_debugfollow->GetName());
 		}
 	}
 
@@ -203,6 +219,18 @@ namespace game
 		break;
 		case 2: // mm
 		{
+			const auto& clicked = get_clickedobject(x, y);
+			if (clicked == NULL)
+			{
+				m_debugfollow = nullptr; 
+				return;
+			}
+			// if clicked agent
+			if (clicked->GetEntityType() == object::GameEntityType::Agent)
+			{
+				const auto& agent = static_cast<object::Agent*>(clicked);
+				m_debugfollow = agent;
+			}
 		}
 		break;
 		case 4: // m2

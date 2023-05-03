@@ -67,6 +67,8 @@ namespace game
 		// URGENT TODO : all text is broke idk why
 		object::TextObject* m_consoletxt;
 		object::TextObject* m_coords;
+		object::TextObject* m_debugname;
+		object::Agent*		m_debugfollow;
 		void do_textelements();
 
 		// input help TODO : move
