@@ -74,6 +74,11 @@ namespace game
 	public:
 		static Game& SharedInstace() { static Game game; return game; }
 
+		// TODO : redesign
+		bool R = false;
+		bool G = false;
+		bool B = false;
+
 		void MouseRelease(int mousebutton);
 		void MouseDown (int mousebutton, int x, int y);
 		void MouseClick(int mousebutton, int x, int y);

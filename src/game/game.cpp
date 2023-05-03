@@ -180,8 +180,19 @@ namespace game
 				{ 64.0f,   64.0f,   64.0f }
 			);
 
+			std::string genus;
+			god::GenerateGenus(genus);
+			// RED
+			god::overwrite_gene(genus, 99,  R ? '1' : '0');
+			// GREEN
+			god::overwrite_gene(genus, 126, G ? '1' : '0');
+			// BLUE
+			god::overwrite_gene(genus, 153, B ? '1' : '0');
+
+			std::cout << R << "\n";
+
 			object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
-			god::BuildAgent(agent);
+			god::BuildAgent(agent, genus);
 
 			// random first & last name
 			agent->SetName("", true);
@@ -260,6 +271,9 @@ namespace game
 	// entities -> camera
 	void Game::Tick()
 	{
+		std::for_each(m_toremove.begin(), m_toremove.end(), maths::delete_pointer_element<object::GameObject*>());
+		m_toremove.clear();
+
 		// tick/collision objects
 		for (object::GameObject* gameobject : m_gameobjects)
 		{
@@ -280,8 +294,5 @@ namespace game
 			if (gameobject == m_consoletxt || gameobject == m_coords) { continue; } // hack for console & coord text
 			m_camera->SetTexturePos(gameobject);
 		}
-
-		std::for_each(m_toremove.begin(), m_toremove.end(), maths::delete_pointer_element<object::GameObject*>());
-		m_toremove.clear();
 	}
 }

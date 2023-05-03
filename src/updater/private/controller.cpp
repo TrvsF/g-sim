@@ -15,7 +15,7 @@ namespace updater
 		{ 
 			m_player = game::Game::SharedInstace().GetPlayer();
 		}
-
+		// MOVEMENT
 		if (m_input->KeyDown("w"))
 		{
 			game::Game::SharedInstace().MoveCamera({ 0, 10 });
@@ -31,6 +31,31 @@ namespace updater
 		if (m_input->KeyDown("d"))
 		{
 			game::Game::SharedInstace().MoveCamera({ -10, 0 });
+		}
+		// RGB
+		if (m_input->KeyDown("j"))
+		{
+			game::Game::SharedInstace().R = true;
+		}
+		if (m_input->KeyDown("k"))
+		{
+			game::Game::SharedInstace().G = true;
+		}
+		if (m_input->KeyDown("l"))
+		{
+			game::Game::SharedInstace().B = true;
+		}
+		if (m_input->KeyReleased("j"))
+		{
+			game::Game::SharedInstace().R = false;
+		}
+		if (m_input->KeyReleased("k"))
+		{
+			game::Game::SharedInstace().G = false;
+		}
+		if (m_input->KeyReleased("l"))
+		{
+			game::Game::SharedInstace().B = false;
 		}
 
 		int x, y;

@@ -444,7 +444,7 @@ namespace object
 		if (m_baby.aliveticks > 30)
 		{
 			// give birth
-			console::bus->postpone(event::eAgentBorn { Get2DPosition(), m_baby.genus1, m_baby.genus2, "AWESOME" });
+			console::bus->postpone(event::eAgentBorn { Get2DPosition(), m_baby.genus1, m_baby.genus2, GetLastname() });
 			console::bus->process();
 
 			m_baby.genus1 = "";

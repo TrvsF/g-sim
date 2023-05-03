@@ -197,12 +197,6 @@ namespace god
 	void BuildAgent(object::Agent* agent, std::string genus);
 	inline void BuildAgent(object::Agent* agent, std::string genus)
 	{
-		// RED
-		overwrite_gene(genus, 99,  '1');
-		// GREEN
-		overwrite_gene(genus, 126, '0');
-		// BLUE
-		overwrite_gene(genus, 153, '0');
 		// get codons for each gene
 		std::vector<std::string> genes			 = get_genes(genus);
 		// TODO : relook @ this

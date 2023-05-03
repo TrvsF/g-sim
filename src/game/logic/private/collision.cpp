@@ -108,6 +108,11 @@ namespace game
 
 	void Collision::CheckCollisionObj(object::GameObject* game_object)
 	{
+		if (game_object == NULL) 
+		{ 
+			std::cout << "nullptr in collision!";
+			return;
+		}
 		std::pair<int, int> gridpair = get_gridfromcoords(game_object->GetPosition().x, game_object->GetPosition().y);
 		auto& objectlist = m_mapped_objects[gridpair];
 		// if object is not in the grid
