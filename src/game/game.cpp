@@ -97,19 +97,48 @@ namespace game
 
 	void Game::generate_map()
 	{
-		srand(m_seed);
-		for (int i = 0; i < 64; i++)
+		for (int i = -5; i < 5; i++)
 		{
-			float x = (float)maths::GetRandomInt(-5000, 5000);
-			float y = (float)maths::GetRandomInt(-5000, 5000);
-			object::GameObject* food = object::GameObject::Create(
-				{ x,     y,     0.0f },
-				{ 0.0f,  0.0f,  0.0f },
-				{ 64.0f, 64.0f, 64.0f }
-			);
-			// AddGameObject(new object::Food(food, 1000));
+			for (int j = -5; j < 5; j++)
+			{
+				int x = maths::GetRandomInt((i * 250) - 250, (i * 250) + 250);
+				int y = maths::GetRandomInt((j * 250) - 250, (j * 250) + 250);
+				spawn_food(x, y, 1200);
+			}
 		}
-		
+	}
+
+	void Game::spawn_agent(int x, int y, std::string genus)
+	{
+		object::GameObject* gameobject = object::GameObject::Create(
+			{ (float)x, (float)y, 0.0f },
+			{ 0.0f,     0.0f,     0.0f },
+			{ 64.0f,    64.0f,    64.0f }
+		);
+		object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
+
+		if (genus == "")
+		{
+			god::GenerateGenus(genus);
+		}
+
+		god::BuildAgent(agent, genus);
+
+		// random first & last name
+		agent->SetName("", true);
+		agent->SetName("", false);
+
+		AddGameObject(agent);
+	}
+
+	void Game::spawn_food(int x, int y, int size)
+	{
+		object::GameObject* food = object::GameObject::Create(
+			{ (float)x, (float)y, 0.0f },
+			{ 0.0f,     0.0f,     0.0f },
+			{ 64.0f,    64.0f,    64.0f }
+		);
+		AddGameObject(new object::Food(food, maths::GetRandomInt(0, 3), size));
 	}
 
 	void Game::zoom(float zoom, Vector2D mousepos)
@@ -136,16 +165,14 @@ namespace game
 		else { m_consoletxt->SetText(""); }
 
 		// coords
-		if (m_camera->GetSubject() != nullptr)
+		if (m_camera != nullptr)
 		{
 			// get current subject coords
-			object::Transform* subject_transform = &m_camera->GetSubject()->GetTransform();
-			Vector2D pos = subject_transform->Get2DPosition();
+			Vector2D pos = m_camera->GetTransform().Get2DPosition();
 			std::string coords = std::string(std::to_string((int)roundf(pos.x)) + " " + std::to_string((int)roundf(pos.y)));
 
 			// offset pos & draw coords
-			Vector2D offsetpos = pos - m_camera->GetOffsetpos();
-			m_coords->GetTexture()->Pos(Vector2D{10, 600});
+			m_coords->GetTexture()->Pos(Vector2D{20, 240});
 			m_coords->SetText(coords);
 		}
 
@@ -190,31 +217,17 @@ namespace game
 		{
 			float _x = x + m_camera->GetOffsetpos().x;
 			float _y = y + m_camera->GetOffsetpos().y;
-			object::GameObject* gameobject = object::GameObject::Create(
-				{ _x,	   _y,      0.0f },
-				{ 0.0f,    0.0f,    0.0f },
-				{ 64.0f,   64.0f,   64.0f }
-			);
 
 			std::string genus;
 			god::GenerateGenus(genus);
 			// RED
-			god::overwrite_gene(genus, 99,  R ? '1' : '0');
+			god::overwrite_gene(genus, 99, R ? '1' : '0');
 			// GREEN
 			god::overwrite_gene(genus, 126, G ? '1' : '0');
 			// BLUE
 			god::overwrite_gene(genus, 153, B ? '1' : '0');
 
-			std::cout << R << "\n";
-
-			object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
-			god::BuildAgent(agent, genus);
-
-			// random first & last name
-			agent->SetName("", true);
-			agent->SetName("", false);
-
-			AddGameObject(agent);
+			spawn_agent(_x, _y, genus);
 		}
 		break;
 		case 2: // mm
@@ -222,6 +235,7 @@ namespace game
 			const auto& clicked = get_clickedobject(x, y);
 			if (clicked == NULL)
 			{
+				m_debugname->SetText("");
 				m_debugfollow = nullptr; 
 				return;
 			}
@@ -237,12 +251,7 @@ namespace game
 		{
 			float _x = x + m_camera->GetOffsetpos().x;
 			float _y = y + m_camera->GetOffsetpos().y;
-			object::GameObject* food = object::GameObject::Create(
-				{ _x,    _y,    0.0f },
-				{ 0.0f,  0.0f,  0.0f },
-				{ 64.0f, 64.0f, 64.0f }
-			);
-			AddGameObject(new object::Food(food, maths::GetRandomInt(0, 3), 1500));
+			spawn_food(_x, _y, 1500);
 		}
 		break;
 		}
@@ -299,22 +308,12 @@ namespace game
 	// entities -> camera
 	void Game::Tick()
 	{
+		// remove entities that died last tick
 		std::for_each(m_toremove.begin(), m_toremove.end(), maths::delete_pointer_element<object::GameObject*>());
 		m_toremove.clear();
 
-		// tick/collision objects
-		for (object::GameObject* gameobject : m_gameobjects)
-		{
-			m_collision->CheckCollisionObj(gameobject);
-			m_collision->DoCollision();
-			gameobject->Tick();
-		}
-
-		// camera
+		// main camera tick
 		m_camera->Tick();
-
-		// console
-		do_textelements();
 
 		// update what camera sees
 		for (object::GameObject* gameobject : m_gameobjects)
@@ -322,5 +321,16 @@ namespace game
 			if (gameobject == m_consoletxt || gameobject == m_coords) { continue; } // hack for console & coord text
 			m_camera->SetTexturePos(gameobject);
 		}
+
+		// tick & collision objects
+		for (object::GameObject* gameobject : m_gameobjects)
+		{
+			m_collision->CheckCollisionObj(gameobject);
+			m_collision->DoCollision();
+			gameobject->Tick();
+		}
+
+		// text on screen
+		do_textelements();
 	}
 }

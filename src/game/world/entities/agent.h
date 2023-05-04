@@ -108,6 +108,7 @@ namespace object
 
 		// mating
 		BabyAgent m_baby = { "", "", 0 };
+		int	 m_timesincelastbaby;
 		bool m_rdytomate;
 		bool check_mate(Agent* mate);
 		void check_baby();

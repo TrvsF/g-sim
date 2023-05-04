@@ -22,6 +22,7 @@ namespace object
 		m_isturning = false;
 		m_ismoving = false;
 
+		m_timesincelastbaby = 0;
 		m_rdytomate = false;
 
 		set_randomtraits();
@@ -97,18 +98,12 @@ namespace object
 	void Agent::SetName(std::string name, bool overwrite)
 	{
 		if (name == "")
-		{
-			name = overwrite ? get_randomfirstname() : get_randomlastname();
-		}
+		{ name = overwrite ? get_randomfirstname() : get_randomlastname(); }
 
 		if (overwrite)
-		{
-			m_traits.name = name;
-		}
+		{ m_traits.name = name; }
 		else
-		{
-			m_traits.name += "." + name;
-		}
+		{ m_traits.name += "." + name; }
 	}
 
 	bool Agent::check_mate(Agent* mate)
@@ -118,6 +113,9 @@ namespace object
 		{ return false; }
 		// has to be different sex
 		if (mate->Sex() == m_traits.sex)
+		{ return false; }
+		// cant pop them out too fast!
+		if (m_timesincelastbaby + 600 > m_age)
 		{ return false; }
 		// colour has to be close
 		double cdifference = maths::ColourDifference(m_traits.colour, mate->Colour());
@@ -349,9 +347,8 @@ namespace object
 					m_baby.genus2 = mateobj->GetGenome();
 					m_baby.aliveticks = 0;
 				}
-
-				m_rdytomate  = false;
-				m_aistate = AgentState::Wandering;
+				m_rdytomate = false;
+				m_aistate   = AgentState::Wandering;
 				return;
 			}
 		}
@@ -441,7 +438,7 @@ namespace object
 
 		m_baby.aliveticks++;
 
-		if (m_baby.aliveticks > 30)
+		if (m_baby.aliveticks > 1920)
 		{
 			// give birth
 			console::bus->postpone(event::eAgentBorn { Get2DPosition(), m_baby.genus1, m_baby.genus2, GetLastname() });
@@ -450,6 +447,8 @@ namespace object
 			m_baby.genus1 = "";
 			m_baby.genus2 = "";
 			m_baby.aliveticks = 0;
+
+			m_timesincelastbaby = m_age;
 		}
 	}
 
@@ -460,7 +459,7 @@ namespace object
 
 		if (m_stamina < m_traits.maxstamina * 0.25) 
 		{ m_aistate = AgentState::Eating; }
-		if (m_health <= 0 || m_age >= 19200)
+		if (m_health <= 0 || m_age >= 57600)
 		{ Die(); }
 
 		switch (m_aistate)
@@ -500,7 +499,9 @@ namespace object
 		calc_transformoffsets();
 	}
 
-	// debug
+	// ------------
+	// DEBUG
+	// ------------
 
 	std::string Agent::GetStateStr()
 	{
@@ -531,7 +532,6 @@ namespace object
 		return *maths::select_randomly(firstnames.begin(), firstnames.end());
 	}
 
-	// TODO : move
 	std::string Agent::get_randomlastname()
 	{
 		std::vector<std::string> lastnames = file::GetLinesFromFile("lastnames.txt");

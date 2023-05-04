@@ -52,6 +52,8 @@ namespace game
 		std::vector<object::GameObject*> m_gameobjects;
 		object::Player* m_player;
 		object::Camera* m_camera;
+		void spawn_food(int x, int y, int size);
+		void spawn_agent(int x, int y, std::string genus);
 
 		// world gen TODO : move
 		// object::BiomeObject* m_biome;
