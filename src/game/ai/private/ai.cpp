@@ -4,19 +4,26 @@ namespace ai
 {
 	AI::AI()
 	{
+		// logs
+		file::CreateLogFile();
+
 		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
-		m_listener.listen<event::eAgentBorn>  (std::bind(&AI::e_agentborn,   this, std::placeholders::_1));
+		m_listener.listen<event::eAgentSpawn> (std::bind(&AI::e_agentspawn,  this, std::placeholders::_1));
 		m_tickcounter = 0;
 	}
 
 	void AI::e_objectdeath(const event::eObjectDeath& event)
 	{
-		// do_debugconsole();
+		std::string name = static_cast<object::Agent*>(event.victim)->GetName();
+		std::string data = "DEATH " + name + " " + std::to_string(m_tickcounter);
+		file::AppendToLogFile(data);
 	}
 
-	void AI::e_agentborn(const event::eAgentBorn& event)
+	void AI::e_agentspawn(const event::eAgentSpawn& event)
 	{
-		// do_debugconsole();
+		std::string name = static_cast<object::Agent*>(event.agent)->GetName();
+		std::string data = "BRITH " + name + " " + std::to_string(m_tickcounter);
+		file::AppendToLogFile(data);
 	}
 
 	std::vector<object::Agent*> AI::get_agents()

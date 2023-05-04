@@ -4,8 +4,10 @@ namespace game
 {
 	Game::Game()
 	{
+		// collision
 		m_collision = new Collision(128);
 
+		// vars
 		m_player	   = nullptr;
 		m_camera       = nullptr;
 		m_consoletxt   = nullptr;
@@ -13,6 +15,7 @@ namespace game
 		m_debugname	   = nullptr;
 		m_debugfollow  = nullptr;
 
+		// events
 		m_listener.listen<event::ePosChange> (std::bind(
 			&Game::e_poschange, this, std::placeholders::_1));
 		m_listener.listen<event::eObjectDeath>(std::bind(
@@ -302,7 +305,7 @@ namespace game
 
 		init_entities();
 		init_textelements();
-		generate_map();
+		// generate_map();
 	}
 
 	// entities -> camera

@@ -43,6 +43,10 @@ namespace event
 
 		std::string lastname;
 	};
+	struct eAgentSpawn
+	{
+		object::GameObject* agent;
+	};
 	// ---------------------
 	class Event
 	{

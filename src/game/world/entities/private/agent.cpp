@@ -27,6 +27,9 @@ namespace object
 
 		set_randomtraits();
 		set_traits();
+
+		console::bus->postpone(event::eAgentSpawn { this });
+		console::bus->process();
 	}
 
 	Agent::~Agent()
@@ -126,16 +129,16 @@ namespace object
 	{
 		m_traits =
 		{
-			get_randomname(), // name
-			get_randomcolour(), // colour
+			get_randomname(),			 // name
+			get_randomcolour(),			// colour
 			maths::GetRandomInt(0, 1), // sex
 
-			maths::GetRandomFloat(1.0f, 3.0f), // walkspeed
-			maths::GetRandomFloat(1.0f, 3.0f), // turnspeed
-			maths::GetRandomInt(100, 500),	   // health 
+			maths::GetRandomFloat(1.0f, 3.0f),    // walkspeed
+			maths::GetRandomFloat(1.0f, 3.0f),   // turnspeed
+			maths::GetRandomInt(100, 500),	    // health 
 			maths::GetRandomInt(750, 1500),    // stamina
-			maths::GetRandomInt(5, 15),        // damage
-			maths::GetRandomInt(0, 10)         // aggresion
+			maths::GetRandomInt(5, 15),       // damage
+			maths::GetRandomInt(0, 10)       // aggresion
 		};
 	}
 

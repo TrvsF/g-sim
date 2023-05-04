@@ -8,6 +8,8 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <iomanip>
+#include <ctime>
 
 namespace file
 {
@@ -46,6 +48,18 @@ namespace file
 		return basepath;
 	}
 
+	static std::string get_datetimestr()
+	{
+		auto t = std::time(nullptr);
+		auto tm = *std::localtime(&t);
+
+		std::ostringstream oss;
+		oss << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S");
+		auto str = oss.str();
+
+		return str;
+	}
+
 	static std::string basepath = GetBasePath();
 	static std::vector<std::string> GetLinesFromFile(std::string filepath)
 	{
@@ -56,6 +70,22 @@ namespace file
 			lines.push_back(line);
 		}
 		return lines;
+	}
+
+	static std::string datetimestr = get_datetimestr();
+	static std::string logfile = basepath + "logs/" + datetimestr + ".gsim";
+	static void CreateLogFile()
+	{
+		std::ofstream out(logfile);
+		out << "started simulation @ " << datetimestr << "\n";
+		out.close();
+	}
+
+	static void AppendToLogFile(std::string data)
+	{
+		std::ofstream out(logfile, std::ios_base::app);
+		out << data << "\n";
+		out.close();
 	}
 }
 #endif
