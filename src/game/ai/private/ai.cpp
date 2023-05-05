@@ -9,21 +9,47 @@ namespace ai
 
 		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
 		m_listener.listen<event::eAgentSpawn> (std::bind(&AI::e_agentspawn,  this, std::placeholders::_1));
-		m_tickcounter = 0;
+		
+		m_tick_counter	  = 0;
+		m_agentid_counter = 0;
 	}
 
 	void AI::e_objectdeath(const event::eObjectDeath& event)
 	{
-		std::string name = static_cast<object::Agent*>(event.victim)->GetName();
-		std::string data = "DEATH " + name + " " + std::to_string(m_tickcounter);
-		file::AppendToLogFile(data);
+		const auto& agent = static_cast<object::Agent*>(event.victim);
+		std::string id    = std::to_string(agent->Id());
+		std::string tick  = std::to_string(m_tick_counter);
+
+		std::string line = "DEATH:" + id + ":" + tick;
+		file::AppendLogFile(line);
+
+		std::string age = std::to_string(agent->GetAge());
+
+		std::string data = age;
+		file::AppendAgentFile(id, data);
 	}
 
 	void AI::e_agentspawn(const event::eAgentSpawn& event)
 	{
-		std::string name = static_cast<object::Agent*>(event.agent)->GetName();
-		std::string data = "BRITH " + name + " " + std::to_string(m_tickcounter);
-		file::AppendToLogFile(data);
+		m_agentid_counter++;
+
+		const auto& agent = static_cast<object::Agent*>(event.agent);
+		agent->Id(m_agentid_counter);
+		std::string id    = std::to_string(m_agentid_counter);
+		std::string tick  = std::to_string(m_tick_counter);
+
+		std::string line = "BIRTH:" + id + ":" + tick;
+		file::AppendLogFile(line);
+
+		auto r = std::to_string(agent->Colour().r) + ",";
+		auto g = std::to_string(agent->Colour().g) + ",";
+		auto b = std::to_string(agent->Colour().b);
+
+		std::string name   = agent->GetName();
+		std::string colour = r + g + b;
+		
+		std::string data = name + ":" + colour + ":";
+		file::AppendAgentFile(id, data);
 	}
 
 	std::vector<object::Agent*> AI::get_agents()
@@ -67,8 +93,8 @@ namespace ai
 
 	void AI::Tick()
 	{
-		m_tickcounter++;
-		if (m_tickcounter % 32 == 0)
+		m_tick_counter++;
+		if (m_tick_counter % 32 == 0)
 		{
 			do_debugconsole();
 		}

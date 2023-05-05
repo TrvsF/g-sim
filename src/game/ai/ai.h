@@ -23,7 +23,8 @@ namespace ai
 		void e_objectdeath(const event::eObjectDeath& event);
 		void e_agentspawn (const event::eAgentSpawn& event);
 
-		long m_tickcounter; // TODO : probably not a good idea
+		long m_agentid_counter;
+		long m_tick_counter; // TODO : probably not a good idea
 
 		std::vector<object::Agent*> get_agents();
 		void do_debugconsole();

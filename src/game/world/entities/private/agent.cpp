@@ -412,7 +412,7 @@ namespace object
 		if (iscollided)
 		{
 			// do damage based on spikeyness
-			int damage = 15.0 / GetSpikyness();
+			int damage = GetSpikyness() * 0.66;
 			m_seenagent->TakeDamage(damage);
 			if (m_seenagent->IsDead()) 
 			{

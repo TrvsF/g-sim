@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 
+#include <filesystem>
 #include <fstream>
 #include <vector>
 #include <map>
@@ -73,18 +74,30 @@ namespace file
 	}
 
 	static std::string datetimestr = get_datetimestr();
-	static std::string logfile = basepath + "logs/" + datetimestr + ".gsim";
+	static std::string logdir = basepath + "logs/" + datetimestr + "/";
+	static std::string logfile = logdir + "logs.g";
 	static void CreateLogFile()
 	{
+		std::filesystem::create_directories(logdir);
 		std::ofstream out(logfile);
 		out << "started simulation @ " << datetimestr << "\n";
 		out.close();
 	}
 
-	static void AppendToLogFile(std::string data)
+	static void AppendLogFile(std::string data)
 	{
 		std::ofstream out(logfile, std::ios_base::app);
 		out << data << "\n";
+		out.close();
+	}
+
+	static void AppendAgentFile(std::string id, std::string data)
+	{
+		auto dir = logdir + "agents/";
+
+		std::filesystem::create_directories(dir);
+		std::ofstream out(dir + id + ".g", std::ios_base::app);
+		out << data;
 		out.close();
 	}
 }

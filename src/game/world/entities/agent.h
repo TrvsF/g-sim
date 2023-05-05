@@ -58,6 +58,9 @@ namespace object
 		int		   m_stamina;
 		bool       m_dead;
 
+		// logs
+		int m_id;
+
 		// genes
 		std::string g_genome;
 
@@ -136,11 +139,18 @@ namespace object
 		{ return m_rdytomate; }
 		inline bool IsDead()
 		{ return m_dead; }
+		inline int GetAge()
+		{ return m_age; }
+
+		// logs
+		inline void Id(int id) 
+		{ m_id = id; }
+		inline int Id() 
+		{ return m_id; }
 
 		// traits
 		inline bool Sex()
 		{ return m_traits.sex; }
-
 		inline SDL_Color Colour()
 		{ return m_traits.colour; }
 		inline void Colour(SDL_Color colour)
