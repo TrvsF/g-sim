@@ -80,7 +80,7 @@ namespace file
 	{
 		std::filesystem::create_directories(logdir);
 		std::ofstream out(logfile);
-		out << "started simulation @ " << datetimestr << "\n";
+		out << "LOGS@ " << datetimestr << "\n";
 		out.close();
 	}
 
@@ -95,8 +95,9 @@ namespace file
 	{
 		auto dir = logdir + "agents/";
 
-		std::filesystem::create_directories(dir);
 		std::ofstream out(dir + id + ".g", std::ios_base::app);
+		if (std::filesystem::create_directories(dir))
+		{ out << "AGENT" << "\n"; }
 		out << data;
 		out.close();
 	}
