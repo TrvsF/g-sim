@@ -27,9 +27,6 @@ namespace object
 
 		set_randomtraits();
 		set_traits();
-
-		console::bus->postpone(event::eAgentSpawn { this });
-		console::bus->process();
 	}
 
 	Agent::~Agent()

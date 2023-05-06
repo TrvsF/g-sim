@@ -45,10 +45,19 @@ namespace ai
 		auto g = std::to_string(agent->Colour().g) + ",";
 		auto b = std::to_string(agent->Colour().b);
 
+		std::string tris;
+		for (const auto& tri : agent->GetGeometry()->Tris())
+		{
+			auto point = tri.GetPoint1();
+			auto px = std::to_string(point.x);
+			auto py = std::to_string(point.y);
+			tris += "(" + px + "," + py + ")";
+		}
+
 		std::string name   = agent->GetName();
 		std::string colour = r + g + b;
 		
-		std::string data = name + ":" + colour + ":";
+		std::string data = name + ":" + colour + ":" + tris + ":";
 		file::AppendAgentFile(id, data);
 	}
 

@@ -47,19 +47,7 @@ namespace game
 		std::string genus;
 		god::generate_child_genome(event.g1, event.g2, genus);
 
-		object::GameObject* gameobject = object::GameObject::Create(
-			{ event.pos.x, event.pos.y, 0.0f  },
-			{ 0.0f,		   0.0f,		0.0f  },
-			{ 64.0f,	   64.0f,		64.0f }
-		);
-		object::Agent* agent = new object::Agent(gameobject, { {0, 0}, {50, 0}, {0, 50} });
-		god::BuildAgent(agent, genus);
-
-		// set names
-		agent->SetName("", true);
-		agent->SetName(event.lastname, false);
-
-		AddGameObject(agent);
+		spawn_agent(event.pos.x, event.pos.y, genus, event.lastname);
 	}
 
 	void Game::init_entities()
@@ -111,7 +99,7 @@ namespace game
 		}
 	}
 
-	void Game::spawn_agent(int x, int y, std::string genus)
+	void Game::spawn_agent(int x, int y, std::string genus, std::string lastname)
 	{
 		object::GameObject* gameobject = object::GameObject::Create(
 			{ (float)x, (float)y, 0.0f },
@@ -124,14 +112,15 @@ namespace game
 		{
 			god::GenerateGenus(genus);
 		}
-
 		god::BuildAgent(agent, genus);
 
 		// random first & last name
 		agent->SetName("", true);
-		agent->SetName("", false);
+		agent->SetName(lastname, false);
 
 		AddGameObject(agent);
+		console::bus->postpone(event::eAgentSpawn { agent });
+		console::bus->process();
 	}
 
 	void Game::spawn_food(int x, int y, int size)
@@ -230,7 +219,7 @@ namespace game
 			// BLUE
 			god::overwrite_gene(genus, 153, B ? '1' : '0');
 
-			spawn_agent(_x, _y, genus);
+			spawn_agent(_x, _y, genus, "");
 		}
 		break;
 		case 2: // mm
