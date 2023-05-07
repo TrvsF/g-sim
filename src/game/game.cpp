@@ -114,12 +114,11 @@ namespace game
 		{
 			god::GenerateGenus(genus);
 		}
-		god::BuildAgent(agent, genus);
-
-		// make sure agent was built correctly
-		if (agent->GetGenome() != genus)
+		// if does not build successfully
+		if (!god::BuildAgent(agent, genus))
 		{
-			std::cout << "bad genome";
+			agent->GetGeometry()->Active(false); // TODO : bug
+			RemoveGameObject(agent);
 			return;
 		}
 

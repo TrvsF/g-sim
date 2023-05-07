@@ -24,6 +24,9 @@ namespace god
 	// STOP codon
 	const std::string STOP = "000";
 
+	// mutation rate
+	const double M_RATE = 0.05;
+
 	// (i dont think these should be inlines??)
 
 	// get list of genes from genus
@@ -101,6 +104,17 @@ namespace god
 			genus[i] = c % 3 == 0 ? '1' : bit;
 			c++; // int trick to not produce stop codons
 		}
+	}
+
+	void		mutate_genus(std::string& genus);
+	inline void mutate_genus(std::string& genus)
+	{
+		// get where to flip
+		int length = genus.length();
+		int randomindex = maths::GetRandomInt(0, length);
+		// flip the bit
+		auto gchar = genus[randomindex];
+		genus[randomindex] = gchar == '1' ? '0' : '1';
 	}
 
 	// append random non-stop codon to genus
@@ -195,15 +209,22 @@ namespace god
 		}
 	}
 
-	void BuildAgent(object::Agent* agent, std::string genus);
-	inline void BuildAgent(object::Agent* agent, std::string genus)
+	bool BuildAgent(object::Agent* agent, std::string genus);
+	inline bool BuildAgent(object::Agent* agent, std::string genus)
 	{
-		// get codons for each gene
-		std::vector<std::string> genes			 = get_genes(genus);
-		// check
-		if (genes.size() != 7)
+		// mutate genome
+		int odds = 1 / M_RATE;
+		if (maths::GetRandomInt(0, odds) == 0)
 		{
-			return;
+			mutate_genus(genus);
+		}
+		
+		// get codons for each gene
+		std::vector<std::string> genes = get_genes(genus);
+		// mutated genome check
+		if (genes.size() != 7)
+		{ 
+			return false;
 		}
 		// TODO : relook @ this
 		std::vector<std::string> midpointcodons  = get_codons(genes[0]);
@@ -368,6 +389,8 @@ namespace god
 
 		agent->SetTraits({ "", agentcolour, sex, walkspeed, maxturnspeed, maxhealth, maxstamina, maxdamage, agression });
 		agent->SetGenome(genus);
+
+		return true;
 	}
 
 	inline void BuildAgent(object::Agent* agent)

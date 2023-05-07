@@ -61,7 +61,7 @@ namespace ai
 		std::string colour = r + g + b;
 		
 		std::string data = name + ":" + colour + ":" + tris + ":";
-		file::AppendAgentFile(id, data);
+		file::CreateAgentFile(id, data);
 	}
 
 	std::vector<object::Agent*> AI::get_agents()

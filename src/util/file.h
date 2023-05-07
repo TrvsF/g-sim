@@ -91,13 +91,24 @@ namespace file
 		out.close();
 	}
 
+	static void CreateAgentFile(std::string id, std::string data)
+	{
+		auto dir = logdir + "agents/";
+
+		std::ofstream out(dir + id + ".g", std::ios_base::app);
+		std::filesystem::create_directories(dir);
+
+		out << "AGENT" << "\n";
+		out << data;
+		out.close();
+	}
+
 	static void AppendAgentFile(std::string id, std::string data)
 	{
 		auto dir = logdir + "agents/";
 
 		std::ofstream out(dir + id + ".g", std::ios_base::app);
-		if (std::filesystem::create_directories(dir))
-		{ out << "AGENT" << "\n"; }
+
 		out << data;
 		out.close();
 	}
