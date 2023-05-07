@@ -147,7 +147,8 @@ namespace god
 			}
 			child += STOP;
 
-			if (maths::GetRandomInt(0, 3) == 0)
+			// if (maths::GetRandomInt(0, 3) == 0)
+			if (i == 3)
 			{
 				parentflag = !parentflag;
 			}
@@ -199,6 +200,11 @@ namespace god
 	{
 		// get codons for each gene
 		std::vector<std::string> genes			 = get_genes(genus);
+		// check
+		if (genes.size() != 7)
+		{
+			return;
+		}
 		// TODO : relook @ this
 		std::vector<std::string> midpointcodons  = get_codons(genes[0]);
 		std::vector<std::string> pointcodons	 = get_codons(genes[1]);

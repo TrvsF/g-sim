@@ -32,6 +32,14 @@ using Listener = dexode::EventBus::Listener;
 
 namespace game
 {
+	struct ToBeBorn
+	{
+		float x;
+		float y;
+		std::string genus;
+		std::string lastname;
+	};
+
 	class Game
 	{
 	private:
@@ -54,6 +62,9 @@ namespace game
 		object::Camera* m_camera;
 		void spawn_food(int x, int y, int size);
 		void spawn_agent(int x, int y, std::string genus, std::string lastname);
+
+		// TODO : bad agent hack
+		std::vector<ToBeBorn> m_tobeborn;
 
 		// world gen TODO : move
 		// object::BiomeObject* m_biome;

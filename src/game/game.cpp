@@ -47,7 +47,9 @@ namespace game
 		std::string genus;
 		god::generate_child_genome(event.g1, event.g2, genus);
 
-		spawn_agent(event.pos.x, event.pos.y, genus, event.lastname);
+		m_tobeborn.push_back({ event.pos.x, event.pos.y, genus, event.lastname });
+
+		// spawn_agent(event.pos.x, event.pos.y, genus, event.lastname);
 	}
 
 	void Game::init_entities()
@@ -113,6 +115,13 @@ namespace game
 			god::GenerateGenus(genus);
 		}
 		god::BuildAgent(agent, genus);
+
+		// make sure agent was built correctly
+		if (agent->GetGenome() != genus)
+		{
+			std::cout << "bad genome";
+			return;
+		}
 
 		// random first & last name
 		agent->SetName("", true);
@@ -322,6 +331,13 @@ namespace game
 			m_collision->DoCollision();
 			gameobject->Tick();
 		}
+
+		// TODO : bad hack!
+		for (const auto& obj : m_tobeborn)
+		{
+			spawn_agent(obj.x, obj.y, obj.genus, obj.lastname);
+		}
+		m_tobeborn.clear();
 
 		// text on screen
 		do_textelements();
