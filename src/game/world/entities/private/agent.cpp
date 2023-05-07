@@ -10,17 +10,18 @@ namespace object
 		m_aistate = AgentState::Wandering;
 		m_dead = false;
 		m_age  = 0;
+		m_id   = -1;
 
 		m_turnobj.steps = 0;
-		m_turnobj.left = 0;
+		m_turnobj.left  = 0;
 
 		m_seenagent = NULL;
 		m_targetpos = VEC2_ZERO;
 
-		m_velocity = 0;
+		m_velocity  = 0;
 		m_turnspeed = 0;
 		m_isturning = false;
-		m_ismoving = false;
+		m_ismoving  = false;
 
 		m_timesincelastbaby = 0;
 		m_rdytomate = false;

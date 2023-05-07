@@ -6,6 +6,13 @@ namespace game
 	{
 		m_collision->AddCollisionObj(gameobject);
 		m_gameobjects.push_back(gameobject);
+
+		// if (gameobject->GetEntityType() == object::GameEntityType::Agent)
+		// {
+		// 	const auto& agent = dynamic_cast<object::Agent*>(gameobject);
+		// 	console::bus->postpone(event::eAgentSpawn { agent });
+		// 	console::bus->process();
+		// }
 	}
 
 	inline void Game::RemoveGameObject(object::GameObject* gameobject)

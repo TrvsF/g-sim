@@ -118,9 +118,10 @@ namespace game
 		agent->SetName("", true);
 		agent->SetName(lastname, false);
 
-		AddGameObject(agent);
 		console::bus->postpone(event::eAgentSpawn { agent });
 		console::bus->process();
+
+		AddGameObject(agent);
 	}
 
 	void Game::spawn_food(int x, int y, int size)

@@ -4,18 +4,21 @@ namespace ai
 {
 	AI::AI()
 	{
+		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
+		m_listener.listen<event::eAgentSpawn>(std::bind(&AI::e_agentspawn, this, std::placeholders::_1));
+
+		m_tick_counter = 0;
+		m_agentid_counter = 0;
+
 		// logs
 		file::CreateLogFile();
-
-		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
-		m_listener.listen<event::eAgentSpawn> (std::bind(&AI::e_agentspawn,  this, std::placeholders::_1));
-		
-		m_tick_counter	  = 0;
-		m_agentid_counter = 0;
 	}
 
 	void AI::e_objectdeath(const event::eObjectDeath& event)
 	{
+		if (event.victim->GetEntityType() == object::GameEntityType::Food)
+		{ return; }
+
 		const auto& agent = static_cast<object::Agent*>(event.victim);
 		std::string id    = std::to_string(agent->Id());
 		std::string tick  = std::to_string(m_tick_counter);
