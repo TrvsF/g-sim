@@ -252,7 +252,7 @@ namespace game
 		{
 			float _x = x + m_camera->GetOffsetpos().x;
 			float _y = y + m_camera->GetOffsetpos().y;
-			spawn_food(_x, _y, 1500);
+			spawn_food(_x, _y, 500000);
 		}
 		break;
 		}

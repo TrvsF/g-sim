@@ -458,7 +458,7 @@ namespace object
 		if (m_stamina <= 0) { m_health--; }
 		else { m_stamina--; }
 
-		if (m_stamina < m_traits.maxstamina * 0.25) 
+		if (m_stamina < m_traits.maxstamina * 0.2) 
 		{ m_aistate = AgentState::Eating; }
 		if (m_health <= 0 || m_age >= 57600)
 		{ Die(); }

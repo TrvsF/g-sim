@@ -25,7 +25,8 @@ namespace god
 	const std::string STOP = "000";
 
 	// mutation rate
-	const double M_RATE = 0.05;
+	const double PM_RATE = 0.1;
+	const double DM_RATE = 0.05;
 
 	// (i dont think these should be inlines??)
 
@@ -106,8 +107,8 @@ namespace god
 		}
 	}
 
-	void		mutate_genus(std::string& genus);
-	inline void mutate_genus(std::string& genus)
+	void		mutation_point(std::string& genus);
+	inline void mutation_point(std::string& genus)
 	{
 		// get where to flip
 		int length = genus.length();
@@ -115,6 +116,23 @@ namespace god
 		// flip the bit
 		auto gchar = genus[randomindex];
 		genus[randomindex] = gchar == '1' ? '0' : '1';
+	}
+
+	void		mutation_duplication(std::string& genus);
+	inline void	mutation_duplication(std::string& genus)
+	{
+		// get points of duplication
+		int length = genus.length();
+		int point1 = maths::GetRandomInt(0, length - 1);
+		int point2 = maths::GetRandomInt(point1, length);
+		// get str to duplicate
+		std::string duplicatedstr;
+		for (int i = point1; i < point2; i++)
+		{
+			duplicatedstr += genus[i];
+		}
+		// append to genus
+		genus.insert(point2, duplicatedstr);
 	}
 
 	// append random non-stop codon to genus
@@ -212,11 +230,16 @@ namespace god
 	bool BuildAgent(object::Agent* agent, std::string genus);
 	inline bool BuildAgent(object::Agent* agent, std::string genus)
 	{
-		// mutate genome
-		int odds = 1 / M_RATE;
-		if (maths::GetRandomInt(0, odds) == 0)
+		// mutations
+		int p_odds = 1 / PM_RATE;
+		int d_odds = 1 / DM_RATE;
+		if (maths::GetRandomInt(0, p_odds) == 0)
 		{
-			mutate_genus(genus);
+			mutation_point(genus);
+		}
+		if (maths::GetRandomInt(0, d_odds) == 0)
+		{
+			mutation_duplication(genus);
 		}
 		
 		// get codons for each gene
@@ -315,10 +338,8 @@ namespace god
 				AGENT COLOUR
 		 -------------------------------
 		*/
-		int colourcodonsize = rcodons.size(); // should be 8!
-
 		std::string rgene;
-		for (int i = 0; i < colourcodonsize; i++)
+		for (int i = 0; i < rcodons.size(); i++)
 		{
 			const auto& codons = rcodons[i];
 			int totalbits	   = 0;
@@ -333,7 +354,7 @@ namespace god
 			rgene += totalbits > 1 ? '1' : '0';
 		}
 		std::string bgene;
-		for (int i = 0; i < colourcodonsize; i++)
+		for (int i = 0; i < bcodons.size(); i++)
 		{
 			const auto& codons = bcodons[i];
 			int totalbits = 0;
@@ -348,7 +369,7 @@ namespace god
 			bgene += totalbits > 1 ? '1' : '0';
 		}
 		std::string ggene;
-		for (int i = 0; i < colourcodonsize; i++)
+		for (int i = 0; i < gcodons.size(); i++)
 		{
 			const auto& codons = gcodons[i];
 			int totalbits = 0;
@@ -372,6 +393,9 @@ namespace god
 				AGENT SEX
 		 -------------------------------
 		*/
+		// not iterated so can be 0 due to duplication
+		if (sexcodons.size() == 0)
+		{ return false; }
 		std::string bittle = sexcodons[0];
 		int sex = maths::StringToDecimal(bittle, false) % 2;
 
@@ -384,7 +408,7 @@ namespace god
 		float walkspeed		= (spikeyness / (area * 0.1f)) + 1.0f;
 		float maxturnspeed  = maths::GetRandomFloat(0.5f, 5.0f); // TODO : not random 
 		int maxhealth		= area;
-		int maxstamina		= area * 10;
+		int maxstamina		= area * 15;
 		int maxdamage		= spikeyness;
 
 		agent->SetTraits({ "", agentcolour, sex, walkspeed, maxturnspeed, maxhealth, maxstamina, maxdamage, agression });
