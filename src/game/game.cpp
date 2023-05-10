@@ -90,13 +90,13 @@ namespace game
 
 	void Game::generate_map()
 	{
-		for (int i = -5; i < 5; i++)
+		for (int i = -5; i < 5; i+=2)
 		{
-			for (int j = -5; j < 5; j++)
+			for (int j = -5; j < 5; j+=2)
 			{
 				int x = maths::GetRandomInt((i * 250) - 250, (i * 250) + 250);
 				int y = maths::GetRandomInt((j * 250) - 250, (j * 250) + 250);
-				spawn_food(x, y, 1200);
+				spawn_food(x, y, 3500);
 			}
 		}
 	}
@@ -219,6 +219,7 @@ namespace game
 			float _x = x + m_camera->GetOffsetpos().x;
 			float _y = y + m_camera->GetOffsetpos().y;
 
+			bool multicolour = R && G && B;
 			std::string genus;
 			god::GenerateGenus(genus);
 			// RED
@@ -228,7 +229,7 @@ namespace game
 			// BLUE
 			god::overwrite_gene(genus, 153, B ? '1' : '0');
 
-			spawn_agent(_x, _y, genus, "");
+			spawn_agent(_x, _y, multicolour ? "" : genus, "");
 		}
 		break;
 		case 2: // mm
@@ -303,7 +304,7 @@ namespace game
 
 		init_entities();
 		init_textelements();
-		// generate_map();
+		generate_map();
 	}
 
 	// entities -> camera

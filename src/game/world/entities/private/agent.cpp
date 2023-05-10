@@ -154,7 +154,7 @@ namespace object
 	{
 		Vector2D pos = object->Get2DPosition();
 		GameEntityType type = object->GetEntityType();
-		m_objectmemory.push_back({pos, type });
+		m_objectmemory.insert(m_objectmemory.begin(), { pos, type });
 	}
 
 	Vector2D Agent::get_memoryentitypos(GameEntityType type)
