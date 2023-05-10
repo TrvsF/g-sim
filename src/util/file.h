@@ -95,8 +95,8 @@ namespace file
 	{
 		auto dir = logdir + "agents/";
 
-		std::ofstream out(dir + id + ".g", std::ios_base::app);
 		std::filesystem::create_directories(dir);
+		std::ofstream out(dir + id + ".g", std::ios_base::app);
 
 		out << "AGENT" << "\n";
 		out << data;

@@ -7,10 +7,12 @@ namespace object
 	{
 		SetEntityType(GameEntityType::Agent);
 
-		m_aistate = AgentState::Wandering;
-		m_dead = false;
-		m_age  = 0;
-		m_id   = -1;
+		m_aistate  = AgentState::Wandering;
+		m_dead	   = false;
+		m_age      = 0;
+		m_id	   = -1;
+		m_children = 0;
+		m_damage   = 0;
 
 		m_turnobj.steps = 0;
 		m_turnobj.left  = 0;
@@ -450,6 +452,7 @@ namespace object
 			m_baby.aliveticks = 0;
 
 			m_timesincelastbaby = m_age;
+			m_children++;
 		}
 	}
 

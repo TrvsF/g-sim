@@ -21,7 +21,7 @@ namespace ai
 
 		Listener m_listener{ event::Event::SharedInstace().EventBus };
 		void e_objectdeath(const event::eObjectDeath& event);
-		void e_agentspawn (const event::eAgentSpawn& event);
+		void e_agentspawn (const event::eObjectSpawn& event);
 
 		int m_agentid_counter;
 		int m_tick_counter; // TODO : probably not a good idea

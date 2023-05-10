@@ -5,7 +5,7 @@ namespace ai
 	AI::AI()
 	{
 		m_listener.listen<event::eObjectDeath>(std::bind(&AI::e_objectdeath, this, std::placeholders::_1));
-		m_listener.listen<event::eAgentSpawn>(std::bind(&AI::e_agentspawn, this, std::placeholders::_1));
+		m_listener.listen<event::eObjectSpawn>(std::bind(&AI::e_agentspawn, this, std::placeholders::_1));
 
 		m_tick_counter = 0;
 		m_agentid_counter = 0;
@@ -16,7 +16,7 @@ namespace ai
 
 	void AI::e_objectdeath(const event::eObjectDeath& event)
 	{
-		if (event.victim->GetEntityType() == object::GameEntityType::Food)
+		if (event.victim->GetEntityType() != object::GameEntityType::Agent)
 		{ return; }
 
 		const auto& agent = static_cast<object::Agent*>(event.victim);
@@ -26,14 +26,19 @@ namespace ai
 		std::string line = "DEATH:" + id + ":" + tick;
 		file::AppendLogFile(line);
 
-		std::string age = std::to_string(agent->GetAge());
+		auto age  = std::to_string(agent->GetAge());
+		auto kids = std::to_string(agent->GetKids());
+		auto dmg  = std::to_string(agent->GetDamage());
 
-		std::string data = age;
+		std::string data = age + ":" + kids + ":" + dmg + ":";
 		file::AppendAgentFile(id, data);
 	}
 
-	void AI::e_agentspawn(const event::eAgentSpawn& event)
+	void AI::e_agentspawn(const event::eObjectSpawn& event)
 	{
+		if (event.agent->GetEntityType() != object::GameEntityType::Agent)
+		{ return; }
+
 		m_agentid_counter++;
 
 		const auto& agent = static_cast<object::Agent*>(event.agent);

@@ -43,7 +43,7 @@ namespace event
 
 		std::string lastname;
 	};
-	struct eAgentSpawn
+	struct eObjectSpawn
 	{
 		object::GameObject* agent;
 	};

@@ -60,6 +60,8 @@ namespace object
 
 		// logs
 		int m_id;
+		int m_children;
+		int m_damage;
 
 		// genes
 		std::string g_genome;
@@ -141,6 +143,10 @@ namespace object
 		{ return m_dead; }
 		inline int GetAge()
 		{ return m_age; }
+		inline int GetKids() 
+		{ return m_children; }
+		inline int GetDamage()
+		{ return m_damage; }
 
 		// logs
 		inline void Id(int id) 
