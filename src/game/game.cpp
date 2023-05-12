@@ -96,7 +96,7 @@ namespace game
 			{
 				int x = maths::GetRandomInt((i * 250) - 250, (i * 250) + 250);
 				int y = maths::GetRandomInt((j * 250) - 250, (j * 250) + 250);
-				spawn_food(x, y, 3500);
+				spawn_food(x, y, 15000);
 			}
 		}
 	}
@@ -304,7 +304,7 @@ namespace game
 
 		init_entities();
 		init_textelements();
-		generate_map();
+		// generate_map();
 	}
 
 	// entities -> camera

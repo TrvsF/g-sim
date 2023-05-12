@@ -122,7 +122,7 @@ namespace object
 		{ return false; }
 		// colour has to be close
 		double cdifference = maths::ColourDifference(m_traits.colour, mate->Colour());
-		return cdifference < 100;
+		return cdifference < 140;
 	}
 
 	void Agent::set_randomtraits()
@@ -340,8 +340,7 @@ namespace object
 		if (is_inenttype(GameEntityType::Agent, mate))
 		{
 			const auto& mateobj = static_cast<Agent*> (mate);
-			bool ready = mateobj->IsReadyToMate() && m_rdytomate;
-			if (ready)
+			if (m_rdytomate)
 			{
 				// make a baby
 				if (m_traits.sex)
