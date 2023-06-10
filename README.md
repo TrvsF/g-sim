@@ -1,8 +1,19 @@
-g sim<br>
+```c++
+<"g-sim">
 
-using https://github.com/TrvsF/tri-engine to make a cool simulation<br>
+using 'https://github.com/TrvsF/tri-engine' to make a cool simulation
 
-commit index <br>
-[a] - append/add<br>
-[c] - clean/[small]change<br>
-[f] - fix/[re]factor<br>
+commit index
+[a] - append/add
+[c] - clean/[small]change
+[f] - fix/[re]factor
+
+cool features
+- smart texture (de)loading
+- smart texture animating
+- grid-based collision
+- geometric sprite simulation
+- genetic simulation
+- console cvar system
+- garbage collection
+```
